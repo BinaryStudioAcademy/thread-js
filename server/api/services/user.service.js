@@ -1,13 +1,6 @@
 const userRepository = require('../../data/repositories/user.repository');
+const BaseService = require('./base.service');
 
-class UserService {
-    getAll() {
-        return userRepository.getAll();
-    }
+class UserService extends BaseService {}
 
-    getById(uid) {
-        return userRepository.getById(uid);
-    }
-}
-
-module.exports = new UserService();
+module.exports = new UserService(userRepository);
