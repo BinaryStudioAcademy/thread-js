@@ -4,16 +4,10 @@ const user = express.Router();
 
 user
     .get('/', (req, res) => {
-        const users = userService.getAll();
-        res.send(users);
+        userService.getAll().then(users => res.send(users));
     })
-    .get('/:id', (req, res) => {
-        const user = userService.getById();
-        res.send(user);
-    })
-    .post('/', (req, res) => {
-        const user = userService.addUser(req.body);
-        res.send(user);
+    .get('/:uid', (req, res) => {
+        userService.getById(req.params.uid).then(user => res.send(user));
     });
 
 module.exports = user;

@@ -1,15 +1,6 @@
-class UserRepository {
-    getAll() {
-        return 'Get all users.';
-    }
+const { UserModel } = require('../models/index');
+const BaseRepository = require('./base.repository');
 
-    getById(id) {
-        return 'Get by id.';
-    }
+class UserRepository extends BaseRepository {}
 
-    addUser(user) {
-        return 'Add user.';
-    }
-}
-
-module.exports = new UserRepository();
+module.exports = new UserRepository(UserModel);

@@ -1,16 +1,8 @@
 module.exports = (orm, DataTypes) => {
-    const User = orm.define('User', {
-        email: {
+    const Comment = orm.define('Comment', {
+        body: {
             allowNull: false,
-            type: DataTypes.STRING
-        },
-        username: {
-            allowNull: false,
-            type: DataTypes.STRING
-        },
-        password: {
-            allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.TEXT
         },
         isActive: {
             allowNull: false,
@@ -21,9 +13,9 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    User.associate = function (models) {
+    Comment.associate = function (models) {
         // associations can be defined here
     };
 
-    return User;
+    return Comment;
 };

@@ -5,12 +5,8 @@ class UserService {
         return userRepository.getAll();
     }
 
-    getById(id) {
-        return userRepository.getById(id);
-    }
-
-    addUser(user) {
-        return userRepository.addUser(user);
+    getById(uid) {
+        return userRepository.getById(uid);
     }
 }
 
