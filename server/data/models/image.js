@@ -14,7 +14,8 @@ module.exports = (orm, DataTypes) => {
     }, {});
 
     Image.associate = function (models) {
-        // associations can be defined here
+        Image.hasOne(models.User);
+        Image.hasOne(models.Post);
     };
 
     return Image;

@@ -4,10 +4,14 @@ const user = express.Router();
 
 user
     .get('/', (req, res) => {
-        userService.getAll().then(users => res.send(users));
+        userService.getAll().then(users => {
+            res.send(users);
+        });
     })
     .get('/:uid', (req, res) => {
-        userService.getById(req.params.uid).then(user => res.send(user));
+        userService.getById(req.params.uid).then(user => {
+            res.send(user);
+        });
     });
 
 module.exports = user;

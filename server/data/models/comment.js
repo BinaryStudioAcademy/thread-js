@@ -13,8 +13,9 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    Comment.associate = function (models) {
-        // associations can be defined here
+    Comment.associate = function ({ User, Post }) {
+        Comment.belongsTo(User);
+        Comment.belongsTo(Post);
     };
 
     return Comment;

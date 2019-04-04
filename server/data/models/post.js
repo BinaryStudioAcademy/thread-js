@@ -14,7 +14,10 @@ module.exports = (orm, DataTypes) => {
     }, {});
 
     Post.associate = function (models) {
-        // associations can be defined here
+        Post.belongsTo(models.Image);
+        Post.belongsTo(models.User);
+        Post.hasMany(models.PostReaction);
+        Post.hasMany(models.Comment);
     };
 
     return Post;

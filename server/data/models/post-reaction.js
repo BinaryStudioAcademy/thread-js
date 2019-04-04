@@ -9,8 +9,9 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    PostReaction.associate = function (models) {
-        // associations can be defined here
+    PostReaction.associate = function ({ Post, User }) {
+        PostReaction.belongsTo(Post);
+        PostReaction.belongsTo(User);
     };
 
     return PostReaction;
