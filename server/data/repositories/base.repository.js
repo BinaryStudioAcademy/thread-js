@@ -10,6 +10,10 @@ class BaseRepository {
     getById(uid) {
         return this.model.findByPk(uid);
     }
+
+    create(data) {
+        return this.model.create(data);
+    }
 }
 
 module.exports = BaseRepository;

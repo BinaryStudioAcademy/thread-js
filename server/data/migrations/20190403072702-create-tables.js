@@ -1,21 +1,24 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.sequelize.transaction((transaction) => Promise.all([
+        return queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
+        .then(() => queryInterface.sequelize.transaction((transaction) => Promise.all([
             queryInterface.createTable('Users', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
                     primaryKey: true,
                     type: Sequelize.UUID,
-                    defaultValue: Sequelize.UUIDV4
+                    defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
                 email: {
                     allowNull: false,
-                    type: Sequelize.STRING
+                    type: Sequelize.STRING,
+                    unique: true
                 },
                 username: {
                     allowNull: false,
-                    type: Sequelize.STRING
+                    type: Sequelize.STRING,
+                    unique: true
                 },
                 password: {
                     allowNull: false,
@@ -35,7 +38,7 @@ module.exports = {
                     autoIncrement: false,
                     primaryKey: true,
                     type: Sequelize.UUID,
-                    defaultValue: Sequelize.UUIDV4
+                    defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
                 body: {
                     allowNull: false,
@@ -55,7 +58,7 @@ module.exports = {
                     autoIncrement: false,
                     primaryKey: true,
                     type: Sequelize.UUID,
-                    defaultValue: Sequelize.UUIDV4
+                    defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
                 body: {
                     allowNull: false,
@@ -75,7 +78,7 @@ module.exports = {
                     autoIncrement: false,
                     primaryKey: true,
                     type: Sequelize.UUID,
-                    defaultValue: Sequelize.UUIDV4
+                    defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
                 isLike: {
                     allowNull: false,
@@ -91,7 +94,7 @@ module.exports = {
                     autoIncrement: false,
                     primaryKey: true,
                     type: Sequelize.UUID,
-                    defaultValue: Sequelize.UUIDV4
+                    defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
                 path: {
                     allowNull: false,
@@ -105,7 +108,7 @@ module.exports = {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction })
-        ]));
+        ])));
     },
 
     down: (queryInterface, Sequelize) => {

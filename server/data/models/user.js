@@ -6,11 +6,13 @@ module.exports = (orm, DataTypes) => {
         },
         username: {
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true
         },
         password: {
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true
         },
         isActive: {
             allowNull: false,

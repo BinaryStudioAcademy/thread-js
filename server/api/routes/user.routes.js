@@ -12,6 +12,11 @@ user
         userService.getById(req.params.uid).then(user => {
             res.send(user);
         });
+    })
+    .post('/', (req, res) => {
+        userService.addUser(req.body).then(user => {
+            res.send(user);
+        });
     });
 
 module.exports = user;
