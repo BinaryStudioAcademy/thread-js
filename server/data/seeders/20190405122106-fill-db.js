@@ -1,12 +1,12 @@
-const { usersSeed, userImagesSeed } = require('../seed-data/users.seed');
-const { postsSeed, postImagesSeed } = require('../seed-data/posts.seed');
-const commentsSeed = require('../seed-data/comments.seed');
-const postReactionsSeed = require('../seed-data/post-reactions.seed');
+import { usersSeed, userImagesSeed } from '../seed-data/users.seed';
+import { postsSeed, postImagesSeed } from '../seed-data/posts.seed';
+import commentsSeed from '../seed-data/comments.seed';
+import postReactionsSeed from '../seed-data/post-reactions.seed';
 
 const randomIndex = length => Math.floor(Math.random() * length);
 const mapPaths = images => images.map(x => `'${x.path}'`).join(',');
 
-module.exports = {
+export default {
     up: async (queryInterface, Sequelize) => {
         try {
             const options = {

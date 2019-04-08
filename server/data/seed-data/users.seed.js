@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 const hash = password => bcrypt.hashSync(password, 10);
 const now = new Date();
 
-const usersSeed = [{
+export const usersSeed = [{
     email: 'rrourke0@hubpages.com',
     username: 'wskellion0',
     password: hash('s6chfx')
@@ -31,7 +31,7 @@ const usersSeed = [{
 }));
 
 // Do not add more images than the number of users.
-const userImagesSeed = [
+export const userImagesSeed = [
     'https://s3.amazonaws.com/uifaces/faces/twitter/nasirwd/128.jpg',
     'https://s3.amazonaws.com/uifaces/faces/twitter/emileboudeling/128.jpg',
     'https://s3.amazonaws.com/uifaces/faces/twitter/grrr_nl/128.jpg',
@@ -42,8 +42,3 @@ const userImagesSeed = [
     createdAt: now,
     updatedAt: now
 }));
-
-module.exports = {
-    usersSeed,
-    userImagesSeed
-};

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     up: (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
         .then(() => queryInterface.sequelize.transaction(transaction => Promise.all([
             queryInterface.createTable('Users', {

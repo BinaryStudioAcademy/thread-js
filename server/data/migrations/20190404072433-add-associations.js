@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     up: (queryInterface, Sequelize) => queryInterface.sequelize.transaction(transaction => Promise.all([
         queryInterface.addColumn('Users', 'imageId', {
             type: Sequelize.UUID,

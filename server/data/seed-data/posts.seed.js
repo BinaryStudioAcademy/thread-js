@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 const now = new Date();
 
-const postsSeed = [
+export const postsSeed = [
     'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
     'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
     'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
@@ -20,7 +20,7 @@ const postsSeed = [
 }));
 
 // Do not add more images than the number of posts.
-const postImagesSeed = [
+export const postImagesSeed = [
     'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg'
 ].map(imagePath => ({
     path: imagePath,
@@ -28,8 +28,3 @@ const postImagesSeed = [
     createdAt: now,
     updatedAt: now
 }));
-
-module.exports = {
-    postsSeed,
-    postImagesSeed
-};
