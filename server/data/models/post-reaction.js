@@ -1,4 +1,4 @@
-module.exports = (orm, DataTypes) => {
+export default (orm, DataTypes) => {
     const PostReaction = orm.define('PostReaction', {
         isLike: {
             allowNull: false,

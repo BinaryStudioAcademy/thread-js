@@ -1,7 +1,7 @@
-const express = require('express');
-const userService = require('../services/user.service');
+import { Router } from 'express';
+import userService from '../services/user.service';
 
-const router = express.Router();
+const router = Router();
 
 router
     .get('/', (req, res) => {
@@ -20,4 +20,4 @@ router
         });
     });
 
-module.exports = router;
+export default router;

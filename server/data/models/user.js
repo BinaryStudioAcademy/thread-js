@@ -1,4 +1,4 @@
-module.exports = (orm, DataTypes) => {
+export default (orm, DataTypes) => {
     const User = orm.define('User', {
         email: {
             allowNull: false,

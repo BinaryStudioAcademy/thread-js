@@ -1,5 +1,5 @@
-const userRepository = require('../../data/repositories/user.repository');
-const BaseService = require('./base.service');
+import userRepository from '../../data/repositories/user.repository';
+import BaseService from './base.service';
 
 class UserService extends BaseService {
     addUser(user) {
@@ -7,4 +7,4 @@ class UserService extends BaseService {
     }
 }
 
-module.exports = new UserService(userRepository);
+export default new UserService(userRepository);

@@ -1,9 +1,10 @@
-require('dotenv').config();
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import routes from './api/routes/index';
 
-const express = require('express');
-const path = require('path');
-const routes = require('./api/routes/index');
-const bodyParser = require('body-parser');
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());

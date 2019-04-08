@@ -1,4 +1,4 @@
-module.exports = (orm, DataTypes) => {
+export default (orm, DataTypes) => {
     const Post = orm.define('Post', {
         body: {
             allowNull: false,

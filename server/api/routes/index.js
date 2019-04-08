@@ -1,5 +1,5 @@
-const userRoutes = require('./user.routes');
+import userRoutes from './user.routes';
 
-module.exports = (app) => {
+export default (app) => {
     app.use('/api/users', userRoutes);
 };

@@ -1,4 +1,4 @@
-module.exports = (orm, DataTypes) => {
+export default (orm, DataTypes) => {
     const Image = orm.define('Image', {
         path: {
             allowNull: false,

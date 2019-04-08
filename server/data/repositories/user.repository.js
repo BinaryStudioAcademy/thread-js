@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const { UserModel } = require('../models/index');
-const BaseRepository = require('./base.repository');
+import bcrypt from 'bcrypt';
+import { UserModel } from '../models/index';
+import BaseRepository from './base.repository';
 
 class UserRepository extends BaseRepository {
     addUser({ email, username, password }) {
@@ -12,4 +12,4 @@ class UserRepository extends BaseRepository {
     }
 }
 
-module.exports = new UserRepository(UserModel);
+export default new UserRepository(UserModel);
