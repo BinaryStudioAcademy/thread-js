@@ -13,9 +13,9 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    Image.associate = function (models) {
-        Image.hasOne(models.User);
-        Image.hasOne(models.Post);
+    Image.associate = ({ User, Post }) => {
+        Image.hasOne(User);
+        Image.hasOne(Post);
     };
 
     return Image;

@@ -1,6 +1,6 @@
+const bcrypt = require('bcrypt');
 const { UserModel } = require('../models/index');
 const BaseRepository = require('./base.repository');
-const bcrypt = require('bcrypt');
 
 class UserRepository extends BaseRepository {
     addUser({ email, username, password }) {

@@ -1,5 +1,5 @@
-const orm = require('../db/connection');
 const sequelize = require('sequelize');
+const orm = require('../db/connection');
 
 const UserModel = require('./user')(orm, sequelize);
 const PostModel = require('./post')(orm, sequelize);

@@ -4,6 +4,7 @@ const commentsSeed = require('../seed-data/comments.seed');
 const postReactionsSeed = require('../seed-data/post-reactions.seed');
 
 const randomIndex = length => Math.floor(Math.random() * length);
+const mapPaths = images => images.map(x => `'${x.path}'`).join(',');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -15,10 +16,10 @@ module.exports = {
             // Add images.
             await queryInterface.bulkInsert('Images', userImagesSeed.concat(postImagesSeed), {});
 
-            const userImagesQuery = `SELECT id FROM "Images" WHERE path IN (${userImagesSeed.map(x => `'${x.path}'`).join(',')});`;
+            const userImagesQuery = `SELECT id FROM "Images" WHERE path IN (${mapPaths(userImagesSeed)});`;
             const userImages = await queryInterface.sequelize.query(userImagesQuery, options);
 
-            const postImagesQuery = `SELECT id FROM "Images" WHERE path IN (${postImagesSeed.map(x => `'${x.path}'`).join(',')});`;
+            const postImagesQuery = `SELECT id FROM "Images" WHERE path IN (${mapPaths(postImagesSeed)});`;
             const postImages = await queryInterface.sequelize.query(postImagesQuery, options);
 
             // Add users.
@@ -58,7 +59,7 @@ module.exports = {
         }
     },
 
-    down: async (queryInterface, Sequelize) => {
+    down: async (queryInterface) => {
         try {
             await queryInterface.bulkDelete('PostReactions', null, {});
             await queryInterface.bulkDelete('Comments', null, {});

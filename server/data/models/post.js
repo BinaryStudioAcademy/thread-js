@@ -13,11 +13,11 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    Post.associate = function (models) {
-        Post.belongsTo(models.Image);
-        Post.belongsTo(models.User);
-        Post.hasMany(models.PostReaction);
-        Post.hasMany(models.Comment);
+    Post.associate = ({ Image, User, PostReaction, Comment }) => {
+        Post.belongsTo(Image);
+        Post.belongsTo(User);
+        Post.hasMany(PostReaction);
+        Post.hasMany(Comment);
     };
 
     return Post;

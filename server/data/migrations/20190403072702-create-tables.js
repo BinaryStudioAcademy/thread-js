@@ -1,7 +1,6 @@
 module.exports = {
-    up: (queryInterface, Sequelize) => {
-        return queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
-        .then(() => queryInterface.sequelize.transaction((transaction) => Promise.all([
+    up: (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
+        .then(() => queryInterface.sequelize.transaction(transaction => Promise.all([
             queryInterface.createTable('Users', {
                 id: {
                     allowNull: false,
@@ -108,16 +107,13 @@ module.exports = {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction })
-        ])));
-    },
+        ]))),
 
-    down: (queryInterface, Sequelize) => {
-        return queryInterface.sequelize.transaction((transaction) => Promise.all([
-            queryInterface.dropTable('Users', { transaction }),
-            queryInterface.dropTable('Posts', { transaction }),
-            queryInterface.dropTable('Comments', { transaction }),
-            queryInterface.dropTable('PostReactions', { transaction }),
-            queryInterface.dropTable('Images', { transaction })
-        ]));
-    }
+    down: queryInterface => queryInterface.sequelize.transaction(transaction => Promise.all([
+        queryInterface.dropTable('Users', { transaction }),
+        queryInterface.dropTable('Posts', { transaction }),
+        queryInterface.dropTable('Comments', { transaction }),
+        queryInterface.dropTable('PostReactions', { transaction }),
+        queryInterface.dropTable('Images', { transaction })
+    ]))
 };

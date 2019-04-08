@@ -13,7 +13,7 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    Comment.associate = function ({ User, Post }) {
+    Comment.associate = ({ User, Post }) => {
         Comment.belongsTo(User);
         Comment.belongsTo(Post);
     };

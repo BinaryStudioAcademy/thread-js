@@ -9,7 +9,7 @@ module.exports = (orm, DataTypes) => {
         updatedAt: DataTypes.DATE
     }, {});
 
-    PostReaction.associate = function ({ Post, User }) {
+    PostReaction.associate = ({ Post, User }) => {
         PostReaction.belongsTo(Post);
         PostReaction.belongsTo(User);
     };

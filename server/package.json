@@ -20,5 +20,10 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.2.7",
     "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
   }
 }
