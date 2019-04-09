@@ -16,6 +16,7 @@
       "indent": ["error", 4],
       "comma-dangle": "off",
       "max-len": ["error", 120],
-      "object-curly-newline": "off"
+      "object-curly-newline": "off",
+      "class-methods-use-this": "off"
   }
 }

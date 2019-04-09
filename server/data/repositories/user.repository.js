@@ -10,6 +10,14 @@ class UserRepository extends BaseRepository {
             password: hash
         })).then(user => this.create(user));
     }
+
+    getByEmail(email) {
+        return this.model.findOne({ where: { email } });
+    }
+
+    getByUsername(username) {
+        return this.model.findOne({ where: { username } });
+    }
 }
 
 export default new UserRepository(UserModel);

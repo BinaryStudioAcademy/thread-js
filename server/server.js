@@ -1,14 +1,20 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
+import passport from 'passport';
 import routes from './api/routes/index';
+import authenticationMiddleware from './api/middlewares/authentication.middleware';
+import routesWhiteList from './config/routes-white-list.config';
+
+import './config/passport.config';
 
 dotenv.config();
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(authenticationMiddleware(routesWhiteList));
 
 routes(app);
 
