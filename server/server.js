@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import routes from './api/routes/index';
-import authenticationMiddleware from './api/middlewares/authentication.middleware';
+import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import routesWhiteList from './config/routes-white-list.config';
 
 import './config/passport.config';
@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
-app.use(authenticationMiddleware(routesWhiteList));
+app.use(authorizationMiddleware(routesWhiteList));
 
 routes(app);
 
