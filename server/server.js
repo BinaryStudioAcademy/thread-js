@@ -4,6 +4,7 @@ import path from 'path';
 import passport from 'passport';
 import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorization.middleware';
+import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import routesWhiteList from './config/routes-white-list.config';
 
 import './config/passport.config';
@@ -20,6 +21,8 @@ routes(app);
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
+
+app.use(errorHandlerMiddleware);
 
 app.listen(process.env.APP_PORT, () => {
     console.log(`Server listening on port ${process.env.APP_PORT}!`);

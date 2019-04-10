@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
+import cryptoService from '../../common/services/crypto.service';
 
-const hash = password => bcrypt.hashSync(password, 10);
+const hash = password => cryptoService.encryptSync(password);
 const now = new Date();
 
 export const usersSeed = [{
