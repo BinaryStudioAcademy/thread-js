@@ -1,14 +1,14 @@
-import tokenService from '../../common/services/token.service';
-import cryptoService from '../../common/services/crypto.service';
+import tokenHelper from '../../helpers/token.helper';
+import cryptoHelper from '../../helpers/crypto.helper';
 import userRepository from '../../data/repositories/user.repository';
 
 export default {
-    login: ({ id }) => tokenService.createToken({ id }),
+    login: ({ id }) => tokenHelper.createToken({ id }),
     register: async ({ password, ...user }) => {
         const { id } = await userRepository.addUser({
             ...user,
-            password: cryptoService.encrypt(password)
+            password: cryptoHelper.encrypt(password)
         });
-        return tokenService.createToken({ id });
+        return tokenHelper.createToken({ id });
     }
 };
