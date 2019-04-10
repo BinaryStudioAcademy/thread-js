@@ -1,0 +1,1 @@
+export const THREAD_ACTION = 'THREAD_ACTION';
