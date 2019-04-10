@@ -4,9 +4,9 @@ const hash = password => cryptoService.encryptSync(password);
 const now = new Date();
 
 export const usersSeed = [{
-    email: 'rrourke0@hubpages.com',
-    username: 'wskellion0',
-    password: hash('s6chfx')
+    email: 'demo@demo.com',
+    username: 'demo',
+    password: hash('demo')
 }, {
     email: 'gbottoms1@arizona.edu',
     username: 'thartwright1',
