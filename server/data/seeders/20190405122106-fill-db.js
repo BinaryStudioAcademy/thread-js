@@ -14,12 +14,12 @@ export default {
             };
 
             // Add images.
-            await queryInterface.bulkInsert('Images', userImagesSeed.concat(postImagesSeed), {});
+            await queryInterface.bulkInsert('images', userImagesSeed.concat(postImagesSeed), {});
 
-            const userImagesQuery = `SELECT id FROM "Images" WHERE path IN (${mapPaths(userImagesSeed)});`;
+            const userImagesQuery = `SELECT id FROM "images" WHERE path IN (${mapPaths(userImagesSeed)});`;
             const userImages = await queryInterface.sequelize.query(userImagesQuery, options);
 
-            const postImagesQuery = `SELECT id FROM "Images" WHERE path IN (${mapPaths(postImagesSeed)});`;
+            const postImagesQuery = `SELECT id FROM "images" WHERE path IN (${mapPaths(postImagesSeed)});`;
             const postImages = await queryInterface.sequelize.query(postImagesQuery, options);
 
             // Add users.
@@ -27,8 +27,8 @@ export default {
                 ...user,
                 imageId: userImages[i] ? userImages[i].id : null
             }));
-            await queryInterface.bulkInsert('Users', usersMappedSeed, {});
-            const users = await queryInterface.sequelize.query('SELECT id FROM "Users";', options);
+            await queryInterface.bulkInsert('users', usersMappedSeed, {});
+            const users = await queryInterface.sequelize.query('SELECT id FROM "users";', options);
 
             // Add posts.
             const postsMappedSeed = postsSeed.map((post, i) => ({
@@ -36,8 +36,8 @@ export default {
                 userId: users[randomIndex(users.length)].id,
                 imageId: postImages[i] ? postImages[i].id : null
             }));
-            await queryInterface.bulkInsert('Posts', postsMappedSeed, {});
-            const posts = await queryInterface.sequelize.query('SELECT id FROM "Posts";', options);
+            await queryInterface.bulkInsert('posts', postsMappedSeed, {});
+            const posts = await queryInterface.sequelize.query('SELECT id FROM "posts";', options);
 
             // Add comments.
             const commentsMappedSeed = commentsSeed.map(comment => ({
@@ -45,7 +45,7 @@ export default {
                 userId: users[randomIndex(users.length)].id,
                 postId: posts[randomIndex(posts.length)].id
             }));
-            await queryInterface.bulkInsert('Comments', commentsMappedSeed, {});
+            await queryInterface.bulkInsert('comments', commentsMappedSeed, {});
 
             // Add post reactions.
             const postReactionsMappedSeed = postReactionsSeed.map(reaction => ({
@@ -53,7 +53,7 @@ export default {
                 userId: users[randomIndex(users.length)].id,
                 postId: posts[randomIndex(posts.length)].id
             }));
-            await queryInterface.bulkInsert('PostReactions', postReactionsMappedSeed, {});
+            await queryInterface.bulkInsert('postReactions', postReactionsMappedSeed, {});
         } catch (err) {
             console.log(`Seeding error: ${err}`);
         }
@@ -61,11 +61,11 @@ export default {
 
     down: async (queryInterface) => {
         try {
-            await queryInterface.bulkDelete('PostReactions', null, {});
-            await queryInterface.bulkDelete('Comments', null, {});
-            await queryInterface.bulkDelete('Posts', null, {});
-            await queryInterface.bulkDelete('Users', null, {});
-            await queryInterface.bulkDelete('Images', null, {});
+            await queryInterface.bulkDelete('postReactions', null, {});
+            await queryInterface.bulkDelete('comments', null, {});
+            await queryInterface.bulkDelete('posts', null, {});
+            await queryInterface.bulkDelete('users', null, {});
+            await queryInterface.bulkDelete('images', null, {});
         } catch (err) {
             console.log(`Seeding error: ${err}`);
         }

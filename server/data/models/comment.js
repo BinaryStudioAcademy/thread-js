@@ -1,5 +1,5 @@
 export default (orm, DataTypes) => {
-    const Comment = orm.define('Comment', {
+    const Comment = orm.define('comment', {
         body: {
             allowNull: false,
             type: DataTypes.TEXT
@@ -12,11 +12,6 @@ export default (orm, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     }, {});
-
-    Comment.associate = ({ User, Post }) => {
-        Comment.belongsTo(User);
-        Comment.belongsTo(Post);
-    };
 
     return Comment;
 };

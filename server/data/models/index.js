@@ -1,14 +1,24 @@
-import sequelize from 'sequelize';
 import orm from '../db/connection';
+import associate from '../db/associations';
 
-import User from './user';
-import Post from './post';
-import PostReaction from './post-reaction';
-import Comment from './comment';
-import Image from './image';
+const User = orm.import('./user');
+const Post = orm.import('./post');
+const PostReaction = orm.import('./post-reaction');
+const Comment = orm.import('./comment');
+const Image = orm.import('./image');
 
-export const UserModel = User(orm, sequelize);
-export const PostModel = Post(orm, sequelize);
-export const PostReactionModel = PostReaction(orm, sequelize);
-export const CommentModel = Comment(orm, sequelize);
-export const ImageModel = Image(orm, sequelize);
+associate({
+    User,
+    Post,
+    PostReaction,
+    Comment,
+    Image
+});
+
+export {
+    User as UserModel,
+    Post as PostModel,
+    PostReaction as PostReactionModel,
+    Comment as CommentModel,
+    Image as ImageModel
+};

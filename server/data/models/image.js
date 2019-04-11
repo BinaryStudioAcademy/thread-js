@@ -1,5 +1,5 @@
 export default (orm, DataTypes) => {
-    const Image = orm.define('Image', {
+    const Image = orm.define('image', {
         path: {
             allowNull: false,
             type: DataTypes.STRING
@@ -12,11 +12,6 @@ export default (orm, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     }, {});
-
-    Image.associate = ({ User, Post }) => {
-        Image.hasOne(User);
-        Image.hasOne(Post);
-    };
 
     return Image;
 };

@@ -1,5 +1,5 @@
 export default (orm, DataTypes) => {
-    const Post = orm.define('Post', {
+    const Post = orm.define('post', {
         body: {
             allowNull: false,
             type: DataTypes.TEXT
@@ -12,13 +12,6 @@ export default (orm, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     }, {});
-
-    Post.associate = ({ Image, User, PostReaction, Comment }) => {
-        Post.belongsTo(Image);
-        Post.belongsTo(User);
-        Post.hasMany(PostReaction);
-        Post.hasMany(Comment);
-    };
 
     return Post;
 };

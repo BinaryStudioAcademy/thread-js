@@ -1,7 +1,7 @@
 export default {
     up: (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
         .then(() => queryInterface.sequelize.transaction(transaction => Promise.all([
-            queryInterface.createTable('Users', {
+            queryInterface.createTable('users', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
@@ -31,7 +31,7 @@ export default {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
-            queryInterface.createTable('Posts', {
+            queryInterface.createTable('posts', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
@@ -51,7 +51,7 @@ export default {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
-            queryInterface.createTable('Comments', {
+            queryInterface.createTable('comments', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
@@ -71,7 +71,7 @@ export default {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
-            queryInterface.createTable('PostReactions', {
+            queryInterface.createTable('postReactions', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
@@ -87,7 +87,7 @@ export default {
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
-            queryInterface.createTable('Images', {
+            queryInterface.createTable('images', {
                 id: {
                     allowNull: false,
                     autoIncrement: false,
@@ -110,10 +110,10 @@ export default {
         ]))),
 
     down: queryInterface => queryInterface.sequelize.transaction(transaction => Promise.all([
-        queryInterface.dropTable('Users', { transaction }),
-        queryInterface.dropTable('Posts', { transaction }),
-        queryInterface.dropTable('Comments', { transaction }),
-        queryInterface.dropTable('PostReactions', { transaction }),
-        queryInterface.dropTable('Images', { transaction })
+        queryInterface.dropTable('users', { transaction }),
+        queryInterface.dropTable('posts', { transaction }),
+        queryInterface.dropTable('comments', { transaction }),
+        queryInterface.dropTable('postReactions', { transaction }),
+        queryInterface.dropTable('images', { transaction })
     ]))
 };

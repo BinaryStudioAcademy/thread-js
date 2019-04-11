@@ -1,6 +1,6 @@
-import cryptoService from '../../common/services/crypto.service';
+import cryptoHelper from '../../helpers/crypto.helper';
 
-const hash = password => cryptoService.encryptSync(password);
+const hash = password => cryptoHelper.encryptSync(password);
 const now = new Date();
 
 export const usersSeed = [{

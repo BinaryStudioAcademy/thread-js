@@ -1,5 +1,5 @@
 export default (orm, DataTypes) => {
-    const User = orm.define('User', {
+    const User = orm.define('user', {
         email: {
             allowNull: false,
             type: DataTypes.STRING
@@ -22,13 +22,6 @@ export default (orm, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     }, {});
-
-    User.associate = ({ Image, Post, Comment, PostReaction }) => {
-        User.belongsTo(Image);
-        User.hasMany(Post);
-        User.hasMany(Comment);
-        User.hasMany(PostReaction);
-    };
 
     return User;
 };

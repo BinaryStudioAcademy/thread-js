@@ -1,5 +1,5 @@
 export default (orm, DataTypes) => {
-    const PostReaction = orm.define('PostReaction', {
+    const PostReaction = orm.define('postReaction', {
         isLike: {
             allowNull: false,
             type: DataTypes.BOOLEAN,
@@ -8,11 +8,6 @@ export default (orm, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     }, {});
-
-    PostReaction.associate = ({ Post, User }) => {
-        PostReaction.belongsTo(Post);
-        PostReaction.belongsTo(User);
-    };
 
     return PostReaction;
 };

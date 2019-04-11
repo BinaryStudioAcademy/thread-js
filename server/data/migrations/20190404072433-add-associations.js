@@ -1,63 +1,63 @@
 export default {
     up: (queryInterface, Sequelize) => queryInterface.sequelize.transaction(transaction => Promise.all([
-        queryInterface.addColumn('Users', 'imageId', {
+        queryInterface.addColumn('users', 'imageId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Images',
+                model: 'images',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('Posts', 'imageId', {
+        queryInterface.addColumn('posts', 'imageId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Images',
+                model: 'images',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('Posts', 'userId', {
+        queryInterface.addColumn('posts', 'userId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Users',
+                model: 'users',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('PostReactions', 'userId', {
+        queryInterface.addColumn('postReactions', 'userId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Users',
+                model: 'users',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('PostReactions', 'postId', {
+        queryInterface.addColumn('postReactions', 'postId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Posts',
+                model: 'posts',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('Comments', 'userId', {
+        queryInterface.addColumn('comments', 'userId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Users',
+                model: 'users',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
         }, { transaction }),
-        queryInterface.addColumn('Comments', 'postId', {
+        queryInterface.addColumn('comments', 'postId', {
             type: Sequelize.UUID,
             references: {
-                model: 'Posts',
+                model: 'posts',
                 key: 'id',
             },
             onUpdate: 'CASCADE',
@@ -66,12 +66,12 @@ export default {
     ])),
 
     down: queryInterface => queryInterface.sequelize.transaction(transaction => Promise.all([
-        queryInterface.removeColumn('Users', 'imageId', { transaction }),
-        queryInterface.removeColumn('Posts', 'imageId', { transaction }),
-        queryInterface.removeColumn('Posts', 'userId', { transaction }),
-        queryInterface.removeColumn('PostReactions', 'userId', { transaction }),
-        queryInterface.removeColumn('PostReactions', 'postId', { transaction }),
-        queryInterface.removeColumn('Comments', 'userId', { transaction }),
-        queryInterface.removeColumn('Comments', 'postId', { transaction })
+        queryInterface.removeColumn('users', 'imageId', { transaction }),
+        queryInterface.removeColumn('posts', 'imageId', { transaction }),
+        queryInterface.removeColumn('posts', 'userId', { transaction }),
+        queryInterface.removeColumn('postReactions', 'userId', { transaction }),
+        queryInterface.removeColumn('postReactions', 'postId', { transaction }),
+        queryInterface.removeColumn('comments', 'userId', { transaction }),
+        queryInterface.removeColumn('comments', 'postId', { transaction })
     ]))
 };
