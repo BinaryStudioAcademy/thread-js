@@ -23,11 +23,6 @@ export default {
                     allowNull: false,
                     type: Sequelize.STRING
                 },
-                isActive: {
-                    allowNull: false,
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: true
-                },
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
@@ -43,11 +38,6 @@ export default {
                     allowNull: false,
                     type: Sequelize.TEXT
                 },
-                isActive: {
-                    allowNull: false,
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: true
-                },
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
             }, { transaction }),
@@ -62,11 +52,6 @@ export default {
                 body: {
                     allowNull: false,
                     type: Sequelize.TEXT
-                },
-                isActive: {
-                    allowNull: false,
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: true
                 },
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE
@@ -98,11 +83,6 @@ export default {
                 path: {
                     allowNull: false,
                     type: Sequelize.STRING
-                },
-                isActive: {
-                    allowNull: false,
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: true
                 },
                 createdAt: Sequelize.DATE,
                 updatedAt: Sequelize.DATE

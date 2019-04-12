@@ -14,7 +14,6 @@ export const postsSeed = [
     'quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error'
 ].map(body => ({
     body,
-    isActive: true,
     createdAt: now,
     updatedAt: now
 }));
@@ -24,7 +23,6 @@ export const postImagesSeed = [
     'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg'
 ].map(imagePath => ({
     path: imagePath,
-    isActive: true,
     createdAt: now,
     updatedAt: now
 }));

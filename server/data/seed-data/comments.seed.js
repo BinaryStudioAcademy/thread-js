@@ -32,7 +32,6 @@ export default [
     'voluptatem repellendus quo alias at laudantium\nmollitia quidem esse\ntemporibus consequuntur vitae rerum illum\nid corporis sit id'
 ].map(body => ({
     body,
-    isActive: true,
     createdAt: now,
     updatedAt: now
 }));

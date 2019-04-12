@@ -25,7 +25,6 @@ export const usersSeed = [{
     password: hash('0naQBpP9')
 }].map(user => ({
     ...user,
-    isActive: true,
     createdAt: now,
     updatedAt: now
 }));
@@ -38,7 +37,6 @@ export const userImagesSeed = [
     'https://s3.amazonaws.com/uifaces/faces/twitter/gauchomatt/128.jpg'
 ].map(imagePath => ({
     path: imagePath,
-    isActive: true,
     createdAt: now,
     updatedAt: now
 }));
