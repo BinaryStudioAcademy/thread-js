@@ -19,10 +19,11 @@ export const postsSeed = [
 }));
 
 // Do not add more images than the number of posts.
-export const postImagesSeed = [
-    'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg'
-].map(imagePath => ({
-    path: imagePath,
+export const postImagesSeed = [{
+    link: 'https://i.imgur.com/jmxuL3D.jpg',
+    deleteHash: 'qFrQiMT4iTHJTBU'
+}].map(image => ({
+    ...image,
     createdAt: now,
     updatedAt: now
 }));

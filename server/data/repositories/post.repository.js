@@ -25,13 +25,13 @@ class PostRepository extends BaseRepository {
             },
             include: [{
                 model: ImageModel,
-                attributes: ['id', 'path']
+                attributes: ['id', 'link']
             }, {
                 model: UserModel,
                 attributes: ['id', 'username'],
                 include: {
                     model: ImageModel,
-                    attributes: ['id', 'path']
+                    attributes: ['id', 'link']
                 }
             }, {
                 model: PostReactionModel,
@@ -65,7 +65,7 @@ class PostRepository extends BaseRepository {
                     attributes: ['id', 'username'],
                     include: {
                         model: ImageModel,
-                        attributes: ['id', 'path']
+                        attributes: ['id', 'link']
                     }
                 }
             }, {
@@ -73,11 +73,11 @@ class PostRepository extends BaseRepository {
                 attributes: ['id', 'username'],
                 include: {
                     model: ImageModel,
-                    attributes: ['id', 'path']
+                    attributes: ['id', 'link']
                 }
             }, {
                 model: ImageModel,
-                attributes: ['id', 'path']
+                attributes: ['id', 'link']
             }, {
                 model: PostReactionModel,
                 attributes: []

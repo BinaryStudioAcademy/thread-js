@@ -4,7 +4,7 @@ import commentsSeed from '../seed-data/comments.seed';
 import postReactionsSeed from '../seed-data/post-reactions.seed';
 
 const randomIndex = length => Math.floor(Math.random() * length);
-const mapPaths = images => images.map(x => `'${x.path}'`).join(',');
+const mapLinks = images => images.map(x => `'${x.link}'`).join(',');
 
 export default {
     up: async (queryInterface, Sequelize) => {
@@ -16,10 +16,10 @@ export default {
             // Add images.
             await queryInterface.bulkInsert('images', userImagesSeed.concat(postImagesSeed), {});
 
-            const userImagesQuery = `SELECT id FROM "images" WHERE path IN (${mapPaths(userImagesSeed)});`;
+            const userImagesQuery = `SELECT id FROM "images" WHERE link IN (${mapLinks(userImagesSeed)});`;
             const userImages = await queryInterface.sequelize.query(userImagesQuery, options);
 
-            const postImagesQuery = `SELECT id FROM "images" WHERE path IN (${mapPaths(postImagesSeed)});`;
+            const postImagesQuery = `SELECT id FROM "images" WHERE link IN (${mapLinks(postImagesSeed)});`;
             const postImages = await queryInterface.sequelize.query(postImagesQuery, options);
 
             // Add users.

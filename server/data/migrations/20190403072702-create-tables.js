@@ -80,7 +80,11 @@ export default {
                     type: Sequelize.UUID,
                     defaultValue: Sequelize.literal('gen_random_uuid()')
                 },
-                path: {
+                link: {
+                    allowNull: false,
+                    type: Sequelize.STRING
+                },
+                deleteHash: {
                     allowNull: false,
                     type: Sequelize.STRING
                 },

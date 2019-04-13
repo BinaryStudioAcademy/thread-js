@@ -30,13 +30,20 @@ export const usersSeed = [{
 }));
 
 // Do not add more images than the number of users.
-export const userImagesSeed = [
-    'https://s3.amazonaws.com/uifaces/faces/twitter/nasirwd/128.jpg',
-    'https://s3.amazonaws.com/uifaces/faces/twitter/emileboudeling/128.jpg',
-    'https://s3.amazonaws.com/uifaces/faces/twitter/grrr_nl/128.jpg',
-    'https://s3.amazonaws.com/uifaces/faces/twitter/gauchomatt/128.jpg'
-].map(imagePath => ({
-    path: imagePath,
+export const userImagesSeed = [{
+    link: 'https://i.imgur.com/dJbN8ib.jpg',
+    deleteHash: 'HVkRkOtyNHVIyp3'
+}, {
+    link: 'https://i.imgur.com/3AKJHOK.jpg',
+    deleteHash: 'iO2T1f6HuB8xjAU'
+}, {
+    link: 'https://i.imgur.com/kX8OeH3.jpg',
+    deleteHash: 'SEGM6QPylAbRWAA'
+}, {
+    link: 'https://i.imgur.com/aqZiLzq.jpg',
+    deleteHash: 'jHIj5YNdNOQ3FBj'
+}].map(image => ({
+    ...image,
     createdAt: now,
     updatedAt: now
 }));

@@ -7,8 +7,8 @@ export default class BaseRepository {
         return this.model.findAll();
     }
 
-    getById(uid) {
-        return this.model.findByPk(uid);
+    getById(id) {
+        return this.model.findByPk(id);
     }
 
     create(data) {
