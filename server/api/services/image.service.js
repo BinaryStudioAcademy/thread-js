@@ -4,6 +4,7 @@ import imageRepository from '../../data/repositories/image.repository';
 
 export default {
     upload: async (file) => {
+        let image;
         try {
             const { data: { data } } = await axios.post(
                 'https://api.imgur.com/3/upload',
@@ -11,18 +12,17 @@ export default {
                     image: file.buffer.toString('base64')
                 }, {
                     headers: {
-                     Authorization: `Client-ID ${imgurId}`
+                        Authorization: `Client-ID ${imgurId}`
                     }
-                });
-
-            const image = {
+                }
+            );
+            image = {
                 link: data.link,
                 deleteHash: data.deletehash
             };
-
-            return imageRepository.create(image);
         } catch ({ response: { data: { status, data } } }) {
             return Promise.reject({ status, message: data.error });
         }
+        return imageRepository.create(image);
     }
 };

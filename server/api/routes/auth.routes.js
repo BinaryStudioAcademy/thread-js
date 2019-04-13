@@ -6,21 +6,11 @@ import registrationMiddleware from '../middlewares/registration.middleware';
 const router = Router();
 
 router
-    .post('/login', authenticationMiddleware, async (req, res, next) => {
-        try {
-            const token = await authService.login(req.user);
-            res.send(token);
-        } catch (err) {
-            next(err);
-        }
-    })
-    .post('/register', registrationMiddleware, async (req, res, next) => {
-        try {
-            const token = await authService.register(req.user);
-            res.send(token);
-        } catch (err) {
-            next(err);
-        }
-    });
+    .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
+        .then(token => res.send(token))
+        .catch(next))
+    .post('/register', registrationMiddleware, (req, res, next) => authService.register(req.user)
+        .then(token => res.send(token))
+        .catch(next));
 
 export default router;
