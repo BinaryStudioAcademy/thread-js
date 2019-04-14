@@ -14,4 +14,10 @@ export default class BaseRepository {
     create(data) {
         return this.model.create(data);
     }
+
+    deleteById(id) {
+        return this.model.destroy({
+            where: { id }
+        });
+    }
 }

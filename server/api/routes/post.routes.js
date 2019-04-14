@@ -12,6 +12,9 @@ router
         .catch(next))
     .post('/', (req, res, next) => postService.create(req.user.id, req.body)
         .then(post => res.send(post))
+        .catch(next))
+    .put('/react', (req, res, next) => postService.setReaction(req.user.id, req.body)
+        .then(reaction => res.send(reaction))
         .catch(next));
 
 export default router;
