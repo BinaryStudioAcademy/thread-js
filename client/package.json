@@ -6,6 +6,7 @@
     "connected-react-router": "^6.3.2",
     "history": "^4.9.0",
     "node-sass": "^4.11.0",
+    "query-string": "^6.4.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
@@ -15,6 +16,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
+  "proxy": "http://localhost:3000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

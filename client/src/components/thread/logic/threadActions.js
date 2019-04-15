@@ -1,9 +1,9 @@
 import { THREAD_ACTION } from './threadActionTypes';
-import { getAllPosts } from '../../../services/postService'
+import * as postService from 'src/services/postService'
 
 export const loadAllPosts = () => {
     return async (dispatch) => {
-        const posts = await getAllPosts();
+        const posts = await postService.getAllPosts();
         dispatch({
             type: THREAD_ACTION,
             posts

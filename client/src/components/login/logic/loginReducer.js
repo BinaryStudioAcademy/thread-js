@@ -1,10 +1,10 @@
-import { THREAD_ACTION } from "./threadActionTypes";
+import { LOGIN_ACTION } from "./loginActionTypes";
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case THREAD_ACTION:
+        case LOGIN_ACTION:
             return {
-                posts: action.posts
+                user: action.user
             }
         default:
             return state
