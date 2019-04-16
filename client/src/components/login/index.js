@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as loginActions from './logic/loginActions';
 import { connect } from 'react-redux';
 
-import styles from './login.module.scss'
+import styles from './login.module.scss';
 
 class Login extends React.Component {
 

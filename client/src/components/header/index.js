@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import styles from './header.module.scss'
+import styles from './header.module.scss';
 
-const header = () => (
+const Header = () => (
     <div className={styles["root"]}>
         Header Component
     </div>
 )
 
-export default header;
+export default Header;

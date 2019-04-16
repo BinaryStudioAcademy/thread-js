@@ -12,8 +12,9 @@ function getFetchArgs(args) {
         headers["Content-Type"] = 'application/json';
         headers["Accept"] = 'application/json';
     }
-    if (!args.skipAuthorization) {
-        //headers[AuthorizationHeaderName] = authorizationString;
+    const token = localStorage.getItem('token');
+    if (token && !args.skipAuthorization) {
+        headers["Authorization"] = `Bearer ${token}`;
     }
     let body = undefined;
     if (args.attachment) {
