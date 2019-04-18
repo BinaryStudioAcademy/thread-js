@@ -1,8 +1,10 @@
+import { SET_TOKEN } from "./profileActionTypes";
+
 export default (state = {}, action) => {
     switch (action.type) {
-        case 'PROFILE_ACTION':
+        case SET_TOKEN:
             return {
-                result: action.payload
+                token: action.token
             }
         default:
             return state

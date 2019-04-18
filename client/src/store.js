@@ -4,7 +4,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 
-import threadReducer from './components/thread/logic/threadReducer';
+import postReducer from './components/post/logic/postReducer';
 import profileReducer from './components/profile/logic/profileReducer';
 
 export const history = createBrowserHistory();
@@ -21,8 +21,8 @@ const composedEnhancers = compose(
 );
 
 const reducers = {
-    thread: threadReducer,
-    profile: profileReducer
+    posts: postReducer,
+    profile: profileReducer,
 };
 
 const rootReducer = combineReducers({

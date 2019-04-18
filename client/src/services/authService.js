@@ -10,3 +10,12 @@ export const login = async (request) => {
     });
     return await response;
 }
+
+export const registration = async (request) => {
+    const response = await callWebApi({
+        endpoint: "/api/auth/register",
+        type: 'POST',
+        request,
+    });
+    return await response;
+}

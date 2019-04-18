@@ -1,28 +1,57 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
 import Header from 'src/components/header';
 import Login from 'src/components/login';
+import Registration from 'src/components/registration';
 import PrivateRoute from 'src/containers/privateRoute';
+
+import { setToken } from 'src/components/profile/logic/profileActions';
 
 import styles from './app.module.scss';
 
-const App = () => (
-    <div className={styles["root-app"]}>
-        <header>
-            <Header />
-        </header>
-        <main>
-            <Router>
-                <Switch>
-                    <PrivateRoute exact path="/" component={Thread} />
-                    <Route exact path="/login" component={Login} />
-                    <PrivateRoute exact path="/profile" component={Profile} />
-                </Switch>
-            </Router>
-        </main>
-    </div>
-)
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        if (!props.token) {
+            const lsToken = localStorage.getItem('token');
+            // here we can check token
+            props.setToken(lsToken);
+        }
+    }
 
-export default App;
+    render () {
+        return <div className={styles["root-app"]}>
+            <header>
+                <Header />
+            </header>
+            <main>
+                <Router>
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/registration" component={Registration} />
+                        <PrivateRoute exact path="/" component={Thread} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
+                    </Switch>
+                </Router>
+            </main>
+        </div>
+    }
+}
+
+const mapStateToProps = (rootState) => {
+    return {
+        token: rootState.profile.token
+    };
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ setToken }, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);

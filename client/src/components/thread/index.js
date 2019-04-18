@@ -3,24 +3,35 @@ import { bindActionCreators } from 'redux';
 import * as threadActions from './logic/threadActions';
 import { connect } from 'react-redux';
 import Post from 'src/components/post';
+import AddPost from 'src/components/addPost';
 
 import styles from './thread.module.scss';
 
-const Thread = (props) => (
-    <div className={styles["root"]}>
-        Thread Component
-        <div>
-            <button onClick={props.loadAllPosts}>Click on me to get list of posts</button>
-            {props.posts && props.posts.map((post, index) =>
-                <Post key={index} post={post} />
-            )}
-        </div>
-    </div>
-)
+class Thread extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.props.loadAllPosts();
+    }
+
+    render() {
+        const { posts } = this.props;
+        return <div className={styles["root"]}>
+            Add post:
+            <AddPost />
+            Posts:
+            <div>
+                {posts && posts.map((post, index) =>
+                    <Post key={index} post={post} />
+                )}
+            </div>
+        </div>;
+    }
+}
 
 const mapStateToProps = (rootState) => {
     return {
-        posts: rootState.thread.posts
+        posts: rootState.posts.posts
     };
 }
 
