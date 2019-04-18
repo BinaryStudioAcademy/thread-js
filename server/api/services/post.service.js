@@ -4,9 +4,8 @@ import postReactionRepository from '../../data/repositories/post-reaction.reposi
 export default {
     getPosts: () => postRepository.getPosts(),
     getPostById: id => postRepository.getPostById(id),
-    create: (userId, { imageId, post }) => postRepository.create({
+    create: (userId, post) => postRepository.create({
         ...post,
-        imageId,
         userId
     }),
     setReaction: async (userId, { postId, isLike = true }) => {
