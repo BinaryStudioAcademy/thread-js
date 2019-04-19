@@ -9,8 +9,8 @@ import Header from 'src/components/header';
 import Login from 'src/components/login';
 import Registration from 'src/components/registration';
 import PrivateRoute from 'src/containers/privateRoute';
-
 import { setToken } from 'src/components/profile/logic/profileActions';
+import PropTypes from 'prop-types';
 
 import styles from './app.module.scss';
 
@@ -42,6 +42,11 @@ class App extends React.Component {
         </div>
     }
 }
+
+App.propTypes = {
+    token: PropTypes.string
+}
+
 
 const mapStateToProps = (rootState) => {
     return {

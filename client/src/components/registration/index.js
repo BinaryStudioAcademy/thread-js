@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as profileActions from 'src/components/profile/logic/profileActions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import styles from './registration.module.scss';
 
@@ -35,6 +36,10 @@ class Registration extends React.Component {
             </div>
             : <Redirect to={'/'} />
     }
+}
+
+Registration.propTypes = {
+    token: PropTypes.string,
 }
 
 const mapStateToProps = (rootState) => {

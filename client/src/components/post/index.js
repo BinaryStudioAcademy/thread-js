@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './post.module.scss';
 
@@ -15,6 +16,10 @@ const Post = (props) => {
             <div>{`Commented ${commentCount} times`}</div>
         </div>
     </div>
+}
+
+Post.propTypes = {
+    post: PropTypes.object.isRequired,
 }
 
 export default Post;

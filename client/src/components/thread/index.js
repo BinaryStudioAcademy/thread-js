@@ -4,6 +4,7 @@ import * as threadActions from './logic/threadActions';
 import { connect } from 'react-redux';
 import Post from 'src/components/post';
 import AddPost from 'src/components/addPost';
+import PropTypes from 'prop-types';
 
 import styles from './thread.module.scss';
 
@@ -22,11 +23,15 @@ class Thread extends React.Component {
             Posts:
             <div>
                 {posts && posts.map((post, index) =>
-                    <Post key={index} post={post} />
+                    <Post key={index} post={post}/>
                 )}
             </div>
         </div>;
     }
+}
+
+Thread.propTypes = {
+    posts: PropTypes.arrayOf(PropTypes.object)
 }
 
 const mapStateToProps = (rootState) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { logout } from 'src/components/profile/logic/profileActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import styles from './header.module.scss';
 
@@ -14,6 +15,9 @@ const Header = (props) => {
 
 }
 
+Header.propTypes = {
+    token: PropTypes.string
+}
 
 const mapStateToProps = (rootState) => {
     return {

@@ -2,6 +2,7 @@ import React from 'react';
 import * as postActions from 'src/components/post/logic/postActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import styles from './addPost.module.scss';
 
@@ -27,6 +28,10 @@ class AddPost extends React.Component {
             <button onClick={this.handleAddPost}>Add Post</button>
         </div>
     }
+}
+
+AddPost.propTypes = {
+    addPost: PropTypes.func
 }
 
 const mapStateToProps = (rootState) => {
