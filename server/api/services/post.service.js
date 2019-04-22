@@ -2,7 +2,7 @@ import postRepository from '../../data/repositories/post.repository';
 import postReactionRepository from '../../data/repositories/post-reaction.repository';
 
 export default {
-    getPosts: () => postRepository.getPosts(),
+    getPosts: (from, count) => postRepository.getPosts(from, count),
     getPostById: id => postRepository.getPostById(id),
     create: (userId, post) => postRepository.create({
         ...post,
