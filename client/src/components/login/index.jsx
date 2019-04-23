@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import styles from './login.module.scss';
 
 class Login extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,31 +26,29 @@ class Login extends React.Component {
     render() {
         const { token } = this.props;
         return !token
-            ? <div className={styles["root"]}>
-                <input onChange={(ev) => this.setState({ email: ev.target.value }) } />
-                <input onChange={(ev) => this.setState({ password: ev.target.value }) } />
-                <button onClick={this.handleClickLogin}>Login</button>
-            </div>
-            : <Redirect to={'/'} />
+            ? (
+                <div className={styles.root}>
+                    <input onChange={ev => this.setState({ email: ev.target.value }) } />
+                    <input onChange={ev => this.setState({ password: ev.target.value }) } />
+                    <button type="submit" onClick={this.handleClickLogin}>Login</button>
+                </div>
+            )
+            : <Redirect to="/" />;
     }
 }
 
 Login.propTypes = {
     token: PropTypes.string,
     login: PropTypes.func
-}
+};
 
-const mapStateToProps = (rootState) => {
-    return {
-        token: rootState.profile.token
-    };
-}
+const mapStateToProps = rootState => ({
+    token: rootState.profile.token
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(profileActions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(profileActions, dispatch);
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login)
-
-
+)(Login);

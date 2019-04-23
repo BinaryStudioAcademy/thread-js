@@ -9,5 +9,6 @@ const loadAllPosts = () => async (dispatch) => {
     });
 };
 
-
-export default loadAllPosts;
+export default {
+    loadAllPosts
+};

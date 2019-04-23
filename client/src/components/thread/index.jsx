@@ -9,7 +9,6 @@ import threadActions from './logic/threadActions';
 import styles from './thread.module.scss';
 
 class Thread extends React.Component {
-
     constructor(props) {
         super(props);
         this.props.loadAllPosts();
