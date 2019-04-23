@@ -13,10 +13,12 @@ import './config/passport.config';
 dotenv.config();
 
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
-app.get('/api/*', authorizationMiddleware(routesWhiteList));
+app.use('/api/', authorizationMiddleware(routesWhiteList));
+
 routes(app);
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
@@ -29,5 +31,6 @@ app.get('*', (req, res) => {
 
 app.use(errorHandlerMiddleware);
 app.listen(process.env.APP_PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server listening on port ${process.env.APP_PORT}!`);
 });

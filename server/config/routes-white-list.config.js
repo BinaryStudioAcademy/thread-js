@@ -1,4 +1,4 @@
 export default [
-    '/api/auth/login',
-    '/api/auth/register'
+    '/auth/login',
+    '/auth/register'
 ];
