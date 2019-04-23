@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import passport from 'passport';
@@ -6,7 +7,6 @@ import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import routesWhiteList from './config/routes-white-list.config';
-import fs from 'fs';
 
 import './config/passport.config';
 
