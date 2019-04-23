@@ -2,33 +2,32 @@
 import * as queryString from 'query-string';
 
 function getFetchUrl(args) {
-    return args.endpoint +
-        (args.query ? `?${queryString.stringify(args.query)}` : '');
+    return args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '');
 }
 
 function getFetchArgs(args) {
-    let headers ={};
-    if(!args.attachment) {
-        headers["Content-Type"] = 'application/json';
-        headers["Accept"] = 'application/json';
+    const headers = {};
+    if (!args.attachment) {
+        headers['Content-Type'] = 'application/json';
+        headers.Accept = 'application/json';
     }
     const token = localStorage.getItem('token');
     if (token && !args.skipAuthorization) {
-        headers["Authorization"] = `Bearer ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
-    let body = undefined;
+    let body;
     if (args.attachment) {
         if (args.type === 'GET') {
-            throw new Error('GET request does not support attachments.')
+            throw new Error('GET request does not support attachments.');
         }
         const formData = new FormData();
         formData.append(args.attachment.name, args.attachment);
         body = formData;
     } else if (args.request) {
         if (args.type === 'GET') {
-            throw new Error('GET request does not support request body.')
+            throw new Error('GET request does not support request body.');
         }
-        body =  JSON.stringify(args.request);
+        body = JSON.stringify(args.request);
     }
     return {
         method: args.type,
@@ -43,12 +42,14 @@ export async function throwIfResponseFailed(res) {
         let parsedException = 'Something went wrong with request!';
         try {
             parsedException = await res.json();
-        } catch { }
+        } catch (err) {
+            //
+        }
         throw parsedException;
     }
 }
 
-export default async function callWebApi(args){
+export default async function callWebApi(args) {
     try {
         const res = await fetch(
             getFetchUrl(args),
@@ -56,8 +57,7 @@ export default async function callWebApi(args){
         );
         await throwIfResponseFailed(res);
         return res;
-    }
-    catch (err) {
+    } catch (err) {
         throw err;
     }
 }

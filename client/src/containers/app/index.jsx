@@ -24,37 +24,38 @@ class App extends React.Component {
         }
     }
 
-    render () {
-        return <div className={styles["root-app"]}>
-            <header>
-                <Header />
-            </header>
-            <main>
-                <Router>
-                    <Switch>
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/registration" component={Registration} />
-                        <PrivateRoute exact path="/" component={Thread} />
-                        <PrivateRoute exact path="/profile" component={Profile} />
-                    </Switch>
-                </Router>
-            </main>
-        </div>
+    render() {
+        return (
+            <div className={styles['root-app']}>
+                <header>
+                    <Header />
+                </header>
+                <main>
+                    <Router>
+                        <Switch>
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/registration" component={Registration} />
+                            <PrivateRoute exact path="/" component={Thread} />
+                            <PrivateRoute exact path="/profile" component={Profile} />
+                        </Switch>
+                    </Router>
+                </main>
+            </div>
+        );
     }
 }
 
 App.propTypes = {
     token: PropTypes.string
-}
-
+};
 
 const mapStateToProps = (rootState) => {
     return {
         token: rootState.profile.token
     };
-}
+};
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ setToken }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setToken }, dispatch);
 
 export default connect(
     mapStateToProps,

@@ -8,26 +8,25 @@ import styles from './header.module.scss';
 
 const Header = (props) => {
     const isAuthorized = props.token;
-    return <div className={styles["root"]}>
-        Header Component
-        {isAuthorized && <button onClick={props.logout}>Logout</button>}
-    </div>
-
-}
+    return (
+        <div className={styles.root}>
+            Header Component
+            {isAuthorized && <button type="button" onClick={props.logout}>Logout</button>}
+        </div>
+    );
+};
 
 Header.propTypes = {
     token: PropTypes.string
-}
+};
 
-const mapStateToProps = (rootState) => {
-    return {
-        token: rootState.profile.token
-    };
-}
+const mapStateToProps = rootState => ({
+    token: rootState.profile.token
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ logout }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ logout }, dispatch);
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header)
+)(Header);

@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import styles from './addPost.module.scss';
 
 class AddPost extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -19,29 +18,30 @@ class AddPost extends React.Component {
         this.props.addPost({
             imageId: null,
             body: this.state.post
-        })
+        });
     }
 
     render() {
-        return <div className={styles["root"]}>
-            <textarea onChange={(ev) => this.setState({ post: ev.target.value })}/>
-            <button onClick={this.handleAddPost}>Add Post</button>
-        </div>
+        return (
+            <div className={styles.root}>
+                <textarea onChange={ev => this.setState({ post: ev.target.value })} />
+                <button type="button" onClick={this.handleAddPost}>Add Post</button>
+            </div>
+        );
     }
 }
 
 AddPost.propTypes = {
     addPost: PropTypes.func
-}
+};
 
-const mapStateToProps = (rootState) => {
-    return {};
-}
+const mapStateToProps = rootState => ({});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addPost: postActions.addPost }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    addPost: postActions.addPost
+}, dispatch);
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(AddPost);
-

@@ -1,28 +1,32 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": "airbnb",
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es6": true
     },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react"
-  ],
-  "rules": {
-    "semi": ["error", "always"],
-    "indent": ["error", 4],
-    "comma-dangle": "off",
-    "object-curly-newline": "off",
-    "class-methods-use-this": "off"
-  }
+    "extends": [
+        "react-app",
+        "airbnb"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "semi": ["error", "always"],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "comma-dangle": "off",
+        "import/no-unresolved": "off"
+    }
 }

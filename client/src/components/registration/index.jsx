@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import styles from './registration.module.scss';
 
 class Registration extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -28,31 +27,31 @@ class Registration extends React.Component {
     render() {
         const { token } = this.props;
         return !token
-            ? <div className={styles["root"]}>
-                <input onChange={(ev) => this.setState({ email: ev.target.value }) } />
-                <input onChange={(ev) => this.setState({ username: ev.target.value }) } />
-                <input onChange={(ev) => this.setState({ password: ev.target.value }) } />
-                <button onClick={this.handleClickRegister}>Registration</button>
-            </div>
-            : <Redirect to={'/'} />
+            ? (
+                <div className={styles.root}>
+                    <input onChange={ev => this.setState({ email: ev.target.value })} />
+                    <input onChange={ev => this.setState({ username: ev.target.value })} />
+                    <input onChange={ev => this.setState({ password: ev.target.value })} />
+                    <button type="submit" onClick={this.handleClickRegister}>Registration</button>
+                </div>
+            )
+            : <Redirect to="/" />;
     }
 }
 
 Registration.propTypes = {
     token: PropTypes.string,
-}
+};
 
 const mapStateToProps = (rootState) => {
     return {
         token: rootState.profile.token
     };
-}
+};
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(profileActions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(profileActions, dispatch)
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Registration)
-
-
+)(Registration);
