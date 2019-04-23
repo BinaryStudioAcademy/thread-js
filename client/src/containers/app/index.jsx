@@ -46,14 +46,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    token: PropTypes.string
+    token: PropTypes.string.isRequired,
+    setToken: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (rootState) => {
-    return {
-        token: rootState.profile.token
-    };
-};
+const mapStateToProps = rootState => ({ token: rootState.profile.token });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setToken }, dispatch);
 

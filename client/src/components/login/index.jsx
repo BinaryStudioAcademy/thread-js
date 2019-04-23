@@ -28,8 +28,8 @@ class Login extends React.Component {
         return !token
             ? (
                 <div className={styles.root}>
-                    <input onChange={ev => this.setState({ email: ev.target.value }) } />
-                    <input onChange={ev => this.setState({ password: ev.target.value }) } />
+                    <input onChange={ev => this.setState({ email: ev.target.value })} />
+                    <input onChange={ev => this.setState({ password: ev.target.value })} />
                     <button type="submit" onClick={this.handleClickLogin}>Login</button>
                 </div>
             )
@@ -39,7 +39,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
     token: PropTypes.string,
-    login: PropTypes.func
+    login: PropTypes.func.isRequired
+};
+
+Login.defaultProps = {
+    token: undefined
 };
 
 const mapStateToProps = rootState => ({

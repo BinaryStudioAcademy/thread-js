@@ -22,7 +22,7 @@ class Thread extends React.Component {
                 <AddPost />
                 Posts:
                 <div>
-                    {posts && posts.map((post, index) => <Post key={index} post={post} />)}
+                    {posts && posts.map(post => <Post key={post.id} post={post} />)}
                 </div>
             </div>
         );
@@ -30,7 +30,12 @@ class Thread extends React.Component {
 }
 
 Thread.propTypes = {
-    posts: PropTypes.arrayOf(PropTypes.object)
+    posts: PropTypes.arrayOf(PropTypes.object),
+    loadAllPosts: PropTypes.func.isRequired
+};
+
+Thread.defaultProps = {
+    posts: []
 };
 
 const mapStateToProps = rootState => ({

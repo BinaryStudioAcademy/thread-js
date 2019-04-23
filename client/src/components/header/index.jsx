@@ -17,7 +17,12 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-    token: PropTypes.string
+    token: PropTypes.string,
+    logout: PropTypes.func.isRequired
+};
+
+Header.defaultProps = {
+    token: undefined
 };
 
 const mapStateToProps = rootState => ({

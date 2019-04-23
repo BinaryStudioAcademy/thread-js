@@ -32,16 +32,14 @@ class AddPost extends React.Component {
 }
 
 AddPost.propTypes = {
-    addPost: PropTypes.func
+    addPost: PropTypes.func.isRequired
 };
-
-const mapStateToProps = rootState => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     addPost: postActions.addPost
 }, dispatch);
 
 export default connect(
-    mapStateToProps,
+    undefined,
     mapDispatchToProps
 )(AddPost);

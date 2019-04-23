@@ -20,7 +20,8 @@ class Registration extends React.Component {
     handleClickRegister = async () => {
         this.props.registration({
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            username: this.state.username
         });
     }
 
@@ -41,15 +42,18 @@ class Registration extends React.Component {
 
 Registration.propTypes = {
     token: PropTypes.string,
+    registration: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (rootState) => {
-    return {
-        token: rootState.profile.token
-    };
+Registration.defaultProps = {
+    token: undefined
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(profileActions, dispatch)
+const mapStateToProps = rootState => ({
+    token: rootState.profile.token
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(profileActions, dispatch);
 
 export default connect(
     mapStateToProps,

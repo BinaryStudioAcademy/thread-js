@@ -1,1 +1,1 @@
-export const SET_TOKEN = 'SET_TOKEN';
+export const SET_TOKEN = 'PROFILE_ACTION:SET_TOKEN';

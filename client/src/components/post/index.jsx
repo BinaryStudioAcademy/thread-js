@@ -29,7 +29,7 @@ const Post = (props) => {
 };
 
 Post.propTypes = {
-    post: PropTypes.object.isRequired,
+    post: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Post;

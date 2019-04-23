@@ -1,18 +1,18 @@
 import * as authService from 'src/services/authService';
 import { SET_TOKEN } from './profileActionTypes';
 
-export const login = request => async (dispatch, getRootState) => {
-    const loginRequest = await authService.login(request);
-    const token = await loginRequest.text();
-    setToken(token)(dispatch, getRootState);
-};
-
-export const setToken = token => async (dispatch, getRootState) => {
+export const setToken = token => async (dispatch) => {
     localStorage.setItem('token', token);
     dispatch({
         type: SET_TOKEN,
         token
     });
+};
+
+export const login = request => async (dispatch, getRootState) => {
+    const loginRequest = await authService.login(request);
+    const token = await loginRequest.text();
+    setToken(token)(dispatch, getRootState);
 };
 
 export const registration = request => async (dispatch, getRootState) => {
