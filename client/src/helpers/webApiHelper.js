@@ -21,7 +21,7 @@ function getFetchArgs(args) {
             throw new Error('GET request does not support attachments.');
         }
         const formData = new FormData();
-        formData.append(args.attachment.name, args.attachment);
+        formData.append('image', args.attachment);
         body = formData;
     } else if (args.request) {
         if (args.type === 'GET') {

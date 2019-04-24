@@ -10,7 +10,7 @@ const Header = (props) => {
     const isAuthorized = props.token;
     return (
         <div className={styles.root}>
-            Header Component
+            <div className={styles.title}>Thread.JS</div>
             {isAuthorized && <button type="button" onClick={props.logout}>Logout</button>}
         </div>
     );

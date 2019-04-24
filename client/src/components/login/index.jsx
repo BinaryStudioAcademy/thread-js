@@ -28,9 +28,22 @@ class Login extends React.Component {
         return !token
             ? (
                 <div className={styles.root}>
-                    <input onChange={ev => this.setState({ email: ev.target.value })} />
-                    <input onChange={ev => this.setState({ password: ev.target.value })} />
-                    <button type="submit" onClick={this.handleClickLogin}>Login</button>
+                    <div className={styles['login-wrapper']}>
+                        <div className={styles['form-line']}>
+                            Login
+                        </div>
+                        <div className={styles['form-line']}>
+                            <span className={styles['form-title']}>e-mail:</span>
+                            <input id="email" onChange={ev => this.setState({ email: ev.target.value })} />
+                        </div>
+                        <div className={styles['form-line']}>
+                            <span className={styles['form-title']}>password:</span>
+                            <input onChange={ev => this.setState({ password: ev.target.value })} />
+                        </div>
+                        <div className={styles['form-button']}>
+                            <button type="submit" onClick={this.handleClickLogin}>Login</button>
+                        </div>
+                    </div>
                 </div>
             )
             : <Redirect to="/" />;

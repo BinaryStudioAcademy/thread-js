@@ -18,11 +18,14 @@ class Thread extends React.Component {
         const { posts } = this.props;
         return (
             <div className={styles.root}>
-                Add post:
-                <AddPost />
-                Posts:
-                <div>
-                    {posts && posts.map(post => <Post key={post.id} post={post} />)}
+                <div className={styles['add-post-wrapper']}>
+                    <AddPost />
+                </div>
+                <div className={styles['thread-wrapper']}>
+                    Posts:
+                    <div className={styles.posts}>
+                        {posts && posts.map(post => <Post key={post.id} post={post} />)}
+                    </div>
                 </div>
             </div>
         );

@@ -46,8 +46,12 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    token: PropTypes.string.isRequired,
+    token: PropTypes.string,
     setToken: PropTypes.func.isRequired
+};
+
+App.defaultProps = {
+    token: undefined,
 };
 
 const mapStateToProps = rootState => ({ token: rootState.profile.token });
