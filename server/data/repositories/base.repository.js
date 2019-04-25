@@ -15,6 +15,16 @@ export default class BaseRepository {
         return this.model.create(data);
     }
 
+    async updateById(id, data) {
+        const result = await this.model.update(data, {
+            where: { id },
+            returning: true,
+            plain: true
+        });
+
+        return result[1];
+    }
+
     deleteById(id) {
         return this.model.destroy({
             where: { id }

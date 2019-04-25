@@ -12,9 +12,13 @@ export default {
         const reaction = await postReactionRepository.getPostReaction(userId, postId);
 
         if (reaction) {
-            await postReactionRepository.deleteById(reaction.id);
-        } else {
-            await postReactionRepository.create({ userId, postId, isLike });
+            const result = reaction.isLike === isLike
+                ? await postReactionRepository.deleteById(reaction.id)
+                : await postReactionRepository.updateById(reaction.id, { isLike });
+
+            return Number.isInteger(result) ? null : result;
         }
+
+        return postReactionRepository.create({ userId, postId, isLike });
     }
 };
