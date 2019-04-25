@@ -1,5 +1,5 @@
 import * as postService from 'src/services/postService';
-import { ADD_POST } from './postActionTypes';
+import { ADD_POST, ADD_LIKE } from './postActionTypes';
 
 export const addPost = request => async (dispatch) => {
     const post = await postService.addPost(request);
@@ -10,4 +10,12 @@ export const addPost = request => async (dispatch) => {
             post: fullPostInfo
         });
     }
+};
+
+export const likePost = postId => async (dispatch) => {
+    await postService.likePost(postId);
+    dispatch({
+        type: ADD_LIKE,
+        postId
+    });
 };

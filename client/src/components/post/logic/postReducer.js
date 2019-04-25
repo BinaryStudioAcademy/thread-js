@@ -1,4 +1,4 @@
-import { SET_ALL_POSTS, ADD_POST } from './postActionTypes';
+import { SET_ALL_POSTS, ADD_POST, ADD_LIKE } from './postActionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -8,8 +8,18 @@ export default (state = {}, action) => {
             };
         case ADD_POST:
             return {
-                posts: [...state.posts, action.post]
+                posts: [action.post, ...state.posts]
             };
+        case ADD_LIKE: {
+            const newPosts = [...state.posts];
+            const { postId } = action;
+            const editedPost = newPosts.find(post => post.id === postId);
+            const newLikeCount = Number(editedPost.likeCount) + 1;
+            editedPost.likeCount = newLikeCount.toString();
+            return {
+                posts: newPosts
+            };
+        }
         default:
             return state;
     }

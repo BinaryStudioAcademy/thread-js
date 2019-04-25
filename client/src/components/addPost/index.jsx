@@ -1,5 +1,5 @@
 import React from 'react';
-import * as postActions from 'src/components/post/logic/postActions';
+import { addPost } from 'src/components/post/logic/postActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -49,9 +49,11 @@ AddPost.propTypes = {
     addPost: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    addPost: postActions.addPost
-}, dispatch);
+const actions = {
+    addPost
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
     undefined,

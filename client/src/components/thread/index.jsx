@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Post from 'src/components/post';
 import AddPost from 'src/components/addPost';
 import PropTypes from 'prop-types';
-import threadActions from './logic/threadActions';
+import { loadAllPosts } from './logic/threadActions';
 
 import styles from './thread.module.scss';
 
@@ -45,7 +45,9 @@ const mapStateToProps = rootState => ({
     posts: rootState.posts.posts
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(threadActions, dispatch);
+const actions = { loadAllPosts };
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,

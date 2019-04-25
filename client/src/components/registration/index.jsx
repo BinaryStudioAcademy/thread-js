@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import * as profileActions from 'src/components/profile/logic/profileActions';
+import { registration } from 'src/components/profile/logic/profileActions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -53,7 +53,9 @@ const mapStateToProps = rootState => ({
     token: rootState.profile.token
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(profileActions, dispatch);
+const actions = { registration };
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,

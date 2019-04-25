@@ -25,11 +25,15 @@ Header.defaultProps = {
     token: undefined
 };
 
+const actions = {
+    logout
+};
+
 const mapStateToProps = rootState => ({
     token: rootState.profile.token
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ logout }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,

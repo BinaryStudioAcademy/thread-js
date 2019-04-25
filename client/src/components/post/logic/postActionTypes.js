@@ -1,2 +1,3 @@
 export const ADD_POST = 'POST_ACTION:ADD_POST';
 export const SET_ALL_POSTS = 'POST_ACTION:SET_ALL_POSTS';
+export const ADD_LIKE = 'POST_ACTION:ADD_LIKE';

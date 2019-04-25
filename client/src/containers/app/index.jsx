@@ -54,9 +54,11 @@ App.defaultProps = {
     token: undefined,
 };
 
+const actions = { setToken };
+
 const mapStateToProps = rootState => ({ token: rootState.profile.token });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setToken }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,
