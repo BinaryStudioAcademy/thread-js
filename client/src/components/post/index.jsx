@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { likePost } from 'src/components/post/logic/postActions';
+import { likePost, toggleExpandedPost } from 'src/components/post/logic/postActions';
 
 import styles from './post.module.scss';
 
@@ -10,6 +10,11 @@ class Post extends React.Component {
     handleClickOnLike = () => {
         const { id } = this.props.post;
         this.props.likePost(id);
+    }
+
+    handleClickOnExpand = () => {
+        const { id } = this.props.post;
+        this.props.toggleExpandedPost(id);
     }
 
     render() {
@@ -36,6 +41,7 @@ class Post extends React.Component {
                     <div>{`Disliked ${dislikeCount} times`}</div>
                     <div>{`Commented ${commentCount} times`}</div>
                 </div>
+                <button type="button" onClick={this.handleClickOnExpand}>Show more</button>
             </div>
         );
     }
@@ -43,12 +49,11 @@ class Post extends React.Component {
 
 Post.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
-    likePost: PropTypes.func.isRequired
+    likePost: PropTypes.func.isRequired,
+    toggleExpandedPost: PropTypes.func.isRequired
 };
 
-const actions = {
-    likePost
-};
+const actions = { likePost, toggleExpandedPost };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

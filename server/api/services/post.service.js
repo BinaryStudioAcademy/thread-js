@@ -10,13 +10,12 @@ export default {
     }),
     setReaction: async (userId, { postId, isLike = true }) => {
         const reaction = await postReactionRepository.getPostReaction(userId, postId);
-
         if (reaction) {
             const result = reaction.isLike === isLike
                 ? await postReactionRepository.deleteById(reaction.id)
                 : await postReactionRepository.updateById(reaction.id, { isLike });
 
-            return Number.isInteger(result) ? null : result;
+            return Number.isInteger(result) ? {} : result;
         }
 
         return postReactionRepository.create({ userId, postId, isLike });

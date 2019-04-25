@@ -1,7 +1,9 @@
 :local(.root) {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
+
 :local(.add-post-wrapper),
 :local(.thread-wrapper) {
     display: flex;

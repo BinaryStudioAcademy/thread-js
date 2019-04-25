@@ -36,5 +36,5 @@ export const likePost = async (postId) => {
             isLike: true
         }
     });
-    return response;
+    return response.json();
 };

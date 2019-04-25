@@ -1,7 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Post from 'src/components/post';
+import ExpandedPost from 'src/components/expandedPost';
 import AddPost from 'src/components/addPost';
 import PropTypes from 'prop-types';
 import { loadAllPosts } from './logic/threadActions';
@@ -14,6 +16,15 @@ class Thread extends React.Component {
         this.props.loadAllPosts();
     }
 
+    renderExpandedPost() {
+        const { expandedPostId } = this.props;
+        if (expandedPostId) {
+            const target = document.getElementById('root');
+            return ReactDOM.createPortal(<ExpandedPost postId={expandedPostId} />, target);
+        }
+        return null;
+    }
+
     render() {
         const { posts } = this.props;
         return (
@@ -24,9 +35,10 @@ class Thread extends React.Component {
                 <div className={styles['thread-wrapper']}>
                     Posts:
                     <div className={styles.posts}>
-                        {posts && posts.map(post => <Post key={post.id} post={post} />)}
+                        {posts && posts.map(post => (<Post post={post} key={post.id} />))}
                     </div>
                 </div>
+                {this.renderExpandedPost()}
             </div>
         );
     }
@@ -34,15 +46,18 @@ class Thread extends React.Component {
 
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
-    loadAllPosts: PropTypes.func.isRequired
+    loadAllPosts: PropTypes.func.isRequired,
+    expandedPostId: PropTypes.string
 };
 
 Thread.defaultProps = {
-    posts: []
+    posts: [],
+    expandedPostId: undefined
 };
 
 const mapStateToProps = rootState => ({
-    posts: rootState.posts.posts
+    posts: rootState.posts.posts,
+    expandedPostId: rootState.posts.expandedPostId
 });
 
 const actions = { loadAllPosts };

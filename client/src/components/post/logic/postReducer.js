@@ -1,24 +1,23 @@
-import { SET_ALL_POSTS, ADD_POST, ADD_LIKE } from './postActionTypes';
+import {
+    SET_ALL_POSTS, ADD_POST,
+    TOGGLE_EXPANDED_POST_VISIBILITY
+} from './postActionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case SET_ALL_POSTS:
-            return {
+        case SET_ALL_POSTS: {
+            return Object.assign({}, state, {
                 posts: action.posts
-            };
+            });
+        }
         case ADD_POST:
-            return {
+            return Object.assign({}, state, {
                 posts: [action.post, ...state.posts]
-            };
-        case ADD_LIKE: {
-            const newPosts = [...state.posts];
-            const { postId } = action;
-            const editedPost = newPosts.find(post => post.id === postId);
-            const newLikeCount = Number(editedPost.likeCount) + 1;
-            editedPost.likeCount = newLikeCount.toString();
-            return {
-                posts: newPosts
-            };
+            });
+        case TOGGLE_EXPANDED_POST_VISIBILITY: {
+            return Object.assign({}, state, {
+                expandedPostId: action.postId
+            });
         }
         default:
             return state;
