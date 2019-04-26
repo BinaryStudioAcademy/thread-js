@@ -14,6 +14,15 @@ export const addPost = request => async (dispatch) => {
     }
 };
 
+export const addComment = () => {};
+// export const addComment = request => async (dispatch) => {
+//     const comment = await postService.addComment(request);
+//     dispatch({
+//         type: ADD_COMMENT,
+//         comment
+//     });
+// };
+
 export const likePost = postId => async (dispatch, getRootState) => {
     const result = await postService.likePost(postId);
     const { posts } = getRootState();
@@ -35,4 +44,16 @@ export const toggleExpandedPost = postId => async (dispatch, getRootState) => {
         ? postId
         : undefined;
     dispatch({ type: TOGGLE_EXPANDED_POST_VISIBILITY, postId: newValue });
+};
+
+export const loadPostComments = postId => async (dispatch, getRootState) => {
+    const fullPostInfo = await postService.getPost(postId);
+    const { posts } = getRootState();
+    const newPosts = [...posts.posts];
+    const postIndex = newPosts.findIndex(post => post.id === postId);
+    const post = newPosts[postIndex];
+    newPosts[postIndex] = Object.assign({}, post, {
+        comments: fullPostInfo.comments
+    });
+    dispatch({ type: SET_ALL_POSTS, posts: newPosts });
 };

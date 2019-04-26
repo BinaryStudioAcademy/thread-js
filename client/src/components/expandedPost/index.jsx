@@ -2,11 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { likePost, toggleExpandedPost } from 'src/components/post/logic/postActions';
+import { likePost, loadPostComments, toggleExpandedPost } from 'src/components/post/logic/postActions';
+import Comment from 'src/components/comment';
+import AddComment from 'src/components/addComment';
 
 import styles from './expandedPost.module.scss';
 
 class ExpandedPost extends React.Component {
+    componentDidMount() {
+        const { post } = this.props;
+        if (post && !post.comments) {
+            this.props.loadPostComments(this.props.postId);
+        }
+    }
+
     handleClickOutside = () => {
         const { postId } = this.props;
         this.props.toggleExpandedPost(postId);
@@ -40,7 +49,8 @@ class ExpandedPost extends React.Component {
             body,
             likeCount,
             dislikeCount,
-            commentCount
+            commentCount,
+            comments
         } = post;
         const date = new Date(createdAt);
 
@@ -57,6 +67,10 @@ class ExpandedPost extends React.Component {
                         </div>
                         <div>{`Disliked ${dislikeCount} times`}</div>
                         <div>{`Commented ${commentCount} times`}</div>
+                        {comments && comments.map(comment => (
+                            <Comment key={comment.id} comment={comment} />
+                        ))}
+                        {comments && <AddComment />}
                     </div>
                 </div>
             </div>
@@ -68,6 +82,7 @@ ExpandedPost.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
+    loadPostComments: PropTypes.func.isRequired,
     postId: PropTypes.string
 };
 
@@ -82,7 +97,7 @@ const mapStateToProps = (rootState, ownProps) => {
     return { post };
 };
 
-const actions = { likePost, toggleExpandedPost };
+const actions = { likePost, toggleExpandedPost, loadPostComments };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
