@@ -15,7 +15,10 @@ const Comment = (props) => {
     return (
         <div className={styles.root}>
             <div>{body}</div>
-            <div>{`Created at: ${createdAtDate.toDateString()} by ${user.username}`}</div>
+            <div>
+                {`Created at: ${createdAtDate.toDateString()} by ${user.username}`}
+                {user.image && <img src={user.image.link} alt="avatar" />}
+            </div>
             <div>{`Updated at: ${updatedAtDate.toDateString()}`}</div>
         </div>
     );

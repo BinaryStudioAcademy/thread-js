@@ -1,6 +1,6 @@
 import * as postService from 'src/services/postService';
 import {
-    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY
+    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY, ADD_COMMENT
 } from './postActionTypes';
 
 export const addPost = request => async (dispatch) => {
@@ -14,14 +14,13 @@ export const addPost = request => async (dispatch) => {
     }
 };
 
-export const addComment = () => {};
-// export const addComment = request => async (dispatch) => {
-//     const comment = await postService.addComment(request);
-//     dispatch({
-//         type: ADD_COMMENT,
-//         comment
-//     });
-// };
+export const addComment = request => async (dispatch) => {
+    // const comment = await postService.addComment(request);
+    dispatch({
+        type: ADD_COMMENT,
+        comment: request.body
+    });
+};
 
 export const likePost = postId => async (dispatch, getRootState) => {
     const result = await postService.likePost(postId);

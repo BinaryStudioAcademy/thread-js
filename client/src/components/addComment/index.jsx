@@ -3,7 +3,6 @@ import { addComment } from 'src/components/post/logic/postActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as imageService from 'src/services/imageService';
 
 import styles from './addComment.module.scss';
 
@@ -11,24 +10,13 @@ class AddComment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            post: '',
-            imageId: undefined,
-            imageLink: undefined
+            comment: ''
         };
     }
 
     handleAddPost = () => {
         this.props.addComment({
-            imageId: this.state.imageId,
-            body: this.state.post
-        });
-    }
-
-    loadFile = async (e) => {
-        const { id, link } = await imageService.uploadImage(e.target.files[0]);
-        this.setState({
-            imageId: id,
-            imageLink: link
+            body: this.state.comment
         });
     }
 
@@ -36,10 +24,8 @@ class AddComment extends React.Component {
         return (
             <div className={styles.root}>
                 Add comment:
-                {this.state.imageLink && <img src={this.state.imageLink} alt="post" />}
-                <textarea onChange={ev => this.setState({ post: ev.target.value })} />
-                <input type="file" onChange={this.loadFile} />
-                <button type="button" onClick={this.handleAddPost}>Add Post</button>
+                <textarea onChange={ev => this.setState({ comment: ev.target.value })} />
+                <button type="button" onClick={this.handleAddPost}>Add Comment</button>
             </div>
         );
     }
