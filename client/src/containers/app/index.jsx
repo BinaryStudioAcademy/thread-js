@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import {
+    Route, Switch
+} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -31,14 +33,12 @@ class App extends React.Component {
                     <Header />
                 </header>
                 <main>
-                    <Router>
-                        <Switch>
-                            <Route exact path="/login" component={Login} />
-                            <Route exact path="/registration" component={Registration} />
-                            <PrivateRoute exact path="/" component={Thread} />
-                            <PrivateRoute exact path="/profile" component={Profile} />
-                        </Switch>
-                    </Router>
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/registration" component={Registration} />
+                        <PrivateRoute exact path="/" component={Thread} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
+                    </Switch>
                 </main>
             </div>
         );

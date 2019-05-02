@@ -1,15 +1,17 @@
+@import 'src/globalStyles/_variables.scss';
+@import 'src/globalStyles/_text.scss';
+
 :local(.root) {
-    border: 1px solid #a3a3a3;
+    border: 1px solid $border-color;
     margin: 10px 0;
     padding: 10px;
     border-radius: 4px;
 }
 
 :local(.text) {
-    font-size: 15px;
+    @include main-text;
 }
 
 :local(.additional-info) {
-    font-size: 11px;
-    color: #A3A3A3
+    @include additional-text;
 }

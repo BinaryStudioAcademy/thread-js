@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import formsStyles from 'src/globalStyles/_forms.scss';
 import styles from './login.module.scss';
 
 class Login extends React.Component {
@@ -29,18 +30,18 @@ class Login extends React.Component {
             ? (
                 <div className={styles.root}>
                     <div className={styles['login-wrapper']}>
-                        <div className={styles['form-line']}>
+                        <div className={formsStyles['form-line']}>
                             Login
                         </div>
-                        <div className={styles['form-line']}>
-                            <span className={styles['form-title']}>e-mail:</span>
+                        <div className={formsStyles['form-line']}>
+                            <span className={formsStyles['form-title']}>e-mail:</span>
                             <input id="email" onChange={ev => this.setState({ email: ev.target.value })} />
                         </div>
-                        <div className={styles['form-line']}>
-                            <span className={styles['form-title']}>password:</span>
+                        <div className={formsStyles['form-line']}>
+                            <span className={formsStyles['form-title']}>password:</span>
                             <input onChange={ev => this.setState({ password: ev.target.value })} />
                         </div>
-                        <div className={styles['form-button']}>
+                        <div className={formsStyles['form-button']}>
                             <button type="submit" onClick={this.handleClickLogin}>Login</button>
                         </div>
                     </div>

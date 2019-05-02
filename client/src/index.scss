@@ -1,12 +1,11 @@
+@import 'src/globalStyles/_text.scss';
+
 body {
     margin: 0;
     padding: 0;
-    font-family: "Roboto";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #333
+    @include main-text;
 }
 
 code {
-    font-family: "Courier New", monospace;
+    @include code;
 }

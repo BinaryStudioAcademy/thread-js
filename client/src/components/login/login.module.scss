@@ -10,20 +10,3 @@
     padding: 20px;
     border: 1px solid;
 }
-
-:local(.form-line) {
-    padding: 10px;
-    input {
-        display: block;
-        width: 100%;
-    }
-}
-
-:local(.form-title) {
-
-}
-
-:local(.form-button) {
-    display: flex;
-    justify-content: flex-end;
-}

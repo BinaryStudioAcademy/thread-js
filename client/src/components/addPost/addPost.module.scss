@@ -1,9 +1,11 @@
+@import 'src/globalStyles/_variables.scss';
+
 :local(.root) {
     display: flex;
     flex-direction: column;
     width: 600px;
     align-items: center;
-    border: 1px solid #a3a3a3;
+    border: 1px solid $border-color;
     textarea {
         margin: 10px 0 0 0;
         min-width: 500px;
