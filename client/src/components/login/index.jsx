@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import formsStyles from 'src/globalStyles/_forms.scss';
+import formsStyles from 'src/styles/_forms.scss';
 import styles from './login.module.scss';
 
 class Login extends React.Component {

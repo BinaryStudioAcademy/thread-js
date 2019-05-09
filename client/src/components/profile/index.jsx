@@ -1,6 +1,6 @@
 import React from 'react';
 
-import formsStyles from 'src/globalStyles/_forms.scss';
+import formsStyles from 'src/styles/_forms.scss';
 import styles from './profile.module.scss';
 
 const Profile = () => (
