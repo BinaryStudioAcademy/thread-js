@@ -17,6 +17,7 @@
         "comma-dangle": "off",
         "object-curly-newline": "off",
         "class-methods-use-this": "off",
-        "prefer-promise-reject-errors": "off"
+        "prefer-promise-reject-errors": "off",
+        "import/prefer-default-export": "off"
     }
 }
