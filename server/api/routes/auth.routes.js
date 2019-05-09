@@ -7,10 +7,10 @@ const router = Router();
 
 router
     .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
-        .then(token => res.send(token))
+        .then(data => res.send(data))
         .catch(next))
     .post('/register', registrationMiddleware, (req, res, next) => authService.register(req.user)
-        .then(token => res.send(token))
+        .then(data => res.send(data))
         .catch(next));
 
 export default router;
