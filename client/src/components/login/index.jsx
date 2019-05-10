@@ -25,8 +25,7 @@ class Login extends React.Component {
     }
 
     render() {
-        const { user } = this.props;
-        return !(user && user.id)
+        return !this.props.isAuthorized
             ? (
                 <div className={styles.root}>
                     <div className={styles['login-wrapper']}>
@@ -52,16 +51,16 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    user: PropTypes.objectOf(PropTypes.any),
+    isAuthorized: PropTypes.bool,
     login: PropTypes.func.isRequired
 };
 
 Login.defaultProps = {
-    user: undefined
+    isAuthorized: false
 };
 
 const mapStateToProps = rootState => ({
-    user: rootState.profile.user
+    isAuthorized: rootState.profile.isAuthorized
 });
 
 const actions = { login };

@@ -7,30 +7,26 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 import styles from './header.module.scss';
 
-const Header = (props) => {
-    const { user } = props;
-    const isAuthorized = user && user.id;
-    return (
-        <div className={styles.root}>
-            <div className={styles.title}>Thread.JS</div>
-            {isAuthorized && (
-                <div>
-                    <NavLink exact activeClassName={styles.active} to="/profile">Profile</NavLink>
-                    <NavLink exact activeClassName={styles.active} to="/">Home</NavLink>
-                    <button type="button" onClick={props.logout}>Logout</button>
-                </div>
-            )}
-        </div>
-    );
-};
+const Header = props => (
+    <div className={styles.root}>
+        <div className={styles.title}>Thread.JS</div>
+        {props.isAuthorized && (
+            <div>
+                <NavLink exact activeClassName={styles.active} to="/profile">Profile</NavLink>
+                <NavLink exact activeClassName={styles.active} to="/">Home</NavLink>
+                <button type="button" onClick={props.logout}>Logout</button>
+            </div>
+        )}
+    </div>
+);
 
 Header.propTypes = {
-    user: PropTypes.objectOf(PropTypes.any),
+    isAuthorized: PropTypes.bool,
     logout: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
-    user: undefined
+    isAuthorized: false
 };
 
 const actions = {
@@ -38,7 +34,7 @@ const actions = {
 };
 
 const mapStateToProps = rootState => ({
-    user: rootState.profile.user
+    isAuthorized: rootState.profile.isAuthorized
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

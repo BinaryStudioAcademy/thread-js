@@ -10,7 +10,8 @@ export default (state = {}, action) => {
         case SET_USER:
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                isAuthorized: Boolean(action.user && action.user.id)
             };
         case SET_IS_LOADING:
             return {

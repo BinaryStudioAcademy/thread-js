@@ -26,8 +26,7 @@ class Registration extends React.Component {
     }
 
     render() {
-        const { user } = this.props;
-        return !(user && user.id)
+        return !this.props.isAuthorized
             ? (
                 <div className={styles.root}>
                     <input type="email" onChange={ev => this.setState({ email: ev.target.value })} />
@@ -41,16 +40,16 @@ class Registration extends React.Component {
 }
 
 Registration.propTypes = {
-    user: PropTypes.objectOf(PropTypes.any),
+    isAuthorized: PropTypes.bool,
     registration: PropTypes.func.isRequired
 };
 
 Registration.defaultProps = {
-    user: undefined
+    isAuthorized: undefined
 };
 
 const mapStateToProps = rootState => ({
-    user: rootState.profile.user
+    isAuthorized: rootState.profile.isAuthorized
 });
 
 const actions = { registration };
