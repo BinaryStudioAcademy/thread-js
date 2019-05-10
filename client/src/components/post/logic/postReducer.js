@@ -5,20 +5,21 @@ import {
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case SET_ALL_POSTS: {
-            return Object.assign({}, state, {
+        case SET_ALL_POSTS:
+            return {
+                ...state,
                 posts: action.posts
-            });
-        }
+            };
         case ADD_POST:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 posts: [action.post, ...state.posts]
-            });
-        case TOGGLE_EXPANDED_POST_VISIBILITY: {
-            return Object.assign({}, state, {
+            };
+        case TOGGLE_EXPANDED_POST_VISIBILITY:
+            return {
+                ...state,
                 expandedPostId: action.postId
-            });
-        }
+            };
         default:
             return state;
     }

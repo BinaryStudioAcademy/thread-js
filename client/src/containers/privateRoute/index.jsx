@@ -1,14 +1,14 @@
 /* eslint-disable react/forbid-prop-types */
-
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => (
-            localStorage.getItem('token')
+            rest.user && rest.user.id
                 ? <Component {...props} />
                 : (
                     <Redirect to={{
@@ -22,13 +22,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 PrivateRoute.propTypes = {
+    user: PropTypes.objectOf(PropTypes.any),
     location: PropTypes.any,
     component: PropTypes.any
 };
 
 PrivateRoute.defaultProps = {
+    user: undefined,
     location: undefined,
     component: undefined
 };
 
-export default PrivateRoute;
+const mapStateToProps = rootState => ({
+    user: rootState.profile.user
+});
+
+export default connect(mapStateToProps)(PrivateRoute);

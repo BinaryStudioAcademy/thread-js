@@ -6,7 +6,7 @@ export const login = async (request) => {
         type: 'POST',
         request,
     });
-    return response;
+    return response.json();
 };
 
 export const registration = async (request) => {
@@ -15,5 +15,14 @@ export const registration = async (request) => {
         type: 'POST',
         request,
     });
-    return response;
+    return response.json();
+};
+
+export const getCurrentUser = async () => {
+    const response = await callWebApi({
+        endpoint: '/api/auth/user',
+        type: 'GET'
+    });
+
+    return response.json();
 };

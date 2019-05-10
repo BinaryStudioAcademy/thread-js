@@ -1,4 +1,3 @@
-
 import * as queryString from 'query-string';
 
 function getFetchUrl(args) {

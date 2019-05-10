@@ -25,8 +25,8 @@ class Login extends React.Component {
     }
 
     render() {
-        const { token } = this.props;
-        return !token
+        const { user } = this.props;
+        return !(user && user.id)
             ? (
                 <div className={styles.root}>
                     <div className={styles['login-wrapper']}>
@@ -34,7 +34,7 @@ class Login extends React.Component {
                             Login
                         </div>
                         <div className={formsStyles['form-line']}>
-                            <span className={formsStyles['form-title']}>e-mail:</span>
+                            <span className={formsStyles['form-title']}>email:</span>
                             <input id="email" onChange={ev => this.setState({ email: ev.target.value })} />
                         </div>
                         <div className={formsStyles['form-line']}>
@@ -52,16 +52,16 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    token: PropTypes.string,
+    user: PropTypes.objectOf(PropTypes.any),
     login: PropTypes.func.isRequired
 };
 
 Login.defaultProps = {
-    token: undefined
+    user: undefined
 };
 
 const mapStateToProps = rootState => ({
-    token: rootState.profile.token
+    user: rootState.profile.user
 });
 
 const actions = { login };

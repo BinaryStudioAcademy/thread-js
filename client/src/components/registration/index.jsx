@@ -26,13 +26,13 @@ class Registration extends React.Component {
     }
 
     render() {
-        const { token } = this.props;
-        return !token
+        const { user } = this.props;
+        return !(user && user.id)
             ? (
                 <div className={styles.root}>
-                    <input onChange={ev => this.setState({ email: ev.target.value })} />
-                    <input onChange={ev => this.setState({ username: ev.target.value })} />
-                    <input onChange={ev => this.setState({ password: ev.target.value })} />
+                    <input type="email" onChange={ev => this.setState({ email: ev.target.value })} />
+                    <input type="text" onChange={ev => this.setState({ username: ev.target.value })} />
+                    <input type="password" onChange={ev => this.setState({ password: ev.target.value })} />
                     <button type="submit" onClick={this.handleClickRegister}>Registration</button>
                 </div>
             )
@@ -41,16 +41,16 @@ class Registration extends React.Component {
 }
 
 Registration.propTypes = {
-    token: PropTypes.string,
+    user: PropTypes.objectOf(PropTypes.any),
     registration: PropTypes.func.isRequired
 };
 
 Registration.defaultProps = {
-    token: undefined
+    user: undefined
 };
 
 const mapStateToProps = rootState => ({
-    token: rootState.profile.token
+    user: rootState.profile.user
 });
 
 const actions = { registration };

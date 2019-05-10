@@ -8,8 +8,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import styles from './header.module.scss';
 
 const Header = (props) => {
-    const { token } = props;
-    const isAuthorized = token;
+    const { user } = props;
+    const isAuthorized = user && user.id;
     return (
         <div className={styles.root}>
             <div className={styles.title}>Thread.JS</div>
@@ -25,12 +25,12 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-    token: PropTypes.string,
+    user: PropTypes.objectOf(PropTypes.any),
     logout: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
-    token: undefined
+    user: undefined
 };
 
 const actions = {
@@ -38,7 +38,7 @@ const actions = {
 };
 
 const mapStateToProps = rootState => ({
-    token: rootState.profile.token
+    user: rootState.profile.user
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
