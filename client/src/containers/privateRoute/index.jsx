@@ -2,27 +2,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loadCurrentUser } from 'src/components/profile/logic/profileActions';
 
 class PrivateRoute extends React.Component {
-
-    componentDidMount() {
-        this.loadUser();
-    }
-
-    componentDidUpdate() {
-        this.loadUser();
-    }
-
-    loadUser = () => {
-        const { isLoading, isAuthorized } = this.props;
-        if (!isLoading && !isAuthorized) {
-            this.props.loadCurrentUser();
-        }
-    }
-
     renderComponent = (props) => {
         const { Component, ...rest } = props;
         return <Component {...rest} />;
@@ -43,26 +25,19 @@ class PrivateRoute extends React.Component {
 
 PrivateRoute.propTypes = {
     isAuthorized: PropTypes.bool,
-    isLoading: PropTypes.bool,
     location: PropTypes.any,
-    Component: PropTypes.any,
-    loadCurrentUser: PropTypes.func.isRequired
+    Component: PropTypes.any
 };
 
 PrivateRoute.defaultProps = {
     isAuthorized: false,
-    isLoading: false,
     location: undefined,
     Component: undefined
 };
-
-const actions = { loadCurrentUser };
 
 const mapStateToProps = rootState => ({
     isAuthorized: rootState.profile.isAuthorized,
     isLoading: rootState.profile.isLoading
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default connect(mapStateToProps)(PrivateRoute);

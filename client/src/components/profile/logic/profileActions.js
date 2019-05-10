@@ -1,13 +1,7 @@
 import * as authService from 'src/services/authService';
-import { SET_TOKEN, SET_USER, SET_IS_LOADING } from './profileActionTypes';
+import { SET_USER, SET_IS_LOADING } from './profileActionTypes';
 
-export const setToken = token => async (dispatch) => {
-    localStorage.setItem('token', token);
-    dispatch({
-        type: SET_TOKEN,
-        token
-    });
-};
+const setToken = token => localStorage.setItem('token', token);
 
 export const setUser = user => async dispatch => dispatch({
     type: SET_USER,
@@ -22,7 +16,7 @@ export const setIsLoading = isLoading => async dispatch => dispatch({
 const auth = authCallbackPromise => async (dispatch, getRootState) => {
     setIsLoading(true)(dispatch, getRootState);
     const { token, user } = await authCallbackPromise;
-    setToken(token)(dispatch, getRootState);
+    setToken(token);
     setUser(user)(dispatch, getRootState);
     setIsLoading(false)(dispatch, getRootState);
 };
@@ -36,7 +30,7 @@ export const registration = request => async (dispatch, getRootState) => {
 };
 
 export const logout = () => (dispatch, getRootState) => {
-    setToken('')(dispatch, getRootState);
+    setToken('');
     setUser(null)(dispatch, getRootState);
 };
 

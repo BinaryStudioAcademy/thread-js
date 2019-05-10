@@ -39,7 +39,7 @@ function getFetchArgs(args) {
 function redirectToLoginPage() {
     const loginPageRoute = `${window.location.origin}/login`;
     if (window.location.href !== loginPageRoute) {
-        window.location.href = loginPageRoute;
+        window.location.replace(loginPageRoute);
     }
 }
 
