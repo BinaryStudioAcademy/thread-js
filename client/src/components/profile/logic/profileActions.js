@@ -43,12 +43,7 @@ export const logout = () => (dispatch, getRootState) => {
 
 export const loadCurrentUser = () => async (dispatch, getRootState) => {
     setIsLoading(true)(dispatch, getRootState);
-    try {
-        const user = await authService.getCurrentUser();
-        setUser(user)(dispatch, getRootState);
-    } catch {
-        // ignore
-        setUser(null)(dispatch, getRootState);
-    }
+    const user = await authService.getCurrentUser();
+    setUser(user)(dispatch, getRootState);
     setIsLoading(false)(dispatch, getRootState);
 };

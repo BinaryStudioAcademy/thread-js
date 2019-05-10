@@ -14,8 +14,6 @@ import PropTypes from 'prop-types';
 
 import styles from './app.module.scss';
 
-const Spinner = () => <div>Loading...</div>;
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -25,48 +23,38 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.props.loadCurrentUser();
-    }
-
     render() {
-        return !this.props.isLoading
-            ? (
-                <div className={styles['root-app']}>
-                    <header>
-                        <Header />
-                    </header>
-                    <main>
-                        <Switch>
-                            <Route exact path="/login" component={Login} />
-                            <Route exact path="/registration" component={Registration} />
-                            <PrivateRoute exact path="/" component={Thread} />
-                            <PrivateRoute exact path="/profile" component={Profile} />
-                        </Switch>
-                    </main>
-                </div>
-            )
-            : <Spinner />;
+        return (
+            <div className={styles['root-app']}>
+                <header>
+                    <Header />
+                </header>
+                <main>
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/registration" component={Registration} />
+                        <PrivateRoute exact path="/" component={Thread} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
+                    </Switch>
+                </main>
+            </div>
+        );
     }
 }
 
 App.propTypes = {
     token: PropTypes.string,
-    isLoading: PropTypes.bool,
-    setToken: PropTypes.func.isRequired,
-    loadCurrentUser: PropTypes.func.isRequired
+    setToken: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
-    token: undefined,
-    isLoading: true
+    token: undefined
 };
 
 const actions = { setToken, loadCurrentUser };
 
 const mapStateToProps = rootState => ({
-    token: rootState.profile.token,
-    isLoading: rootState.profile.isLoading
+    token: rootState.profile.token
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
