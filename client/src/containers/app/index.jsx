@@ -8,13 +8,14 @@ import Profile from 'src/components/profile';
 import Header from 'src/components/header';
 import Login from 'src/components/login';
 import Registration from 'src/components/registration';
+import SharedPost from 'src/components/sharedPost/index';
+import Spinner from 'src/components/common/spinner';
+
 import PrivateRoute from 'src/containers/privateRoute';
 import { loadCurrentUser } from 'src/components/profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
 import styles from './app.module.scss';
-
-const Spinner = () => <div>Loading...</div>;
 
 class App extends React.Component {
     componentDidMount() {
@@ -36,6 +37,7 @@ class App extends React.Component {
                                 <Route exact path="/registration" component={Registration} />
                                 <PrivateRoute exact path="/" component={Thread} />
                                 <PrivateRoute exact path="/profile" component={Profile} />
+                                <PrivateRoute path="/share/:postHash" component={SharedPost} />
                             </Switch>
                         </main>
                     )

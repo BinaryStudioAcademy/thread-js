@@ -3,7 +3,7 @@ import { logout } from 'src/components/profile/logic/profileActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import styles from './header.module.scss';
 
@@ -39,7 +39,7 @@ const mapStateToProps = rootState => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header));
+)(Header);

@@ -1,6 +1,6 @@
 import * as postService from 'src/services/postService';
 import {
-    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY, ADD_COMMENT
+    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY, ADD_COMMENT, SET_SHARED_POST_INFO
 } from './postActionTypes';
 
 export const addPost = request => async (dispatch) => {
@@ -55,4 +55,10 @@ export const loadPostComments = postId => async (dispatch, getRootState) => {
         comments: fullPostInfo.comments
     });
     dispatch({ type: SET_ALL_POSTS, posts: newPosts });
+};
+
+export const getPostByHash = hash => async (dispatch) => {
+    const fullPostInfo = await postService.getPostByHash(hash);
+    dispatch({ type: SET_SHARED_POST_INFO, post: fullPostInfo });
+    return fullPostInfo;
 };
