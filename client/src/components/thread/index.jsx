@@ -7,6 +7,7 @@ import ExpandedPost from 'src/components/expandedPost';
 import AddPost from 'src/components/addPost';
 import PropTypes from 'prop-types';
 import { loadAllPosts } from './logic/threadActions';
+import { getFilteredPosts } from './logic/threadHelper';
 
 import styles from './thread.module.scss';
 
@@ -14,9 +15,12 @@ class Thread extends React.Component {
     constructor(props) {
         super(props);
         this.props.loadAllPosts();
+        this.state = {
+            postsType: 'all'
+        };
     }
 
-    renderExpandedPost() {
+    renderExpandedPost = () => {
         const { expandedPostId } = this.props;
         if (expandedPostId) {
             const target = document.getElementById('root');
@@ -25,8 +29,16 @@ class Thread extends React.Component {
         return null;
     }
 
+    showPosts = (type) => {
+        this.setState({
+            postsType: type
+        });
+    }
+
     render() {
-        const { posts } = this.props;
+        const { posts, userId } = this.props;
+        const { postsType } = this.state;
+        const filteredPosts = getFilteredPosts({ posts, postsType, currentUserId: userId });
         return (
             <div className={styles.root}>
                 <div className={styles['add-post-wrapper']}>
@@ -34,8 +46,10 @@ class Thread extends React.Component {
                 </div>
                 <div className={styles['thread-wrapper']}>
                     Posts:
+                    <div onClick={() => this.showPosts('mine')}>Mine Posts</div>
+                    <div onClick={() => this.showPosts('all')}>All Posts</div>
                     <div className={styles.posts}>
-                        {posts && posts.map(post => (<Post post={post} key={post.id} />))}
+                        {filteredPosts && filteredPosts.map(post => (<Post post={post} key={post.id} />))}
                     </div>
                 </div>
                 {this.renderExpandedPost()}
@@ -47,17 +61,20 @@ class Thread extends React.Component {
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
     loadAllPosts: PropTypes.func.isRequired,
-    expandedPostId: PropTypes.string
+    expandedPostId: PropTypes.string,
+    userId: PropTypes.string
 };
 
 Thread.defaultProps = {
     posts: [],
-    expandedPostId: undefined
+    expandedPostId: undefined,
+    userId: undefined
 };
 
 const mapStateToProps = rootState => ({
     posts: rootState.posts.posts,
-    expandedPostId: rootState.posts.expandedPostId
+    expandedPostId: rootState.posts.expandedPostId,
+    userId: rootState.profile.user.id
 });
 
 const actions = { loadAllPosts };
