@@ -10,6 +10,7 @@ import Login from 'src/components/login';
 import Registration from 'src/components/registration';
 import SharedPost from 'src/components/sharedPost/index';
 import Spinner from 'src/components/common/spinner';
+import GenericNotFound from 'src/components/genericNotFound';
 
 import PrivateRoute from 'src/containers/privateRoute';
 import { loadCurrentUser } from 'src/components/profile/logic/profileActions';
@@ -38,6 +39,7 @@ class App extends React.Component {
                                 <PrivateRoute exact path="/" component={Thread} />
                                 <PrivateRoute exact path="/profile" component={Profile} />
                                 <PrivateRoute path="/share/:postHash" component={SharedPost} />
+                                <Route path="*" exact component={GenericNotFound} />
                             </Switch>
                         </main>
                     )
