@@ -19,10 +19,13 @@ export const registration = async (request) => {
 };
 
 export const getCurrentUser = async () => {
-    const response = await callWebApi({
-        endpoint: '/api/auth/user',
-        type: 'GET'
-    });
-
-    return response.json();
+    try {
+        const response = await callWebApi({
+            endpoint: '/api/auth/user',
+            type: 'GET'
+        });
+        return response.json();
+    } catch (e) {
+        return null;
+    }
 };
