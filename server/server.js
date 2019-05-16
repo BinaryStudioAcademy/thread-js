@@ -3,6 +3,9 @@ import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import passport from 'passport';
+import http from 'http';
+import socketIO from 'socket.io';
+
 import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
@@ -13,6 +16,8 @@ import './config/passport.config';
 dotenv.config();
 
 const app = express();
+const httpServer = http.Server(app);
+const io = socketIO(httpServer);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,3 +39,13 @@ app.listen(process.env.APP_PORT, () => {
     // eslint-disable-next-line no-console
     console.log(`Server listening on port ${process.env.APP_PORT}!`);
 });
+
+io.on('connection', (socket) => {
+    socket.on('createRoom', (roomId) => {
+        // eslint-disable-next-line no-console
+        console.log(`Room ${roomId} was joined`);
+        socket.join(roomId);
+    });
+});
+
+httpServer.listen(3002);
