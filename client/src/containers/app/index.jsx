@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
@@ -19,6 +20,14 @@ import PropTypes from 'prop-types';
 class App extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { userId } = this.props;
+        if (userId && userId !== prevProps.userId) {
+            const socket = io('http://localhost:3002');
+            socket.emit('createRoom', 'userId');
+        }
     }
 
     // <header>
@@ -50,17 +59,20 @@ class App extends React.Component {
 
 App.propTypes = {
     isLoading: PropTypes.bool,
-    loadCurrentUser: PropTypes.func.isRequired
+    loadCurrentUser: PropTypes.func.isRequired,
+    userId: PropTypes.string,
 };
 
 App.defaultProps = {
-    isLoading: true
+    isLoading: true,
+    userId: undefined
 };
 
 const actions = { loadCurrentUser };
 
 const mapStateToProps = rootState => ({
-    isLoading: rootState.profile.isLoading
+    isLoading: rootState.profile.isLoading,
+    userId: rootState.profile.user && rootState.profile.user.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
