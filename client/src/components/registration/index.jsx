@@ -22,6 +22,7 @@ class Registration extends React.Component {
             email: '',
             password: '',
             username: '',
+            isLoading: false,
             isEmailValid: true,
             isUsernameValid: true,
             isPasswordValid: true
@@ -62,19 +63,23 @@ class Registration extends React.Component {
     ].every(Boolean);
 
     handleClickRegister = async () => {
-        if (!this.validateForm()) {
+        const { isLoading, email, password, username } = this.state;
+        const valid = this.validateForm();
+        if (!valid || isLoading) {
             return;
         }
-
+        this.setState({ isLoading: true });
         try {
-            const { email, password, username } = this.state;
             await this.props.registration({ email, password, username });
-        } catch (err) {
+        } catch {
             // TODO: show error
+        } finally {
+            this.setState({ isLoading: false });
         }
     };
 
     render() {
+        const { isLoading, isEmailValid, isUsernameValid, isPasswordValid } = this.state;
         return !this.props.isAuthorized
             ? (
                 <Grid textAlign="center" verticalAlign="middle" className="fill">
@@ -86,11 +91,11 @@ class Registration extends React.Component {
                             <Segment>
                                 <Form.Input
                                     fluid
-                                    icon="user"
+                                    icon="mail"
                                     iconPosition="left"
                                     placeholder="Email"
                                     type="email"
-                                    error={!this.state.isEmailValid}
+                                    error={!isEmailValid}
                                     onChange={ev => this.emailChanged(ev.target.value)}
                                     onBlur={this.validateEmail}
                                 />
@@ -100,7 +105,7 @@ class Registration extends React.Component {
                                     iconPosition="left"
                                     placeholder="Username"
                                     type="text"
-                                    error={!this.state.isUsernameValid}
+                                    error={!isUsernameValid}
                                     onChange={ev => this.usernameChanged(ev.target.value)}
                                     onBlur={this.validateUsername}
                                 />
@@ -111,10 +116,10 @@ class Registration extends React.Component {
                                     placeholder="Password"
                                     type="password"
                                     onChange={ev => this.passwordChanged(ev.target.value)}
-                                    error={!this.state.isPasswordValid}
+                                    error={!isPasswordValid}
                                     onBlur={this.validatePassword}
                                 />
-                                <Button type="submit" color="teal" fluid size="large">
+                                <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
                                     Register
                                 </Button>
                             </Segment>

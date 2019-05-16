@@ -21,6 +21,7 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
+            isLoading: false,
             isEmailValid: true,
             isPasswordValid: true
         };
@@ -49,17 +50,24 @@ class Login extends React.Component {
         this.validatePassword()
     ].every(Boolean);
 
-    handleClickLogin = () => {
+    handleClickLogin = async () => {
+        const { isLoading, email, password } = this.state;
         const valid = this.validateForm();
-        if (valid) {
-            this.props.login({
-                email: this.state.email,
-                password: this.state.password
-            });
+        if (!valid || isLoading) {
+            return;
+        }
+        this.setState({ isLoading: true });
+        try {
+            await this.props.login({ email, password });
+        } catch {
+            // TODO: show error
+        } finally {
+            this.setState({ isLoading: false });
         }
     }
 
     render() {
+        const { isLoading, isEmailValid, isPasswordValid } = this.state;
         return !this.props.isAuthorized
             ? (
                 <Grid textAlign="center" verticalAlign="middle" className="fill">
@@ -71,11 +79,11 @@ class Login extends React.Component {
                             <Segment>
                                 <Form.Input
                                     fluid
-                                    icon="user"
+                                    icon="mail"
                                     iconPosition="left"
                                     placeholder="Email"
                                     type="email"
-                                    error={!this.state.isEmailValid}
+                                    error={!isEmailValid}
                                     onChange={ev => this.emailChanged(ev.target.value)}
                                     onBlur={this.validateEmail}
                                 />
@@ -85,11 +93,11 @@ class Login extends React.Component {
                                     iconPosition="left"
                                     placeholder="Password"
                                     type="password"
-                                    error={!this.state.isPasswordValid}
+                                    error={!isPasswordValid}
                                     onChange={ev => this.passwordChanged(ev.target.value)}
                                     onBlur={this.validatePassword}
                                 />
-                                <Button type="submit" color="teal" fluid size="large">
+                                <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
                                     Login
                                 </Button>
                             </Segment>

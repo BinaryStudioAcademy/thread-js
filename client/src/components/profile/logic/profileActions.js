@@ -14,20 +14,13 @@ const setIsLoading = isLoading => async dispatch => dispatch({
 });
 
 const setAuthData = (user = null, token = '') => (dispatch, getRootState) => {
+    setToken(token); // token should be set first before user
     setUser(user)(dispatch, getRootState);
-    setToken(token);
 };
 
 const handleAuthResponse = authResponsePromise => async (dispatch, getRootState) => {
-    setIsLoading(true)(dispatch, getRootState);
-    try {
-        const { user, token } = await authResponsePromise;
-        setAuthData(user, token)(dispatch, getRootState);
-    } catch (err) {
-        throw err;
-    } finally {
-        setIsLoading(false)(dispatch, getRootState);
-    }
+    const { user, token } = await authResponsePromise;
+    setAuthData(user, token)(dispatch, getRootState);
 };
 
 export const login = request => handleAuthResponse(authService.login(request));
