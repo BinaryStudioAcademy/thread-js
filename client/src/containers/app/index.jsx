@@ -26,12 +26,12 @@ class App extends React.Component {
     render() {
         const { isLoading } = this.props;
         return (
-            <div className={styles['root-app']}>
-                <header>
-                    <Header />
-                </header>
-                {!isLoading
-                    ? (
+            !isLoading
+                ? (
+                    <div className={styles['root-app']}>
+                        <header>
+                            <Header />
+                        </header>
                         <main>
                             <Switch>
                                 <Route exact path="/login" component={Login} />
@@ -42,10 +42,9 @@ class App extends React.Component {
                                 <Route path="*" exact component={GenericNotFound} />
                             </Switch>
                         </main>
-                    )
-                    : <Spinner />
-                }
-            </div>
+                    </div>
+                )
+                : <Spinner />
         );
     }
 }
