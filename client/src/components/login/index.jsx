@@ -33,19 +33,21 @@ class Login extends React.Component {
     render() {
         return !this.props.isAuthorized
             ? (
-                <Grid textAlign="center" style={{ height: '100%', width: '100%' }} verticalAlign="middle">
+                <Grid textAlign="center" verticalAlign="middle" className="fill">
                     <Grid.Column style={{ maxWidth: 450 }}>
                         <Header as="h2" color="teal" textAlign="center">
                             Log-in to your account
                         </Header>
-                        <Form size="large">
+                        <Form name="loginForm" size="large">
                             <Segment>
                                 <Form.Input
                                     fluid
                                     icon="user"
                                     iconPosition="left"
                                     placeholder="Email or username"
+                                    type="email"
                                     onChange={ev => this.setState({ email: ev.target.value })}
+                                    required
                                 />
                                 <Form.Input
                                     fluid
@@ -54,8 +56,9 @@ class Login extends React.Component {
                                     placeholder="Password"
                                     type="password"
                                     onChange={ev => this.setState({ password: ev.target.value })}
+                                    required
                                 />
-                                <Button color="teal" fluid size="large" onClick={this.handleClickLogin}>
+                                <Button type="submit" color="teal" fluid size="large" onClick={this.handleClickLogin}>
                                     Login
                                 </Button>
                             </Segment>

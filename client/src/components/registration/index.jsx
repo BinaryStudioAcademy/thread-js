@@ -2,10 +2,17 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { registration } from 'src/components/profile/logic/profileActions';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import styles from './registration.module.scss';
+import {
+    Grid,
+    Header,
+    Form,
+    Button,
+    Segment,
+    Message
+} from 'semantic-ui-react';
 
 class Registration extends React.Component {
     constructor(props) {
@@ -28,12 +35,52 @@ class Registration extends React.Component {
     render() {
         return !this.props.isAuthorized
             ? (
-                <div className={styles.root}>
-                    <input type="email" onChange={ev => this.setState({ email: ev.target.value })} />
-                    <input type="text" onChange={ev => this.setState({ username: ev.target.value })} />
-                    <input type="password" onChange={ev => this.setState({ password: ev.target.value })} />
-                    <button type="submit" onClick={this.handleClickRegister}>Registration</button>
-                </div>
+                <Grid textAlign="center" verticalAlign="middle" className="fill">
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Header as="h2" color="teal" textAlign="center">
+                            Sign Up
+                        </Header>
+                        <Form size="large">
+                            <Segment>
+                                <Form.Input
+                                    fluid
+                                    icon="user"
+                                    iconPosition="left"
+                                    placeholder="Email"
+                                    type="email"
+                                    onChange={ev => this.setState({ email: ev.target.value })}
+                                    required
+                                />
+                                <Form.Input
+                                    fluid
+                                    icon="user"
+                                    iconPosition="left"
+                                    placeholder="Username"
+                                    type="text"
+                                    onChange={ev => this.setState({ username: ev.target.value })}
+                                    required
+                                />
+                                <Form.Input
+                                    fluid
+                                    icon="lock"
+                                    iconPosition="left"
+                                    placeholder="Password"
+                                    type="password"
+                                    onChange={ev => this.setState({ password: ev.target.value })}
+                                    required
+                                />
+                                <Button type="submit" color="teal" fluid size="large" onClick={this.handleClickRegister}>
+                                    Login
+                                </Button>
+                            </Segment>
+                        </Form>
+                        <Message>
+                            Alredy with us?
+                            {' '}
+                            <NavLink exact to="/login">Sign In</NavLink>
+                        </Message>
+                    </Grid.Column>
+                </Grid>
             )
             : <Redirect to="/" />;
     }
