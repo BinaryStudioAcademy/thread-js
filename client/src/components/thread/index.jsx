@@ -36,7 +36,7 @@ class Thread extends React.Component {
     }
 
     render() {
-        const { posts, userId } = this.props;
+        const { posts = [], userId } = this.props;
         const { postsType } = this.state;
         const filteredPosts = getFilteredPosts({ posts, postsType, currentUserId: userId });
         return (
@@ -49,7 +49,7 @@ class Thread extends React.Component {
                     <div onClick={() => this.showPosts('mine')}>Mine Posts</div>
                     <div onClick={() => this.showPosts('all')}>All Posts</div>
                     <div className={styles.posts}>
-                        {filteredPosts && filteredPosts.map(post => (<Post post={post} key={post.id} />))}
+                        {filteredPosts.map(post => (<Post post={post} key={post.id} />))}
                     </div>
                 </div>
                 {this.renderExpandedPost()}
