@@ -4,6 +4,7 @@ import { registration } from 'src/components/profile/logic/profileActions';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import validator from 'validator';
 
 import {
     Grid,
@@ -20,17 +21,56 @@ class Registration extends React.Component {
         this.state = {
             email: '',
             password: '',
-            username: ''
+            username: '',
+            isEmailValid: true,
+            isUsernameValid: true,
+            isPasswordValid: true
         };
     }
 
+    validateEmail = () => {
+        const { email } = this.state;
+        const isEmailValid = validator.isEmail(email);
+        this.setState({ isEmailValid });
+        return isEmailValid;
+    };
+
+    validateUsername = () => {
+        const { username } = this.state;
+        const isUsernameValid = !validator.isEmpty(username);
+        this.setState({ isUsernameValid });
+        return isUsernameValid;
+    };
+
+    validatePassword = () => {
+        const { password } = this.state;
+        const isPasswordValid = !validator.isEmpty(password);
+        this.setState({ isPasswordValid });
+        return isPasswordValid;
+    };
+
+    emailChanged = email => this.setState({ email, isEmailValid: true });
+
+    usernameChanged = username => this.setState({ username, isUsernameValid: true });
+
+    passwordChanged = password => this.setState({ password, isPasswordValid: true });
+
+    validateForm = () => [
+        this.validateEmail(),
+        this.validateUsername(),
+        this.validatePassword()
+    ].every(Boolean);
+
     handleClickRegister = async () => {
-        this.props.registration({
-            email: this.state.email,
-            password: this.state.password,
-            username: this.state.username
-        });
-    }
+        const valid = this.validateForm();
+        if (valid) {
+            this.props.registration({
+                email: this.state.email,
+                password: this.state.password,
+                username: this.state.username
+            });
+        }
+    };
 
     render() {
         return !this.props.isAuthorized
@@ -38,9 +78,9 @@ class Registration extends React.Component {
                 <Grid textAlign="center" verticalAlign="middle" className="fill">
                     <Grid.Column style={{ maxWidth: 450 }}>
                         <Header as="h2" color="teal" textAlign="center">
-                            Sign Up
+                            Register for free account
                         </Header>
-                        <Form size="large">
+                        <Form name="registrationForm" size="large" onSubmit={this.handleClickRegister}>
                             <Segment>
                                 <Form.Input
                                     fluid
@@ -48,8 +88,9 @@ class Registration extends React.Component {
                                     iconPosition="left"
                                     placeholder="Email"
                                     type="email"
-                                    onChange={ev => this.setState({ email: ev.target.value })}
-                                    required
+                                    error={!this.state.isEmailValid}
+                                    onChange={ev => this.emailChanged(ev.target.value)}
+                                    onBlur={this.validateEmail}
                                 />
                                 <Form.Input
                                     fluid
@@ -57,8 +98,9 @@ class Registration extends React.Component {
                                     iconPosition="left"
                                     placeholder="Username"
                                     type="text"
-                                    onChange={ev => this.setState({ username: ev.target.value })}
-                                    required
+                                    error={!this.state.isUsernameValid}
+                                    onChange={ev => this.usernameChanged(ev.target.value)}
+                                    onBlur={this.validateUsername}
                                 />
                                 <Form.Input
                                     fluid
@@ -66,11 +108,12 @@ class Registration extends React.Component {
                                     iconPosition="left"
                                     placeholder="Password"
                                     type="password"
-                                    onChange={ev => this.setState({ password: ev.target.value })}
-                                    required
+                                    onChange={ev => this.passwordChanged(ev.target.value)}
+                                    error={!this.state.isPasswordValid}
+                                    onBlur={this.validatePassword}
                                 />
-                                <Button type="submit" color="teal" fluid size="large" onClick={this.handleClickRegister}>
-                                    Login
+                                <Button type="submit" color="teal" fluid size="large">
+                                    Register
                                 </Button>
                             </Segment>
                         </Form>
