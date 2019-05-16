@@ -5,7 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import store, { history } from './store';
 import App from './containers/app';
 
-import './index.scss';
+import './styles/reset.scss';
+import 'semantic-ui-css/semantic.min.css';
+import './styles/index.scss';
 
 const target = document.getElementById('root');
 

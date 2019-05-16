@@ -2,10 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
-import Header from 'src/components/header';
+// import Header from 'src/components/header';
 import Login from 'src/components/login';
 import Registration from 'src/components/registration';
 import SharedPost from 'src/components/sharedPost/index';
@@ -16,23 +17,22 @@ import PrivateRoute from 'src/containers/privateRoute';
 import { loadCurrentUser } from 'src/components/profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
-import styles from './app.module.scss';
-
 class App extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
     }
+
+    // <header>
+    //     <Header />
+    // </header>
 
     render() {
         const { isLoading } = this.props;
         return (
             !isLoading
                 ? (
-                    <div className={styles['root-app']}>
-                        <header>
-                            <Header />
-                        </header>
-                        <main>
+                    <div className="fill">
+                        <main className="fill">
                             <Switch>
                                 <Route exact path="/login" component={Login} />
                                 <Route exact path="/registration" component={Registration} />
