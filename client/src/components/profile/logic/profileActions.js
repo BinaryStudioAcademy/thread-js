@@ -20,9 +20,14 @@ const setAuthData = (user = null, token = '') => (dispatch, getRootState) => {
 
 const handleAuthResponse = authResponsePromise => async (dispatch, getRootState) => {
     setIsLoading(true)(dispatch, getRootState);
-    const { user, token } = await authResponsePromise;
-    setAuthData(user, token)(dispatch, getRootState);
-    setIsLoading(false)(dispatch, getRootState);
+    try {
+        const { user, token } = await authResponsePromise;
+        setAuthData(user, token)(dispatch, getRootState);
+    } catch (err) {
+        throw err;
+    } finally {
+        setIsLoading(false)(dispatch, getRootState);
+    }
 };
 
 export const login = request => handleAuthResponse(authService.login(request));

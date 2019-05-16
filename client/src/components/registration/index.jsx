@@ -62,13 +62,15 @@ class Registration extends React.Component {
     ].every(Boolean);
 
     handleClickRegister = async () => {
-        const valid = this.validateForm();
-        if (valid) {
-            this.props.registration({
-                email: this.state.email,
-                password: this.state.password,
-                username: this.state.username
-            });
+        if (!this.validateForm()) {
+            return;
+        }
+
+        try {
+            const { email, password, username } = this.state;
+            await this.props.registration({ email, password, username });
+        } catch (err) {
+            // TODO: show error
         }
     };
 
