@@ -73,7 +73,6 @@ class Registration extends React.Component {
             await this.props.registration({ email, password, username });
         } catch {
             // TODO: show error
-        } finally {
             this.setState({ isLoading: false });
         }
     };

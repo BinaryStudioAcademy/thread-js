@@ -61,7 +61,6 @@ class Login extends React.Component {
             await this.props.login({ email, password });
         } catch {
             // TODO: show error
-        } finally {
             this.setState({ isLoading: false });
         }
     }
