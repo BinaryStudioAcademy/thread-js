@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
