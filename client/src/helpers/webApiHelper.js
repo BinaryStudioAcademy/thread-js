@@ -36,19 +36,9 @@ function getFetchArgs(args) {
     };
 }
 
-function redirectToLoginPage() {
-    const loginPageRoute = `${window.location.origin}/login`;
-    if (window.location.href !== loginPageRoute) {
-        window.location.replace(loginPageRoute);
-    }
-}
-
 export async function throwIfResponseFailed(res) {
     if (!res.ok) {
         let parsedException = 'Something went wrong with request!';
-        if (res.status === 401) {
-            redirectToLoginPage();
-        }
         try {
             parsedException = await res.json();
         } catch (err) {
