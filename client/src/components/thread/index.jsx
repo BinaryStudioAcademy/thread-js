@@ -6,6 +6,7 @@ import Post from 'src/components/post';
 import ExpandedPost from 'src/components/expandedPost';
 import AddPost from 'src/components/addPost';
 import PropTypes from 'prop-types';
+import { Grid } from 'semantic-ui-react';
 import { loadAllPosts } from './logic/threadActions';
 import { getFilteredPosts } from './logic/threadHelper';
 
@@ -48,9 +49,13 @@ class Thread extends React.Component {
                     Posts:
                     <div onClick={() => this.showPosts('mine')}>Mine Posts</div>
                     <div onClick={() => this.showPosts('all')}>All Posts</div>
-                    <div className={styles.posts}>
-                        {filteredPosts.map(post => (<Post post={post} key={post.id} />))}
-                    </div>
+                    <Grid centered>
+                        <Grid.Column style={{ width: 'auto' }}>
+                            {filteredPosts.map(post => (
+                                <Post post={post} key={post.id} />
+                            ))}
+                        </Grid.Column>
+                    </Grid>
                 </div>
                 {this.renderExpandedPost()}
             </div>
