@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import styles from './header.module.scss';
-
 const Header = props => (
-    <div className={styles.root}>
-        <div className={styles.title}>Thread.JS</div>
+    <div>
+        <div>Thread.JS</div>
         {props.isAuthorized && (
             <div>
-                <NavLink exact activeClassName={styles.active} to="/profile">Profile</NavLink>
-                <NavLink exact activeClassName={styles.active} to="/">Home</NavLink>
+                <NavLink exact activeClassName="active" to="/profile">Profile</NavLink>
+                <NavLink exact activeClassName="active" to="/">Home</NavLink>
                 <button type="button" onClick={props.logout}>Logout</button>
             </div>
         )}

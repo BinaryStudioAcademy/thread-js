@@ -10,8 +10,6 @@ import { Grid } from 'semantic-ui-react';
 import { loadAllPosts } from './logic/threadActions';
 import { getFilteredPosts } from './logic/threadHelper';
 
-import styles from './thread.module.scss';
-
 class Thread extends React.Component {
     constructor(props) {
         super(props);
@@ -41,11 +39,11 @@ class Thread extends React.Component {
         const { postsType } = this.state;
         const filteredPosts = getFilteredPosts({ posts, postsType, currentUserId: userId });
         return (
-            <div className={styles.root}>
-                <div className={styles['add-post-wrapper']}>
+            <div>
+                <div>
                     <AddPost />
                 </div>
-                <div className={styles['thread-wrapper']}>
+                <div>
                     Posts:
                     <div onClick={() => this.showPosts('mine')}>Mine Posts</div>
                     <div onClick={() => this.showPosts('all')}>All Posts</div>

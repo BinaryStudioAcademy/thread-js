@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as imageService from 'src/services/imageService';
 
-import styles from './addPost.module.scss';
-
 class AddPost extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +32,7 @@ class AddPost extends React.Component {
 
     render() {
         return (
-            <div className={styles.root}>
+            <div>
                 Add post:
                 {this.state.imageLink && <img src={this.state.imageLink} alt="post" />}
                 <textarea onChange={ev => this.setState({ post: ev.target.value })} />

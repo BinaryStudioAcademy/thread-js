@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import styles from './comment.module.scss';
-
 const Comment = (props) => {
     const { comment } = props;
     const {
@@ -13,7 +11,7 @@ const Comment = (props) => {
     const createdAtDate = new Date(createdAt);
     const updatedAtDate = new Date(updatedAt);
     return (
-        <div className={styles.root}>
+        <div>
             <div>{body}</div>
             <div>
                 {`Created at: ${createdAtDate.toDateString()} by ${user.username}`}

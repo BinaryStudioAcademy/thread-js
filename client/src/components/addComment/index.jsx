@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import styles from './addComment.module.scss';
-
 class AddComment extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +20,7 @@ class AddComment extends React.Component {
 
     render() {
         return (
-            <div className={styles.root}>
+            <div>
                 Add comment:
                 <textarea onChange={ev => this.setState({ comment: ev.target.value })} />
                 <button type="button" onClick={this.handleAddPost}>Add Comment</button>

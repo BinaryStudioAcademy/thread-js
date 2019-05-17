@@ -6,8 +6,6 @@ import { likePost, loadPostComments, toggleExpandedPost } from 'src/components/p
 import Comment from 'src/components/comment';
 import AddComment from 'src/components/addComment';
 
-import styles from './expandedPost.module.scss';
-
 class ExpandedPost extends React.Component {
     componentDidMount() {
         const { post } = this.props;
@@ -55,11 +53,11 @@ class ExpandedPost extends React.Component {
         const date = new Date(createdAt);
 
         return (
-            <div className={styles.root} onClick={this.handleClickOutside}>
-                <div className={styles.wrapper} onClick={this.handleClickInside}>
+            <div onClick={this.handleClickOutside}>
+                <div onClick={this.handleClickInside}>
                     {this.renderImage()}
-                    <div className={styles.text}>{body}</div>
-                    <div className={styles['additional-info']}>
+                    <div>{body}</div>
+                    <div>
                         <div>{`Created at: ${date.toDateString()} by ${user.username}`}</div>
                         <div>
                             {`Liked ${likeCount} times`}
