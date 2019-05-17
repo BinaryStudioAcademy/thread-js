@@ -1,12 +1,13 @@
 import {
     createStore,
     applyMiddleware,
-    compose,
+    // compose,
     combineReducers
 } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import postReducer from './components/post/logic/postReducer';
 import profileReducer from './components/profile/logic/profileReducer';
@@ -20,7 +21,7 @@ const middlewares = [
     routerMiddleware(history)
 ];
 
-const composedEnhancers = compose(
+const composedEnhancers = composeWithDevTools(
     applyMiddleware(...middlewares)
 );
 

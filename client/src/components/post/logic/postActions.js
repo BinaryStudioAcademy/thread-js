@@ -23,18 +23,16 @@ export const addComment = request => async (dispatch) => {
 };
 
 export const likePost = postId => async (dispatch, getRootState) => {
-    const result = await postService.likePost(postId);
-    const { posts } = getRootState();
-    const newPosts = [...posts.posts];
-    const postIndex = newPosts.findIndex(post => post.id === postId);
-    const post = newPosts[postIndex];
-    const { likeCount } = post;
-    const diff = (result && result.id) ? 1 : -1;
-    const newLikeCount = Number(likeCount) + diff;
-    newPosts[postIndex] = Object.assign({}, post, {
-        likeCount: newLikeCount.toString()
-    });
-    dispatch({ type: SET_ALL_POSTS, posts: newPosts });
+    const { id } = await postService.likePost(postId);
+    const diff = id ? 1 : -1;
+
+    const { posts: { posts } } = getRootState();
+    const updated = posts.map(post => (post.id !== postId ? post : {
+        ...post,
+        likeCount: Number(post.likeCount) + diff
+    }));
+
+    dispatch({ type: SET_ALL_POSTS, posts: updated });
 };
 
 export const toggleExpandedPost = postId => async (dispatch, getRootState) => {

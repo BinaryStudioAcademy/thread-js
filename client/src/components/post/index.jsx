@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { likePost, toggleExpandedPost } from 'src/components/post/logic/postActions';
-
-import styles from './post.module.scss';
+import { Card, Image, Label, Icon } from 'semantic-ui-react';
+import moment from 'moment';
 
 class Post extends React.Component {
     handleClickOnLike = () => {
@@ -20,29 +20,48 @@ class Post extends React.Component {
     render() {
         const { post } = this.props;
         const {
-            user,
-            createdAt,
+            image,
             body,
+            user,
             likeCount,
             dislikeCount,
-            commentCount
+            commentCount,
+            createdAt
         } = post;
-        const date = new Date(createdAt);
+        const date = moment(createdAt).fromNow();
 
         return (
-            <div className={styles.root}>
-                <div className={styles.text}>{body}</div>
-                <div className={styles['additional-info']}>
-                    <div>{`Created at: ${date.toDateString()} by ${user.username}`}</div>
-                    <div>
-                        {`Liked ${likeCount} times`}
-                        <button type="button" onClick={this.handleClickOnLike}>Like!</button>
-                    </div>
-                    <div>{`Disliked ${dislikeCount} times`}</div>
-                    <div>{`Commented ${commentCount} times`}</div>
-                </div>
-                <button type="button" onClick={this.handleClickOnExpand}>Show more</button>
-            </div>
+            <Card style={{ width: 500 }}>
+                {image && <Image src={image.link} wrapped ui={false} />}
+                <Card.Content>
+                    <Card.Meta>
+                        <span className="date">
+                            posted by
+                            {' '}
+                            {user.username}
+                            {' - '}
+                            {date}
+                        </span>
+                    </Card.Meta>
+                    <Card.Description>
+                        {body}
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <Label basic size="tiny" as="a" onClick={this.handleClickOnLike}>
+                        <Icon name="thumbs up" />
+                        {likeCount}
+                    </Label>
+                    <Label basic size="tiny" as="a">
+                        <Icon name="thumbs down" />
+                        {dislikeCount}
+                    </Label>
+                    <Label basic size="tiny" as="a" onClick={this.handleClickOnExpand}>
+                        <Icon name="comment" />
+                        {commentCount}
+                    </Label>
+                </Card.Content>
+            </Card>
         );
     }
 }
