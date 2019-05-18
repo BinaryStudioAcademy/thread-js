@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
-// import Header from 'src/components/header';
+import Header from 'src/components/header';
 import Login from 'src/components/login';
 import Registration from 'src/components/registration';
 import SharedPost from 'src/components/sharedPost/index';
@@ -30,16 +30,15 @@ class App extends React.Component {
         }
     }
 
-    // <header>
-    //     <Header />
-    // </header>
-
     render() {
         const { isLoading } = this.props;
         return (
             !isLoading
                 ? (
                     <div className="fill">
+                        <header>
+                            <Header />
+                        </header>
                         <main className="fill">
                             <Switch>
                                 <Route exact path="/login" component={Login} />
