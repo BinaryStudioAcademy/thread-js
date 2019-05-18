@@ -1,25 +1,27 @@
 import * as postService from 'src/services/postService';
+import * as commentService from 'src/services/commentService';
 import {
-    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY, ADD_COMMENT, SET_SHARED_POST_INFO
+    ADD_POST, SET_ALL_POSTS, TOGGLE_EXPANDED_POST_VISIBILITY, SET_SHARED_POST_INFO
 } from './postActionTypes';
 
 export const addPost = request => async (dispatch) => {
-    const post = await postService.addPost(request);
-    if (post && post.id) {
-        const fullPostInfo = await postService.getPost(post.id);
-        dispatch({
-            type: ADD_POST,
-            post: fullPostInfo
-        });
-    }
+    const { id } = await postService.addPost(request);
+    const post = await postService.getPost(id);
+    dispatch({ type: ADD_POST, post });
 };
 
-export const addComment = request => async (dispatch) => {
-    // const comment = await postService.addComment(request);
-    dispatch({
-        type: ADD_COMMENT,
-        comment: request.body
-    });
+export const addComment = request => async (dispatch, getRootState) => {
+    const { id } = await commentService.addComment(request);
+    const comment = await commentService.getComment(id);
+
+    const { posts: { posts } } = getRootState();
+    const updated = posts.map(post => (post.id !== comment.postId ? post : {
+        ...post,
+        commentCount: Number(post.commentCount) + 1,
+        comments: [...(post.comments || []), comment]
+    }));
+
+    dispatch({ type: SET_ALL_POSTS, posts: updated });
 };
 
 export const likePost = postId => async (dispatch, getRootState) => {
@@ -35,24 +37,23 @@ export const likePost = postId => async (dispatch, getRootState) => {
     dispatch({ type: SET_ALL_POSTS, posts: updated });
 };
 
-export const toggleExpandedPost = postId => async (dispatch, getRootState) => {
-    const { posts } = getRootState();
-    const newValue = (posts.expandedPostId !== postId)
-        ? postId
-        : undefined;
-    dispatch({ type: TOGGLE_EXPANDED_POST_VISIBILITY, postId: newValue });
+export const toggleExpandedPost = postId => async (dispatch) => {
+    dispatch({
+        type: TOGGLE_EXPANDED_POST_VISIBILITY,
+        postId
+    });
 };
 
 export const loadPostComments = postId => async (dispatch, getRootState) => {
-    const fullPostInfo = await postService.getPost(postId);
-    const { posts } = getRootState();
-    const newPosts = [...posts.posts];
-    const postIndex = newPosts.findIndex(post => post.id === postId);
-    const post = newPosts[postIndex];
-    newPosts[postIndex] = Object.assign({}, post, {
-        comments: fullPostInfo.comments
-    });
-    dispatch({ type: SET_ALL_POSTS, posts: newPosts });
+    const { id, comments } = await postService.getPost(postId);
+    const { posts: { posts } } = getRootState();
+
+    const updated = posts.map(post => (post.id !== id ? post : {
+        ...post,
+        comments
+    }));
+
+    dispatch({ type: SET_ALL_POSTS, posts: updated });
 };
 
 export const getPostByHash = hash => async (dispatch) => {

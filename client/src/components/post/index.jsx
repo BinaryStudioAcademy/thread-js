@@ -6,13 +6,19 @@ import { likePost, toggleExpandedPost } from 'src/components/post/logic/postActi
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
+const styles = {
+    toolbarBtn: {
+        border: 'none'
+    }
+};
+
 class Post extends React.Component {
     handleClickOnLike = () => {
         const { id } = this.props.post;
         this.props.likePost(id);
     }
 
-    handleClickOnExpand = () => {
+    handleClickOnShowComments = () => {
         const { id } = this.props.post;
         this.props.toggleExpandedPost(id);
     }
@@ -31,7 +37,7 @@ class Post extends React.Component {
         const date = moment(createdAt).fromNow();
 
         return (
-            <Card style={{ width: 500 }}>
+            <Card style={{ width: '100%' }}>
                 {image && <Image src={image.link} wrapped ui={false} />}
                 <Card.Content>
                     <Card.Meta>
@@ -48,15 +54,15 @@ class Post extends React.Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Label basic size="tiny" as="a" onClick={this.handleClickOnLike}>
+                    <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={this.handleClickOnLike}>
                         <Icon name="thumbs up" />
                         {likeCount}
                     </Label>
-                    <Label basic size="tiny" as="a">
+                    <Label basic size="small" as="a" style={styles.toolbarBtn}>
                         <Icon name="thumbs down" />
                         {dislikeCount}
                     </Label>
-                    <Label basic size="tiny" as="a" onClick={this.handleClickOnExpand}>
+                    <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={this.handleClickOnShowComments}>
                         <Icon name="comment" />
                         {commentCount}
                     </Label>

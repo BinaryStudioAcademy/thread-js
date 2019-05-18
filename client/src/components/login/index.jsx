@@ -78,7 +78,7 @@ class Login extends React.Component {
                             <Segment>
                                 <Form.Input
                                     fluid
-                                    icon="mail"
+                                    icon="at"
                                     iconPosition="left"
                                     placeholder="Email"
                                     type="email"

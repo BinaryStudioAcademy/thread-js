@@ -11,7 +11,7 @@ class SharedPost extends React.Component {
         const { match } = this.props;
         const { params } = match;
         const { postHash } = params;
-        console.log(postHash);
+        console.log(match);
         this.props.getPostByHash('b91ff172-6967-4c09-9c01-f5c0520260fe'); // todo: send real hash, not post id
     }
 

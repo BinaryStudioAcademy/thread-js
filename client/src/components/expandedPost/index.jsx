@@ -2,11 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { likePost, loadPostComments, toggleExpandedPost } from 'src/components/post/logic/postActions';
+import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
+import { loadPostComments, toggleExpandedPost } from 'src/components/post/logic/postActions';
+import Post from 'src/components/post';
 import Comment from 'src/components/comment';
 import AddComment from 'src/components/addComment';
+import moment from 'moment';
 
 class ExpandedPost extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: true
+        };
+    }
+
     componentDidMount() {
         const { post } = this.props;
         if (post && !post.comments) {
@@ -14,73 +24,39 @@ class ExpandedPost extends React.Component {
         }
     }
 
-    handleClickOutside = () => {
-        const { postId } = this.props;
-        this.props.toggleExpandedPost(postId);
-    }
-
-    handleClickOnLike = () => {
-        const { id } = this.props.post;
-        this.props.likePost(id);
-    }
-
-    handleClickInside = (ev) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-    }
-
-    renderImage = () => {
-        const { post } = this.props;
-        const { image } = post;
-        const imgLink = image && image.link;
-        if (imgLink) {
-            return <img src={imgLink} alt="post" />;
-        }
-        return null;
+    closeModal = () => {
+        this.props.toggleExpandedPost();
     }
 
     render() {
         const { post } = this.props;
-        const {
-            user,
-            createdAt,
-            body,
-            likeCount,
-            dislikeCount,
-            commentCount,
-            comments
-        } = post;
-        const date = new Date(createdAt);
-
+        const { comments } = post;
         return (
-            <div onClick={this.handleClickOutside}>
-                <div onClick={this.handleClickInside}>
-                    {this.renderImage()}
-                    <div>{body}</div>
-                    <div>
-                        <div>{`Created at: ${date.toDateString()} by ${user.username}`}</div>
-                        <div>
-                            {`Liked ${likeCount} times`}
-                            <button type="button" onClick={this.handleClickOnLike}>Like!</button>
-                        </div>
-                        <div>{`Disliked ${dislikeCount} times`}</div>
-                        <div>{`Commented ${commentCount} times`}</div>
-                        {comments && comments.map(comment => (
-                            <Comment key={comment.id} comment={comment} />
-                        ))}
-                        {comments && <AddComment />}
-                    </div>
-                </div>
-            </div>
+            <Modal open={this.state.open} onClose={this.closeModal}>
+                <Modal.Content>
+                    <Post post={post} />
+                    <CommentUI.Group style={{ maxWidth: '100%' }}>
+                        <Header as="h3" dividing>
+                            Comments
+                        </Header>
+                        {
+                            comments
+                            && comments
+                                .sort((c1, c2) => moment(c1.createdAt).diff(c2.createdAt))
+                                .map(c => <Comment key={c.id} comment={c} />)
+                        }
+                        <AddComment postId={post.id} />
+                    </CommentUI.Group>
+                </Modal.Content>
+            </Modal>
         );
     }
 }
 
 ExpandedPost.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
-    toggleExpandedPost: PropTypes.func.isRequired,
-    likePost: PropTypes.func.isRequired,
     loadPostComments: PropTypes.func.isRequired,
+    toggleExpandedPost: PropTypes.func.isRequired,
     postId: PropTypes.string
 };
 
@@ -95,7 +71,7 @@ const mapStateToProps = (rootState, ownProps) => {
     return { post };
 };
 
-const actions = { likePost, toggleExpandedPost, loadPostComments };
+const actions = { loadPostComments, toggleExpandedPost };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

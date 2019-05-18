@@ -3,23 +3,29 @@ import { addPost } from 'src/components/post/logic/postActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Form, Button, Icon, Image } from 'semantic-ui-react';
 import * as imageService from 'src/services/imageService';
+
+const initialState = {
+    body: '',
+    imageId: undefined,
+    imageLink: undefined
+};
 
 class AddPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            post: '',
-            imageId: undefined,
-            imageLink: undefined
+            ...initialState
         };
     }
 
-    handleAddPost = () => {
-        this.props.addPost({
+    handleAddPost = async () => {
+        await this.props.addPost({
             imageId: this.state.imageId,
-            body: this.state.post
+            body: this.state.body
         });
+        this.setState(initialState);
     }
 
     loadFile = async (e) => {
@@ -31,14 +37,18 @@ class AddPost extends React.Component {
     }
 
     render() {
+        const { imageLink, body } = this.state;
         return (
-            <div>
-                Add post:
-                {this.state.imageLink && <img src={this.state.imageLink} alt="post" />}
-                <textarea onChange={ev => this.setState({ post: ev.target.value })} />
-                <input type="file" onChange={this.loadFile} />
-                <button type="button" onClick={this.handleAddPost}>Add Post</button>
-            </div>
+            <Form onSubmit={this.handleAddPost}>
+                <Form.TextArea placeholder="What is the news?" value={body} onChange={ev => this.setState({ body: ev.target.value })} />
+                {imageLink && <Image size="small" src={imageLink} alt="post" />}
+                <Button color="teal" icon labelPosition="left" as="label">
+                    <Icon name="image" />
+                    Attach image
+                    <input type="file" onChange={this.loadFile} hidden />
+                </Button>
+                <Button floated="right" color="blue" type="submit">Post</Button>
+            </Form>
         );
     }
 }
