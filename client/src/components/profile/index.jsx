@@ -5,10 +5,7 @@ import { getUserImgLink } from 'src/helpers/imageHelper';
 import {
     Grid,
     Image,
-    Input,
-    Button,
-    Segment,
-    Message
+    Input
 } from 'semantic-ui-react';
 
 
