@@ -6,15 +6,14 @@ import io from 'socket.io-client';
 
 import Thread from 'src/components/thread';
 import Profile from 'src/components/profile';
-import Header from 'src/components/header';
+import Header from 'src/components/Header';
 import Login from 'src/components/login';
 import Registration from 'src/components/registration';
 import SharedPost from 'src/components/sharedPost/index';
 import Spinner from 'src/components/common/spinner';
-import GenericNotFound from 'src/components/genericNotFound';
-
+import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/privateRoute';
-import { loadCurrentUser } from 'src/components/profile/logic/profileActions';
+import { loadCurrentUser, logout } from 'src/components/profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
 class App extends React.Component {
@@ -31,14 +30,16 @@ class App extends React.Component {
     }
 
     render() {
-        const { isLoading } = this.props;
+        const { isLoading, isAuthorized, user, ...props } = this.props;
         return (
             !isLoading
                 ? (
                     <div className="fill">
-                        <header>
-                            <Header />
-                        </header>
+                        {isAuthorized && (
+                            <header>
+                                <Header user={user} logout={props.logout} />
+                            </header>
+                        )}
                         <main className="fill">
                             <Switch>
                                 <Route exact path="/login" component={Login} />
@@ -46,7 +47,7 @@ class App extends React.Component {
                                 <PrivateRoute exact path="/" component={Thread} />
                                 <PrivateRoute exact path="/profile" component={Profile} />
                                 <PrivateRoute path="/share/:postHash" component={SharedPost} />
-                                <Route path="*" exact component={GenericNotFound} />
+                                <Route path="*" exact component={NotFound} />
                             </Switch>
                         </main>
                     </div>
@@ -57,19 +58,26 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    isAuthorized: PropTypes.bool,
+    logout: PropTypes.func.isRequired,
+    user: PropTypes.objectOf(PropTypes.any),
     isLoading: PropTypes.bool,
     loadCurrentUser: PropTypes.func.isRequired,
     userId: PropTypes.string,
 };
 
 App.defaultProps = {
+    isAuthorized: false,
+    user: {},
     isLoading: true,
     userId: undefined
 };
 
-const actions = { loadCurrentUser };
+const actions = { loadCurrentUser, logout };
 
 const mapStateToProps = rootState => ({
+    isAuthorized: rootState.profile.isAuthorized,
+    user: rootState.profile.user,
     isLoading: rootState.profile.isLoading,
     userId: rootState.profile.user && rootState.profile.user.id
 });

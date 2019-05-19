@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const GenericNotFound = () => (
+const NotFound = () => (
     <div>
         {'Page not found.'}
         {'Go to '}
@@ -10,4 +10,4 @@ const GenericNotFound = () => (
     </div>
 );
 
-export default GenericNotFound;
+export default NotFound;
