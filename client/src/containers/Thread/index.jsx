@@ -1,10 +1,11 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
-import ExpandedPost from 'src/components/ExpandedPost';
 import AddPost from 'src/components/AddPost';
 import PropTypes from 'prop-types';
+import { likePost, toggleExpandedPost } from 'src/components/Post/logic/postActions';
 import { loadAllPosts } from './logic/threadActions';
 import { getFilteredPosts } from './logic/threadHelper';
 
@@ -24,7 +25,7 @@ class Thread extends React.Component {
     }
 
     render() {
-        const { posts = [], userId, expandedPostId } = this.props;
+        const { posts = [], userId, expandedPostId, ...props } = this.props;
         const { postsType } = this.state;
         const filteredPosts = getFilteredPosts({ posts, postsType, currentUserId: userId });
         return (
@@ -35,7 +36,14 @@ class Thread extends React.Component {
                     <AddPost />
                 </div>
                 <div>
-                    {filteredPosts.map(post => <Post post={post} key={post.id} />)}
+                    {filteredPosts.map(post => (
+                        <Post
+                            post={post}
+                            likePost={props.likePost}
+                            toggleExpandedPost={props.toggleExpandedPost}
+                            key={post.id}
+                        />
+                    ))}
                 </div>
                 {expandedPostId && <ExpandedPost postId={expandedPostId} />}
             </div>
@@ -62,7 +70,7 @@ const mapStateToProps = rootState => ({
     userId: rootState.profile.user.id
 });
 
-const actions = { loadAllPosts };
+const actions = { loadAllPosts, likePost, toggleExpandedPost };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

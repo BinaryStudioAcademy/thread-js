@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
-import Thread from 'src/components/Thread';
+import Thread from 'src/containers/Thread';
 import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
 import Login from 'src/components/Login';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
-import { loadPostComments, toggleExpandedPost } from 'src/components/Post/logic/postActions';
+import { loadPostComments, likePost, toggleExpandedPost } from 'src/components/Post/logic/postActions';
 import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
@@ -29,12 +29,16 @@ class ExpandedPost extends React.Component {
     }
 
     render() {
-        const { post } = this.props;
+        const { post, ...props } = this.props;
         const { comments } = post;
         return (
             <Modal open={this.state.open} onClose={this.closeModal}>
                 <Modal.Content>
-                    <Post post={post} />
+                    <Post
+                        post={post}
+                        likePost={props.likePost}
+                        toggleExpandedPost={props.toggleExpandedPost}
+                    />
                     <CommentUI.Group style={{ maxWidth: '100%' }}>
                         <Header as="h3" dividing>
                             Comments
@@ -57,6 +61,7 @@ ExpandedPost.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
     loadPostComments: PropTypes.func.isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
+    likePost: PropTypes.func.isRequired,
     postId: PropTypes.string
 };
 
@@ -71,7 +76,7 @@ const mapStateToProps = (rootState, ownProps) => {
     return { post };
 };
 
-const actions = { loadPostComments, toggleExpandedPost };
+const actions = { loadPostComments, likePost, toggleExpandedPost };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
