@@ -1,4 +1,4 @@
-import { SET_ALL_POSTS } from 'src/components/post/logic/postActionTypes';
+import { SET_ALL_POSTS } from 'src/components/Post/logic/postActionTypes';
 import * as postService from 'src/services/postService';
 
 export const loadAllPosts = () => async (dispatch) => {

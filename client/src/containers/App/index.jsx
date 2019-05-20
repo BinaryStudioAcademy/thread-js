@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
-import Thread from 'src/components/thread';
-import Profile from 'src/components/profile';
+import Thread from 'src/components/Thread';
+import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
-import Login from 'src/components/login';
-import Registration from 'src/components/registration';
-import SharedPost from 'src/components/sharedPost/index';
-import Spinner from 'src/components/common/spinner';
+import Login from 'src/components/Login';
+import Registration from 'src/components/Registration';
+import SharedPost from 'src/components/SharedPost';
+import Spinner from 'src/components/common/Spinner';
 import NotFound from 'src/scenes/NotFound';
-import PrivateRoute from 'src/containers/privateRoute';
-import { loadCurrentUser, logout } from 'src/components/profile/logic/profileActions';
+import PrivateRoute from 'src/containers/PrivateRoute';
+import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
 class App extends React.Component {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { likePost, toggleExpandedPost } from 'src/components/post/logic/postActions';
+import { likePost, toggleExpandedPost } from 'src/components/Post/logic/postActions';
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 

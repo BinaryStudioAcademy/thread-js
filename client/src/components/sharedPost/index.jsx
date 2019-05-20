@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import Post from 'src/components/post';
-import Spinner from 'src/components/common/spinner';
-import { getPostByHash } from 'src/components/post/logic/postActions';
+import Post from 'src/components/Post';
+import Spinner from 'src/components/common/Spinner';
+import { getPostByHash } from 'src/components/Post/logic/postActions';
 
 class SharedPost extends React.Component {
     async componentDidMount() {
         const { match } = this.props;
         const { params } = match;
         const { postHash } = params;
-        console.log(match);
+        console.log(postHash);
         this.props.getPostByHash('b91ff172-6967-4c09-9c01-f5c0520260fe'); // todo: send real hash, not post id
     }
 

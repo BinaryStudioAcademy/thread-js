@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
-import { loadPostComments, toggleExpandedPost } from 'src/components/post/logic/postActions';
-import Post from 'src/components/post';
-import Comment from 'src/components/comment';
-import AddComment from 'src/components/addComment';
+import { loadPostComments, toggleExpandedPost } from 'src/components/Post/logic/postActions';
+import Post from 'src/components/Post';
+import Comment from 'src/components/Comment';
+import AddComment from 'src/components/AddComment';
 import moment from 'moment';
 
 class ExpandedPost extends React.Component {

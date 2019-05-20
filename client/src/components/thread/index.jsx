@@ -1,9 +1,9 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Post from 'src/components/post';
-import ExpandedPost from 'src/components/expandedPost';
-import AddPost from 'src/components/addPost';
+import Post from 'src/components/Post';
+import ExpandedPost from 'src/components/ExpandedPost';
+import AddPost from 'src/components/AddPost';
 import PropTypes from 'prop-types';
 import { loadAllPosts } from './logic/threadActions';
 import { getFilteredPosts } from './logic/threadHelper';

@@ -9,8 +9,8 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import postReducer from './components/post/logic/postReducer';
-import profileReducer from './components/profile/logic/profileReducer';
+import postReducer from './components/Post/logic/postReducer';
+import profileReducer from './components/Profile/logic/profileReducer';
 
 export const history = createBrowserHistory();
 
