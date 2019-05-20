@@ -11,7 +11,7 @@ import Login from 'src/components/Login';
 import Registration from 'src/components/Registration';
 import SharedPost from 'src/components/SharedPost';
 import Spinner from 'src/components/common/Spinner';
-import NotFound from 'src/scenes/NotFound';
+import NotFound from 'src/components/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
 import PropTypes from 'prop-types';
