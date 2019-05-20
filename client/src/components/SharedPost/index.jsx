@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Post from 'src/components/Post';
 import Spinner from 'src/components/common/Spinner';
-import { getPostByHash } from 'src/components/Post/logic/postActions';
+import { getPostByHash } from 'src/containers/Thread/actions';
 
 class SharedPost extends React.Component {
     async componentDidMount() {

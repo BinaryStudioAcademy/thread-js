@@ -1,5 +1,5 @@
 import React from 'react';
-import { addComment } from 'src/components/Post/logic/postActions';
+import { addComment } from 'src/containers/Thread/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';

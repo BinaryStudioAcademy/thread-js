@@ -5,9 +5,8 @@ import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
 import PropTypes from 'prop-types';
-import { likePost, toggleExpandedPost } from 'src/components/Post/logic/postActions';
-import { loadAllPosts } from './logic/threadActions';
-import { getFilteredPosts } from './logic/threadHelper';
+import { loadAllPosts, likePost, toggleExpandedPost } from './actions';
+import { getFilteredPosts } from './helper';
 
 import styles from './styles';
 

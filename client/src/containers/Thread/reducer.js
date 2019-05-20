@@ -2,7 +2,7 @@ import {
     SET_ALL_POSTS, ADD_POST,
     TOGGLE_EXPANDED_POST_VISIBILITY,
     SET_SHARED_POST_INFO
-} from './postActionTypes';
+} from './actionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {

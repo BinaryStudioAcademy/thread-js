@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import postReducer from './components/Post/logic/postReducer';
+import threadReducer from './containers/Thread/reducer';
 import profileReducer from './components/Profile/logic/profileReducer';
 
 export const history = createBrowserHistory();
@@ -26,7 +26,7 @@ const composedEnhancers = composeWithDevTools(
 );
 
 const reducers = {
-    posts: postReducer,
+    posts: threadReducer,
     profile: profileReducer,
 };
 
