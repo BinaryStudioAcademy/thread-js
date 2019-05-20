@@ -32,8 +32,9 @@ class App extends React.Component {
     render() {
         const { isLoading, isAuthorized, user, ...props } = this.props;
         return (
-            !isLoading
-                ? (
+            isLoading
+                ? <Spinner />
+                : (
                     <div className="fill">
                         {isAuthorized && (
                             <header>
@@ -52,7 +53,6 @@ class App extends React.Component {
                         </main>
                     </div>
                 )
-                : <Spinner />
         );
     }
 }

@@ -34,11 +34,7 @@ const Header = ({ user, logout }) => (
 
 Header.propTypes = {
     logout: PropTypes.func.isRequired,
-    user: PropTypes.objectOf(PropTypes.any)
-};
-
-Header.defaultProps = {
-    user: {}
+    user: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default Header;
