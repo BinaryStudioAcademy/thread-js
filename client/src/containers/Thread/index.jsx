@@ -5,7 +5,8 @@ import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
 import PropTypes from 'prop-types';
-import { loadAllPosts, likePost, toggleExpandedPost } from './actions';
+import * as imageService from 'src/services/imageService';
+import { loadAllPosts, likePost, toggleExpandedPost, addPost } from './actions';
 import { getFilteredPosts } from './helper';
 
 import styles from './styles';
@@ -23,6 +24,8 @@ class Thread extends React.Component {
         this.setState({ postsType });
     }
 
+    uploadImage = file => imageService.uploadImage(file);
+
     render() {
         const { posts = [], userId, expandedPostId, ...props } = this.props;
         const { postsType } = this.state;
@@ -32,7 +35,7 @@ class Thread extends React.Component {
                 <div onClick={() => this.showPosts('mine')}>My Posts</div>
                 <div onClick={() => this.showPosts('all')}>All Posts</div>
                 <div style={styles.addPostForm}>
-                    <AddPost />
+                    <AddPost addPost={props.addPost} uploadImage={this.uploadImage} />
                 </div>
                 <div>
                     {filteredPosts.map(post => (
@@ -52,9 +55,12 @@ class Thread extends React.Component {
 
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
-    loadAllPosts: PropTypes.func.isRequired,
     expandedPostId: PropTypes.string,
-    userId: PropTypes.string
+    userId: PropTypes.string,
+    loadAllPosts: PropTypes.func.isRequired,
+    likePost: PropTypes.func.isRequired,
+    toggleExpandedPost: PropTypes.func.isRequired,
+    addPost: PropTypes.func.isRequired
 };
 
 Thread.defaultProps = {
@@ -69,7 +75,12 @@ const mapStateToProps = rootState => ({
     userId: rootState.profile.user.id
 });
 
-const actions = { loadAllPosts, likePost, toggleExpandedPost };
+const actions = {
+    loadAllPosts,
+    likePost,
+    toggleExpandedPost,
+    addPost
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
