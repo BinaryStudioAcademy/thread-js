@@ -16,7 +16,7 @@ import PrivateRoute from 'src/containers/PrivateRoute';
 import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
-class App extends React.Component {
+class Routing extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
     }
@@ -57,7 +57,7 @@ class App extends React.Component {
     }
 }
 
-App.propTypes = {
+Routing.propTypes = {
     isAuthorized: PropTypes.bool,
     logout: PropTypes.func.isRequired,
     user: PropTypes.objectOf(PropTypes.any),
@@ -66,7 +66,7 @@ App.propTypes = {
     userId: PropTypes.string,
 };
 
-App.defaultProps = {
+Routing.defaultProps = {
     isAuthorized: false,
     user: {},
     isLoading: true,
@@ -87,4 +87,4 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(App);
+)(Routing);
