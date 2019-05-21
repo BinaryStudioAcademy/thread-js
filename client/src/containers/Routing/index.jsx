@@ -7,7 +7,7 @@ import Login from 'src/containers/Login';
 import Registration from 'src/containers/Registration';
 import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
-import SharedPost from 'src/components/SharedPost';
+import SharedPost from 'src/containers/SharedPost';
 import Spinner from 'src/components/common/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';

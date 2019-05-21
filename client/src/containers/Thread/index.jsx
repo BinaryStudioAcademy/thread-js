@@ -6,6 +6,7 @@ import * as imageService from 'src/services/imageService';
 import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
+import SharedPostLink from 'src/components/SharedPostLink';
 import { Checkbox } from 'semantic-ui-react';
 import { loadPosts, likePost, toggleExpandedPost, addPost } from './actions';
 
@@ -15,6 +16,7 @@ class Thread extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sharedPostId: undefined,
             showOwnPosts: false,
             postsFilter: {
                 userId: undefined,
@@ -33,13 +35,21 @@ class Thread extends React.Component {
                 userId: !showOwnPosts ? this.props.userId : undefined
             }
         }), () => this.props.loadPosts(this.state.postsFilter));
+    };
+
+    sharePost = (sharedPostId) => {
+        this.setState({ sharedPostId });
+    };
+
+    closeSharePost = () => {
+        this.setState({ sharedPostId: undefined });
     }
 
     uploadImage = file => imageService.uploadImage(file);
 
     render() {
         const { posts = [], expandedPostId, ...props } = this.props;
-        const { showOwnPosts } = this.state;
+        const { showOwnPosts, sharedPostId } = this.state;
         return (
             <div style={styles.threadContent}>
                 <div style={styles.threadContent}>
@@ -51,10 +61,15 @@ class Thread extends React.Component {
                         post={post}
                         likePost={props.likePost}
                         toggleExpandedPost={props.toggleExpandedPost}
+                        sharePost={this.sharePost}
                         key={post.id}
                     />
                 ))}
-                {expandedPostId && <ExpandedPost postId={expandedPostId} />}
+                {expandedPostId && <ExpandedPost postId={expandedPostId} sharePost={this.sharePost} />}
+                {
+                    sharedPostId
+                    && <SharedPostLink postId={sharedPostId} close={this.closeSharePost} />
+                }
             </div>
         );
     }
@@ -63,6 +78,7 @@ class Thread extends React.Component {
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
     expandedPostId: PropTypes.string,
+    sharedPostId: PropTypes.string,
     userId: PropTypes.string,
     loadPosts: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
@@ -73,6 +89,7 @@ Thread.propTypes = {
 Thread.defaultProps = {
     posts: [],
     expandedPostId: undefined,
+    sharedPostId: undefined,
     userId: undefined
 };
 

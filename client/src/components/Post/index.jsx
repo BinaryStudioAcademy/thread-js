@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import styles from './styles';
 
-const Post = ({ post, likePost, toggleExpandedPost }) => {
+const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
     const {
         id,
         image,
@@ -48,6 +48,9 @@ const Post = ({ post, likePost, toggleExpandedPost }) => {
                     <Icon name="comment" />
                     {commentCount}
                 </Label>
+                <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={() => sharePost(id)}>
+                    <Icon name="share alternate" />
+                </Label>
             </Card.Content>
         </Card>
     );
@@ -57,7 +60,8 @@ const Post = ({ post, likePost, toggleExpandedPost }) => {
 Post.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
     likePost: PropTypes.func.isRequired,
-    toggleExpandedPost: PropTypes.func.isRequired
+    toggleExpandedPost: PropTypes.func.isRequired,
+    sharePost: PropTypes.func.isRequired
 };
 
 export default Post;
