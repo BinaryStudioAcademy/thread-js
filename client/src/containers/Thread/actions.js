@@ -21,13 +21,23 @@ const toogleExpandedPostAction = postId => ({
     postId
 });
 
-export const loadPosts = filter => async (dispatch) => {
+export const loadPosts = filter => async (dispatch, getRootState) => {
     const posts = await postService.getAllPosts(filter);
-    dispatch(setPostsAction(posts));
+    const { from } = filter;
+    const rootState = getRootState();
+    const prevPosts = (rootState.posts && rootState.posts.posts) || [];
+    posts.forEach((post, index) => {
+        prevPosts[index + from] = post;
+    });
+    dispatch(setPostsAction(prevPosts));
 };
 
-export const addPost = request => async (dispatch) => {
-    const { id } = await postService.addPost(request);
+export const applyPost = id => async (dispatch) => {
+    const post = await postService.getPost(id);
+    dispatch(addPostAction(post));
+};
+
+export const addPost = id => async (dispatch) => {
     const post = await postService.getPost(id);
     dispatch(addPostAction(post));
 };

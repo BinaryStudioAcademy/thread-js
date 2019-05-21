@@ -13,6 +13,7 @@ import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';
 import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
+import { applyPost } from 'src/containers/Thread/actions';
 import PropTypes from 'prop-types';
 
 class Routing extends React.Component {
@@ -42,7 +43,7 @@ class Routing extends React.Component {
                                 <Route path="*" exact component={NotFound} />
                             </Switch>
                         </main>
-                        <Notifications user={user} />
+                        <Notifications applyPost={this.props.applyPost} user={user} />
                     </div>
                 )
         );
@@ -52,6 +53,7 @@ class Routing extends React.Component {
 Routing.propTypes = {
     isAuthorized: PropTypes.bool,
     logout: PropTypes.func.isRequired,
+    applyPost: PropTypes.func.isRequired,
     user: PropTypes.objectOf(PropTypes.any),
     isLoading: PropTypes.bool,
     loadCurrentUser: PropTypes.func.isRequired,
@@ -65,7 +67,7 @@ Routing.defaultProps = {
     userId: undefined
 };
 
-const actions = { loadCurrentUser, logout };
+const actions = { loadCurrentUser, logout, applyPost };
 
 const mapStateToProps = rootState => ({
     isAuthorized: rootState.profile.isAuthorized,
