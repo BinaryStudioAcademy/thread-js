@@ -30,7 +30,6 @@
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "2.1.8",
-    "react-virtualized": "^9.21.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
