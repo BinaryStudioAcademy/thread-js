@@ -1,12 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as imageService from 'src/services/imageService';
 import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
-import PropTypes from 'prop-types';
-import * as imageService from 'src/services/imageService';
-import { loadAllPosts, likePost, toggleExpandedPost, addPost } from './actions';
+import { loadPosts, likePost, toggleExpandedPost, addPost } from './actions';
 import { getFilteredPosts } from './helper';
 
 import styles from './styles';
@@ -14,7 +14,7 @@ import styles from './styles';
 class Thread extends React.Component {
     constructor(props) {
         super(props);
-        this.props.loadAllPosts();
+        this.props.loadPosts();
         this.state = {
             postsType: 'all'
         };
@@ -57,7 +57,7 @@ Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
     expandedPostId: PropTypes.string,
     userId: PropTypes.string,
-    loadAllPosts: PropTypes.func.isRequired,
+    loadPosts: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
     addPost: PropTypes.func.isRequired
@@ -76,7 +76,7 @@ const mapStateToProps = rootState => ({
 });
 
 const actions = {
-    loadAllPosts,
+    loadPosts,
     likePost,
     toggleExpandedPost,
     addPost
