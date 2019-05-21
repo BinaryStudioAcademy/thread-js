@@ -48,49 +48,48 @@ export const addPost = post => async (dispatch) => {
     dispatch(addPostAction(newPost));
 };
 
+export const toggleExpandedPost = postId => async (dispatch) => {
+    const post = postId ? await postService.getPost(postId) : undefined;
+    dispatch(setExpandedPostAction(post));
+};
+
 export const likePost = postId => async (dispatch, getRootState) => {
     const { id } = await postService.likePost(postId);
     const diff = id ? 1 : -1; // if ID exists then the post was liked otherwise - disliked
 
-    const { posts: { posts, expandedPost } } = getRootState();
-    const updated = posts.map(post => (post.id !== postId ? post : {
+    const mapLikes = post => ({
         ...post,
-        likeCount: Number(post.likeCount) + diff
-    }));
+        likeCount: Number(post.likeCount) + diff // diff is taken from the current closure
+    });
+
+    const { posts: { posts, expandedPost } } = getRootState();
+    const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
 
     dispatch(setPostsAction(updated));
 
     if (expandedPost && expandedPost.id === postId) {
-        dispatch(setExpandedPostAction({
-            ...expandedPost,
-            likeCount: Number(expandedPost.likeCount) + diff
-        }));
+        dispatch(setExpandedPostAction(mapLikes(expandedPost)));
     }
-};
-
-export const toggleExpandedPost = postId => async (dispatch) => {
-    const post = postId ? await postService.getPost(postId) : undefined;
-    dispatch(setExpandedPostAction(post));
 };
 
 export const addComment = request => async (dispatch, getRootState) => {
     const { id } = await commentService.addComment(request);
     const comment = await commentService.getComment(id);
 
-    const { posts: { posts, expandedPost } } = getRootState();
-    const updated = posts.map(post => (post.id !== comment.postId ? post : {
+    const mapComments = post => ({
         ...post,
         commentCount: Number(post.commentCount) + 1,
-        comments: [...(post.comments || []), comment]
-    }));
+        comments: [...(post.comments || []), comment] // comment is taken from the current closure
+    });
 
-    if (expandedPost && expandedPost.id === comment.postId) {
-        dispatch(setExpandedPostAction({
-            ...expandedPost,
-            commentCount: Number(expandedPost.commentCount) + 1,
-            comments: [...(expandedPost.comments || []), comment]
-        }));
-    }
+    const { posts: { posts, expandedPost } } = getRootState();
+    const updated = posts.map(post => (post.id !== comment.postId
+        ? post
+        : mapComments(post)));
 
     dispatch(setPostsAction(updated));
+
+    if (expandedPost && expandedPost.id === comment.postId) {
+        dispatch(setExpandedPostAction(mapComments(expandedPost)));
+    }
 };
