@@ -3,15 +3,15 @@ import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Thread from 'src/containers/Thread';
+import Login from 'src/containers/Login';
+import Registration from 'src/containers/Registration';
 import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
-import Login from 'src/components/Login';
-import Registration from 'src/components/Registration';
 import SharedPost from 'src/components/SharedPost';
 import Spinner from 'src/components/common/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
-import Notifications from 'src/components/Notifications'
+import Notifications from 'src/components/Notifications';
 import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
