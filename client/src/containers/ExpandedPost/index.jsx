@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
-import { loadPostComments, likePost, toggleExpandedPost } from 'src/containers/Thread/actions';
+import { loadPostComments, likePost, toggleExpandedPost, addComment } from 'src/containers/Thread/actions';
 import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
@@ -49,7 +49,7 @@ class ExpandedPost extends React.Component {
                                 .sort((c1, c2) => moment(c1.createdAt).diff(c2.createdAt))
                                 .map(c => <Comment key={c.id} comment={c} />)
                         }
-                        <AddComment postId={post.id} />
+                        <AddComment postId={post.id} addComment={props.addComment} />
                     </CommentUI.Group>
                 </Modal.Content>
             </Modal>
@@ -62,6 +62,7 @@ ExpandedPost.propTypes = {
     loadPostComments: PropTypes.func.isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
+    addComment: PropTypes.func.isRequired,
     postId: PropTypes.string
 };
 
@@ -76,7 +77,7 @@ const mapStateToProps = (rootState, ownProps) => {
     return { post };
 };
 
-const actions = { loadPostComments, likePost, toggleExpandedPost };
+const actions = { loadPostComments, likePost, toggleExpandedPost, addComment };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
