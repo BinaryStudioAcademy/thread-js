@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import Thread from 'src/containers/Thread';
 import Login from 'src/containers/Login';
 import Registration from 'src/containers/Registration';
-import Profile from 'src/components/Profile';
+import Profile from 'src/containers/Profile';
 import Header from 'src/components/Header';
 import SharedPost from 'src/containers/SharedPost';
 import Spinner from 'src/components/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';
-import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
+import { loadCurrentUser, logout } from 'src/containers/Profile/logic/profileActions';
 import { applyPost } from 'src/containers/Thread/actions';
 import PropTypes from 'prop-types';
 

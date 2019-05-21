@@ -12,7 +12,6 @@ class Notifications extends React.Component {
         this.initSocket();
     }
 
-
     componentDidUpdate() {
         this.initSocket();
     }

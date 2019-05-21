@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { registration } from 'src/components/Profile/logic/profileActions';
+import { registration } from 'src/containers/Profile/logic/profileActions';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
