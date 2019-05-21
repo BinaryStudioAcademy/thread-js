@@ -1,7 +1,7 @@
 import postRepository from '../../data/repositories/post.repository';
 import postReactionRepository from '../../data/repositories/post-reaction.repository';
 
-export const getPosts = (from, count) => postRepository.getPosts(from, count);
+export const getPosts = filter => postRepository.getPosts(filter);
 
 export const getPostById = id => postRepository.getPostById(id);
 

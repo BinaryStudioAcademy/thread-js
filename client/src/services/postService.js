@@ -1,9 +1,10 @@
 import callWebApi from 'src/helpers/webApiHelper';
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (filter) => {
     const response = await callWebApi({
         endpoint: '/api/posts',
-        type: 'GET'
+        type: 'GET',
+        query: filter
     });
     return response.json();
 };

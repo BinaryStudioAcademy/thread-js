@@ -6,47 +6,54 @@ import * as imageService from 'src/services/imageService';
 import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
+import { Checkbox } from 'semantic-ui-react';
 import { loadPosts, likePost, toggleExpandedPost, addPost } from './actions';
-import { getFilteredPosts } from './helper';
 
 import styles from './styles';
 
 class Thread extends React.Component {
     constructor(props) {
         super(props);
-        this.props.loadPosts();
         this.state = {
-            postsType: 'all'
+            showOwnPosts: false,
+            postsFilter: {
+                userId: undefined,
+                from: 0,
+                count: 10
+            }
         };
+        this.props.loadPosts(this.state.postsFilter);
     }
 
-    showPosts = (postsType) => {
-        this.setState({ postsType });
+    tooglePosts = () => {
+        this.setState(({ showOwnPosts, postsFilter }) => ({
+            showOwnPosts: !showOwnPosts,
+            postsFilter: {
+                ...postsFilter,
+                userId: !showOwnPosts ? this.props.userId : undefined
+            }
+        }), () => this.props.loadPosts(this.state.postsFilter));
     }
 
     uploadImage = file => imageService.uploadImage(file);
 
     render() {
-        const { posts = [], userId, expandedPostId, ...props } = this.props;
-        const { postsType } = this.state;
-        const filteredPosts = getFilteredPosts({ posts, postsType, currentUserId: userId });
+        const { posts = [], expandedPostId, ...props } = this.props;
+        const { showOwnPosts } = this.state;
         return (
             <div style={styles.threadContent}>
-                <div onClick={() => this.showPosts('mine')}>My Posts</div>
-                <div onClick={() => this.showPosts('all')}>All Posts</div>
-                <div style={styles.addPostForm}>
+                <div style={styles.threadContent}>
                     <AddPost addPost={props.addPost} uploadImage={this.uploadImage} />
                 </div>
-                <div>
-                    {filteredPosts.map(post => (
-                        <Post
-                            post={post}
-                            likePost={props.likePost}
-                            toggleExpandedPost={props.toggleExpandedPost}
-                            key={post.id}
-                        />
-                    ))}
-                </div>
+                <Checkbox toggle label="Show only my posts" checked={showOwnPosts} onChange={this.tooglePosts} />
+                {posts.map(post => (
+                    <Post
+                        post={post}
+                        likePost={props.likePost}
+                        toggleExpandedPost={props.toggleExpandedPost}
+                        key={post.id}
+                    />
+                ))}
                 {expandedPostId && <ExpandedPost postId={expandedPostId} />}
             </div>
         );

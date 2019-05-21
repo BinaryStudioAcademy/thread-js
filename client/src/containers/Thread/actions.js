@@ -22,8 +22,8 @@ const toogleExpandedPostAction = postId => ({
     postId
 });
 
-export const loadPosts = () => async (dispatch) => {
-    const posts = await postService.getAllPosts();
+export const loadPosts = filter => async (dispatch) => {
+    const posts = await postService.getAllPosts(filter);
     dispatch(setPostsAction(posts));
 };
 

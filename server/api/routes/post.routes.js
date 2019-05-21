@@ -4,7 +4,7 @@ import * as postService from '../services/post.service';
 const router = Router();
 
 router
-    .get('/', (req, res, next) => postService.getPosts(req.query.from, req.query.count)
+    .get('/', (req, res, next) => postService.getPosts(req.query)
         .then(posts => res.send(posts))
         .catch(next))
     .get('/:id', (req, res, next) => postService.getPostById(req.params.id)

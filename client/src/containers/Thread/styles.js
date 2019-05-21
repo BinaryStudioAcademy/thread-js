@@ -1,9 +1,9 @@
 export default {
     threadContent: {
         width: 500,
-        margin: '0 auto'
+        margin: '20px auto'
     },
     addPostForm: {
-        marginBottom: 20
+        margin: '20px 0'
     }
 };

@@ -5,8 +5,20 @@ import BaseRepository from './base.repository';
 const likeCase = bool => `CASE WHEN "postReactions"."isLike" = ${bool} THEN 1 ELSE 0 END`;
 
 class PostRepository extends BaseRepository {
-    async getPosts(offset, limit) {
+    async getPosts(filter) {
+        const {
+            from: offset,
+            count: limit,
+            userId
+        } = filter;
+
+        const where = {};
+        if (userId) {
+            Object.assign(where, { userId });
+        }
+
         return this.model.findAll({
+            where,
             attributes: {
                 include: [
                     [sequelize.literal(`
