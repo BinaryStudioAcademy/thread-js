@@ -10,7 +10,7 @@ import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import threadReducer from './containers/Thread/reducer';
-import profileReducer from './containers/Profile/logic/profileReducer';
+import profileReducer from './containers/Profile/reducer';
 
 export const history = createBrowserHistory();
 

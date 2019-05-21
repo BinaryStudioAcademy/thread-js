@@ -1,5 +1,5 @@
 import * as authService from 'src/services/authService';
-import { SET_USER, SET_IS_LOADING } from './profileActionTypes';
+import { SET_USER, SET_IS_LOADING } from './actionTypes';
 
 const setToken = token => localStorage.setItem('token', token);
 

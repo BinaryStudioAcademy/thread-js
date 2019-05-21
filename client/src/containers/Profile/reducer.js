@@ -1,4 +1,4 @@
-import { SET_USER, SET_IS_LOADING } from './profileActionTypes';
+import { SET_USER, SET_IS_LOADING } from './actionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {

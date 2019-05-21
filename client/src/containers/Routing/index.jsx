@@ -12,7 +12,7 @@ import Spinner from 'src/components/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';
-import { loadCurrentUser, logout, login, registration } from 'src/containers/Profile/logic/profileActions';
+import { loadCurrentUser, logout, login, registration } from 'src/containers/Profile/actions';
 import { applyPost } from 'src/containers/Thread/actions';
 import PropTypes from 'prop-types';
 
