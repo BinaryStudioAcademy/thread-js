@@ -8,7 +8,7 @@ import Registration from 'src/containers/Registration';
 import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
 import SharedPost from 'src/containers/SharedPost';
-import Spinner from 'src/components/common/Spinner';
+import Spinner from 'src/components/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';

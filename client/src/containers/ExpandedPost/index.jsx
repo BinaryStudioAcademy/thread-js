@@ -8,7 +8,7 @@ import { likePost, toggleExpandedPost, addComment } from 'src/containers/Thread/
 import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
-import Spinner from 'src/components/common/Spinner';
+import Spinner from 'src/components/Spinner';
 import styles from './styles';
 
 class ExpandedPost extends React.Component {
