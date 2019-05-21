@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
-
 import Thread from 'src/containers/Thread';
 import Profile from 'src/components/Profile';
 import Header from 'src/components/Header';
@@ -13,20 +11,13 @@ import SharedPost from 'src/components/SharedPost';
 import Spinner from 'src/components/common/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
+import Notifications from 'src/components/Notifications'
 import { loadCurrentUser, logout } from 'src/components/Profile/logic/profileActions';
 import PropTypes from 'prop-types';
 
 class Routing extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
-    }
-
-    componentDidUpdate(prevProps) {
-        const { userId } = this.props;
-        if (userId && userId !== prevProps.userId) {
-            const socket = io('http://localhost:3002');
-            socket.emit('createRoom', 'userId');
-        }
     }
 
     render() {
@@ -51,6 +42,7 @@ class Routing extends React.Component {
                                 <Route path="*" exact component={NotFound} />
                             </Switch>
                         </main>
+                        <Notifications user={user} />
                     </div>
                 )
         );

@@ -10,6 +10,8 @@ import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import routesWhiteList from './config/routes-white-list.config';
+import socketInjector from './socket/injector';
+import socketHandlers from './socket/handlers';
 
 import './config/passport.config';
 
@@ -19,12 +21,17 @@ const app = express();
 const httpServer = http.Server(app);
 const io = socketIO(httpServer);
 
+io.on('connection', socketHandlers);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
+
+app.use(socketInjector(io));
+
 app.use('/api/', authorizationMiddleware(routesWhiteList));
 
-routes(app);
+routes(app, io);
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
@@ -40,12 +47,5 @@ app.listen(process.env.APP_PORT, () => {
     console.log(`Server listening on port ${process.env.APP_PORT}!`);
 });
 
-io.on('connection', (socket) => {
-    socket.on('createRoom', (roomId) => {
-        // eslint-disable-next-line no-console
-        console.log(`Room ${roomId} was joined`);
-        socket.join(roomId);
-    });
-});
 
 httpServer.listen(3002);

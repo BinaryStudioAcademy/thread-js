@@ -11,10 +11,16 @@ router
         .then(post => res.send(post))
         .catch(next))
     .post('/', (req, res, next) => postService.create(req.user.id, req.body)
-        .then(post => res.send(post))
+        .then((post) => {
+            req.io.emit('new_post', post.userId);
+            return res.send(post);
+        })
         .catch(next))
     .put('/react', (req, res, next) => postService.setReaction(req.user.id, req.body)
-        .then(reaction => res.send(reaction))
+        .then((reaction) => {
+            req.io.to(req.user.id).emit('like', 'Your post was liked!');
+            return res.send(reaction);
+        })
         .catch(next));
 
 export default router;
