@@ -1,7 +1,4 @@
 import React from 'react';
-import { addComment } from 'src/containers/Thread/actions';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 
@@ -13,18 +10,17 @@ class AddComment extends React.Component {
         };
     }
 
-    handleAddPost = async () => {
-        await this.props.addComment({
-            postId: this.props.postId,
-            body: this.state.body
-        });
+    handleAddComment = async () => {
+        const { body } = this.state;
+        const { postId } = this.props;
+        await this.props.addComment({ postId, body });
         this.setState({ body: '' });
     }
 
     render() {
         const { body } = this.state;
         return (
-            <Form reply onSubmit={this.handleAddPost}>
+            <Form reply onSubmit={this.handleAddComment}>
                 <Form.TextArea
                     value={body}
                     placeholder="Type a comment..."
@@ -41,13 +37,4 @@ AddComment.propTypes = {
     postId: PropTypes.string.isRequired
 };
 
-const actions = {
-    addComment
-};
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(
-    undefined,
-    mapDispatchToProps
-)(AddComment);
+export default AddComment;
