@@ -4,6 +4,9 @@ export default {
         margin: '20px auto'
     },
     addPostForm: {
+        marginTop: 20
+    },
+    toolbar: {
         margin: '20px 0'
     }
 };

@@ -2,12 +2,18 @@ import * as postService from 'src/services/postService';
 import * as commentService from 'src/services/commentService';
 import {
     ADD_POST,
+    LOAD_MORE_POSTS,
     SET_ALL_POSTS,
     TOGGLE_EXPANDED_POST_VISIBILITY
 } from './actionTypes';
 
 const setPostsAction = posts => ({
     type: SET_ALL_POSTS,
+    posts
+});
+
+const addMorePostsAction = posts => ({
+    type: LOAD_MORE_POSTS,
     posts
 });
 
@@ -21,15 +27,14 @@ const toogleExpandedPostAction = postId => ({
     postId
 });
 
-export const loadPosts = filter => async (dispatch, getRootState) => {
+export const loadPosts = filter => async (dispatch) => {
     const posts = await postService.getAllPosts(filter);
-    const { from } = filter;
-    const rootState = getRootState();
-    const prevPosts = (rootState.posts && rootState.posts.posts) || [];
-    posts.forEach((post, index) => {
-        prevPosts[index + from] = post;
-    });
-    dispatch(setPostsAction(prevPosts));
+    dispatch(setPostsAction(posts));
+};
+
+export const loadMorePosts = filter => async (dispatch) => {
+    const posts = await postService.getAllPosts(filter);
+    dispatch(addMorePostsAction(posts));
 };
 
 export const applyPost = id => async (dispatch) => {

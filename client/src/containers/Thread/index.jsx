@@ -7,37 +7,44 @@ import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
 import SharedPostLink from 'src/components/SharedPostLink';
-import { Checkbox } from 'semantic-ui-react';
-import { loadPosts, likePost, toggleExpandedPost, addPost } from './actions';
+import { Checkbox, Loader } from 'semantic-ui-react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { loadPosts, loadMorePosts, likePost, toggleExpandedPost, addPost } from './actions';
 
 import styles from './styles';
-import 'react-virtualized/styles.css';
 
 class Thread extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             sharedPostId: undefined,
-            showOwnPosts: false,
-            postsFilter: {
-                userId: undefined,
-                from: 0,
-                count: 10
-            }
+            showOwnPosts: false
         };
-        this.props.loadPosts(this.state.postsFilter);
+        this.postsFilter = {
+            userId: undefined,
+            from: 0,
+            count: 10
+        };
     }
 
     tooglePosts = () => {
-        this.setState(({ showOwnPosts, postsFilter }) => ({
-            showOwnPosts: !showOwnPosts,
-            postsFilter: {
-                ...postsFilter,
-                userId: !showOwnPosts ? this.props.userId : undefined
+        this.setState(
+            ({ showOwnPosts }) => ({ showOwnPosts: !showOwnPosts }),
+            () => {
+                Object.assign(this.postsFilter, {
+                    userId: this.state.showOwnPosts ? this.props.userId : undefined,
+                    from: 0
+                });
+                this.props.loadPosts(this.postsFilter);
             }
-        }), () => this.props.loadPosts(this.state.postsFilter));
+        );
     };
+
+    loadMorePosts = () => {
+        this.props.loadMorePosts(this.postsFilter);
+        const { from, count } = this.postsFilter;
+        this.postsFilter.from = from + count;
+    }
 
     sharePost = (sharedPostId) => {
         this.setState({ sharedPostId });
@@ -51,23 +58,32 @@ class Thread extends React.Component {
 
 
     render() {
-        const { posts = [], expandedPostId, ...props } = this.props;
+        const { posts = [], expandedPostId, hasMorePosts, ...props } = this.props;
         const { showOwnPosts, sharedPostId } = this.state;
         return (
             <div style={styles.threadContent}>
                 <div style={styles.addPostForm}>
                     <AddPost addPost={props.addPost} uploadImage={this.uploadImage} />
                 </div>
-                <Checkbox toggle label="Show only my posts" checked={showOwnPosts} onChange={this.tooglePosts} />
-                {posts.map(post => (
-                    <Post
-                        post={post}
-                        likePost={props.likePost}
-                        toggleExpandedPost={props.toggleExpandedPost}
-                        sharePost={this.sharePost}
-                        key={post.id}
-                    />
-                ))}
+                <div style={styles.toolbar}>
+                    <Checkbox toggle label="Show only my posts" checked={showOwnPosts} onChange={this.tooglePosts} />
+                </div>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={this.loadMorePosts}
+                    hasMore={hasMorePosts}
+                    loader={<Loader active inline="centered" key={0} />}
+                >
+                    {posts.map(post => (
+                        <Post
+                            post={post}
+                            likePost={props.likePost}
+                            toggleExpandedPost={props.toggleExpandedPost}
+                            sharePost={this.sharePost}
+                            key={post.id}
+                        />
+                    ))}
+                </InfiniteScroll>
                 {
                     expandedPostId
                     && <ExpandedPost postId={expandedPostId} sharePost={this.sharePost} />
@@ -83,10 +99,12 @@ class Thread extends React.Component {
 
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
+    hasMorePosts: PropTypes.bool,
     expandedPostId: PropTypes.string,
     sharedPostId: PropTypes.string,
     userId: PropTypes.string,
     loadPosts: PropTypes.func.isRequired,
+    loadMorePosts: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
     addPost: PropTypes.func.isRequired
@@ -94,6 +112,7 @@ Thread.propTypes = {
 
 Thread.defaultProps = {
     posts: [],
+    hasMorePosts: true,
     expandedPostId: undefined,
     sharedPostId: undefined,
     userId: undefined
@@ -101,12 +120,14 @@ Thread.defaultProps = {
 
 const mapStateToProps = rootState => ({
     posts: rootState.posts.posts,
+    hasMorePosts: rootState.posts.hasMorePosts,
     expandedPostId: rootState.posts.expandedPostId,
     userId: rootState.profile.user.id
 });
 
 const actions = {
     loadPosts,
+    loadMorePosts,
     likePost,
     toggleExpandedPost,
     addPost

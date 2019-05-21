@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import styles from './styles';
 
-const Post = ({ post, likePost, toggleExpandedPost, sharePost, style, key }) => {
+const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
     const {
         id,
         image,
@@ -19,7 +19,7 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost, style, key }) => 
     const date = moment(createdAt).fromNow();
 
     return (
-        <Card style={{ ...style, width: '100%' }} key={key}>
+        <Card style={{ width: '100%' }}>
             {image && <Image src={image.link} wrapped ui={false} />}
             <Card.Content>
                 <Card.Meta>
@@ -61,14 +61,7 @@ Post.propTypes = {
     post: PropTypes.objectOf(PropTypes.any).isRequired,
     likePost: PropTypes.func.isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
-    sharePost: PropTypes.func.isRequired,
-    style: PropTypes.objectOf(PropTypes.any),
-    key: PropTypes.string
-};
-
-Post.defaultProps = {
-    style: {},
-    key: undefined
+    sharePost: PropTypes.func.isRequired
 };
 
 export default Post;
