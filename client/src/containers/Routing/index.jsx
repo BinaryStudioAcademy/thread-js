@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Thread from 'src/containers/Thread';
 import Login from 'src/components/Login';
-import Registration from 'src/containers/Registration';
+import Registration from 'src/components/Registration';
 import Profile from 'src/containers/Profile';
 import Header from 'src/components/Header';
 import SharedPost from 'src/containers/SharedPost';
@@ -12,7 +12,7 @@ import Spinner from 'src/components/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';
-import { loadCurrentUser, logout, login } from 'src/containers/Profile/logic/profileActions';
+import { loadCurrentUser, logout, login, registration } from 'src/containers/Profile/logic/profileActions';
 import { applyPost } from 'src/containers/Thread/actions';
 import PropTypes from 'prop-types';
 
@@ -20,6 +20,18 @@ class Routing extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
     }
+
+    renderLogin = loginProps => (
+        <Login {...loginProps} isAuthorized={this.props.isAuthorized} login={this.props.login} />
+    );
+
+    renderRegistration = regProps => (
+        <Registration
+            {...regProps}
+            isAuthorized={this.props.isAuthorized}
+            registration={this.props.registration}
+        />
+    );
 
     render() {
         const { isLoading, isAuthorized, user, ...props } = this.props;
@@ -35,12 +47,8 @@ class Routing extends React.Component {
                         )}
                         <main className="fill">
                             <Switch>
-                                <Route
-                                    exact
-                                    path="/login"
-                                    render={loginProps => <Login {...loginProps} isAuthorized={isAuthorized} login={props.login} />}
-                                />
-                                <Route exact path="/registration" component={Registration} />
+                                <Route exact path="/login" render={this.renderLogin} />
+                                <Route exact path="/registration" render={this.renderRegistration} />
                                 <PrivateRoute exact path="/" component={Thread} />
                                 <PrivateRoute exact path="/profile" component={Profile} />
                                 <PrivateRoute path="/share/:postHash" component={SharedPost} />
@@ -58,6 +66,7 @@ Routing.propTypes = {
     isAuthorized: PropTypes.bool,
     logout: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
+    registration: PropTypes.func.isRequired,
     applyPost: PropTypes.func.isRequired,
     user: PropTypes.objectOf(PropTypes.any),
     isLoading: PropTypes.bool,
@@ -72,7 +81,7 @@ Routing.defaultProps = {
     userId: undefined
 };
 
-const actions = { loadCurrentUser, login, logout, applyPost };
+const actions = { loadCurrentUser, login, logout, registration, applyPost };
 
 const mapStateToProps = rootState => ({
     isAuthorized: rootState.profile.isAuthorized,
