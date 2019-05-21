@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Thread from 'src/containers/Thread';
-import Login from 'src/containers/Login';
+import Login from 'src/components/Login';
 import Registration from 'src/containers/Registration';
 import Profile from 'src/containers/Profile';
 import Header from 'src/components/Header';
@@ -12,7 +12,7 @@ import Spinner from 'src/components/Spinner';
 import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import Notifications from 'src/components/Notifications';
-import { loadCurrentUser, logout } from 'src/containers/Profile/logic/profileActions';
+import { loadCurrentUser, logout, login } from 'src/containers/Profile/logic/profileActions';
 import { applyPost } from 'src/containers/Thread/actions';
 import PropTypes from 'prop-types';
 
@@ -35,7 +35,11 @@ class Routing extends React.Component {
                         )}
                         <main className="fill">
                             <Switch>
-                                <Route exact path="/login" component={Login} />
+                                <Route
+                                    exact
+                                    path="/login"
+                                    render={loginProps => <Login {...loginProps} isAuthorized={isAuthorized} login={props.login} />}
+                                />
                                 <Route exact path="/registration" component={Registration} />
                                 <PrivateRoute exact path="/" component={Thread} />
                                 <PrivateRoute exact path="/profile" component={Profile} />
@@ -53,6 +57,7 @@ class Routing extends React.Component {
 Routing.propTypes = {
     isAuthorized: PropTypes.bool,
     logout: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     applyPost: PropTypes.func.isRequired,
     user: PropTypes.objectOf(PropTypes.any),
     isLoading: PropTypes.bool,
@@ -67,7 +72,7 @@ Routing.defaultProps = {
     userId: undefined
 };
 
-const actions = { loadCurrentUser, logout, applyPost };
+const actions = { loadCurrentUser, login, logout, applyPost };
 
 const mapStateToProps = rootState => ({
     isAuthorized: rootState.profile.isAuthorized,
