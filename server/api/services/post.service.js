@@ -11,14 +11,16 @@ export const create = (userId, post) => postRepository.create({
 });
 
 export const setReaction = async (userId, { postId, isLike = true }) => {
+    const updateOrDelete = react => (react.isLike === isLike
+        ? postReactionRepository.deleteById(react.id)
+        : postReactionRepository.updateById(react.id, { isLike }));
+
     const reaction = await postReactionRepository.getPostReaction(userId, postId);
-    if (reaction) {
-        const result = reaction.isLike === isLike
-            ? await postReactionRepository.deleteById(reaction.id)
-            : await postReactionRepository.updateById(reaction.id, { isLike });
 
-        return Number.isInteger(result) ? {} : result;
-    }
+    const result = reaction
+        ? await updateOrDelete(reaction)
+        : await postReactionRepository.create({ userId, postId, isLike });
 
-    return postReactionRepository.create({ userId, postId, isLike });
+    // the result is an integer when an entity is deleted
+    return Number.isInteger(result) ? {} : postReactionRepository.getPostReaction(userId, postId);
 };

@@ -18,7 +18,9 @@ router
         .catch(next))
     .put('/react', (req, res, next) => postService.setReaction(req.user.id, req.body)
         .then((reaction) => {
-            req.io.to(req.user.id).emit('like', 'Your post was liked!');
+            if (reaction.post) {
+                req.io.to(reaction.post.userId).emit('like', 'Your post was liked!');
+            }
             return res.send(reaction);
         })
         .catch(next));
