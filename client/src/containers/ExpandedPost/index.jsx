@@ -43,11 +43,9 @@ class ExpandedPost extends React.Component {
                         <Header as="h3" dividing>
                             Comments
                         </Header>
-                        {
-                            comments
-                            && comments
-                                .sort((c1, c2) => moment(c1.createdAt).diff(c2.createdAt))
-                                .map(c => <Comment key={c.id} comment={c} />)
+                        {comments && comments
+                            .sort((c1, c2) => moment(c1.createdAt).diff(c2.createdAt))
+                            .map(comment => <Comment key={comment.id} comment={comment} />)
                         }
                         <AddComment postId={post.id} addComment={props.addComment} />
                     </CommentUI.Group>
