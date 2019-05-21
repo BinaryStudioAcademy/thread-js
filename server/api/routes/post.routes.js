@@ -12,7 +12,7 @@ router
         .catch(next))
     .post('/', (req, res, next) => postService.create(req.user.id, req.body)
         .then((post) => {
-            req.io.emit('new_post', post.userId);
+            req.io.emit('new_post', post);
             return res.send(post);
         })
         .catch(next))

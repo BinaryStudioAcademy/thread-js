@@ -20,11 +20,11 @@ class Notifications extends React.Component {
     addSocketHandlers = (userId) => {
         this.socket.emit('createRoom', userId);
         this.socket.on('like', () => {
-            NotificationManager.info('like');
+            NotificationManager.info('Your post was liked!');
         });
-        this.socket.on('new_post', (postUserId) => {
-            if (postUserId !== userId) {
-                NotificationManager.info(`New post by ${postUserId}`);
+        this.socket.on('new_post', (post) => {
+            if (post.userId !== userId) {
+                this.props.applyPost(post.id);
             }
         });
     }
@@ -48,6 +48,7 @@ Notifications.defaultProps = {
 
 Notifications.propTypes = {
     user: PropTypes.objectOf(PropTypes.any),
+    applyPost: PropTypes.func.isRequired,
 };
 
 export default Notifications;
