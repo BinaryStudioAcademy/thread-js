@@ -58,7 +58,7 @@ class Thread extends React.Component {
 
 
     render() {
-        const { posts = [], expandedPostId, hasMorePosts, ...props } = this.props;
+        const { posts = [], expandedPost, hasMorePosts, ...props } = this.props;
         const { showOwnPosts, sharedPostId } = this.state;
         return (
             <div style={styles.threadContent}>
@@ -85,8 +85,8 @@ class Thread extends React.Component {
                     ))}
                 </InfiniteScroll>
                 {
-                    expandedPostId
-                    && <ExpandedPost postId={expandedPostId} sharePost={this.sharePost} />
+                    expandedPost
+                    && <ExpandedPost sharePost={this.sharePost} />
                 }
                 {
                     sharedPostId
@@ -100,7 +100,7 @@ class Thread extends React.Component {
 Thread.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
     hasMorePosts: PropTypes.bool,
-    expandedPostId: PropTypes.string,
+    expandedPost: PropTypes.objectOf(PropTypes.any),
     sharedPostId: PropTypes.string,
     userId: PropTypes.string,
     loadPosts: PropTypes.func.isRequired,
@@ -113,7 +113,7 @@ Thread.propTypes = {
 Thread.defaultProps = {
     posts: [],
     hasMorePosts: true,
-    expandedPostId: undefined,
+    expandedPost: undefined,
     sharedPostId: undefined,
     userId: undefined
 };
@@ -121,7 +121,7 @@ Thread.defaultProps = {
 const mapStateToProps = rootState => ({
     posts: rootState.posts.posts,
     hasMorePosts: rootState.posts.hasMorePosts,
-    expandedPostId: rootState.posts.expandedPostId,
+    expandedPost: rootState.posts.expandedPost,
     userId: rootState.profile.user.id
 });
 

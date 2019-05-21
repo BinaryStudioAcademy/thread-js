@@ -9,33 +9,19 @@ import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
 import Spinner from 'src/components/common/Spinner';
-import * as postService from 'src/services/postService';
 import styles from './styles';
 
 class ExpandedPost extends React.Component {
     state = {
-        post: undefined,
         open: true
     };
 
-    async componentDidMount() {
-        const { postId } = this.props;
-        try {
-            const post = await postService.getPost(postId);
-            this.setState({ post });
-        } catch {
-            this.closeModal();
-        }
-    }
-
     closeModal = () => {
-        this.setState({ open: false });
         this.props.toggleExpandedPost();
     }
 
     render() {
-        const { post } = this.state;
-        const { sharePost, ...props } = this.props;
+        const { post, sharePost, ...props } = this.props;
         return (
             <Modal dimmer="blurring" centered={false} open={this.state.open} onClose={this.closeModal} style={styles.expandedPostModal}>
                 {post
@@ -67,22 +53,21 @@ class ExpandedPost extends React.Component {
 }
 
 ExpandedPost.propTypes = {
+    post: PropTypes.objectOf(PropTypes.any).isRequired,
     toggleExpandedPost: PropTypes.func.isRequired,
     likePost: PropTypes.func.isRequired,
     addComment: PropTypes.func.isRequired,
-    sharePost: PropTypes.func.isRequired,
-    postId: PropTypes.string
+    sharePost: PropTypes.func.isRequired
 };
 
-ExpandedPost.defaultProps = {
-    postId: undefined
-};
-
+const mapStateToProps = rootState => ({
+    post: rootState.posts.expandedPost
+});
 const actions = { likePost, toggleExpandedPost, addComment };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ExpandedPost);

@@ -2,7 +2,7 @@ import {
     SET_ALL_POSTS,
     LOAD_MORE_POSTS,
     ADD_POST,
-    TOGGLE_EXPANDED_POST_VISIBILITY
+    SET_EXPANDED_POST
 } from './actionTypes';
 
 export default (state = {}, action) => {
@@ -24,10 +24,10 @@ export default (state = {}, action) => {
                 ...state,
                 posts: [action.post, ...state.posts]
             };
-        case TOGGLE_EXPANDED_POST_VISIBILITY:
+        case SET_EXPANDED_POST:
             return {
                 ...state,
-                expandedPostId: action.postId
+                expandedPost: action.post
             };
         default:
             return state;

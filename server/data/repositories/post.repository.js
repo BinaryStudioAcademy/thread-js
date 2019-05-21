@@ -70,6 +70,10 @@ class PostRepository extends BaseRepository {
             where: { id },
             attributes: {
                 include: [
+                    [sequelize.literal(`
+                        (SELECT COUNT(*)
+                        FROM "comments" as "comment"
+                        WHERE "post"."id" = "comment"."postId")`), 'commentCount'],
                     [sequelize.fn('SUM', sequelize.literal(likeCase(true))), 'likeCount'],
                     [sequelize.fn('SUM', sequelize.literal(likeCase(false))), 'dislikeCount']
                 ]
