@@ -22,7 +22,11 @@ class Routing extends React.Component {
     }
 
     renderLogin = loginProps => (
-        <Login {...loginProps} isAuthorized={this.props.isAuthorized} login={this.props.login} />
+        <Login
+            {...loginProps}
+            isAuthorized={this.props.isAuthorized}
+            login={this.props.login}
+        />
     );
 
     renderRegistration = regProps => (
