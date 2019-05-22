@@ -18,7 +18,7 @@
 3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
 4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token "JWT")
 5. [Socket.IO](https://socket.io/docs/ "Socket.IO")
-6. [npm](https://en.wikipedia.org/wiki/Npm_(software)
+6. [npm](https://en.wikipedia.org/wiki/Npm_(software))
 7. [ESLint](https://eslint.org/docs/user-guide/getting-started "ESLint")
 
 #### Frond-end
