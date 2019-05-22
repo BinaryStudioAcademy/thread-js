@@ -63,7 +63,7 @@
     git clone git@github.com:BinaryStudioAcademy/thread-js.git
     '''
     
-6. Создать репозиторий на [Bitbucket](https://bitbucket.org/) и вести дальнейшую разработку там.
+6. **Создать репозиторий на [Bitbucket](https://bitbucket.org/) и вести дальнейшую разработку там.**
 
 #### Backend
 
