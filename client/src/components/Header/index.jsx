@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 import { getUserImgLink } from 'src/helpers/imageHelper';
 import { Header as HeaderUI, Image, Grid, Icon, Button } from 'semantic-ui-react';
 
-import styles from './styles';
+import styles from './styles.module.scss';
 
 const Header = ({ user, logout }) => (
-    <div style={styles.headerWrp}>
+    <div className={styles.headerWrp}>
         <Grid centered container columns="2">
             <Grid.Column>
                 {user && (
@@ -24,7 +24,7 @@ const Header = ({ user, logout }) => (
                 <NavLink exact activeClassName="active" to="/">
                     <Icon name="home" size="large" />
                 </NavLink>
-                <Button basic icon type="button" style={styles.logoutBtn} onClick={logout}>
+                <Button basic icon type="button" className={styles.logoutBtn} onClick={logout}>
                     <Icon name="log out" size="large" />
                 </Button>
             </Grid.Column>

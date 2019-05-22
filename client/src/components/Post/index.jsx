@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
-import styles from './styles';
+import styles from './styles.module.scss';
 
 const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
     const {
@@ -17,7 +17,6 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
         createdAt
     } = post;
     const date = moment(createdAt).fromNow();
-
     return (
         <Card style={{ width: '100%' }}>
             {image && <Image src={image.link} wrapped ui={false} />}
@@ -36,19 +35,19 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={() => likePost(id)}>
+                <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => likePost(id)}>
                     <Icon name="thumbs up" />
                     {likeCount}
                 </Label>
-                <Label basic size="small" as="a" style={styles.toolbarBtn}>
+                <Label basic size="small" as="a" className={styles.toolbarBtn}>
                     <Icon name="thumbs down" />
                     {dislikeCount}
                 </Label>
-                <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={() => toggleExpandedPost(id)}>
+                <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => toggleExpandedPost(id)}>
                     <Icon name="comment" />
                     {commentCount}
                 </Label>
-                <Label basic size="small" as="a" style={styles.toolbarBtn} onClick={() => sharePost(id)}>
+                <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => sharePost(id)}>
                     <Icon name="share alternate" />
                 </Label>
             </Card.Content>

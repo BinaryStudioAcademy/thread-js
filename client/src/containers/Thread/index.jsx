@@ -11,7 +11,7 @@ import { Checkbox, Loader } from 'semantic-ui-react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { loadPosts, loadMorePosts, likePost, toggleExpandedPost, addPost } from './actions';
 
-import styles from './styles';
+import styles from './styles.module.scss';
 
 class Thread extends React.Component {
     constructor(props) {
@@ -61,11 +61,11 @@ class Thread extends React.Component {
         const { posts = [], expandedPost, hasMorePosts, ...props } = this.props;
         const { showOwnPosts, sharedPostId } = this.state;
         return (
-            <div style={styles.threadContent}>
-                <div style={styles.addPostForm}>
+            <div className={styles.threadContent}>
+                <div className={styles.addPostForm}>
                     <AddPost addPost={props.addPost} uploadImage={this.uploadImage} />
                 </div>
-                <div style={styles.toolbar}>
+                <div className={styles.toolbar}>
                     <Checkbox toggle label="Show only my posts" checked={showOwnPosts} onChange={this.tooglePosts} />
                 </div>
                 <InfiniteScroll

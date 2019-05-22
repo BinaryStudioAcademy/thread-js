@@ -9,7 +9,6 @@ import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
 import Spinner from 'src/components/Spinner';
-import styles from './styles';
 
 class ExpandedPost extends React.Component {
     state = {
@@ -23,7 +22,7 @@ class ExpandedPost extends React.Component {
     render() {
         const { post, sharePost, ...props } = this.props;
         return (
-            <Modal dimmer="blurring" centered={false} open={this.state.open} onClose={this.closeModal} style={styles.expandedPostModal}>
+            <Modal dimmer="blurring" centered={false} open={this.state.open} onClose={this.closeModal}>
                 {post
                     ? (
                         <Modal.Content>

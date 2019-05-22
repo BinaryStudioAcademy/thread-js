@@ -4,11 +4,13 @@ import { Comment as CommentUI } from 'semantic-ui-react';
 import moment from 'moment';
 import { getUserImgLink } from 'src/helpers/imageHelper';
 
+import styles from './styles.module.scss';
+
 const Comment = (props) => {
     const { comment: { body, createdAt, user } } = props;
     const date = moment(createdAt).fromNow();
     return (
-        <CommentUI>
+        <CommentUI className={styles.comment}>
             <CommentUI.Avatar src={getUserImgLink(user.image)} />
             <CommentUI.Content>
                 <CommentUI.Author as="a">

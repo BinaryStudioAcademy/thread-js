@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Input, Icon } from 'semantic-ui-react';
-import styles from './styles';
+
+import styles from './styles.module.scss';
 
 class SharedPostLink extends React.Component {
     state = {
@@ -20,7 +21,7 @@ class SharedPostLink extends React.Component {
         const { copied } = this.state;
         return (
             <Modal open onClose={close}>
-                <Modal.Header style={styles.header}>
+                <Modal.Header className={styles.header}>
                     <span>Share Post</span>
                     {copied && (
                         <span>
