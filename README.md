@@ -55,6 +55,16 @@
 
 3. Создайте в PostgreSQL **пустую** базу данных для проекта. Например, *thread*.
 
+4. Установите Git.
+
+5. Склонировать репозиторий проекта:
+
+    '''
+    git clone git@github.com:BinaryStudioAcademy/thread-js.git
+    '''
+    
+6. Создать репозиторий на [Bitbucket](https://bitbucket.org/) и вести дальнейшую разработку там.
+
 #### Backend
 
 1. В командной строке (терминале) зайдите в папку server:
