@@ -1,5 +1,3 @@
-[TOC]
-
 # BSA 2019 JS - mini-project Thread
 
 ## Description
