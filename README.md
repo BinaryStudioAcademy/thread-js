@@ -158,5 +158,5 @@
 Основной результат работы можно определить тем, как глубоко вы смогли разобраться в проекте и понять его, и как далеко продвинулись в личном обучении.
 
 Ссылки:
-1. [Репозиторий](git@github.com:BinaryStudioAcademy/thread-js.git).
+1. [Репозиторий](https://github.com/BinaryStudioAcademy/thread-js).
 2. [Trello](https://trello.com/b/9Y9ZIr6j).
