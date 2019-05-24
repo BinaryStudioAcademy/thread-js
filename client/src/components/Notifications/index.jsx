@@ -12,8 +12,15 @@ class Notifications extends React.Component {
         this.initSocket();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.initSocket();
+        this.checkLoggedInUser(prevProps);
+    }
+
+    checkLoggedInUser = (prevProps) => {
+        if (this.socket && !this.props.user && this.props.user !== prevProps.user) {
+            this.socket.emit('leaveRoom', prevProps.user.id);
+        }
     }
 
     addSocketHandlers = (userId) => {
@@ -31,7 +38,9 @@ class Notifications extends React.Component {
     initSocket() {
         const { user } = this.props;
         if (!this.socket && user && user.id) {
-            this.socket = io('http://localhost:3002');
+            const { REACT_APP_SOCKET_SERVER, REACT_APP_SOCKET_SERVER_PORT } = process.env;
+            const address = `http://${REACT_APP_SOCKET_SERVER}:${REACT_APP_SOCKET_SERVER_PORT}`;
+            this.socket = io(address);
             this.addSocketHandlers(user.id);
         }
     }
