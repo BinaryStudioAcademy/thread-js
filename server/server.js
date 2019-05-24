@@ -18,8 +18,8 @@ import './config/passport.config';
 dotenv.config();
 
 const app = express();
-const httpServer = http.Server(app);
-const io = socketIO(httpServer);
+const socketServer = http.Server(app);
+const io = socketIO(socketServer);
 
 io.on('connection', socketHandlers);
 
@@ -48,4 +48,4 @@ app.listen(process.env.APP_PORT, () => {
 });
 
 
-httpServer.listen(3002);
+socketServer.listen(3002);
