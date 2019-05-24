@@ -1,0 +1,9 @@
+:local(.imageWrapper) {
+    margin-bottom: 10px
+}
+
+:global(.ui.image):local(.image) {
+    width: auto;
+    max-width: 150px;
+    max-height: 150px;
+}

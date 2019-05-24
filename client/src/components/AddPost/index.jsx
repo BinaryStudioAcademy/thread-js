@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Icon, Image } from 'semantic-ui-react';
+import { Form, Button, Icon, Image, Segment } from 'semantic-ui-react';
+
+import styles from './styles.module.scss';
 
 const initialState = {
     body: '',
@@ -12,7 +14,8 @@ class AddPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...initialState
+            ...initialState,
+            isUploading: false
         };
     }
 
@@ -22,29 +25,41 @@ class AddPost extends React.Component {
         this.setState(initialState);
     }
 
-    handleUploadFile = async (e) => {
-        const { id: imageId, link: imageLink } = await this.props.uploadImage(e.target.files[0]);
-        this.setState({ imageId, imageLink });
+    handleUploadFile = async ({ target }) => {
+        this.setState({ isUploading: true });
+        try {
+            const { id: imageId, link: imageLink } = await this.props.uploadImage(target.files[0]);
+            this.setState({ imageId, imageLink, isUploading: false });
+        } catch {
+            // TODO: show error
+            this.setState({ isUploading: false });
+        }
     }
 
     render() {
-        const { imageLink, body } = this.state;
+        const { imageLink, body, isUploading } = this.state;
         return (
-            <Form onSubmit={this.handleAddPost}>
-                <Form.TextArea
-                    name="body"
-                    value={body}
-                    placeholder="What is the news?"
-                    onChange={ev => this.setState({ body: ev.target.value })}
-                />
-                {imageLink && <Image size="small" src={imageLink} alt="post" />}
-                <Button color="teal" icon labelPosition="left" as="label">
-                    <Icon name="image" />
-                    Attach image
-                    <input name="image" type="file" onChange={this.handleUploadFile} hidden />
-                </Button>
-                <Button floated="right" color="blue" type="submit">Post</Button>
-            </Form>
+            <Segment>
+                <Form onSubmit={this.handleAddPost}>
+                    <Form.TextArea
+                        name="body"
+                        value={body}
+                        placeholder="What is the news?"
+                        onChange={ev => this.setState({ body: ev.target.value })}
+                    />
+                    {imageLink && (
+                        <div className={styles.imageWrapper}>
+                            <Image className={styles.image} src={imageLink} alt="post" />
+                        </div>
+                    )}
+                    <Button color="teal" icon labelPosition="left" as="label" loading={isUploading} disabled={isUploading}>
+                        <Icon name="image" />
+                        Attach image
+                        <input name="image" type="file" onChange={this.handleUploadFile} hidden />
+                    </Button>
+                    <Button floated="right" color="blue" type="submit">Post</Button>
+                </Form>
+            </Segment>
         );
     }
 }
