@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validator from 'validator';
+import Logo from 'src/components/Logo';
 
 import {
     Grid,
@@ -68,6 +69,7 @@ class Login extends React.Component {
             ? (
                 <Grid textAlign="center" verticalAlign="middle" className="fill">
                     <Grid.Column style={{ maxWidth: 450 }}>
+                        <Logo />
                         <Header as="h2" color="teal" textAlign="center">
                             Login to your account
                         </Header>
