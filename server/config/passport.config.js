@@ -49,7 +49,6 @@ passport.use(
     )
 );
 
-
 passport.use(new JwtStrategy(options, async ({ id }, done) => {
     try {
         const user = await userRepository.getById(id);

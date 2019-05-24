@@ -7,7 +7,7 @@ router
     .get('/:id', (req, res, next) => commentService.getCommentById(req.params.id)
         .then(comment => res.send(comment))
         .catch(next))
-    .post('/', (req, res, next) => commentService.create(req.user.id, req.body)
+    .post('/', (req, res, next) => commentService.create(req.user.id, req.body) // user added to the request in the jwt strategy, see passport config
         .then(comment => res.send(comment))
         .catch(next));
 

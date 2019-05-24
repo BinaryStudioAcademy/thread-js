@@ -16,7 +16,7 @@ const uploadToImgur = async (file) => {
             link: data.link,
             deleteHash: data.deletehash
         };
-    } catch ({ response: { data: { status, data } } }) {
+    } catch ({ response: { data: { status, data } } }) { // parse Imgur error
         return Promise.reject({ status, message: data.error });
     }
 };
