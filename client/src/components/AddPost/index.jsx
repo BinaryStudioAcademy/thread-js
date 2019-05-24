@@ -21,6 +21,9 @@ class AddPost extends React.Component {
 
     handleAddPost = async () => {
         const { imageId, body } = this.state;
+        if (!body) {
+            return;
+        }
         await this.props.addPost({ imageId, body });
         this.setState(initialState);
     }

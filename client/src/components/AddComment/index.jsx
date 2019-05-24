@@ -12,6 +12,9 @@ class AddComment extends React.Component {
 
     handleAddComment = async () => {
         const { body } = this.state;
+        if (!body) {
+            return;
+        }
         const { postId } = this.props;
         await this.props.addComment({ postId, body });
         this.setState({ body: '' });
