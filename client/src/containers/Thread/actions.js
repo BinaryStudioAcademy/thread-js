@@ -32,9 +32,12 @@ export const loadPosts = filter => async (dispatch) => {
     dispatch(setPostsAction(posts));
 };
 
-export const loadMorePosts = filter => async (dispatch) => {
-    const posts = await postService.getAllPosts(filter);
-    dispatch(addMorePostsAction(posts));
+export const loadMorePosts = filter => async (dispatch, getRootState) => {
+    const { posts: { posts } } = getRootState();
+    const loadedPosts = await postService.getAllPosts(filter);
+    const filteredPosts = loadedPosts
+        .filter(post => !(posts && posts.some(loadedPost => post.id === loadedPost.id)));
+    dispatch(addMorePostsAction(filteredPosts));
 };
 
 export const applyPost = postId => async (dispatch) => {

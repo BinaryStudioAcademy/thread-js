@@ -36,6 +36,7 @@ class Thread extends React.Component {
                     from: 0
                 });
                 this.props.loadPosts(this.postsFilter);
+                this.postsFilter.from = this.postsFilter.count; // for next scroll
             }
         );
     };
@@ -55,7 +56,6 @@ class Thread extends React.Component {
     }
 
     uploadImage = file => imageService.uploadImage(file);
-
 
     render() {
         const { posts = [], expandedPost, hasMorePosts, ...props } = this.props;
