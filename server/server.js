@@ -13,6 +13,8 @@ import routesWhiteList from './config/routes-white-list.config';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
 
+import sequelize from './data/db/connection';
+
 import './config/passport.config';
 
 dotenv.config();
@@ -20,6 +22,15 @@ dotenv.config();
 const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
+
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch((err) => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 io.on('connection', socketHandlers);
 
