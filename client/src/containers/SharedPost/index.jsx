@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { toggleExpandedPost } from 'src/containers/Thread/actions';
 
-class SharedPost extends React.Component {
-    async componentDidMount() {
-        const { match } = this.props;
-        this.props.toggleExpandedPost(match.params.postHash);
-    }
+const SharedPost = ({ match, toggleExpandedPost: toggle }) => {
+  useEffect(() => {
+    toggle(match.params.postHash);
+  });
 
+  return <Redirect to="/" />;
+};
 
-    render() {
-        return <Redirect to="/" />;
-    }
-}
 SharedPost.propTypes = {
-    match: PropTypes.objectOf(PropTypes.any),
-    toggleExpandedPost: PropTypes.func.isRequired
+  match: PropTypes.objectOf(PropTypes.any),
+  toggleExpandedPost: PropTypes.func.isRequired
 };
 
 SharedPost.defaultProps = {
-    match: undefined
+  match: undefined
 };
 
 const actions = { toggleExpandedPost };
@@ -30,6 +27,6 @@ const actions = { toggleExpandedPost };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(SharedPost);

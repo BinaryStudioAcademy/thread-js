@@ -1,6 +1,6 @@
 :global(.ui.modal) {
-    >:global(.header):local(.header) {
-        display: flex;
-        justify-content: space-between;
-    }
+  >:global(.header).header {
+    display: flex;
+    justify-content: space-between;
+  }
 }

@@ -1,12 +1,12 @@
-:local(.threadContent) {
-    width: 500px;
-    margin: 20px auto;
+.threadContent {
+  width: 500px;
+  margin: 20px auto;
 }
 
-:local(.addPostForm) {
-    margin-top: 20px;
+.addPostForm {
+  margin-top: 20px;
 }
 
-:local(.toolbar) {
-    margin: 20px 0;
+.toolbar {
+  margin: 20px 0;
 }
