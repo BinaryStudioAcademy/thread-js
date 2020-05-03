@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
+import env from '../env';
 
-dotenv.config();
-
-export const secret = process.env.SECRET_KEY;
+export const { secret } = env.app;
 export const expiresIn = '24h';

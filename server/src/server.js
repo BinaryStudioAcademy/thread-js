@@ -1,23 +1,18 @@
-import dotenv from 'dotenv';
 import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
-
 import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import routesWhiteList from './config/routes-white-list.config';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
-
 import sequelize from './data/db/connection';
-
+import env from './env';
 import './config/passport.config';
-
-dotenv.config();
 
 const app = express();
 const socketServer = http.Server(app);
@@ -26,9 +21,11 @@ const io = socketIO(socketServer);
 sequelize
   .authenticate()
   .then(() => {
+    // eslint-disable-next-line no-console
     console.log('Connection has been established successfully.');
   })
   .catch(err => {
+    // eslint-disable-next-line no-console
     console.error('Unable to connect to the database:', err);
   });
 
@@ -53,10 +50,10 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandlerMiddleware);
-app.listen(process.env.APP_PORT, () => {
+app.listen(env.app.port, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server listening on port ${process.env.APP_PORT}!`);
+  console.log(`Server listening on port ${env.app.port}!`);
 });
 
 
-socketServer.listen(process.env.SOCKET_PORT);
+socketServer.listen(env.app.socketPort);

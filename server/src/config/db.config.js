@@ -1,11 +1,9 @@
-import dotenv from 'dotenv';
+import env from '../env';
 
-dotenv.config();
-
-export const database = process.env.DB_NAME;
-export const username = process.env.DB_USERNAME;
-export const password = process.env.DB_PASSWORD;
-export const host = process.env.DB_HOST;
-export const port = process.env.DB_PORT;
-export const dialect = process.env.DB_DIALECT;
-export const logging = false;
+export const { database } = env.db;
+export const { username } = env.db;
+export const { password } = env.db;
+export const { host } = env.db;
+export const { port } = env.db;
+export const { dialect } = env.db;
+export const { logging } = env.db;

@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
-    "lint:start": "nodemon src/server.js --exec \"npm run linter && babel-node\"",
-    "linter": "eslint src/**/*.js",
+    "start": "nodemon src/server.js --exec \"npm run linter && babel-node\"",
+    "linter": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

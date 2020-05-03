@@ -1,7 +1,5 @@
-import dotenv from 'dotenv';
+import env from '../env';
 
-dotenv.config();
-
-export const imgurId = process.env.IMGUR_ID;
-export const imgurSecret = process.env.IMGUR_SECRET;
+export const imgurId = env.imgur;
+export const imgurSecret = env.imgur;
 export const fileSize = 10000000; // ~ 10MB
