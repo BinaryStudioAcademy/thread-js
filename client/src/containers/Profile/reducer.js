@@ -1,4 +1,4 @@
-import { SET_USER, SET_IS_LOADING } from './actionTypes';
+import { SET_USER } from './actionTypes';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -6,12 +6,8 @@ export default (state = {}, action) => {
       return {
         ...state,
         user: action.user,
-        isAuthorized: Boolean(action.user && action.user.id)
-      };
-    case SET_IS_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading
+        isAuthorized: Boolean(action.user?.id),
+        isLoading: false
       };
     default:
       return state;
