@@ -4,8 +4,8 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -18,12 +18,14 @@
   "dependencies": {
     "classnames": "2.2.6",
     "connected-react-router": "6.8.0",
+    "customize-cra": "^0.9.1",
     "history": "4.10.1",
     "moment": "2.24",
     "node-sass": "4.14.0",
     "prop-types": "15.7.2",
     "query-string": "6.12.1",
     "react": "16.13.1",
+    "react-app-rewired": "^2.1.6",
     "react-dom": "16.13.1",
     "react-infinite-scroller": "1.2.4",
     "react-notifications": "1.6.0",

@@ -6,23 +6,22 @@ import { Redirect } from 'react-router-dom';
 import { toggleExpandedPost } from 'src/containers/Thread/actions';
 
 class SharedPost extends React.Component {
-    async componentDidMount() {
-        const { match } = this.props;
-        this.props.toggleExpandedPost(match.params.postHash);
-    }
+  async componentDidMount() {
+    const { match, ...props } = this.props;
+    props.toggleExpandedPost(match.params.postHash);
+  }
 
-
-    render() {
-        return <Redirect to="/" />;
-    }
+  render() {
+    return <Redirect to="/" />;
+  }
 }
 SharedPost.propTypes = {
-    match: PropTypes.objectOf(PropTypes.any),
-    toggleExpandedPost: PropTypes.func.isRequired
+  match: PropTypes.objectOf(PropTypes.any),
+  toggleExpandedPost: PropTypes.func.isRequired
 };
 
 SharedPost.defaultProps = {
-    match: undefined
+  match: undefined
 };
 
 const actions = { toggleExpandedPost };
@@ -30,6 +29,6 @@ const actions = { toggleExpandedPost };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(SharedPost);

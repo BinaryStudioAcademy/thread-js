@@ -5,11 +5,11 @@ import Routing from 'src/containers/Routing';
 import store, { history } from 'src/store';
 
 const Home = () => (
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <Routing />
-        </ConnectedRouter>
-    </Provider>
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Routing />
+    </ConnectedRouter>
+  </Provider>
 );
 
 export default Home;

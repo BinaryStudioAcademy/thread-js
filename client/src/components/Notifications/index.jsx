@@ -9,53 +9,53 @@ class Notifications extends React.Component {
     socket = undefined;
 
     componentDidMount() {
-        this.initSocket();
+      this.initSocket();
     }
 
     componentDidUpdate(prevProps) {
-        this.initSocket();
-        this.checkLoggedInUser(prevProps);
+      this.initSocket();
+      this.checkLoggedInUser(prevProps);
     }
 
-    checkLoggedInUser = (prevProps) => {
-        if (this.socket && !this.props.user && this.props.user !== prevProps.user) {
-            this.socket.emit('leaveRoom', prevProps.user.id);
+    checkLoggedInUser = prevProps => {
+      if (this.socket && !this.props.user && this.props.user !== prevProps.user) {
+        this.socket.emit('leaveRoom', prevProps.user.id);
+      }
+    }
+
+    addSocketHandlers = userId => {
+      this.socket.emit('createRoom', userId);
+      this.socket.on('like', () => {
+        NotificationManager.info('Your post was liked!');
+      });
+      this.socket.on('new_post', post => {
+        if (post.userId !== userId) {
+          this.props.applyPost(post.id);
         }
-    }
-
-    addSocketHandlers = (userId) => {
-        this.socket.emit('createRoom', userId);
-        this.socket.on('like', () => {
-            NotificationManager.info('Your post was liked!');
-        });
-        this.socket.on('new_post', (post) => {
-            if (post.userId !== userId) {
-                this.props.applyPost(post.id);
-            }
-        });
+      });
     }
 
     initSocket() {
-        const { user } = this.props;
-        if (!this.socket && user && user.id) {
-            const { REACT_APP_SOCKET_SERVER: address } = process.env;
-            this.socket = io(address);
-            this.addSocketHandlers(user.id);
-        }
+      const { user } = this.props;
+      if (!this.socket && user && user.id) {
+        const { REACT_APP_SOCKET_SERVER: address } = process.env;
+        this.socket = io(address);
+        this.addSocketHandlers(user.id);
+      }
     }
 
     render() {
-        return <NotificationContainer />;
+      return <NotificationContainer />;
     }
 }
 
 Notifications.defaultProps = {
-    user: {}
+  user: {}
 };
 
 Notifications.propTypes = {
-    user: PropTypes.objectOf(PropTypes.any),
-    applyPost: PropTypes.func.isRequired,
+  user: PropTypes.objectOf(PropTypes.any),
+  applyPost: PropTypes.func.isRequired
 };
 
 export default Notifications;
