@@ -13,7 +13,7 @@
 Здесь перечислены основные фреймворки и библиотеки, используемые в проекте. Полный список используемых технологий для каждой части проекта находится в файлах package.json в папках client и server.
 
 #### Common
-1. ES2018
+1. ES2020
 2. [Git](https://git-scm.com/book/ru/v1/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git "Git")
 3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
 4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token "JWT")
