@@ -10,13 +10,13 @@ router
   .get('/:id', (req, res, next) => postService.getPostById(req.params.id)
     .then(post => res.send(post))
     .catch(next))
-  .post('/', (req, res, next) => postService.create(req.user.id, req.body) // user added to the request in the jwt strategy, see passport config
+  .post('/', (req, res, next) => postService.create(req.user.id, req.body)
     .then(post => {
       req.io.emit('new_post', post); // notify all users that a new post was created
       return res.send(post);
     })
     .catch(next))
-  .put('/react', (req, res, next) => postService.setReaction(req.user.id, req.body) // user added to the request in the jwt strategy, see passport config
+  .put('/react', (req, res, next) => postService.setReaction(req.user.id, req.body)
     .then(reaction => {
       if (reaction.post && (reaction.post.userId !== req.user.id)) {
         // notify a user if someone (not himself) liked his post

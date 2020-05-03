@@ -7,19 +7,17 @@
         "es6": true,
         "node": true
     },
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2020
     },
     "rules": {
         "comma-dangle": ["error", "never"],
         "object-curly-newline": "off",
         "arrow-parens": ["error", "as-needed"],
         "prefer-promise-reject-errors": "off",
-        "import/prefer-default-export": "off"
-        // "class-methods-use-this": "off",
+        "import/prefer-default-export": "off",
+        "max-len": ["error", { "code": 120 }],
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     }
 }

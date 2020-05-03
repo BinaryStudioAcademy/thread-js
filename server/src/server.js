@@ -55,5 +55,4 @@ app.listen(env.app.port, () => {
   console.log(`Server listening on port ${env.app.port}!`);
 });
 
-
 socketServer.listen(env.app.socketPort);

@@ -7,14 +7,15 @@ import jwtMiddleware from '../middlewares/jwt.middleware';
 
 const router = Router();
 
+// user added to the request (req.user) in a strategy, see passport config
 router
-  .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user) // user added to the request in the login strategy, see passport config
+  .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
     .then(data => res.send(data))
     .catch(next))
-  .post('/register', registrationMiddleware, (req, res, next) => authService.register(req.user) // user added to the request in the register strategy, see passport config
+  .post('/register', registrationMiddleware, (req, res, next) => authService.register(req.user)
     .then(data => res.send(data))
     .catch(next))
-  .get('/user', jwtMiddleware, (req, res, next) => userService.getUserById(req.user.id) // user added to the request in the jwt strategy, see passport config
+  .get('/user', jwtMiddleware, (req, res, next) => userService.getUserById(req.user.id)
     .then(data => res.send(data))
     .catch(next));
 

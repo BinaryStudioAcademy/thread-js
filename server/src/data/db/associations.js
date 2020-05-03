@@ -7,7 +7,6 @@ export default models => {
     Image
   } = models;
 
-
   Image.hasOne(User);
   Image.hasOne(Post);
 
