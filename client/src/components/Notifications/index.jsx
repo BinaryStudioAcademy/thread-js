@@ -38,8 +38,7 @@ class Notifications extends React.Component {
     initSocket() {
         const { user } = this.props;
         if (!this.socket && user && user.id) {
-            const { REACT_APP_SOCKET_SERVER, REACT_APP_SOCKET_SERVER_PORT } = process.env;
-            const address = `http://${REACT_APP_SOCKET_SERVER}:${REACT_APP_SOCKET_SERVER_PORT}`;
+            const { REACT_APP_SOCKET_SERVER: address } = process.env;
             this.socket = io(address);
             this.addSocketHandlers(user.id);
         }

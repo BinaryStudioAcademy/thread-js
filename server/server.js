@@ -59,4 +59,4 @@ app.listen(process.env.APP_PORT, () => {
 });
 
 
-socketServer.listen(3002);
+socketServer.listen(process.env.SOCKET_PORT);
