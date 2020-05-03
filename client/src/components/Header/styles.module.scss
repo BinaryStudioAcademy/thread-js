@@ -1,9 +1,9 @@
-:local(.headerWrp) {
+.headerWrp {
   background-color: white;
   padding: 1em 0;
 }
 
-:global(.ui.icon.button):local(.logoutBtn) {
+:global(.ui.icon.button).logoutBtn {
   border: none;
   box-shadow: none;
 }
