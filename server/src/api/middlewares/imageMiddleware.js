@@ -1,5 +1,5 @@
 import multer from 'multer';
-import { fileSize } from '../../config/imgur.config';
+import { fileSize } from '../../config/imgurConfig';
 
 const storage = multer.memoryStorage();
 const upload = multer({

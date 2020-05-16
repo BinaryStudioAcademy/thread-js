@@ -1,7 +1,7 @@
-import authRoutes from './auth.routes';
-import postRoutes from './post.routes';
-import commentRoutes from './comment.routes';
-import imageRoutes from './image.routes';
+import authRoutes from './authRoutes';
+import postRoutes from './postRoutes';
+import commentRoutes from './commentRoutes';
+import imageRoutes from './imageRoutes';
 // register all routes
 export default app => {
   app.use('/api/auth', authRoutes);

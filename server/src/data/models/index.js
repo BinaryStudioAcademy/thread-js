@@ -3,7 +3,7 @@ import associate from '../db/associations';
 
 const User = orm.import('./user');
 const Post = orm.import('./post');
-const PostReaction = orm.import('./post-reaction');
+const PostReaction = orm.import('./postReaction');
 const Comment = orm.import('./comment');
 const Image = orm.import('./image');
 

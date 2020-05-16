@@ -5,14 +5,14 @@ import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
 import routes from './api/routes/index';
-import authorizationMiddleware from './api/middlewares/authorization.middleware';
-import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
-import routesWhiteList from './config/routes-white-list.config';
+import authorizationMiddleware from './api/middlewares/authorizationMiddleware';
+import errorHandlerMiddleware from './api/middlewares/errorHandlerMiddleware';
+import routesWhiteList from './config/routesWhiteListConfig';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
 import sequelize from './data/db/connection';
 import env from './env';
-import './config/passport.config';
+import './config/passportConfig';
 
 const app = express();
 const socketServer = http.Server(app);

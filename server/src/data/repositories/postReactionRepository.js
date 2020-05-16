@@ -1,5 +1,5 @@
 import { PostReactionModel, PostModel } from '../models/index';
-import BaseRepository from './base.repository';
+import BaseRepository from './baseRepository';
 
 class PostReactionRepository extends BaseRepository {
   getPostReaction(userId, postId) {

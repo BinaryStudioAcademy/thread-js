@@ -1,4 +1,4 @@
-import jwtMiddleware from './jwt.middleware';
+import jwtMiddleware from './jwtMiddleware';
 
 export default (routesWhiteList = []) => (req, res, next) => (
   routesWhiteList.some(route => route === req.path)

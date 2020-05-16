@@ -1,4 +1,4 @@
-import cryptoHelper from '../../helpers/crypto.helper';
+import cryptoHelper from '../../helpers/cryptoHelper';
 
 const hash = password => cryptoHelper.encryptSync(password);
 const now = new Date();

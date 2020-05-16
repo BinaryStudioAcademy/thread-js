@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as postService from '../services/post.service';
+import * as postService from '../services/postService';
 
 const router = Router();
 
