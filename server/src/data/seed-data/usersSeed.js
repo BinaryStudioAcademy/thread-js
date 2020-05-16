@@ -1,6 +1,6 @@
-import cryptoHelper from '../../helpers/cryptoHelper';
+import { encryptSync } from '../../helpers/cryptoHelper';
 
-const hash = password => cryptoHelper.encryptSync(password);
+const hash = password => encryptSync(password);
 const now = new Date();
 
 export const usersSeed = [{

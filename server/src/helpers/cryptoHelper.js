@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 
 const saltRounds = 10;
 
-export default {
-  encrypt: data => bcrypt.hash(data, saltRounds),
-  encryptSync: data => bcrypt.hashSync(data, saltRounds),
-  compare: (data, encrypted) => bcrypt.compare(data, encrypted)
-};
+export const encrypt = data => bcrypt.hash(data, saltRounds);
+
+export const encryptSync = data => bcrypt.hashSync(data, saltRounds);
+
+export const compare = (data, encrypted) => bcrypt.compare(data, encrypted);
