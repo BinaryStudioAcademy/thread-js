@@ -1,4 +1,4 @@
-# BSA 2019 JS - mini-project Thread
+# BSA 2020 JS - mini-project Thread
 
 ## Описание
 [**Thread**](git@github.com:BinaryStudioAcademy/thread-js.git) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с готовой архитектурой и структурой, подключенным базовым стеком технологий и стартовым функционалом, предназначенный для самостоятельной практики студентов.
@@ -88,7 +88,7 @@
 	Замените в файле **.env** значения ключей на действительные.
 	Для того, чтобы указать ключи для Imgur Storage, необходимо зарегистрироваться на сайте [Imgur](https://imgur.com/register "Imgur") и [зарегистрировать приложение](https://api.imgur.com/oauth2/addclient) указав *Anonymous usage without user authorization*. Затем в настройках профиля найдете ключи для Storage.
 
-4. Выполните [миграции](http://docs.sequelizejs.com/manual/migrations.html#running-migrations "миграции") и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
+4. Выполните [миграции](https://sequelize.org/master/manual/migrations.html) и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
 
     ```
     npx sequelize-cli db:migrate
