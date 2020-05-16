@@ -20,8 +20,8 @@ export const postsSeed = [
 
 // Do not add more images than the number of posts.
 export const postImagesSeed = [{
-  link: 'https://i.imgur.com/jmxuL3D.jpg',
-  deleteHash: 'qFrQiMT4iTHJTBU'
+  link: 'https://i.imgur.com/4riVa24.png',
+  deleteHash: 'uMgQ2392bVx4t6y'
 }].map(image => ({
   ...image,
   createdAt: now,

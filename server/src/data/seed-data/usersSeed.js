@@ -9,19 +9,19 @@ export const usersSeed = [{
   password: hash('demo')
 }, {
   email: 'gbottoms1@arizona.edu',
-  username: 'thartwright1',
+  username: 'jhon',
   password: hash('pxlxvUyyUjE')
 }, {
   email: 'cclears2@state.gov',
-  username: 'bkopps2',
+  username: 'alex',
   password: hash('ioyLdS9Mdgj')
 }, {
   email: 'htie3@chronoengine.com',
-  username: 'kmitchinson3',
+  username: 'kivi',
   password: hash('twn50kl')
 }, {
   email: 'bbirmingham4@guardian.co.uk',
-  username: 'fbrabon4',
+  username: 'avocado',
   password: hash('0naQBpP9')
 }].map(user => ({
   ...user,
@@ -31,17 +31,17 @@ export const usersSeed = [{
 
 // Do not add more images than the number of users.
 export const userImagesSeed = [{
-  link: 'https://i.imgur.com/dJbN8ib.jpg',
-  deleteHash: 'HVkRkOtyNHVIyp3'
+  link: 'https://i.imgur.com/1Y2S7aU.png',
+  deleteHash: 'APx0ofUQBidKc1P'
 }, {
-  link: 'https://i.imgur.com/3AKJHOK.jpg',
-  deleteHash: 'iO2T1f6HuB8xjAU'
+  link: 'https://i.imgur.com/iefpTkf.jpg',
+  deleteHash: 'qWVnICWmbmqwGre'
 }, {
-  link: 'https://i.imgur.com/kX8OeH3.jpg',
-  deleteHash: 'SEGM6QPylAbRWAA'
+  link: 'https://i.imgur.com/hsakp5k.jpg',
+  deleteHash: '3cpoGBuOsXIe0o3'
 }, {
-  link: 'https://i.imgur.com/aqZiLzq.jpg',
-  deleteHash: 'jHIj5YNdNOQ3FBj'
+  link: 'https://i.imgur.com/4TLD3P5.png',
+  deleteHash: 'D6su1go8XvKpP4B'
 }].map(image => ({
   ...image,
   createdAt: now,
