@@ -20,8 +20,8 @@
     "connected-react-router": "6.8.0",
     "customize-cra": "^0.9.1",
     "history": "4.10.1",
-    "moment": "2.24",
-    "node-sass": "4.14.0",
+    "moment": "2.25",
+    "node-sass": "4.14.1",
     "prop-types": "15.7.2",
     "query-string": "6.12.1",
     "react": "16.13.1",
@@ -30,7 +30,7 @@
     "react-infinite-scroller": "1.2.4",
     "react-notifications": "1.6.0",
     "react-redux": "7.2.0",
-    "react-router-dom": "5.1.2",
+    "react-router-dom": "5.2.0",
     "react-router-redux": "5.0.0-alpha.9",
     "react-scripts": "3.4.1",
     "redux": "4.0.5",
@@ -44,7 +44,7 @@
     "eslint-config-airbnb": "18.1.0",
     "eslint-plugin-import": "2.20.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react": "7.20.0",
     "redux-devtools-extension": "2.13.8"
   }
 }
