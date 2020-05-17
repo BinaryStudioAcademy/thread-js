@@ -20,7 +20,7 @@ const handleAuthResponse = authResponsePromise => async (dispatch, getRootState)
 
 export const login = request => handleAuthResponse(authService.login(request));
 
-export const registration = request => handleAuthResponse(authService.registration(request));
+export const register = request => handleAuthResponse(authService.registration(request));
 
 export const logout = () => setAuthData();
 

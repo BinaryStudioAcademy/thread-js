@@ -3,19 +3,19 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ isAuthorized, location, ...props }) => (
+const PublicRoute = ({ isAuthorized, location, ...props }) => (
   isAuthorized
-    ? <Route {...props} render={({ Component, ...rest }) => <Component {...rest} />} />
-    : <Redirect to={{ pathname: '/login', state: { from: location } }} />
+    ? <Redirect to={{ pathname: '/', state: { from: location } }} />
+    : <Route {...props} render={({ Component, ...rest }) => <Component {...rest} />} />
 );
 
-PrivateRoute.propTypes = {
+PublicRoute.propTypes = {
   isAuthorized: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
   location: PropTypes.any
 };
 
-PrivateRoute.defaultProps = {
+PublicRoute.defaultProps = {
   isAuthorized: false,
   location: undefined
 };
@@ -25,4 +25,4 @@ const mapStateToProps = rootState => ({
   isLoading: rootState.profile.isLoading
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default connect(mapStateToProps)(PublicRoute);
