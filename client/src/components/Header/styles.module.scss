@@ -3,7 +3,18 @@
   padding: 1em 0;
 }
 
-:global(.ui.icon.button).logoutBtn {
-  border: none;
-  box-shadow: none;
+.logoutBtn,
+.logoutBtn:hover {
+  &:global(.ui.icon.button) {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.menuBtn,
+.menuBtn:global(.ui.icon.button) {
+  color: gray;
+  &:hover {
+    color: black !important;
+  }
 }
