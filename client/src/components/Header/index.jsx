@@ -11,7 +11,7 @@ const Header = ({ user, logout }) => (
     <Grid centered container columns="2">
       <Grid.Column>
         {user && (
-          <NavLink exact to="/profile">
+          <NavLink exact to="/">
             <HeaderUI>
               <Image circular src={getUserImgLink(user.image)} />
               {' '}
@@ -21,10 +21,10 @@ const Header = ({ user, logout }) => (
         )}
       </Grid.Column>
       <Grid.Column textAlign="right">
-        <NavLink exact activeClassName="active" to="/">
-          <Icon name="home" size="large" />
+        <NavLink exact activeClassName="active" to="/profile" className={styles.menuBtn}>
+          <Icon name="user circle" size="large" />
         </NavLink>
-        <Button basic icon type="button" className={styles.logoutBtn} onClick={logout}>
+        <Button basic icon type="button" className={`${styles.menuBtn} ${styles.logoutBtn}`} onClick={logout}>
           <Icon name="log out" size="large" />
         </Button>
       </Grid.Column>
