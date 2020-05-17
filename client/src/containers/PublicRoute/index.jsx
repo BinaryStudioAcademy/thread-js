@@ -14,7 +14,7 @@ const PublicRoute = ({ component: Component, isAuthorized, ...rest }) => (
 
 PublicRoute.propTypes = {
   isAuthorized: PropTypes.bool,
-  component: PropTypes.objectOf(PropTypes.any).isRequired,
+  component: PropTypes.any.isRequired, // eslint-disable-line
   location: PropTypes.any // eslint-disable-line
 };
 
