@@ -4,13 +4,14 @@ import path from 'path';
 import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
+import cors from 'cors';
+import sequelize from './data/db/connection';
 import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorizationMiddleware';
 import errorHandlerMiddleware from './api/middlewares/errorHandlerMiddleware';
 import routesWhiteList from './config/routesWhiteListConfig';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
-import sequelize from './data/db/connection';
 import env from './env';
 import './config/passportConfig';
 
@@ -31,6 +32,7 @@ sequelize
 
 io.on('connection', socketHandlers);
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
