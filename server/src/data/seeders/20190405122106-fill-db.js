@@ -2,7 +2,6 @@
 import { usersSeed, userImagesSeed } from '../seed-data/usersSeed';
 import { postsSeed, postImagesSeed } from '../seed-data/postsSeed';
 import commentsSeed from '../seed-data/commentsSeed';
-import postReactionsSeed from '../seed-data/postReactionsSeed';
 
 const randomIndex = length => Math.floor(Math.random() * length);
 const mapLinks = images => images.map(x => `'${x.link}'`).join(',');
@@ -49,9 +48,11 @@ export default {
       await queryInterface.bulkInsert('comments', commentsMappedSeed, {});
 
       // Add post reactions.
-      const postReactionsMappedSeed = postReactionsSeed.map(reaction => ({
-        ...reaction,
-        userId: users[randomIndex(users.length)].id,
+      const postReactionsMappedSeed = users.map(user => ({
+        isLike: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: user.id,
         postId: posts[randomIndex(posts.length)].id
       }));
       await queryInterface.bulkInsert('postReactions', postReactionsMappedSeed, {});
