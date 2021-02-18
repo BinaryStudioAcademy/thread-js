@@ -11,7 +11,13 @@
   }
 }
 
-.menuBtn,
+.menuBtn {
+  color: gray;
+  &:hover {
+    color: black !important;
+  }
+}
+
 .menuBtn:global(.ui.icon.button) {
   color: gray;
   &:hover {
