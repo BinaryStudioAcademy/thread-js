@@ -7,7 +7,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "lint:css": "stylelint \"src/**/*.scss\" --syntax scss"
+    "lint": "npm run lint:css && npm run lint:js",
+    "lint:css": "stylelint \"src/**/*.scss\" --syntax scss",
+    "lint:js": "eslint --ext .jsx --ext .js src/ "
   },
   "browserslist": [
     ">0.2%",
@@ -21,6 +23,7 @@
     "history": "4.10.1",
     "moment": "2.29",
     "node-sass": "4.14.1",
+    "prop-types": "15.7.2",
     "query-string": "6.13.7",
     "react": "16.14.0",
     "react-dom": "16.14.0",
@@ -42,7 +45,6 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.21.5",
-    "prop-types": "15.7.2",
     "redux-devtools-extension": "2.13.8",
     "stylelint": "13.10.0",
     "stylelint-config-recommended-scss": "4.2.0",
