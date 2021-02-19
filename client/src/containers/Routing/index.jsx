@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Thread from 'src/containers/Thread';
 import LoginPage from 'src/containers/LoginPage';
 import RegistrationPage from 'src/containers/RegistrationPage';
@@ -15,7 +16,7 @@ import PublicRoute from 'src/containers/PublicRoute';
 import Notifications from 'src/components/Notifications';
 import { loadCurrentUser, logout } from 'src/containers/Profile/actions';
 import { applyPost } from 'src/containers/Thread/actions';
-import PropTypes from 'prop-types';
+import { userType } from 'src/common/propTypes';
 
 const Routing = ({
   user,
@@ -61,14 +62,14 @@ Routing.propTypes = {
   isAuthorized: PropTypes.bool,
   logout: PropTypes.func.isRequired,
   applyPost: PropTypes.func.isRequired,
-  user: PropTypes.objectOf(PropTypes.any),
+  user: userType,
   isLoading: PropTypes.bool,
   loadCurrentUser: PropTypes.func.isRequired
 };
 
 Routing.defaultProps = {
   isAuthorized: false,
-  user: {},
+  user: null,
   isLoading: true
 };
 

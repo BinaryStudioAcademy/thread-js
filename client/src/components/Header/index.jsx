@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { getUserImgLink } from 'src/helpers/imageHelper';
 import { Header as HeaderUI, Image, Grid, Icon, Button } from 'semantic-ui-react';
+import { getUserImgLink } from 'src/helpers';
+import { userType } from 'src/common/propTypes';
 
 import styles from './styles.module.scss';
 
@@ -34,7 +35,7 @@ const Header = ({ user, logout }) => (
 
 Header.propTypes = {
   logout: PropTypes.func.isRequired,
-  user: PropTypes.objectOf(PropTypes.any).isRequired
+  user: userType.isRequired
 };
 
 export default Header;

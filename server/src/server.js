@@ -22,11 +22,9 @@ const io = socketIO(socketServer);
 sequelize
   .authenticate()
   .then(() => {
-    // eslint-disable-next-line no-console
-    console.log('Connection has been established successfully.');
+    console.info('Connection has been established successfully.');
   })
   .catch(err => {
-    // eslint-disable-next-line no-console
     console.error('Unable to connect to the database:', err);
   });
 
@@ -53,8 +51,7 @@ app.get('*', (req, res) => {
 
 app.use(errorHandlerMiddleware);
 app.listen(env.app.port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server listening on port ${env.app.port}!`);
+  console.info(`Server listening on port ${env.app.port}!`);
 });
 
 socketServer.listen(env.app.socketPort);

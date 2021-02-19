@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
 import moment from 'moment';
+import { postType } from 'src/common/propTypes';
 
 import styles from './styles.module.scss';
 
@@ -56,7 +57,7 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
 };
 
 Post.propTypes = {
-  post: PropTypes.objectOf(PropTypes.any).isRequired,
+  post: postType.isRequired,
   likePost: PropTypes.func.isRequired,
   toggleExpandedPost: PropTypes.func.isRequired,
   sharePost: PropTypes.func.isRequired

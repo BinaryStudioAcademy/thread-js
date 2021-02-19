@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { locationType } from 'src/common/propTypes';
 
 const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
   <Route
@@ -14,8 +15,8 @@ const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
 
 PrivateRoute.propTypes = {
   isAuthorized: PropTypes.bool,
-  component: PropTypes.any.isRequired, // eslint-disable-line
-  location: PropTypes.any // eslint-disable-line
+  component: PropTypes.elementType.isRequired,
+  location: locationType
 };
 
 PrivateRoute.defaultProps = {
