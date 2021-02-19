@@ -11,7 +11,7 @@
     "start": "nodemon src/server.js --exec \"npm run lint && babel-node\"",
     "lint": "npm run lint:editorconfig && npm run lint:js",
     "lint:editorconfig": "editorconfig-checker",
-    "lint:js": "eslint --ext .jsx --ext .js src/",
+    "lint:js": "eslint --ext .js src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
