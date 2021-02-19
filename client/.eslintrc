@@ -22,20 +22,19 @@
     "react"
   ],
   "rules": {
-    "semi": ["error", "always"],
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "react/jsx-indent": ["error", 2],
-    "react/jsx-indent-props": ["error", 2],
-    "import/no-unresolved": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
+    "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "never"],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "max-len": ["error", { "code": 120 }],
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
-    "react/jsx-props-no-spreading": "off",
-    "import/prefer-default-export": "off",
     "object-curly-newline": "off",
-    "arrow-parens": ["error", "as-needed"]
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off"
   }
 }
