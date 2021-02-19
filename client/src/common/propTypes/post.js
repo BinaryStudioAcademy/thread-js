@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
 import { imageType } from 'src/common/propTypes/image';
+import { commentType } from 'src/common/propTypes/comment';
 
-const commentType = PropTypes.exact({
+const postType = PropTypes.exact({
   id: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
   updatedAt: PropTypes.string.isRequired,
-  postId: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  image: imageType,
+  imageId: PropTypes.string,
+  likeCount: PropTypes.string.isRequired,
+  dislikeCount: PropTypes.string.isRequired,
+  commentCount: PropTypes.string.isRequired,
+  comments: PropTypes.arrayOf(commentType),
   userId: PropTypes.string.isRequired,
   user: PropTypes.exact({
     id: PropTypes.string.isRequired,
@@ -15,4 +21,4 @@ const commentType = PropTypes.exact({
   }).isRequired
 });
 
-export { commentType };
+export { postType };

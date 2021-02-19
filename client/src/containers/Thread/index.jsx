@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import InfiniteScroll from 'react-infinite-scroller';
+import { Checkbox, Loader } from 'semantic-ui-react';
 import * as imageService from 'src/services/imageService';
 import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
 import SharedPostLink from 'src/components/SharedPostLink';
-import { Checkbox, Loader } from 'semantic-ui-react';
-import InfiniteScroll from 'react-infinite-scroller';
+import { postType } from 'src/common/propTypes';
 import { loadPosts, loadMorePosts, likePost, toggleExpandedPost, addPost } from './actions';
 
 import styles from './styles.module.scss';
@@ -91,7 +92,7 @@ const Thread = ({
 Thread.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object),
   hasMorePosts: PropTypes.bool,
-  expandedPost: PropTypes.objectOf(PropTypes.any),
+  expandedPost: postType,
   userId: PropTypes.string,
   loadPosts: PropTypes.func.isRequired,
   loadMorePosts: PropTypes.func.isRequired,

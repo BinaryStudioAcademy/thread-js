@@ -9,6 +9,7 @@ import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
 import Spinner from 'src/components/Spinner';
+import { postType } from 'src/common/propTypes';
 
 const ExpandedPost = ({
   post,
@@ -43,7 +44,7 @@ const ExpandedPost = ({
 );
 
 ExpandedPost.propTypes = {
-  post: PropTypes.objectOf(PropTypes.any).isRequired,
+  post: postType.isRequired,
   toggleExpandedPost: PropTypes.func.isRequired,
   likePost: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
