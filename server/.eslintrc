@@ -12,12 +12,13 @@
     },
     "rules": {
         "comma-dangle": ["error", "never"],
-        "object-curly-newline": "off",
         "arrow-parens": ["error", "as-needed"],
-        "prefer-promise-reject-errors": "off",
-        "import/prefer-default-export": "off",
         "max-len": ["error", { "code": 120 }],
         "no-multiple-empty-lines": ["error", { "max": 1 }],
-        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+        "object-curly-newline": "off",
+        "prefer-promise-reject-errors": "off",
+        "import/prefer-default-export": "off"
     }
 }

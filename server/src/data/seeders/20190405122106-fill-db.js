@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { usersSeed, userImagesSeed } from '../seed-data/usersSeed';
 import { postsSeed, postImagesSeed } from '../seed-data/postsSeed';
 import commentsSeed from '../seed-data/commentsSeed';
@@ -57,7 +56,7 @@ export default {
       }));
       await queryInterface.bulkInsert('postReactions', postReactionsMappedSeed, {});
     } catch (err) {
-      console.log(`Seeding error: ${err}`);
+      console.info(`Seeding error: ${err}`);
     }
   },
 
@@ -69,7 +68,7 @@ export default {
       await queryInterface.bulkDelete('users', null, {});
       await queryInterface.bulkDelete('images', null, {});
     } catch (err) {
-      console.log(`Seeding error: ${err}`);
+      console.info(`Seeding error: ${err}`);
     }
   }
 };
