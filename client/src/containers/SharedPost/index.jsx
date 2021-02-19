@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { toggleExpandedPost } from 'src/containers/Thread/actions';
+import { routeMatchType } from 'src/common/propTypes';
 
 const SharedPost = ({ match, toggleExpandedPost: toggle }) => {
   useEffect(() => {
@@ -14,7 +15,7 @@ const SharedPost = ({ match, toggleExpandedPost: toggle }) => {
 };
 
 SharedPost.propTypes = {
-  match: PropTypes.objectOf(PropTypes.any),
+  match: routeMatchType,
   toggleExpandedPost: PropTypes.func.isRequired
 };
 
