@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { userType } from 'src/common/propTypes';
 import 'react-notifications/lib/notifications.css';
 
 const Notifications = ({ user, applyPost }) => {
@@ -36,7 +37,7 @@ Notifications.defaultProps = {
 };
 
 Notifications.propTypes = {
-  user: PropTypes.objectOf(PropTypes.any),
+  user: userType,
   applyPost: PropTypes.func.isRequired
 };
 

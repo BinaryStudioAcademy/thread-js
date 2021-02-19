@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getUserImgLink } from 'src/helpers/imageHelper';
 import {
   Grid,
   Image,
   Input
 } from 'semantic-ui-react';
+import { getUserImgLink } from 'src/helpers';
+import { userType } from 'src/common/propTypes';
 
 const Profile = ({ user }) => (
   <Grid container textAlign="center" style={{ paddingTop: 30 }}>
@@ -36,11 +36,7 @@ const Profile = ({ user }) => (
 );
 
 Profile.propTypes = {
-  user: PropTypes.objectOf(PropTypes.any)
-};
-
-Profile.defaultProps = {
-  user: {}
+  user: userType.isRequired
 };
 
 const mapStateToProps = rootState => ({
