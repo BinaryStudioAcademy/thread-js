@@ -9,12 +9,10 @@ import 'semantic-ui-css/semantic.min.css';
 import './styles/common.scss';
 
 ReactDOM.render(
-  // <React.StrictMode>
   <Provider store={store}>
     <Router>
       <App />
     </Router>
   </Provider>,
-  // </React.StrictMode>,
   document.getElementById('root')
 );
