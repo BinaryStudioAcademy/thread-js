@@ -6,6 +6,7 @@ import {
   NotificationManager
 } from 'react-notifications';
 import { userType } from 'src/common/propTypes';
+
 import 'react-notifications/lib/notifications.css';
 
 const Notifications = ({ user, onPostApply }) => {

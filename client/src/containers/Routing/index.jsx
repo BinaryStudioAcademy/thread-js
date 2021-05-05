@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spinner, Header } from 'src/components/common/common';
+import { Spinner, Header, Notifications } from 'src/components/common/common';
 import LoginPage from 'src/components/login/login';
 import RegistrationPage from 'src/components/registration/registration';
 import NotFoundPage from 'src/components/not-found/not-found';
@@ -10,7 +10,6 @@ import Profile from 'src/containers/Profile';
 import SharedPost from 'src/containers/SharedPost';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import PublicRoute from 'src/containers/PublicRoute';
-import Notifications from 'src/components/Notifications';
 import { profileActionCreator, threadActionCreator } from 'src/store/actions';
 
 const Routing = () => {
