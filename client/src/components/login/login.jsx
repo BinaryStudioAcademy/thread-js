@@ -4,14 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
 import { profileActionCreator } from 'src/store/actions';
 import Logo from 'src/components/Logo';
-import LoginForm from 'src/components/LoginForm';
+import { LoginForm } from './components';
 
-const LoginPage = () => {
+const Login = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = useCallback(loginPayload => {
-    dispatch(profileActionCreator.login(loginPayload));
-  }, [dispatch]);
+  const handleLogin = useCallback(
+    loginPayload => {
+      dispatch(profileActionCreator.login(loginPayload));
+    },
+    [dispatch]
+  );
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">
@@ -33,4 +36,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
