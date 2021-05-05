@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import * as postService from 'src/services/postService';
-import * as commentService from 'src/services/commentService';
+import { comment as commentService } from 'src/services/services';
 
 const ActionType = {
   ADD_POST: 'thread/add-post',
