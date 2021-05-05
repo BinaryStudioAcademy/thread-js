@@ -4,14 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
 import { profileActionCreator } from 'src/store/actions';
 import { Logo } from 'src/components/common/common';
-import RegistrationForm from './components/components';
+import { RegistrationForm } from './components/components';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const handleRegister = useCallback(registerPayload => {
-    dispatch(profileActionCreator.register(registerPayload));
-  }, [dispatch]);
+  const handleRegister = useCallback(
+    registerPayload => {
+      dispatch(profileActionCreator.register(registerPayload));
+    },
+    [dispatch]
+  );
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">
