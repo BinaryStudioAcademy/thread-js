@@ -1,0 +1,33 @@
+{
+  "name": "threadjs",
+  "private": true,
+  "engines": {
+    "node": "14.x.x",
+    "npm": "6.x.x"
+  },
+  "scripts": {
+    "install:client": "cd client && npm run install",
+    "install:server": "cd server && npm run install",
+    "install:all": "npm install && npm run install:frontend && npm run install:server",
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:client:css": "cd client && npm run lint:css",
+    "lint:client:js": "cd client && npm run lint:js",
+    "lint:client": "cd client && npm run lint",
+    "lint:server:js": "cd server && npm run lint:js",
+    "lint:server": "cd server && npm run lint",
+    "lint": "npm run lint:editorconfig && npm run lint:client && npm run lint:server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "editorconfig-checker": "4.0.2",
+    "eslint": "7.25.0",
+    "eslint-plugin-import": "2.22.1",
+    "lint-staged": "10.5.4",
+    "simple-git-hooks": "2.4.1",
+    "stylelint": "13.13.1",
+    "stylelint-config-recommended": "5.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  }
+}
