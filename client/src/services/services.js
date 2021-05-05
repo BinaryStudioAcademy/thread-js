@@ -1,7 +1,8 @@
 import { Auth } from './auth/auth.service';
-import { Http } from './http/http.service';
-import { Storage } from './storage/storage.service';
 import { Comment } from './comment/comment.service';
+import { Http } from './http/http.service';
+import { Post } from './post/post.service';
+import { Storage } from './storage/storage.service';
 
 const storage = new Storage({
   storage: localStorage
@@ -19,4 +20,8 @@ const comment = new Comment({
   http
 });
 
-export { http, storage, auth, comment };
+const post = new Post({
+  http
+});
+
+export { http, storage, auth, comment, post };

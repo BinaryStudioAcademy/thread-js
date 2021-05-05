@@ -1,6 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import * as postService from 'src/services/postService';
-import { comment as commentService } from 'src/services/services';
+import {
+  comment as commentService,
+  post as postService
+} from 'src/services/services';
 
 const ActionType = {
   ADD_POST: 'thread/add-post',
@@ -39,10 +41,13 @@ const loadPosts = filter => async dispatch => {
 };
 
 const loadMorePosts = filter => async (dispatch, getRootState) => {
-  const { posts: { posts } } = getRootState();
+  const {
+    posts: { posts }
+  } = getRootState();
   const loadedPosts = await postService.getAllPosts(filter);
-  const filteredPosts = loadedPosts
-    .filter(post => !(posts && posts.some(loadedPost => post.id === loadedPost.id)));
+  const filteredPosts = loadedPosts.filter(
+    post => !(posts && posts.some(loadedPost => post.id === loadedPost.id))
+  );
   dispatch(addMorePosts(filteredPosts));
 };
 
@@ -71,7 +76,9 @@ const likePost = postId => async (dispatch, getRootState) => {
     likeCount: Number(post.likeCount) + diff // diff is taken from the current closure
   });
 
-  const { posts: { posts, expandedPost } } = getRootState();
+  const {
+    posts: { posts, expandedPost }
+  } = getRootState();
   const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
 
   dispatch(setPosts(updated));
@@ -91,10 +98,10 @@ const addComment = request => async (dispatch, getRootState) => {
     comments: [...(post.comments || []), comment] // comment is taken from the current closure
   });
 
-  const { posts: { posts, expandedPost } } = getRootState();
-  const updated = posts.map(post => (post.id !== comment.postId
-    ? post
-    : mapComments(post)));
+  const {
+    posts: { posts, expandedPost }
+  } = getRootState();
+  const updated = posts.map(post => (post.id !== comment.postId ? post : mapComments(post)));
 
   dispatch(setPosts(updated));
 

@@ -56,7 +56,7 @@ class Http {
   }
 
   _getUrl(url, query) {
-    return `${url} ${query ? `?${getStringifiedQuery(query)}` : ''}`;
+    return `${url}${query ? `?${getStringifiedQuery(query)}` : ''}`;
   }
 
   _parseJSON(response) {
