@@ -35,7 +35,7 @@ const Thread = () => {
   ), [dispatch]);
 
   const handlePostAdd = useCallback(postPayload => (
-    dispatch(threadActionCreator.addPost(postPayload))
+    dispatch(threadActionCreator.createPost(postPayload))
   ), [dispatch]);
 
   const handlePostsLoad = filtersPayload => {

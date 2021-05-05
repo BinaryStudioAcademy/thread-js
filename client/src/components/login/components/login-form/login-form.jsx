@@ -20,7 +20,7 @@ const LoginForm = ({ onLogin }) => {
     setIsPasswordValid(true);
   };
 
-  const handleLoginClick = async () => {
+  const handleLoginClick = () => {
     const isValid = isEmailValid && isPasswordValid;
     if (!isValid || isLoading) {
       return;
