@@ -19,5 +19,7 @@ rules:
     - code: 120
   object-curly-newline:
     - off
+  no-param-reassign:
+    - off
   import/prefer-default-export:
     - off
