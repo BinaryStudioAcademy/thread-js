@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
 import moment from 'moment';
 import { threadActionCreator } from 'src/store/actions';
-import Post from 'src/components/Post';
-import Comment from 'src/components/Comment';
-import AddComment from 'src/components/AddComment';
-import Spinner from 'src/components/Spinner';
+import { Spinner, Post } from 'src/components/common/common';
+import AddComment from '../add-comment/add-comment';
+import Comment from '../comment/comment';
 
 const ExpandedPost = ({
   sharePost

@@ -14,7 +14,7 @@ import RegistrationPage from 'src/components/registration/registration';
 import NotFoundPage from 'src/components/not-found/not-found';
 import ProfilePage from 'src/components/profile/profile';
 import SharedPostPage from 'src/components/shared-post/shared-post';
-import Thread from 'src/containers/Thread';
+import ThreadPage from 'src/containers/Thread';
 
 const Routing = () => {
   const { user, isAuthorized, isLoading } = useSelector(state => ({
@@ -56,7 +56,7 @@ const Routing = () => {
             path="/registration"
             component={RegistrationPage}
           />
-          <PrivateRoute exact path="/" component={Thread} />
+          <PrivateRoute exact path="/" component={ThreadPage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
           <PrivateRoute path="/share/:postHash" component={SharedPostPage} />
           <Route path="*" exact component={NotFoundPage} />

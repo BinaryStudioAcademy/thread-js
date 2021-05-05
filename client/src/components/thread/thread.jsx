@@ -2,12 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Checkbox, Loader } from 'semantic-ui-react';
-import * as imageService from 'src/services/imageService';
-import ExpandedPost from 'src/containers/ExpandedPost';
-import Post from 'src/components/Post';
-import AddPost from 'src/components/AddPost';
-import SharedPostLink from 'src/components/SharedPostLink';
 import { threadActionCreator } from 'src/store/actions';
+import * as imageService from 'src/services/imageService';
+import { Post } from 'src/components/common/common';
+import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 
 import styles from './styles.module.scss';
 
@@ -85,7 +83,7 @@ const Thread = () => {
         pageStart={0}
         loadMore={getMorePosts}
         hasMore={hasMorePosts}
-        loader={<Loader active inline="centered" key={0} />}
+        loader={<Loader active inline="centered" />}
       >
         {posts.map(post => (
           <Post
