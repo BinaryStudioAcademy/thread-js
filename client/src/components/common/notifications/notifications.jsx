@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {
   NotificationContainer,
   NotificationManager
 } from 'react-notifications';
+import { ENV } from 'src/common/enums/enums';
 import { userType } from 'src/common/prop-types/prop-types';
 
 import 'react-notifications/lib/notifications.css';
 
-const Notifications = ({ user, onPostApply }) => {
-  const { REACT_APP_SOCKET_SERVER: address } = process.env;
-  const [socket] = useState(io(address));
+const socket = io(ENV.SOCKET_URL);
 
+const Notifications = ({ user, onPostApply }) => {
   useEffect(() => {
     if (!user) {
       return undefined;
