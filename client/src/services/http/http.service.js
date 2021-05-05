@@ -1,3 +1,4 @@
+import { getStringifiedQuery } from 'src/helpers/helpers';
 import { StorageKey, HttpHeader, HttpMethod } from 'src/common/enums/enums';
 
 class Http {
@@ -10,14 +11,15 @@ class Http {
       method = HttpMethod.GET,
       payload = null,
       hasAuth = true,
-      contentType
+      contentType,
+      query
     } = options;
     const headers = this._getHeaders({
       hasAuth,
       contentType
     });
 
-    return fetch(url, {
+    return fetch(this._getUrl(url, query), {
       method,
       headers,
       body: payload
@@ -51,6 +53,10 @@ class Http {
     }
 
     return response;
+  }
+
+  _getUrl(url, query) {
+    return `${url} ${query ? `?${getStringifiedQuery(query)}` : ''}`;
   }
 
   _parseJSON(response) {
