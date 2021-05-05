@@ -1,0 +1,20 @@
+extends:
+  - airbnb-base
+  - eslint:recommended
+  - ../.eslintrc.yml
+
+env:
+  node: true
+
+rules:
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
+  no-console:
+    - warn
+    - allow:
+      - warn
+      - error
+      - info
+  prefer-promise-reject-errors:
+    - off

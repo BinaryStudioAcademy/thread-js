@@ -1,0 +1,23 @@
+env:
+  es6: true
+
+parserOptions:
+  ecmaVersion: 2020
+
+rules:
+  comma-dangle:
+    - error
+    - never
+  arrow-parens:
+    - error
+    - as-needed
+  no-multiple-empty-lines:
+    - error
+    - max: 1
+  max-len:
+    - error
+    - code: 120
+  object-curly-newline:
+    - off
+  import/prefer-default-export:
+    - off
