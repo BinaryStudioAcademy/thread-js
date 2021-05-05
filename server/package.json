@@ -1,21 +1,15 @@
 {
   "name": "server",
-  "version": "1.0.0",
-  "description": "ThreadJS. Powered by Binary Studio Academy team.",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:BinaryStudioAcademy/thread-js.git"
+  "private": true,
+  "engines": {
+    "node": "14.x.x",
+    "npm": "6.x.x"
   },
-  "main": "server.js",
   "scripts": {
     "start": "nodemon src/server.js --exec \"npm run lint && babel-node\"",
-    "lint": "npm run lint:editorconfig && npm run lint:js",
-    "lint:editorconfig": "editorconfig-checker",
-    "lint:js": "eslint --ext .js src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:js": "npx eslint --ext .js src",
+    "lint": "npm run lint:js"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "7.12.1",
     "axios": "0.21.0",
@@ -42,9 +36,6 @@
     "@babel/node": "7.12.10",
     "@babel/preset-env": "7.12.10",
     "@babel/register": "7.12.10",
-    "editorconfig-checker": "3.3.0",
-    "eslint": "7.15.0",
-    "eslint-config-airbnb-base": "14.2.1",
-    "eslint-plugin-import": "2.22.1"
+    "eslint-config-airbnb-base": "14.2.1"
   }
 }
