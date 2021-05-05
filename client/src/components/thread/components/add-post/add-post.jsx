@@ -18,17 +18,18 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
     setImage(undefined);
   };
 
-  const handleUploadFile = async ({ target }) => {
+  const handleUploadFile = ({ target }) => {
     setIsUploading(true);
-    try {
-      const { id: imageId, link: imageLink } = await uploadImage(
-        target.files[0]
-      );
-      setImage({ imageId, imageLink });
-    } finally {
-      // TODO: show error
-      setIsUploading(false);
-    }
+    const [file] = target.files;
+
+    uploadImage(file)
+      .then(({ id: imageId, link: imageLink }) => {
+        setImage({ imageId, imageLink });
+      })
+      .catch(() => {
+        // TODO: show error
+        setIsUploading(false);
+      });
   };
 
   return (

@@ -1,6 +1,7 @@
 import { Auth } from './auth/auth.service';
 import { Comment } from './comment/comment.service';
 import { Http } from './http/http.service';
+import { Image } from './image/image.service';
 import { Post } from './post/post.service';
 import { Storage } from './storage/storage.service';
 
@@ -24,4 +25,8 @@ const post = new Post({
   http
 });
 
-export { http, storage, auth, comment, post };
+const image = new Image({
+  http
+});
+
+export { http, storage, auth, comment, post, image };

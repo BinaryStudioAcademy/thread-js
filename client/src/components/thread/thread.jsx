@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Checkbox } from 'semantic-ui-react';
 import { threadActionCreator } from 'src/store/actions';
-import * as imageService from 'src/services/imageService';
+import { image as imageService } from 'src/services/services';
 import { Post, Spinner } from 'src/components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 
