@@ -6,7 +6,7 @@
     "npm": "6.x.x"
   },
   "scripts": {
-    "start": "nodemon src/server.js --exec \"npm run lint && babel-node\"",
+    "start": "nodemon src/server.js --exec babel-node",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js"
   },
