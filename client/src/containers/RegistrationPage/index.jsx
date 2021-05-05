@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from 'src/containers/Profile/actions';
 import Logo from 'src/components/Logo';
@@ -9,7 +9,9 @@ import RegistrationForm from 'src/components/RegistrationForm';
 const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const handleRegister = registerPayload => dispatch(register(registerPayload));
+  const handleRegister = useCallback(registerPayload => {
+    dispatch(register(registerPayload));
+  }, [dispatch]);
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">

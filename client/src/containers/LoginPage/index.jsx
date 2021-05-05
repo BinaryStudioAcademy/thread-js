@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
@@ -9,7 +9,9 @@ import LoginForm from 'src/components/LoginForm';
 const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = loginPayload => dispatch(login(loginPayload));
+  const handleLogin = useCallback(loginPayload => {
+    dispatch(login(loginPayload));
+  }, [dispatch]);
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">
