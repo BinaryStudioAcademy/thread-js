@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spinner, Header, Notifications } from 'src/components/common/common';
+import { profileActionCreator, threadActionCreator } from 'src/store/actions';
+import {
+  Spinner,
+  Header,
+  PrivateRoute,
+  PublicRoute,
+  Notifications
+} from 'src/components/common/common';
 import LoginPage from 'src/components/login/login';
 import RegistrationPage from 'src/components/registration/registration';
 import NotFoundPage from 'src/components/not-found/not-found';
 import ProfilePage from 'src/components/profile/profile';
 import SharedPostPage from 'src/components/shared-post/shared-post';
 import Thread from 'src/containers/Thread';
-import PrivateRoute from 'src/containers/PrivateRoute';
-import PublicRoute from 'src/containers/PublicRoute';
-import { profileActionCreator, threadActionCreator } from 'src/store/actions';
 
 const Routing = () => {
   const { user, isAuthorized, isLoading } = useSelector(state => ({
