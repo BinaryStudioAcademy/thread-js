@@ -6,7 +6,7 @@ import { postType } from 'src/common/propTypes';
 
 import styles from './styles.module.scss';
 
-const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
+const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
   const {
     id,
     image,
@@ -18,6 +18,10 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
     createdAt
   } = post;
   const date = moment(createdAt).fromNow();
+
+  const handlePostLike = () => onPostLike(id);
+  const handleExpandedPostToggle = () => onExpandedPostToggle(id);
+
   return (
     <Card style={{ width: '100%' }}>
       {image && <Image src={image.link} wrapped ui={false} />}
@@ -31,12 +35,16 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
             {date}
           </span>
         </Card.Meta>
-        <Card.Description>
-          {body}
-        </Card.Description>
+        <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => likePost(id)}>
+        <Label
+          basic
+          size="small"
+          as="a"
+          className={styles.toolbarBtn}
+          onClick={handlePostLike}
+        >
           <Icon name="thumbs up" />
           {likeCount}
         </Label>
@@ -44,11 +52,23 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
           <Icon name="thumbs down" />
           {dislikeCount}
         </Label>
-        <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => toggleExpandedPost(id)}>
+        <Label
+          basic
+          size="small"
+          as="a"
+          className={styles.toolbarBtn}
+          onClick={handleExpandedPostToggle}
+        >
           <Icon name="comment" />
           {commentCount}
         </Label>
-        <Label basic size="small" as="a" className={styles.toolbarBtn} onClick={() => sharePost(id)}>
+        <Label
+          basic
+          size="small"
+          as="a"
+          className={styles.toolbarBtn}
+          onClick={() => sharePost(id)}
+        >
           <Icon name="share alternate" />
         </Label>
       </Card.Content>
@@ -58,8 +78,8 @@ const Post = ({ post, likePost, toggleExpandedPost, sharePost }) => {
 
 Post.propTypes = {
   post: postType.isRequired,
-  likePost: PropTypes.func.isRequired,
-  toggleExpandedPost: PropTypes.func.isRequired,
+  onPostLike: PropTypes.func.isRequired,
+  onExpandedPostToggle: PropTypes.func.isRequired,
   sharePost: PropTypes.func.isRequired
 };
 

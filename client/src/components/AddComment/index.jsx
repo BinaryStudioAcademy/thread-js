@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 
-const AddComment = ({
-  postId,
-  addComment
-}) => {
+const AddComment = ({ postId, onCommentAdd }) => {
   const [body, setBody] = useState('');
 
   const handleAddComment = async () => {
     if (!body) {
       return;
     }
-    await addComment({ postId, body });
+    await onCommentAdd({ postId, body });
     setBody('');
   };
 
@@ -23,13 +20,19 @@ const AddComment = ({
         placeholder="Type a comment..."
         onChange={ev => setBody(ev.target.value)}
       />
-      <Button type="submit" content="Post comment" labelPosition="left" icon="edit" primary />
+      <Button
+        type="submit"
+        content="Post comment"
+        labelPosition="left"
+        icon="edit"
+        primary
+      />
     </Form>
   );
 };
 
 AddComment.propTypes = {
-  addComment: PropTypes.func.isRequired,
+  onCommentAdd: PropTypes.func.isRequired,
   postId: PropTypes.string.isRequired
 };
 
