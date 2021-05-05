@@ -1,15 +1,25 @@
 import { SET_USER } from './actionTypes';
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+  user: null,
+  isLoading: false,
+  isAuthorized: false
+};
+
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_USER:
+    case SET_USER: {
       return {
         ...state,
         user: action.user,
         isAuthorized: Boolean(action.user?.id),
         isLoading: false
       };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };
+
+export default reducer;
