@@ -1,34 +1,41 @@
+import { createAction } from '@reduxjs/toolkit';
 import * as authService from 'src/services/authService';
-import { SET_USER } from './actionTypes';
+
+const ActionType = {
+  SET_USER: 'profile/set-user'
+};
 
 const setToken = token => localStorage.setItem('token', token);
 
-const setUser = user => ({
-  type: SET_USER,
-  user
-});
+const setUser = createAction(ActionType.SET_USER, user => ({
+  payload: {
+    user
+  }
+}));
 
-export const login = request => async dispatch => {
+const login = request => async dispatch => {
   const { user, token } = await authService.login(request);
 
   setToken(token);
   dispatch(setUser(user));
 };
 
-export const register = request => async dispatch => {
+const register = request => async dispatch => {
   const { user, token } = await authService.login(request);
 
   setToken(token);
   dispatch(setUser(user));
 };
 
-export const logout = () => dispatch => {
+const logout = () => dispatch => {
   setToken('');
   dispatch(setUser(null));
 };
 
-export const loadCurrentUser = () => async dispatch => {
+const loadCurrentUser = () => async dispatch => {
   const user = await authService.getCurrentUser();
 
   dispatch(setUser(user));
 };
+
+export { setUser, login, register, logout, loadCurrentUser };

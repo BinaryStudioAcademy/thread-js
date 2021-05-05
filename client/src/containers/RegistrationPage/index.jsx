@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { register } from 'src/containers/Profile/actions';
+import { profileActionCreator } from 'src/store/actions';
 import Logo from 'src/components/Logo';
 import { Grid, Header, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
@@ -10,7 +10,7 @@ const RegistrationPage = () => {
   const dispatch = useDispatch();
 
   const handleRegister = useCallback(registerPayload => {
-    dispatch(register(registerPayload));
+    dispatch(profileActionCreator.register(registerPayload));
   }, [dispatch]);
 
   return (

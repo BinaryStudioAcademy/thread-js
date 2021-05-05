@@ -12,7 +12,7 @@ import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import PublicRoute from 'src/containers/PublicRoute';
 import Notifications from 'src/components/Notifications';
-import { loadCurrentUser, logout } from 'src/containers/Profile/actions';
+import { profileActionCreator } from 'src/store/actions';
 import { applyPost } from 'src/containers/Thread/actions';
 
 const Routing = () => {
@@ -29,12 +29,12 @@ const Routing = () => {
   [dispatch]);
 
   const handleUserLogout = useCallback(() => {
-    dispatch(logout());
+    dispatch(profileActionCreator.logout());
   }, [dispatch]);
 
   useEffect(() => {
     if (!isAuthorized) {
-      dispatch(loadCurrentUser());
+      dispatch(profileActionCreator.loadCurrentUser());
     }
   }, [isAuthorized, dispatch]);
 

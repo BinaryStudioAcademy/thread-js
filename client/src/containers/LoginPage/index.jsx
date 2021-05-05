@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
-import { login } from 'src/containers/Profile/actions';
+import { profileActionCreator } from 'src/store/actions';
 import Logo from 'src/components/Logo';
 import LoginForm from 'src/components/LoginForm';
 
@@ -10,7 +10,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const handleLogin = useCallback(loginPayload => {
-    dispatch(login(loginPayload));
+    dispatch(profileActionCreator.login(loginPayload));
   }, [dispatch]);
 
   return (

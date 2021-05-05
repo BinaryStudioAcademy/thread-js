@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import threadReducer from '../containers/Thread/reducer';
-import profileReducer from '../containers/Profile/reducer';
+import { profileReducer } from './root-reducer';
 
 const store = configureStore({
   reducer: {
-    posts: threadReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    posts: threadReducer
   }
 });
 
