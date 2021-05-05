@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routing from 'src/containers/Routing';
+import App from 'src/components/app';
 import store from 'src/store/store';
 
 import './styles/reset.scss';
@@ -13,7 +13,7 @@ ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
     <Router>
-      <Routing />
+      <App />
     </Router>
   </Provider>,
   // </React.StrictMode>,

@@ -14,7 +14,7 @@ import RegistrationPage from 'src/components/registration/registration';
 import NotFoundPage from 'src/components/not-found/not-found';
 import ProfilePage from 'src/components/profile/profile';
 import SharedPostPage from 'src/components/shared-post/shared-post';
-import ThreadPage from 'src/containers/Thread';
+import ThreadPage from 'src/components/thread/thread';
 
 const Routing = () => {
   const { user, isAuthorized, isLoading } = useSelector(state => ({
@@ -39,9 +39,11 @@ const Routing = () => {
     }
   }, [isAuthorized, dispatch]);
 
-  return isLoading ? (
-    <Spinner />
-  ) : (
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  return (
     <div className="fill">
       {isAuthorized && (
         <header>
