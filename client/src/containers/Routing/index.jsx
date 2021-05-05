@@ -12,8 +12,7 @@ import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import PublicRoute from 'src/containers/PublicRoute';
 import Notifications from 'src/components/Notifications';
-import { profileActionCreator } from 'src/store/actions';
-import { applyPost } from 'src/containers/Thread/actions';
+import { profileActionCreator, threadActionCreator } from 'src/store/actions';
 
 const Routing = () => {
   const { user, isAuthorized, isLoading } = useSelector(state => ({
@@ -24,7 +23,7 @@ const Routing = () => {
   const dispatch = useDispatch();
 
   const handlePostApply = useCallback(id => {
-    dispatch(applyPost(id));
+    dispatch(threadActionCreator.applyPost(id));
   },
   [dispatch]);
 

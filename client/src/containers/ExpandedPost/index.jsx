@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
 import moment from 'moment';
-import {
-  likePost,
-  toggleExpandedPost,
-  addComment
-} from 'src/containers/Thread/actions';
+import { threadActionCreator } from 'src/store/actions';
 import Post from 'src/components/Post';
 import Comment from 'src/components/Comment';
 import AddComment from 'src/components/AddComment';
@@ -22,15 +18,15 @@ const ExpandedPost = ({
   }));
 
   const handlePostLike = useCallback(id => {
-    dispatch(likePost(id));
+    dispatch(threadActionCreator.likePost(id));
   }, [dispatch]);
 
   const handleCommentAdd = useCallback(commentPayload => {
-    dispatch(addComment(commentPayload));
+    dispatch(threadActionCreator.addComment(commentPayload));
   }, [dispatch]);
 
   const handleExpandedPostToggle = useCallback(id => {
-    dispatch(toggleExpandedPost(id));
+    dispatch(threadActionCreator.toggleExpandedPost(id));
   }, [dispatch]);
 
   const handleExpandedPostClose = () => handleExpandedPostToggle();

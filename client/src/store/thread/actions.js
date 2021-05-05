@@ -1,62 +1,68 @@
+import { createAction } from '@reduxjs/toolkit';
 import * as postService from 'src/services/postService';
 import * as commentService from 'src/services/commentService';
-import {
-  ADD_POST,
-  LOAD_MORE_POSTS,
-  SET_ALL_POSTS,
-  SET_EXPANDED_POST
-} from './actionTypes';
 
-const setPostsAction = posts => ({
-  type: SET_ALL_POSTS,
-  posts
-});
-
-const addMorePostsAction = posts => ({
-  type: LOAD_MORE_POSTS,
-  posts
-});
-
-const addPostAction = post => ({
-  type: ADD_POST,
-  post
-});
-
-const setExpandedPostAction = post => ({
-  type: SET_EXPANDED_POST,
-  post
-});
-
-export const loadPosts = filter => async dispatch => {
-  const posts = await postService.getAllPosts(filter);
-  dispatch(setPostsAction(posts));
+const ActionType = {
+  ADD_POST: 'thread/add-post',
+  LOAD_MORE_POSTS: 'thread/load-more-posts',
+  SET_ALL_POSTS: 'thread/set-all-posts',
+  SET_EXPANDED_POST: 'thread/set-expanded-post'
 };
 
-export const loadMorePosts = filter => async (dispatch, getRootState) => {
+const setPosts = createAction(ActionType.SET_ALL_POSTS, posts => ({
+  payload: {
+    posts
+  }
+}));
+
+const addMorePosts = createAction(ActionType.LOAD_MORE_POSTS, posts => ({
+  payload: {
+    posts
+  }
+}));
+
+const addPost = createAction(ActionType.ADD_POST, post => ({
+  payload: {
+    post
+  }
+}));
+
+const setExpandedPost = createAction(ActionType.SET_EXPANDED_POST, post => ({
+  payload: {
+    post
+  }
+}));
+
+const loadPosts = filter => async dispatch => {
+  const posts = await postService.getAllPosts(filter);
+  dispatch(setPosts(posts));
+};
+
+const loadMorePosts = filter => async (dispatch, getRootState) => {
   const { posts: { posts } } = getRootState();
   const loadedPosts = await postService.getAllPosts(filter);
   const filteredPosts = loadedPosts
     .filter(post => !(posts && posts.some(loadedPost => post.id === loadedPost.id)));
-  dispatch(addMorePostsAction(filteredPosts));
+  dispatch(addMorePosts(filteredPosts));
 };
 
-export const applyPost = postId => async dispatch => {
+const applyPost = postId => async dispatch => {
   const post = await postService.getPost(postId);
-  dispatch(addPostAction(post));
+  dispatch(addPost(post));
 };
 
-export const addPost = post => async dispatch => {
+const createPost = post => async dispatch => {
   const { id } = await postService.addPost(post);
   const newPost = await postService.getPost(id);
-  dispatch(addPostAction(newPost));
+  dispatch(addPost(newPost));
 };
 
-export const toggleExpandedPost = postId => async dispatch => {
+const toggleExpandedPost = postId => async dispatch => {
   const post = postId ? await postService.getPost(postId) : undefined;
-  dispatch(setExpandedPostAction(post));
+  dispatch(setExpandedPost(post));
 };
 
-export const likePost = postId => async (dispatch, getRootState) => {
+const likePost = postId => async (dispatch, getRootState) => {
   const { id } = await postService.likePost(postId);
   const diff = id ? 1 : -1; // if ID exists then the post was liked, otherwise - like was removed
 
@@ -68,14 +74,14 @@ export const likePost = postId => async (dispatch, getRootState) => {
   const { posts: { posts, expandedPost } } = getRootState();
   const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
 
-  dispatch(setPostsAction(updated));
+  dispatch(setPosts(updated));
 
   if (expandedPost && expandedPost.id === postId) {
-    dispatch(setExpandedPostAction(mapLikes(expandedPost)));
+    dispatch(setExpandedPost(mapLikes(expandedPost)));
   }
 };
 
-export const addComment = request => async (dispatch, getRootState) => {
+const addComment = request => async (dispatch, getRootState) => {
   const { id } = await commentService.addComment(request);
   const comment = await commentService.getComment(id);
 
@@ -90,9 +96,23 @@ export const addComment = request => async (dispatch, getRootState) => {
     ? post
     : mapComments(post)));
 
-  dispatch(setPostsAction(updated));
+  dispatch(setPosts(updated));
 
   if (expandedPost && expandedPost.id === comment.postId) {
-    dispatch(setExpandedPostAction(mapComments(expandedPost)));
+    dispatch(setExpandedPost(mapComments(expandedPost)));
   }
+};
+
+export {
+  setPosts,
+  addMorePosts,
+  addPost,
+  setExpandedPost,
+  loadPosts,
+  loadMorePosts,
+  applyPost,
+  createPost,
+  toggleExpandedPost,
+  likePost,
+  addComment
 };

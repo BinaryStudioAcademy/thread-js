@@ -7,13 +7,7 @@ import ExpandedPost from 'src/containers/ExpandedPost';
 import Post from 'src/components/Post';
 import AddPost from 'src/components/AddPost';
 import SharedPostLink from 'src/components/SharedPostLink';
-import {
-  loadPosts,
-  loadMorePosts,
-  likePost,
-  toggleExpandedPost,
-  addPost
-} from './actions';
+import { threadActionCreator } from 'src/store/actions';
 
 import styles from './styles.module.scss';
 
@@ -35,22 +29,26 @@ const Thread = () => {
   const dispatch = useDispatch();
 
   const handlePostLike = useCallback(id => {
-    dispatch(likePost(id));
+    dispatch(threadActionCreator.likePost(id));
   },
   [dispatch]);
 
   const handleExpandedPostToggle = useCallback(id => {
-    dispatch(toggleExpandedPost(id));
+    dispatch(threadActionCreator.toggleExpandedPost(id));
   },
   [dispatch]);
 
   const handlePostAdd = useCallback(postPayload => {
-    dispatch(addPost(postPayload));
+    dispatch(threadActionCreator.addPost(postPayload));
   }, [dispatch]);
 
-  const handlePostsLoad = filtersPayload => dispatch(loadPosts(filtersPayload));
+  const handlePostsLoad = filtersPayload => {
+    dispatch(threadActionCreator.loadPosts(filtersPayload));
+  };
 
-  const handleMorePostsLoad = filtersPayload => dispatch(loadMorePosts(filtersPayload));
+  const handleMorePostsLoad = filtersPayload => {
+    dispatch(threadActionCreator.loadMorePosts(filtersPayload));
+  };
 
   const toggleShowOwnPosts = () => {
     setShowOwnPosts(!showOwnPosts);
