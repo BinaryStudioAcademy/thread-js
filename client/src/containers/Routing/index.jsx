@@ -6,8 +6,8 @@ import LoginPage from 'src/components/login/login';
 import RegistrationPage from 'src/components/registration/registration';
 import NotFoundPage from 'src/components/not-found/not-found';
 import ProfilePage from 'src/components/profile/profile';
+import SharedPostPage from 'src/components/shared-post/shared-post';
 import Thread from 'src/containers/Thread';
-import SharedPost from 'src/containers/SharedPost';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import PublicRoute from 'src/containers/PublicRoute';
 import { profileActionCreator, threadActionCreator } from 'src/store/actions';
@@ -54,7 +54,7 @@ const Routing = () => {
           />
           <PrivateRoute exact path="/" component={Thread} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
-          <PrivateRoute path="/share/:postHash" component={SharedPost} />
+          <PrivateRoute path="/share/:postHash" component={SharedPostPage} />
           <Route path="*" exact component={NotFoundPage} />
         </Switch>
       </main>
