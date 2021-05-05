@@ -6,7 +6,7 @@ import { routeMatchType } from 'src/common/propTypes';
 
 const SharedPost = ({ match }) => {
   const dispatch = useDispatch();
-  const handleToggleExpandedPost = dispatch(toggleExpandedPost);
+  const handleToggleExpandedPost = id => dispatch(toggleExpandedPost(id));
 
   useEffect(() => {
     handleToggleExpandedPost(match.params.postHash);

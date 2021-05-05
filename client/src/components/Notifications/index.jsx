@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import {
+  NotificationContainer,
+  NotificationManager
+} from 'react-notifications';
 import { userType } from 'src/common/propTypes';
 import 'react-notifications/lib/notifications.css';
 
-const Notifications = ({ user, applyPost }) => {
+const Notifications = ({ user, onPostApply }) => {
   const { REACT_APP_SOCKET_SERVER: address } = process.env;
   const [socket] = useState(io(address));
 
@@ -20,7 +23,7 @@ const Notifications = ({ user, applyPost }) => {
     });
     socket.on('new_post', post => {
       if (post.userId !== id) {
-        applyPost(post.id);
+        onPostApply(post.id);
       }
     });
 
@@ -38,7 +41,7 @@ Notifications.defaultProps = {
 
 Notifications.propTypes = {
   user: userType,
-  applyPost: PropTypes.func.isRequired
+  onPostApply: PropTypes.func.isRequired
 };
 
 export default Notifications;

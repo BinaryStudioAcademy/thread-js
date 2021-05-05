@@ -2,7 +2,7 @@ import { SET_USER } from './actionTypes';
 
 const INITIAL_STATE = {
   user: null,
-  isLoading: false,
+  isLoading: true,
   isAuthorized: false
 };
 

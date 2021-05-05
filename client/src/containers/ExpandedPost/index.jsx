@@ -33,8 +33,10 @@ const ExpandedPost = ({
     dispatch(toggleExpandedPost(id));
   }, [dispatch]);
 
+  const handleExpandedPostClose = () => handleExpandedPostToggle();
+
   return (
-    <Modal dimmer="blurring" centered={false} open onClose={handleExpandedPostToggle}>
+    <Modal dimmer="blurring" centered={false} open onClose={handleExpandedPostClose}>
       {post ? (
         <Modal.Content>
           <Post

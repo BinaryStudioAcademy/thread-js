@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Header as HeaderUI, Image, Grid, Icon, Button } from 'semantic-ui-react';
+import {
+  Header as HeaderUI,
+  Image,
+  Grid,
+  Icon,
+  Button
+} from 'semantic-ui-react';
 import { getUserImgLink } from 'src/helpers';
 import { userType } from 'src/common/propTypes';
 
 import styles from './styles.module.scss';
 
-const Header = ({ user, logout }) => (
+const Header = ({ user, onUserLogout }) => (
   <div className={styles.headerWrp}>
     <Grid centered container columns="2">
       <Grid.Column>
@@ -22,10 +28,21 @@ const Header = ({ user, logout }) => (
         )}
       </Grid.Column>
       <Grid.Column textAlign="right">
-        <NavLink exact activeClassName="active" to="/profile" className={styles.menuBtn}>
+        <NavLink
+          exact
+          activeClassName="active"
+          to="/profile"
+          className={styles.menuBtn}
+        >
           <Icon name="user circle" size="large" />
         </NavLink>
-        <Button basic icon type="button" className={`${styles.menuBtn} ${styles.logoutBtn}`} onClick={logout}>
+        <Button
+          basic
+          icon
+          type="button"
+          className={`${styles.menuBtn} ${styles.logoutBtn}`}
+          onClick={onUserLogout}
+        >
           <Icon name="log out" size="large" />
         </Button>
       </Grid.Column>
@@ -34,7 +51,7 @@ const Header = ({ user, logout }) => (
 );
 
 Header.propTypes = {
-  logout: PropTypes.func.isRequired,
+  onUserLogout: PropTypes.func.isRequired,
   user: userType.isRequired
 };
 
