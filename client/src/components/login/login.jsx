@@ -9,12 +9,9 @@ import { LoginForm } from './components/components';
 const Login = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = useCallback(
-    loginPayload => {
-      dispatch(profileActionCreator.login(loginPayload));
-    },
-    [dispatch]
-  );
+  const handleLogin = useCallback(loginPayload => (
+    dispatch(profileActionCreator.login(loginPayload))
+  ), [dispatch]);
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">

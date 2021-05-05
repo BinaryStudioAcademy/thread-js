@@ -5,14 +5,16 @@ import { useSelector } from 'react-redux';
 import { locationType } from 'src/common/prop-types/prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthorized } = useSelector(state => ({
-    isAuthorized: state.profile.isAuthorized
+  const { user } = useSelector(state => ({
+    user: state.profile.user
   }));
+
+  const hasUser = Boolean(user);
 
   return (
     <Route
       {...rest}
-      render={props => (isAuthorized ? (
+      render={props => (hasUser ? (
         <Component {...props} />
       ) : (
         <Redirect

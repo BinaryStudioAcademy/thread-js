@@ -26,19 +26,17 @@ const Thread = () => {
   const [showOwnPosts, setShowOwnPosts] = useState(false);
   const dispatch = useDispatch();
 
-  const handlePostLike = useCallback(id => {
-    dispatch(threadActionCreator.likePost(id));
-  },
-  [dispatch]);
+  const handlePostLike = useCallback(id => (
+    dispatch(threadActionCreator.likePost(id))
+  ), [dispatch]);
 
-  const handleExpandedPostToggle = useCallback(id => {
-    dispatch(threadActionCreator.toggleExpandedPost(id));
-  },
-  [dispatch]);
+  const handleExpandedPostToggle = useCallback(id => (
+    dispatch(threadActionCreator.toggleExpandedPost(id))
+  ), [dispatch]);
 
-  const handlePostAdd = useCallback(postPayload => {
-    dispatch(threadActionCreator.addPost(postPayload));
-  }, [dispatch]);
+  const handlePostAdd = useCallback(postPayload => (
+    dispatch(threadActionCreator.addPost(postPayload))
+  ), [dispatch]);
 
   const handlePostsLoad = filtersPayload => {
     dispatch(threadActionCreator.loadPosts(filtersPayload));

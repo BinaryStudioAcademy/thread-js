@@ -16,17 +16,17 @@ const ExpandedPost = ({
     post: state.posts.expandedPost
   }));
 
-  const handlePostLike = useCallback(id => {
-    dispatch(threadActionCreator.likePost(id));
-  }, [dispatch]);
+  const handlePostLike = useCallback(id => (
+    dispatch(threadActionCreator.likePost(id))
+  ), [dispatch]);
 
-  const handleCommentAdd = useCallback(commentPayload => {
-    dispatch(threadActionCreator.addComment(commentPayload));
-  }, [dispatch]);
+  const handleCommentAdd = useCallback(commentPayload => (
+    dispatch(threadActionCreator.addComment(commentPayload))
+  ), [dispatch]);
 
-  const handleExpandedPostToggle = useCallback(id => {
-    dispatch(threadActionCreator.toggleExpandedPost(id));
-  }, [dispatch]);
+  const handleExpandedPostToggle = useCallback(id => (
+    dispatch(threadActionCreator.toggleExpandedPost(id))
+  ), [dispatch]);
 
   const handleExpandedPostClose = () => handleExpandedPostToggle();
 

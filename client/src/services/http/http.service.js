@@ -22,9 +22,9 @@ class Http {
       headers,
       body: payload
     })
-      .then(Http.checkStatus)
-      .then(Http.parseJSON)
-      .catch(Http.throwError);
+      .then(this._checkStatus)
+      .then(this._parseJSON)
+      .catch(this._throwError);
   }
 
   _getHeaders({ hasAuth, contentType }) {
@@ -43,9 +43,11 @@ class Http {
     return headers;
   }
 
-  _checkStatus(response) {
+  async _checkStatus(response) {
     if (!response.ok) {
-      throw new Error(response.statusText);
+      const parsedException = await response.json();
+
+      throw new Error(parsedException?.message ?? response.statusText);
     }
 
     return response;

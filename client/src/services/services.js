@@ -1,3 +1,4 @@
+import { Auth } from './auth/auth.service';
 import { Http } from './http/http.service';
 import { Storage } from './storage/storage.service';
 
@@ -9,4 +10,8 @@ const http = new Http({
   storage
 });
 
-export { http, storage };
+const auth = new Auth({
+  http
+});
+
+export { http, storage, auth };

@@ -26,12 +26,11 @@ const LoginForm = ({ onLogin }) => {
       return;
     }
     setIsLoading(true);
-    try {
-      await onLogin({ email, password });
-    } catch {
+
+    onLogin({ email, password }).catch(() => {
       // TODO: show error
       setIsLoading(false);
-    }
+    });
   };
 
   return (

@@ -2,9 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { setUser } from './actions';
 
 const initialState = {
-  user: null,
-  isLoading: true,
-  isAuthorized: false
+  user: null
 };
 
 const reducer = createReducer(initialState, builder => {
@@ -12,8 +10,6 @@ const reducer = createReducer(initialState, builder => {
     const { user } = action.payload;
 
     state.user = user;
-    state.isAuthorized = Boolean(user?.id);
-    state.isLoading = false;
   });
 });
 

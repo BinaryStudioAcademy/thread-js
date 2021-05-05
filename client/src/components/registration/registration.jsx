@@ -9,12 +9,9 @@ import { RegistrationForm } from './components/components';
 const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const handleRegister = useCallback(
-    registerPayload => {
-      dispatch(profileActionCreator.register(registerPayload));
-    },
-    [dispatch]
-  );
+  const handleRegister = useCallback(registerPayload => (
+    dispatch(profileActionCreator.register(registerPayload))
+  ), [dispatch]);
 
   return (
     <Grid textAlign="center" verticalAlign="middle" className="fill">

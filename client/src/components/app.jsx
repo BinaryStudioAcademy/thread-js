@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { StorageKey } from 'src/common/enums/enums';
+import { storage } from 'src/services/services';
 import { profileActionCreator, threadActionCreator } from 'src/store/actions';
 import {
   Spinner,
@@ -17,35 +19,35 @@ import SharedPostPage from 'src/components/shared-post/shared-post';
 import ThreadPage from 'src/components/thread/thread';
 
 const Routing = () => {
-  const { user, isAuthorized, isLoading } = useSelector(state => ({
-    isAuthorized: state.profile.isAuthorized,
-    user: state.profile.user,
-    isLoading: state.profile.isLoading
+  const { user } = useSelector(state => ({
+    user: state.profile.user
   }));
   const dispatch = useDispatch();
 
-  const handlePostApply = useCallback(id => {
-    dispatch(threadActionCreator.applyPost(id));
-  },
-  [dispatch]);
+  const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
+  const hasUser = Boolean(user);
 
-  const handleUserLogout = useCallback(() => {
-    dispatch(profileActionCreator.logout());
-  }, [dispatch]);
+  const handlePostApply = useCallback(id => (
+    dispatch(threadActionCreator.applyPost(id))
+  ), [dispatch]);
+
+  const handleUserLogout = useCallback(() => (
+    dispatch(profileActionCreator.logout())
+  ), [dispatch]);
 
   useEffect(() => {
-    if (!isAuthorized) {
+    if (hasToken) {
       dispatch(profileActionCreator.loadCurrentUser());
     }
-  }, [isAuthorized, dispatch]);
+  }, [hasToken, dispatch]);
 
-  if (isLoading) {
+  if (!hasUser && hasToken) {
     return <Spinner />;
   }
 
   return (
     <div className="fill">
-      {isAuthorized && (
+      {hasUser && (
         <header>
           <Header user={user} onUserLogout={handleUserLogout} />
         </header>
