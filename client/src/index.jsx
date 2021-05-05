@@ -5,7 +5,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'src/components/app';
 import store from 'src/store/store';
 
-import './styles/reset.scss';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/common.scss';
 
