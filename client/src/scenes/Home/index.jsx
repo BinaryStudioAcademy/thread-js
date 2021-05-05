@@ -1,14 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routing from 'src/containers/Routing';
-import store, { history } from 'src/store';
+import store from 'src/store';
 
 const Home = () => (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router>
       <Routing />
-    </ConnectedRouter>
+    </Router>
   </Provider>
 );
 
