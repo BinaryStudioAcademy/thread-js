@@ -6,8 +6,8 @@ import {
 } from './actionTypes';
 
 const INITIAL_STATE = {
-  expandedPost: null,
   posts: [],
+  expandedPost: null,
   hasMorePosts: true
 };
 
