@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
@@ -16,15 +16,15 @@ const ExpandedPost = ({
     post: state.posts.expandedPost
   }));
 
-  const handlePostLike = useCallback(id => (
+  const handlePostLike = React.useCallback(id => (
     dispatch(threadActionCreator.likePost(id))
   ), [dispatch]);
 
-  const handleCommentAdd = useCallback(commentPayload => (
+  const handleCommentAdd = React.useCallback(commentPayload => (
     dispatch(threadActionCreator.addComment(commentPayload))
   ), [dispatch]);
 
-  const handleExpandedPostToggle = useCallback(id => (
+  const handleExpandedPostToggle = React.useCallback(id => (
     dispatch(threadActionCreator.toggleExpandedPost(id))
   ), [dispatch]);
 

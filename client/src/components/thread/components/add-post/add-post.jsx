@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Icon, Image, Segment } from 'semantic-ui-react';
 
 import styles from './styles.module.scss';
 
 const AddPost = ({ onPostAdd, uploadImage }) => {
-  const [body, setBody] = useState('');
-  const [image, setImage] = useState(undefined);
-  const [isUploading, setIsUploading] = useState(false);
+  const [body, setBody] = React.useState('');
+  const [image, setImage] = React.useState(undefined);
+  const [isUploading, setIsUploading] = React.useState(false);
 
   const handleAddPost = async () => {
     if (!body) {

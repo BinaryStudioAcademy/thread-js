@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {
@@ -13,7 +13,7 @@ import 'react-notifications/lib/notifications.css';
 const socket = io(ENV.SOCKET_URL);
 
 const Notifications = ({ user, onPostApply }) => {
-  useEffect(() => {
+  React.useEffect(() => {
     if (!user) {
       return undefined;
     }

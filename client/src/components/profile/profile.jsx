@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { Grid, Image, Input } from 'semantic-ui-react';
 import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';

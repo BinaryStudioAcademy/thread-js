@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 

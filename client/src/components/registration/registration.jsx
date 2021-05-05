@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
@@ -9,7 +9,7 @@ import { RegistrationForm } from './components/components';
 const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const handleRegister = useCallback(registerPayload => (
+  const handleRegister = React.useCallback(registerPayload => (
     dispatch(profileActionCreator.register(registerPayload))
   ), [dispatch]);
 

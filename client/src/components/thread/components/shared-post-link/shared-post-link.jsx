@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Input, Icon } from 'semantic-ui-react';
 
 import styles from './styles.module.scss';
 
 const SharedPostLink = ({ postId, close }) => {
-  const [copied, setCopied] = useState(false);
-  let input = useRef();
+  const [copied, setCopied] = React.useState(false);
+  let input = React.useRef();
 
   const copyToClipboard = e => {
     input.select();

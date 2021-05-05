@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { threadActionCreator } from 'src/store/actions';
@@ -10,7 +10,7 @@ const SharedPost = ({ match }) => {
     dispatch(threadActionCreator.toggleExpandedPost(id));
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     handleToggleExpandedPost(match.params.postHash);
   });
 

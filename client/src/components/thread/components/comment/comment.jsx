@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Comment as CommentUI } from 'semantic-ui-react';
 import { getFromNowTime } from 'src/helpers/helpers';
 import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';

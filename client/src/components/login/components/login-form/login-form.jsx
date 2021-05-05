@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 import { Form, Button, Segment } from 'semantic-ui-react';
 
 const LoginForm = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
+  const [isPasswordValid, setIsPasswordValid] = React.useState(true);
 
   const emailChanged = data => {
     setEmail(data);

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StorageKey } from 'src/common/enums/enums';
@@ -27,15 +27,15 @@ const Routing = () => {
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
   const hasUser = Boolean(user);
 
-  const handlePostApply = useCallback(id => (
+  const handlePostApply = React.useCallback(id => (
     dispatch(threadActionCreator.applyPost(id))
   ), [dispatch]);
 
-  const handleUserLogout = useCallback(() => (
+  const handleUserLogout = React.useCallback(() => (
     dispatch(profileActionCreator.logout())
   ), [dispatch]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (hasToken) {
       dispatch(profileActionCreator.loadCurrentUser());
     }

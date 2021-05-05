@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 
 const AddComment = ({ postId, onCommentAdd }) => {
-  const [body, setBody] = useState('');
+  const [body, setBody] = React.useState('');
 
   const handleAddComment = async () => {
     if (!body) {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
@@ -9,7 +9,7 @@ import { LoginForm } from './components/components';
 const Login = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = useCallback(loginPayload => (
+  const handleLogin = React.useCallback(loginPayload => (
     dispatch(profileActionCreator.login(loginPayload))
   ), [dispatch]);
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Checkbox } from 'semantic-ui-react';
@@ -22,19 +22,19 @@ const Thread = () => {
     expandedPost: state.posts.expandedPost,
     userId: state.profile.user.id
   }));
-  const [sharedPostId, setSharedPostId] = useState(undefined);
-  const [showOwnPosts, setShowOwnPosts] = useState(false);
+  const [sharedPostId, setSharedPostId] = React.useState(undefined);
+  const [showOwnPosts, setShowOwnPosts] = React.useState(false);
   const dispatch = useDispatch();
 
-  const handlePostLike = useCallback(id => (
+  const handlePostLike = React.useCallback(id => (
     dispatch(threadActionCreator.likePost(id))
   ), [dispatch]);
 
-  const handleExpandedPostToggle = useCallback(id => (
+  const handleExpandedPostToggle = React.useCallback(id => (
     dispatch(threadActionCreator.toggleExpandedPost(id))
   ), [dispatch]);
 
-  const handlePostAdd = useCallback(postPayload => (
+  const handlePostAdd = React.useCallback(postPayload => (
     dispatch(threadActionCreator.createPost(postPayload))
   ), [dispatch]);
 
