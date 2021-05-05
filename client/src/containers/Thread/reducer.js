@@ -5,31 +5,44 @@ import {
   SET_EXPANDED_POST
 } from './actionTypes';
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+  expandedPost: null,
+  posts: [],
+  hasMorePosts: true
+};
+
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_ALL_POSTS:
+    case SET_ALL_POSTS: {
       return {
         ...state,
         posts: action.posts,
         hasMorePosts: Boolean(action.posts.length)
       };
-    case LOAD_MORE_POSTS:
+    }
+    case LOAD_MORE_POSTS: {
       return {
         ...state,
-        posts: [...(state.posts || []), ...action.posts],
+        posts: state.posts.concat(action.posts),
         hasMorePosts: Boolean(action.posts.length)
       };
-    case ADD_POST:
+    }
+    case ADD_POST: {
       return {
         ...state,
         posts: [action.post, ...state.posts]
       };
-    case SET_EXPANDED_POST:
+    }
+    case SET_EXPANDED_POST: {
       return {
         ...state,
         expandedPost: action.post
       };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };
+
+export default reducer;
