@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
-import moment from 'moment';
 import { threadActionCreator } from 'src/store/actions';
 import { Spinner, Post } from 'src/components/common/common';
 import AddComment from '../add-comment/add-comment';
 import Comment from '../comment/comment';
+import { getSortedComments } from './helpers/helpers';
 
 const ExpandedPost = ({
   sharePost
@@ -30,8 +30,15 @@ const ExpandedPost = ({
 
   const handleExpandedPostClose = () => handleExpandedPostToggle();
 
+  const sortedComments = getSortedComments(post.comments ?? []);
+
   return (
-    <Modal dimmer="blurring" centered={false} open onClose={handleExpandedPostClose}>
+    <Modal
+      dimmer="blurring"
+      centered={false}
+      open
+      onClose={handleExpandedPostClose}
+    >
       {post ? (
         <Modal.Content>
           <Post
@@ -44,9 +51,9 @@ const ExpandedPost = ({
             <Header as="h3" dividing>
               Comments
             </Header>
-            {post.comments
-              ?.sort((c1, c2) => moment(c1.createdAt).diff(c2.createdAt))
-              .map(comment => <Comment key={comment.id} comment={comment} />)}
+            {sortedComments.map(comment => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
             <AddComment postId={post.id} onCommentAdd={handleCommentAdd} />
           </CommentUI.Group>
         </Modal.Content>

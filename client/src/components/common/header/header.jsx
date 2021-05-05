@@ -8,7 +8,7 @@ import {
   Icon,
   Button
 } from 'semantic-ui-react';
-import { getUserImgLink } from 'src/helpers';
+import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
 import { userType } from 'src/common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
@@ -20,7 +20,7 @@ const Header = ({ user, onUserLogout }) => (
         {user && (
           <NavLink exact to="/">
             <HeaderUI>
-              <Image circular src={getUserImgLink(user.image)} />
+              <Image circular src={user.image?.link ?? DEFAULT_USER_AVATAR} />
               {' '}
               {user.username}
             </HeaderUI>

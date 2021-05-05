@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Grid, Image, Input } from 'semantic-ui-react';
-import { getUserImgLink } from 'src/helpers';
+import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
 
 const Profile = () => {
   const { user } = useSelector(state => ({
@@ -13,7 +13,7 @@ const Profile = () => {
       <Grid.Column>
         <Image
           centered
-          src={getUserImgLink(user.image)}
+          src={user.image?.link ?? DEFAULT_USER_AVATAR}
           size="medium"
           circular
         />

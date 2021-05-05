@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
-import moment from 'moment';
+import { getFromNowTime } from 'src/helpers/helpers';
 import { postType } from 'src/common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
@@ -17,7 +17,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
     commentCount,
     createdAt
   } = post;
-  const date = moment(createdAt).fromNow();
+  const date = getFromNowTime(createdAt);
 
   const handlePostLike = () => onPostLike(id);
   const handleExpandedPostToggle = () => onExpandedPostToggle(id);
