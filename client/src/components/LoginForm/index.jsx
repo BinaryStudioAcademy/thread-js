@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import validator from 'validator';
 import { Form, Button, Segment } from 'semantic-ui-react';
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ const LoginForm = ({ login }) => {
     }
     setIsLoading(true);
     try {
-      await login({ email, password });
+      await onLogin({ email, password });
     } catch {
       // TODO: show error
       setIsLoading(false);
@@ -57,7 +57,14 @@ const LoginForm = ({ login }) => {
           onChange={ev => passwordChanged(ev.target.value)}
           onBlur={() => setIsPasswordValid(Boolean(password))}
         />
-        <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
+        <Button
+          type="submit"
+          color="teal"
+          fluid
+          size="large"
+          loading={isLoading}
+          primary
+        >
           Login
         </Button>
       </Segment>
@@ -66,7 +73,7 @@ const LoginForm = ({ login }) => {
 };
 
 LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
+  onLogin: PropTypes.func.isRequired
 };
 
 export default LoginForm;
