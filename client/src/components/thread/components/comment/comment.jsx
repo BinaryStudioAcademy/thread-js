@@ -2,7 +2,7 @@ import React from 'react';
 import { Comment as CommentUI } from 'semantic-ui-react';
 import moment from 'moment';
 import { getUserImgLink } from 'src/helpers';
-import { commentType } from 'src/common/propTypes';
+import { commentType } from 'src/common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
 

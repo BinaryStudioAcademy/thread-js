@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { threadActionCreator } from 'src/store/actions';
-import { routeMatchType } from 'src/common/propTypes';
+import { routeMatchType } from 'src/common/prop-types/prop-types';
 
 const SharedPost = ({ match }) => {
   const dispatch = useDispatch();

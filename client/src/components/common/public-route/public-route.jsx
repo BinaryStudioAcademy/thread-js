@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { locationType } from 'src/common/propTypes';
+import { locationType } from 'src/common/prop-types/prop-types';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
   const { isAuthorized } = useSelector(state => ({

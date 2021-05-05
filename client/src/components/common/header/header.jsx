@@ -9,7 +9,7 @@ import {
   Button
 } from 'semantic-ui-react';
 import { getUserImgLink } from 'src/helpers';
-import { userType } from 'src/common/propTypes';
+import { userType } from 'src/common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
 

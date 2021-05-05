@@ -5,7 +5,7 @@ import {
   NotificationContainer,
   NotificationManager
 } from 'react-notifications';
-import { userType } from 'src/common/propTypes';
+import { userType } from 'src/common/prop-types/prop-types';
 
 import 'react-notifications/lib/notifications.css';
 

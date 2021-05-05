@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Image, Label, Icon } from 'semantic-ui-react';
 import moment from 'moment';
-import { postType } from 'src/common/propTypes';
+import { postType } from 'src/common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
 
