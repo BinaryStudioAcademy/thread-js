@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Spinner, Header } from 'src/components/common/common';
+import LoginPage from 'src/components/login/login';
+import RegistrationPage from 'src/components/registration/registration';
+import NotFoundPage from 'src/components/not-found/not-found';
 import Thread from 'src/containers/Thread';
-import LoginPage from 'src/containers/LoginPage';
-import RegistrationPage from 'src/containers/RegistrationPage';
 import Profile from 'src/containers/Profile';
-import Header from 'src/components/Header';
 import SharedPost from 'src/containers/SharedPost';
-import Spinner from 'src/components/Spinner';
-import NotFound from 'src/scenes/NotFound';
 import PrivateRoute from 'src/containers/PrivateRoute';
 import PublicRoute from 'src/containers/PublicRoute';
 import Notifications from 'src/components/Notifications';
@@ -57,7 +56,7 @@ const Routing = () => {
           <PrivateRoute exact path="/" component={Thread} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute path="/share/:postHash" component={SharedPost} />
-          <Route path="*" exact component={NotFound} />
+          <Route path="*" exact component={NotFoundPage} />
         </Switch>
       </main>
       <Notifications onPostApply={handlePostApply} user={user} />

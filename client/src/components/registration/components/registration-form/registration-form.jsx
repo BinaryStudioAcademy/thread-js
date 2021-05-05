@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Form, Button, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
-import { Form, Button, Segment } from 'semantic-ui-react';
 
 const RegistrationForm = ({ onRegister }) => {
   const [email, setEmail] = useState('');

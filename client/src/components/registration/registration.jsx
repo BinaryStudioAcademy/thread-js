@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { profileActionCreator } from 'src/store/actions';
-import Logo from 'src/components/Logo';
-import { Grid, Header, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import RegistrationForm from 'src/components/RegistrationForm';
+import { Grid, Header, Message } from 'semantic-ui-react';
+import { profileActionCreator } from 'src/store/actions';
+import { Logo } from 'src/components/common/common';
+import RegistrationForm from './components/components';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Grid, Header, Message } from 'semantic-ui-react';
 import { profileActionCreator } from 'src/store/actions';
-import Logo from 'src/components/Logo';
-import { LoginForm } from './components';
+import { Logo } from 'src/components/common/common';
+import { LoginForm } from './components/components';
 
 const Login = () => {
   const dispatch = useDispatch();
