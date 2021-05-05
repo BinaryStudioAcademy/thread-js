@@ -14,9 +14,14 @@ rules:
   no-multiple-empty-lines:
     - error
     - max: 1
+  no-underscore-dangle:
+    - error
+    - allowAfterThis: true
   max-len:
     - error
     - code: 120
+  class-methods-use-this:
+    - off
   object-curly-newline:
     - off
   no-param-reassign:
