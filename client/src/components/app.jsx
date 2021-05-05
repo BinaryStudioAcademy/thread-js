@@ -42,7 +42,7 @@ const Routing = () => {
   }, [hasToken, dispatch]);
 
   if (!hasUser && hasToken) {
-    return <Spinner />;
+    return <Spinner isOverflow />;
   }
 
   return (
