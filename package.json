@@ -6,9 +6,9 @@
     "npm": "6.x.x"
   },
   "scripts": {
-    "install:client": "cd client && npm run install",
-    "install:server": "cd server && npm run install",
-    "install:all": "npm install && npm run install:frontend && npm run install:server",
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
+    "install:all": "npm install && npm run install:client && npm run install:server",
     "lint:editorconfig": "editorconfig-checker",
     "lint:client:css": "cd client && npm run lint:css",
     "lint:client:js": "cd client && npm run lint:js",
