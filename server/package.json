@@ -11,31 +11,31 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "@babel/polyfill": "7.12.1",
-    "axios": "0.21.0",
-    "bcrypt": "5.0.0",
+    "axios": "0.21.1",
+    "bcrypt": "5.0.1",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
-    "dotenv": "8.2.0",
+    "dotenv": "9.0.0",
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
     "multer": "1.4.2",
-    "nodemon": "2.0.6",
+    "nodemon": "2.0.7",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "passport-local": "1.0.0",
     "path": "0.12.7",
-    "pg": "8.5.1",
+    "pg": "8.6.0",
     "pg-hstore": "2.3.3",
-    "sequelize": "5.22.3",
-    "sequelize-cli": "5.5.1",
+    "sequelize": "6.6.2",
+    "sequelize-cli": "6.2.0",
     "socket.io": "2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "7.12.10",
-    "@babel/node": "7.12.10",
-    "@babel/preset-env": "7.12.10",
-    "@babel/register": "7.12.10",
+    "@babel/core": "7.14.0",
+    "@babel/node": "7.13.13",
+    "@babel/polyfill": "7.12.1",
+    "@babel/preset-env": "7.14.1",
+    "@babel/register": "7.13.16",
     "eslint-config-airbnb-base": "14.2.1"
   }
 }
