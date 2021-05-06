@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { ENV } from '../common/enums/enums';
 import { user as userRepository } from '../data/repositories/repositories';
-import { compare } from '../helpers/cryptoHelper';
+import { cryptCompare } from '../helpers/helpers';
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,7 +19,7 @@ passport.use(
         return done({ status: 401, message: 'Incorrect email.' }, false);
       }
 
-      return await compare(password, user.password)
+      return await cryptCompare(password, user.password)
         ? done(null, user)
         : done({ status: 401, message: 'Passwords do not match.' }, null, false);
     } catch (err) {

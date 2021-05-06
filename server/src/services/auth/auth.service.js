@@ -1,5 +1,4 @@
-import { createToken } from '../../helpers/tokenHelper';
-import { encrypt } from '../../helpers/cryptoHelper';
+import { encrypt, createToken } from '../../helpers/helpers';
 
 class Auth {
   constructor({ userRepository }) {
