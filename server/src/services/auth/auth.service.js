@@ -10,7 +10,7 @@ class Auth {
   async login({ id }) {
     return {
       token: createToken({ id }),
-      user: this._userRepository.getUserById(id)
+      user: await this._userRepository.getUserById(id)
     };
   }
 

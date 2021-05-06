@@ -3,16 +3,10 @@ class User {
     this._userRepository = userRepository;
   }
 
-  async getUserById(userId) {
-    const {
-      id,
-      username,
-      email,
-      imageId,
-      image
-    } = await this._userRepository.getUserById(userId);
+  async getUserById(id) {
+    const user = await this._userRepository.getUserById(id);
 
-    return { id, username, email, imageId, image };
+    return user;
   }
 }
 

@@ -21,6 +21,7 @@ class User extends Abstract {
   getUserById(id) {
     return this.model.findOne({
       group: ['user.id', 'image.id'],
+      attributes: ['id', 'createdAt', 'email', 'updatedAt', 'username'],
       where: { id },
       include: {
         model: this._imageModel,

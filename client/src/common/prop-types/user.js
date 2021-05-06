@@ -5,7 +5,9 @@ const userType = PropTypes.exact({
   email: PropTypes.string.isRequired,
   image: PropTypes.string,
   imageId: PropTypes.string,
-  username: PropTypes.string.isRequired
+  username: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired
 });
 
 export { userType };
