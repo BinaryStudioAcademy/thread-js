@@ -1,4 +1,4 @@
-import { jwt as jwtMiddleware } from './jwt.middleware';
+import { jwt as jwtMiddleware } from '../jwt/jwt.middleware';
 
 const authorization = (routesWhiteList = []) => (req, res, next) => (
   routesWhiteList.some(route => route === req.path)

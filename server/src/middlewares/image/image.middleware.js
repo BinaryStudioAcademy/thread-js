@@ -1,5 +1,5 @@
 import multer from 'multer';
-import { ENV } from '../common/enums/enums';
+import { ENV } from '../../common/enums/enums';
 
 const storage = multer.memoryStorage();
 
