@@ -1,7 +1,8 @@
 import multer from 'multer';
-import { ENV } from '../../common/enums/enums';
+import { ENV } from '../common/enums/enums';
 
 const storage = multer.memoryStorage();
+
 const upload = multer({
   storage,
   limits: {
@@ -9,4 +10,6 @@ const upload = multer({
   }
 });
 
-export default upload.single('image');
+const image = upload.single('image');
+
+export { image };

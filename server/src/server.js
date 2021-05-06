@@ -8,12 +8,14 @@ import cors from 'cors';
 import { ENV } from './common/enums/enums';
 import { sequelize } from './data/db/connection';
 import routes from './api/routes/index';
-import authorizationMiddleware from './api/middlewares/authorizationMiddleware';
-import errorHandlerMiddleware from './api/middlewares/errorHandlerMiddleware';
+import {
+  authorization as authorizationMiddleware,
+  errorHandler as errorHandlerMiddleware,
+  socketInjector as socketInjectorMiddleware
+} from './middlewares/middlewares';
 import routesWhiteList from './config/routesWhiteListConfig';
-import socketInjector from './socket/injector';
-import socketHandlers from './socket/handlers';
-import './config/passportConfig';
+import { handlers as socketHandlers } from './socket/handlers';
+import './config/passport';
 
 const app = express();
 const socketServer = http.Server(app);
@@ -35,7 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
-app.use(socketInjector(io));
+app.use(socketInjectorMiddleware(io));
 
 app.use('/api/', authorizationMiddleware(routesWhiteList));
 
@@ -44,7 +46,7 @@ routes(app, io);
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
 
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
   res.end();
 });

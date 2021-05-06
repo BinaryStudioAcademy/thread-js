@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as imageService from '../services/imageService';
-import imageMiddleware from '../middlewares/imageMiddleware';
+import { image as imageMiddleware } from '../../middlewares/middlewares';
 
 const router = Router();
 

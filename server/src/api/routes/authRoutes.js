@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import * as authService from '../services/authService';
 import * as userService from '../services/userService';
-import authenticationMiddleware from '../middlewares/authenticationMiddleware';
-import registrationMiddleware from '../middlewares/registrationMiddleware';
-import jwtMiddleware from '../middlewares/jwtMiddleware';
+import {
+  authentication as authenticationMiddleware,
+  registration as registrationMiddleware,
+  jwt as jwtMiddleware
+} from '../../middlewares/middlewares';
 
 const router = Router();
 

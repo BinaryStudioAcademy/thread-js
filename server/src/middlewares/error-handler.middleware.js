@@ -1,4 +1,4 @@
-export default (err, req, res, next) => {
+const errorHandler = (err, _req, res, next) => {
   if (res.headersSent) { // http://expressjs.com/en/guide/error-handling.html
     next(err);
   } else {
@@ -6,3 +6,5 @@ export default (err, req, res, next) => {
     res.status(status).send({ status, message });
   }
 };
+
+export { errorHandler };

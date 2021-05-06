@@ -1,4 +1,4 @@
-export default socket => {
+const handlers = socket => {
   socket.on('createRoom', roomId => {
     socket.join(roomId);
   });
@@ -6,3 +6,5 @@ export default socket => {
     socket.leave(roomId);
   });
 };
+
+export { handlers };
