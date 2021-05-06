@@ -15,7 +15,6 @@ import { NavLink } from 'react-router-dom';
 import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
-import Logo from './logo/logo';
 import Notifications from './notifications/notifications';
 import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
@@ -37,7 +36,6 @@ export {
   Button,
   Header,
   Icon,
-  Logo,
   Notifications,
   Post,
   PrivateRoute,
