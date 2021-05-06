@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { profileActionCreator } from 'src/store/actions';
+import { AppRoute } from 'src/common/enums/enums';
 import { Logo, Grid, Message, NavLink } from 'src/components/common/common';
 import { LoginForm } from './components/components';
 import styles from './styles.module.scss';
@@ -23,7 +24,7 @@ const Login = () => {
         <Message>
           New to us?
           {' '}
-          <NavLink exact to="/registration">
+          <NavLink exact to={AppRoute.REGISTRATION}>
             Sign Up
           </NavLink>
         </Message>

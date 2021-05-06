@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { AppRoute } from 'src/common/enums/enums';
 import { locationType } from 'src/common/prop-types/prop-types';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
@@ -15,7 +16,7 @@ const PublicRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => (hasUser ? (
-        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+        <Redirect to={{ pathname: AppRoute.ROOT, state: { from: props.location } }} />
       ) : (
         <Component {...props} />
       ))}

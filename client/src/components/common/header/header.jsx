@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { IconName, IconSize, ButtonType } from 'src/common/enums/enums';
+import { IconName, IconSize, ButtonType, AppRoute } from 'src/common/enums/enums';
 import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
 import { userType } from 'src/common/prop-types/prop-types';
 import {
@@ -18,7 +18,7 @@ const Header = ({ user, onUserLogout }) => (
     <Grid centered container columns="2">
       <Grid.Column>
         {user && (
-          <NavLink exact to="/">
+          <NavLink exact to={AppRoute.ROOT}>
             <div className={styles.userWrapper}>
               <Image
                 circular
@@ -36,7 +36,7 @@ const Header = ({ user, onUserLogout }) => (
         <NavLink
           exact
           activeClassName="active"
-          to="/profile"
+          to={AppRoute.PROFILE}
           className={styles.menuBtn}
         >
           <Icon name={IconName.USER_CIRCLE} size={IconSize.LARGE} />

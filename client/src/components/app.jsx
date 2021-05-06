@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { StorageKey } from 'src/common/enums/enums';
+import { StorageKey, AppRoute } from 'src/common/enums/enums';
 import { storage } from 'src/services/services';
 import { profileActionCreator, threadActionCreator } from 'src/store/actions';
 import {
@@ -54,16 +54,16 @@ const Routing = () => {
       )}
       <main className="fill">
         <Switch>
-          <PublicRoute exact path="/login" component={LoginPage} />
+          <PublicRoute exact path={AppRoute.LOGIN} component={LoginPage} />
           <PublicRoute
             exact
             path="/registration"
             component={RegistrationPage}
           />
-          <PrivateRoute exact path="/" component={ThreadPage} />
-          <PrivateRoute exact path="/profile" component={ProfilePage} />
-          <PrivateRoute path="/share/:postHash" component={SharedPostPage} />
-          <Route path="*" exact component={NotFoundPage} />
+          <PrivateRoute exact path={AppRoute.ROOT} component={ThreadPage} />
+          <PrivateRoute exact path={AppRoute.PROFILE} component={ProfilePage} />
+          <PrivateRoute path={AppRoute.SHARE_$POSTHASH} component={SharedPostPage} />
+          <Route path={AppRoute.ANY} exact component={NotFoundPage} />
         </Switch>
       </main>
       <Notifications onPostApply={handlePostApply} user={user} />
