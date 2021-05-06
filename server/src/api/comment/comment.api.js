@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { comment as commentService } from '../services/services';
+import { comment as commentService } from '../../services/services';
 
-const router = Router();
+const initComment = Router();
 
-router
+initComment
   .get('/:id', (req, res, next) => commentService.getCommentById(req.params.id)
     .then(comment => res.send(comment))
     .catch(next))
@@ -11,4 +11,4 @@ router
     .then(comment => res.send(comment))
     .catch(next));
 
-export default router;
+export { initComment };

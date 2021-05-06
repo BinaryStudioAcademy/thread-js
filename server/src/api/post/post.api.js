@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { post as postService } from '../services/services';
+import { post as postService } from '../../services/services';
 
-const router = Router();
+const initPost = Router();
 
-router
+initPost
   .get('/', (req, res, next) => postService.getPosts(req.query)
     .then(posts => res.send(posts))
     .catch(next))
@@ -26,4 +26,4 @@ router
     })
     .catch(next));
 
-export default router;
+export { initPost };

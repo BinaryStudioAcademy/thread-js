@@ -7,7 +7,7 @@ import socketIO from 'socket.io';
 import cors from 'cors';
 import { ENV } from './common/enums/enums';
 import { sequelize } from './data/db/connection';
-import routes from './api';
+import { initApi } from './api/api';
 import {
   authorization as authorizationMiddleware,
   errorHandler as errorHandlerMiddleware,
@@ -41,7 +41,7 @@ app.use(socketInjectorMiddleware(io));
 
 app.use('/api/', authorizationMiddleware(routesWhiteList));
 
-routes(app, io);
+initApi(app);
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));

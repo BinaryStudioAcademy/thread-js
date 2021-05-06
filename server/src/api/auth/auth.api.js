@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import { auth as authService, user as userService } from '../services/services';
+import { auth as authService, user as userService } from '../../services/services';
 import {
   authentication as authenticationMiddleware,
   registration as registrationMiddleware,
   jwt as jwtMiddleware
-} from '../middlewares/middlewares';
+} from '../../middlewares/middlewares';
 
-const router = Router();
+const initAuth = Router();
 
 // user added to the request (req.user) in a strategy, see passport config
-router
+initAuth
   .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
     .then(data => res.send(data))
     .catch(next))
@@ -20,4 +20,4 @@ router
     .then(data => res.send(data))
     .catch(next));
 
-export default router;
+export { initAuth };
