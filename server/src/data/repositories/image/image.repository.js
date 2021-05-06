@@ -1,6 +1,9 @@
-import { ImageModel } from '../../models';
 import { Abstract } from '../abstract/abstract.repository';
 
-class Image extends Abstract {}
+class Image extends Abstract {
+  constructor({ imageModel }) {
+    super(imageModel);
+  }
+}
 
-export default new Image(ImageModel);
+export { Image };

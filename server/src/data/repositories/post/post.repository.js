@@ -1,16 +1,23 @@
 import { sequelize } from '../../db/connection';
-import {
-  PostModel,
-  CommentModel,
-  UserModel,
-  ImageModel,
-  PostReactionModel
-} from '../../models';
 import { Abstract } from '../abstract/abstract.repository';
 
 const likeCase = bool => `CASE WHEN "postReactions"."isLike" = ${bool} THEN 1 ELSE 0 END`;
 
 class Post extends Abstract {
+  constructor({
+    postModel,
+    commentModel,
+    userModel,
+    imageModel,
+    postReactionModel
+  }) {
+    super(postModel);
+    this._commentModel = commentModel;
+    this._userModel = userModel;
+    this._imageModel = imageModel;
+    this._postReactionModel = postReactionModel;
+  }
+
   async getPosts(filter) {
     const {
       from: offset,
@@ -36,17 +43,17 @@ class Post extends Abstract {
         ]
       },
       include: [{
-        model: ImageModel,
+        model: this._imageModel,
         attributes: ['id', 'link']
       }, {
-        model: UserModel,
+        model: this._userModel,
         attributes: ['id', 'username'],
         include: {
-          model: ImageModel,
+          model: this._imageModel,
           attributes: ['id', 'link']
         }
       }, {
-        model: PostReactionModel,
+        model: this._postReactionModel,
         attributes: [],
         duplicating: false
       }],
@@ -85,31 +92,31 @@ class Post extends Abstract {
         ]
       },
       include: [{
-        model: CommentModel,
+        model: this._commentModel,
         include: {
-          model: UserModel,
+          model: this._userModel,
           attributes: ['id', 'username'],
           include: {
-            model: ImageModel,
+            model: this._imageModel,
             attributes: ['id', 'link']
           }
         }
       }, {
-        model: UserModel,
+        model: this._userModel,
         attributes: ['id', 'username'],
         include: {
-          model: ImageModel,
+          model: this._imageModel,
           attributes: ['id', 'link']
         }
       }, {
-        model: ImageModel,
+        model: this._imageModel,
         attributes: ['id', 'link']
       }, {
-        model: PostReactionModel,
+        model: this._postReactionModel,
         attributes: []
       }]
     });
   }
 }
 
-export default new Post(PostModel);
+export { Post };

@@ -1,7 +1,11 @@
-import { UserModel, ImageModel } from '../../models';
 import { Abstract } from '../abstract/abstract.repository';
 
-class UserRepository extends Abstract {
+class User extends Abstract {
+  constructor({ userModel, imageModel }) {
+    super(userModel);
+    this._imageModel = imageModel;
+  }
+
   addUser(user) {
     return this.create(user);
   }
@@ -19,11 +23,11 @@ class UserRepository extends Abstract {
       group: ['user.id', 'image.id'],
       where: { id },
       include: {
-        model: ImageModel,
+        model: this._imageModel,
         attributes: ['id', 'link']
       }
     });
   }
 }
 
-export default new UserRepository(UserModel);
+export { User };
