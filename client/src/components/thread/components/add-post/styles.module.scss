@@ -7,3 +7,12 @@
   max-width: 150px;
   max-height: 150px;
 }
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnImgLabel {
+  margin: 0 0 0 10px;
+}

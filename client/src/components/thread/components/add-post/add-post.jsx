@@ -1,8 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Image, Segment } from 'semantic-ui-react';
-import { IconName } from 'src/common/enums/enums';
-import { Icon } from 'src/components/common/common';
+import { Form, Image, Segment } from 'semantic-ui-react';
+import { ButtonColor, ButtonType, IconName } from 'src/common/enums/enums';
+import { Button } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -48,21 +48,27 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
             <Image className={styles.image} src={image?.imageLink} alt="post" />
           </div>
         )}
-        <Button
-          color="teal"
-          icon
-          labelPosition="left"
-          as="label"
-          loading={isUploading}
-          disabled={isUploading}
-        >
-          <Icon name={IconName.IMAGE} />
-          Attach image
-          <input name="image" type="file" onChange={handleUploadFile} hidden />
-        </Button>
-        <Button floated="right" color="blue" type="submit">
-          Post
-        </Button>
+        <div className={styles.btnWrapper}>
+          <Button
+            color="teal"
+            isLoading={isUploading}
+            isDisabled={isUploading}
+            iconName={IconName.IMAGE}
+          >
+            <label className={styles.btnImgLabel}>
+              Attach image
+              <input
+                name="image"
+                type="file"
+                onChange={handleUploadFile}
+                hidden
+              />
+            </label>
+          </Button>
+          <Button color={ButtonColor.BLUE} type={ButtonType.SUBMIT}>
+            Post
+          </Button>
+        </div>
       </Form>
     </Segment>
   );

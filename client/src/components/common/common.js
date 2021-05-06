@@ -1,3 +1,4 @@
+import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
 import Logo from './logo/logo';
@@ -8,6 +9,7 @@ import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
 
 export {
+  Button,
   Header,
   Icon,
   Logo,

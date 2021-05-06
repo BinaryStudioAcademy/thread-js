@@ -1,6 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
+import { ButtonType } from 'src/common/enums/enums';
+import { Button } from 'src/components/common/common';
 
 const AddComment = ({ postId, onCommentAdd }) => {
   const [body, setBody] = React.useState('');
@@ -20,13 +22,9 @@ const AddComment = ({ postId, onCommentAdd }) => {
         placeholder="Type a comment..."
         onChange={ev => setBody(ev.target.value)}
       />
-      <Button
-        type="submit"
-        content="Post comment"
-        labelPosition="left"
-        icon="edit"
-        primary
-      />
+      <Button type={ButtonType.SUBMIT} isPrimary>
+        Post comment
+      </Button>
     </Form>
   );
 };

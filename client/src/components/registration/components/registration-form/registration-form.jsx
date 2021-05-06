@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Form, Button, Segment } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
+import { ButtonType, ButtonSize, ButtonColor } from 'src/common/enums/enums';
+import { Button } from 'src/components/common/common';
 
 const RegistrationForm = ({ onRegister }) => {
   const [email, setEmail] = React.useState('');
@@ -73,7 +75,14 @@ const RegistrationForm = ({ onRegister }) => {
           error={!isPasswordValid}
           onBlur={() => setPasswordValid(Boolean(password))}
         />
-        <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
+        <Button
+          type={ButtonType.SUBMIT}
+          color={ButtonColor.TEAL}
+          size={ButtonSize.LARGE}
+          isLoading={isLoading}
+          isFluid
+          isPrimary
+        >
           Register
         </Button>
       </Segment>
