@@ -12,7 +12,7 @@
 
 Здесь перечислены основные фреймворки и библиотеки, используемые в проекте. Полный список используемых технологий для каждой части проекта находится в файлах package.json в папках client и server.
 
-#### Common
+### Common
 1. ES2020
 2. [Git](https://git-scm.com/book/ru/v1/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git "Git")
 3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
@@ -21,15 +21,15 @@
 6. [npm](https://en.wikipedia.org/wiki/Npm_(software))
 7. [ESLint](https://eslint.org/docs/user-guide/getting-started "ESLint")
 
-#### Frontend
+### Frontend
 1. [React](https://reactjs.org/docs/getting-started.html "React")
 2. [React Redux](https://redux.js.org/introduction/getting-started "React Redux")
 3. [React Semantic UI](https://react.semantic-ui.com/ "React Semantic UI")
-4. [Moment.js](https://momentjs.com/ "Moment.js")
+4. [dayjs](https://day.js.org/)
 5. [validator.js](https://www.npmjs.com/package/validator "validator.js")
 6. [history](https://www.npmjs.com/package/history "history")
 
-#### Backend
+### Backend
 1. [Node.js](https://nodejs.org/en/ "Node.js")
 2. [Express](https://expressjs.com/ru/guide/routing.html "Express")
 3. [Passport.js](http://www.passportjs.org/docs/ "Passport.js")
@@ -41,7 +41,7 @@
 9. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
 10. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
 
-#### Database
+### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
 
 ## Установка
@@ -67,7 +67,25 @@
 
 6. **Создать репозиторий на [Bitbucket](https://bitbucket.org/) и вести дальнейшую разработку там.**
 
-#### Backend
+### Корень проекта
+
+1. В руте проекта можно установить все зависимости одной командой:
+
+    ```
+      npm run install:all
+    ```
+
+    Это установит зависимости для рутовой директории, frontend'а и backend'a. Можно установить для каждой папки отедьно (смотрите ниже).
+
+2. После установки пакетов, в руте проекта нужно запустить команду для [git-хуков](https://www.npmjs.com/package/simple-git-hooks):
+
+    ```
+      npx simple-git-hooks
+    ```
+
+    **Теперь на каждый ваш коммит будет запускаться линтер и проверять ваш код.**
+
+### Backend
 
 1. В командной строке (терминале) зайдите в папку server:
 
@@ -103,7 +121,7 @@
     npm start
     ```
 
-#### Frontend
+### Frontend
 
 1. В командной строке (терминале) зайдите в папку client:
 
