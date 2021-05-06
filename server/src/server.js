@@ -7,7 +7,7 @@ import socketIO from 'socket.io';
 import cors from 'cors';
 import { ENV } from './common/enums/enums';
 import { sequelize } from './data/db/connection';
-import routes from './api/routes/index';
+import routes from './api';
 import {
   authorization as authorizationMiddleware,
   errorHandler as errorHandlerMiddleware,

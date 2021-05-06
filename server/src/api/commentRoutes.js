@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as commentService from '../services/commentService';
+import { comment as commentService } from '../services/services';
 
 const router = Router();
 
