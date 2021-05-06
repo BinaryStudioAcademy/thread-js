@@ -1,27 +1,29 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Input, Icon } from 'semantic-ui-react';
+import { Modal, Input } from 'semantic-ui-react';
+import { IconName, IconColor } from 'src/common/enums/enums';
+import { Icon } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
 const SharedPostLink = ({ postId, close }) => {
-  const [copied, setCopied] = React.useState(false);
+  const [isCopied, setIsCopied] = React.useState(false);
   let input = React.useRef();
 
-  const copyToClipboard = e => {
+  const copyToClipboard = ({ target }) => {
     input.select();
     document.execCommand('copy');
-    e.target.focus();
-    setCopied(true);
+    target.focus();
+    setIsCopied(true);
   };
 
   return (
     <Modal open onClose={close}>
       <Modal.Header className={styles.header}>
         <span>Share Post</span>
-        {copied && (
+        {isCopied && (
           <span>
-            <Icon color="green" name="copy" />
+            <Icon name={IconName.COPY} color={IconColor.GREEN} />
             Copied
           </span>
         )}
@@ -37,7 +39,9 @@ const SharedPostLink = ({ postId, close }) => {
             onClick: copyToClipboard
           }}
           value={`${window.location.origin}/share/${postId}`}
-          ref={ref => { input = ref; }}
+          ref={ref => {
+            input = ref;
+          }}
         />
       </Modal.Content>
     </Modal>

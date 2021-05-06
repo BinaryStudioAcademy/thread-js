@@ -1,15 +1,11 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import {
-  Header as HeaderUI,
-  Image,
-  Grid,
-  Icon,
-  Button
-} from 'semantic-ui-react';
+import { Header as HeaderUI, Image, Grid, Button } from 'semantic-ui-react';
+import { IconName, IconSize } from 'src/common/enums/enums';
 import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
 import { userType } from 'src/common/prop-types/prop-types';
+import { Icon } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -34,7 +30,7 @@ const Header = ({ user, onUserLogout }) => (
           to="/profile"
           className={styles.menuBtn}
         >
-          <Icon name="user circle" size="large" />
+          <Icon name={IconName.USER_CIRCLE} size={IconSize.LARGE} />
         </NavLink>
         <Button
           basic
@@ -43,7 +39,7 @@ const Header = ({ user, onUserLogout }) => (
           className={`${styles.menuBtn} ${styles.logoutBtn}`}
           onClick={onUserLogout}
         >
-          <Icon name="log out" size="large" />
+          <Icon name={IconName.LOG_OUT} size={IconSize.LARGE} />
         </Button>
       </Grid.Column>
     </Grid>

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image, Label, Icon } from 'semantic-ui-react';
+import { Card, Image, Label } from 'semantic-ui-react';
 import { getFromNowTime } from 'src/helpers/helpers';
+import { IconName } from 'src/common/enums/enums';
 import { postType } from 'src/common/prop-types/prop-types';
+import { Icon } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -45,11 +47,11 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           className={styles.toolbarBtn}
           onClick={handlePostLike}
         >
-          <Icon name="thumbs up" />
+          <Icon name={IconName.THUMBS_UP} />
           {likeCount}
         </Label>
         <Label basic size="small" as="a" className={styles.toolbarBtn}>
-          <Icon name="thumbs down" />
+          <Icon name={IconName.THUMBS_DOWN} />
           {dislikeCount}
         </Label>
         <Label
@@ -59,7 +61,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           className={styles.toolbarBtn}
           onClick={handleExpandedPostToggle}
         >
-          <Icon name="comment" />
+          <Icon name={IconName.COMMENT} />
           {commentCount}
         </Label>
         <Label
@@ -69,7 +71,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           className={styles.toolbarBtn}
           onClick={() => sharePost(id)}
         >
-          <Icon name="share alternate" />
+          <Icon name={IconName.SHARE_ALTERNATE} />
         </Label>
       </Card.Content>
     </Card>

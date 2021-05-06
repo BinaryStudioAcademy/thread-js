@@ -1,6 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Icon, Image, Segment } from 'semantic-ui-react';
+import { Form, Button, Image, Segment } from 'semantic-ui-react';
+import { IconName } from 'src/common/enums/enums';
+import { Icon } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -54,7 +56,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
           loading={isUploading}
           disabled={isUploading}
         >
-          <Icon name="image" />
+          <Icon name={IconName.IMAGE} />
           Attach image
           <input name="image" type="file" onChange={handleUploadFile} hidden />
         </Button>
