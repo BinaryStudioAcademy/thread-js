@@ -1,8 +1,18 @@
-import { comment as commentRepository } from '../../data/repositories/repositories';
+class Comment {
+  constructor({ commentRepository }) {
+    this._commentRepository = commentRepository;
+  }
 
-export const create = (userId, comment) => commentRepository.create({
-  ...comment,
-  userId
-});
+  create(userId, comment) {
+    return this._commentRepository.create({
+      ...comment,
+      userId
+    });
+  }
 
-export const getCommentById = id => commentRepository.getCommentById(id);
+  getCommentById(id) {
+    return this._commentRepository.getCommentById(id);
+  }
+}
+
+export { Comment };

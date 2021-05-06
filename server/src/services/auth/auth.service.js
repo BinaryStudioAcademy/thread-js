@@ -1,16 +1,28 @@
 import { createToken } from '../../helpers/tokenHelper';
 import { encrypt } from '../../helpers/cryptoHelper';
-import { user as userRepository } from '../../data/repositories/repositories';
 
-export const login = async ({ id }) => ({
-  token: createToken({ id }),
-  user: await userRepository.getUserById(id)
-});
+class Auth {
+  constructor({ userRepository }) {
+    this._userRepository = userRepository;
 
-export const register = async ({ password, ...userData }) => {
-  const newUser = await userRepository.addUser({
-    ...userData,
-    password: await encrypt(password)
-  });
-  return login(newUser);
-};
+    this.register = this.register.bind(this);
+  }
+
+  async login({ id }) {
+    return {
+      token: createToken({ id }),
+      user: this._userRepository.getUserById(id)
+    };
+  }
+
+  async register({ password, ...userData }) {
+    const newUser = await this._userRepository.addUser({
+      ...userData,
+      password: await encrypt(password)
+    });
+
+    return this.login(newUser);
+  }
+}
+
+export { Auth };

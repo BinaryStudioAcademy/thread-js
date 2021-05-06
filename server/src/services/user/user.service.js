@@ -1,13 +1,19 @@
-import { user as userRepository } from '../../data/repositories/repositories';
+class User {
+  constructor({ userRepository }) {
+    this._userRepository = userRepository;
+  }
 
-export const getUserById = async userId => {
-  const {
-    id,
-    username,
-    email,
-    imageId,
-    image
-  } = await userRepository.getUserById(userId);
+  async getUserById(userId) {
+    const {
+      id,
+      username,
+      email,
+      imageId,
+      image
+    } = await this._userRepository.getUserById(userId);
 
-  return { id, username, email, imageId, image };
-};
+    return { id, username, email, imageId, image };
+  }
+}
+
+export { User };

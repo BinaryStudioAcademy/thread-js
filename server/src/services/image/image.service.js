@@ -1,27 +1,28 @@
-import axios from 'axios';
-import { ENV } from '../../common/enums/enums';
-import { image as imageRepository } from '../../data/repositories/repositories';
+import { ENV, HttpMethod } from '../../common/enums/enums';
 
-const uploadToImgur = async file => {
-  try {
-    const { data: { data } } = await axios.post(
+class Image {
+  constructor({ http, imageRepository }) {
+    this._imageRepository = imageRepository;
+    this._http = http;
+  }
+
+  async upload(file) {
+    const { link, deletehash } = await this._http.load(
       'https://api.imgur.com/3/upload',
       {
-        image: file.buffer.toString('base64')
-      }, {
+        method: HttpMethod.POST,
+        data: {
+          image: file.buffer.toString('base64')
+        },
         headers: { Authorization: `Client-ID ${ENV.IMGUR.ID}` }
       }
     );
-    return {
-      link: data.link,
-      deleteHash: data.deletehash
-    };
-  } catch ({ response: { data: { status, data } } }) { // parse Imgur error
-    return Promise.reject({ status, message: data.error });
-  }
-};
 
-export const upload = async file => {
-  const image = await uploadToImgur(file);
-  return imageRepository.create(image);
-};
+    return this._imageRepository.create({
+      link,
+      deletehash
+    });
+  }
+}
+
+export { Image };

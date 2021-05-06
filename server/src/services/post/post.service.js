@@ -1,29 +1,44 @@
-import {
-  post as postRepository,
-  postReaction as postReactionRepository
-} from '../../data/repositories/repositories';
+class Post {
+  constructor({ postRepository, postReactionRepository }) {
+    this._postRepository = postRepository;
+    this._postReactionRepository = postReactionRepository;
+  }
 
-export const getPosts = filter => postRepository.getPosts(filter);
+  getPosts(filter) {
+    return this._postRepository.getPosts(filter);
+  }
 
-export const getPostById = id => postRepository.getPostById(id);
+  getPostById(id) {
+    return this._postRepository.getPostById(id);
+  }
 
-export const create = (userId, post) => postRepository.create({
-  ...post,
-  userId
-});
+  create(userId, post) {
+    return this._postRepository.create({
+      ...post,
+      userId
+    });
+  }
 
-export const setReaction = async (userId, { postId, isLike = true }) => {
-  // define the callback for future use as a promise
-  const updateOrDelete = react => (react.isLike === isLike
-    ? postReactionRepository.deleteById(react.id)
-    : postReactionRepository.updateById(react.id, { isLike }));
+  async setReaction(userId, { postId, isLike = true }) {
+    // define the callback for future use as a promise
+    const updateOrDelete = react => (react.isLike === isLike
+      ? this._postReactionRepository.deleteById(react.id)
+      : this._postReactionRepository.updateById(react.id, { isLike }));
 
-  const reaction = await postReactionRepository.getPostReaction(userId, postId);
+    const reaction = await this._postReactionRepository.getPostReaction(
+      userId,
+      postId
+    );
 
-  const result = reaction
-    ? await updateOrDelete(reaction)
-    : await postReactionRepository.create({ userId, postId, isLike });
+    const result = reaction
+      ? await updateOrDelete(reaction)
+      : await this._postReactionRepository.create({ userId, postId, isLike });
 
-  // the result is an integer when an entity is deleted
-  return Number.isInteger(result) ? {} : postReactionRepository.getPostReaction(userId, postId);
-};
+    // the result is an integer when an entity is deleted
+    return Number.isInteger(result)
+      ? {}
+      : this._postReactionRepository.getPostReaction(userId, postId);
+  }
+}
+
+export { Post };
