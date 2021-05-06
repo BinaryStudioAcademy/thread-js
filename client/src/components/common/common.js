@@ -1,3 +1,17 @@
+import {
+  Form,
+  Segment,
+  Image,
+  Grid,
+  Modal,
+  Input,
+  Comment,
+  Message,
+  Checkbox,
+  Card,
+  Label
+} from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
@@ -9,6 +23,17 @@ import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
 
 export {
+  Form,
+  Segment,
+  Image,
+  Grid,
+  Modal,
+  Input,
+  Comment,
+  Message,
+  Checkbox,
+  Card,
+  Label,
   Button,
   Header,
   Icon,
@@ -17,5 +42,6 @@ export {
   Post,
   PrivateRoute,
   PublicRoute,
-  Spinner
+  Spinner,
+  NavLink
 };

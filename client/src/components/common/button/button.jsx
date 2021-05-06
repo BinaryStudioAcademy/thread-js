@@ -51,7 +51,7 @@ const Button = ({
       <Icon name={iconName} size={iconSize} />
     </Btn>
   ) : (
-    <Btn>{children}</Btn>
+    <Btn />
   );
 };
 

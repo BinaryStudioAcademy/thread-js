@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Form, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 import { ButtonType, ButtonSize, ButtonColor } from 'src/common/enums/enums';
-import { Button } from 'src/components/common/common';
+import { Button, Form, Segment } from 'src/components/common/common';
 
 const RegistrationForm = ({ onRegister }) => {
   const [email, setEmail] = React.useState('');

@@ -1,6 +1,16 @@
 .headerWrp {
+  display: flex;
   background-color: white;
-  padding: 1em 0;
+  padding: 1em 0 1em;
+}
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: black;
+  font-weight: 700;
+  font-size: 1.2em;
 }
 
 .logoutBtn,

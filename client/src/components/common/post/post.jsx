@@ -1,10 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image, Label } from 'semantic-ui-react';
 import { getFromNowTime } from 'src/helpers/helpers';
 import { IconName } from 'src/common/enums/enums';
 import { postType } from 'src/common/prop-types/prop-types';
-import { Icon } from 'src/components/common/common';
+import { Icon, Card, Image, Label } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 

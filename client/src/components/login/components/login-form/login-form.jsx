@@ -1,9 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
-import { Form, Segment } from 'semantic-ui-react';
 import { ButtonType, ButtonSize, ButtonColor } from 'src/common/enums/enums';
-import { Button } from 'src/components/common/common';
+import { Button, Form, Segment } from 'src/components/common/common';
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = React.useState('');
@@ -66,7 +65,7 @@ const LoginForm = ({ onLogin }) => {
           isFluid
           isPrimary
         >
-          Login
+          Login1
         </Button>
       </Segment>
     </Form>

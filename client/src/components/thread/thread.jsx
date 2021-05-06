@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Checkbox } from 'semantic-ui-react';
 import { threadActionCreator } from 'src/store/actions';
 import { image as imageService } from 'src/services/services';
-import { Post, Spinner } from 'src/components/common/common';
+import { Post, Spinner, Checkbox } from 'src/components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 
 import styles from './styles.module.scss';

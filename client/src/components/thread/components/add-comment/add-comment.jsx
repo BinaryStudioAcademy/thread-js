@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react';
 import { ButtonType } from 'src/common/enums/enums';
-import { Button } from 'src/components/common/common';
+import { Button, Form } from 'src/components/common/common';
 
 const AddComment = ({ postId, onCommentAdd }) => {
   const [body, setBody] = React.useState('');

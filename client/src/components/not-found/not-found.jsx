@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Header } from 'semantic-ui-react';
-import { IconName } from 'src/common/enums/enums';
-import { Icon } from 'src/components/common/common';
+import { IconName, IconSize } from 'src/common/enums/enums';
+import { Icon, NavLink } from 'src/components/common/common';
+import styles from './styles.module.scss';
 
 const NotFound = () => (
-  <Header as="h2" icon textAlign="center" style={{ marginTop: 50 }}>
-    <Icon name={IconName.FROWN} circular />
-    <Header.Content>
-      <div>404 Not Found</div>
-      {'Go to '}
-      <NavLink to="/">Home</NavLink>
-      {' page'}
-    </Header.Content>
-  </Header>
+  <h2 className={styles.title}>
+    <Icon size={IconSize.LARGE} name={IconName.FROWN} />
+    <span className={styles.code}>404 Not Found</span>
+    {'Go to '}
+    <NavLink to="/">Home</NavLink>
+    {' page'}
+  </h2>
 );
 
 export default NotFound;

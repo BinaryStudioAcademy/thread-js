@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Grid, Header, Message } from 'semantic-ui-react';
 import { profileActionCreator } from 'src/store/actions';
-import { Logo } from 'src/components/common/common';
+import { Logo, Grid, Message, NavLink } from 'src/components/common/common';
 import { LoginForm } from './components/components';
+import styles from './styles.module.scss';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -17,9 +16,9 @@ const Login = () => {
     <Grid textAlign="center" verticalAlign="middle" className="fill">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Logo />
-        <Header as="h2" color="teal" textAlign="center">
+        <h2 className={styles.title}>
           Login to your account
-        </Header>
+        </h2>
         <LoginForm onLogin={handleLogin} />
         <Message>
           New to us?

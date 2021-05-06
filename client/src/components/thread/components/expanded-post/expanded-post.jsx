@@ -1,9 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Comment as CommentUI, Header } from 'semantic-ui-react';
 import { threadActionCreator } from 'src/store/actions';
-import { Spinner, Post } from 'src/components/common/common';
+import { Spinner, Post, Modal, Comment as CommentUI } from 'src/components/common/common';
 import AddComment from '../add-comment/add-comment';
 import Comment from '../comment/comment';
 import { getSortedComments } from './helpers/helpers';
@@ -48,9 +47,7 @@ const ExpandedPost = ({
             sharePost={sharePost}
           />
           <CommentUI.Group style={{ maxWidth: '100%' }}>
-            <Header as="h3" dividing>
-              Comments
-            </Header>
+            <h3>Comments</h3>
             {sortedComments.map(comment => (
               <Comment key={comment.id} comment={comment} />
             ))}

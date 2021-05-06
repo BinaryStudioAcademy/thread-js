@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Input } from 'semantic-ui-react';
 import { IconName, IconColor } from 'src/common/enums/enums';
-import { Icon } from 'src/components/common/common';
+import { Icon, Modal, Input } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 

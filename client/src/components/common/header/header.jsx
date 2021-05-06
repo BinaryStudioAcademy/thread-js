@@ -1,11 +1,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { Header as HeaderUI, Image, Grid } from 'semantic-ui-react';
 import { IconName, IconSize, ButtonType } from 'src/common/enums/enums';
 import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
 import { userType } from 'src/common/prop-types/prop-types';
-import { Button, Icon } from 'src/components/common/common';
+import {
+  Button,
+  Icon,
+  Image,
+  Grid,
+  NavLink
+} from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -15,11 +19,16 @@ const Header = ({ user, onUserLogout }) => (
       <Grid.Column>
         {user && (
           <NavLink exact to="/">
-            <HeaderUI>
-              <Image circular src={user.image?.link ?? DEFAULT_USER_AVATAR} />
+            <div className={styles.userWrapper}>
+              <Image
+                circular
+                width="45"
+                height="45"
+                src={user.image?.link ?? DEFAULT_USER_AVATAR}
+              />
               {' '}
               {user.username}
-            </HeaderUI>
+            </div>
           </NavLink>
         )}
       </Grid.Column>

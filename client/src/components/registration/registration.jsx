@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Grid, Header, Message } from 'semantic-ui-react';
 import { profileActionCreator } from 'src/store/actions';
-import { Logo } from 'src/components/common/common';
+import { Logo, Grid, Message, NavLink } from 'src/components/common/common';
 import { RegistrationForm } from './components/components';
+import styles from './styles.module.scss';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
@@ -17,9 +16,9 @@ const RegistrationPage = () => {
     <Grid textAlign="center" verticalAlign="middle" className="fill">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Logo />
-        <Header as="h2" color="teal" textAlign="center">
+        <h2 className={styles.title}>
           Register for free account
-        </Header>
+        </h2>
         <RegistrationForm onRegister={handleRegister} />
         <Message>
           Alredy with us?

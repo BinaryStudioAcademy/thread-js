@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Image, Segment } from 'semantic-ui-react';
 import { ButtonColor, ButtonType, IconName } from 'src/common/enums/enums';
-import { Button } from 'src/components/common/common';
+import { Button, Form, Image, Segment } from 'src/components/common/common';
 
 import styles from './styles.module.scss';
 
