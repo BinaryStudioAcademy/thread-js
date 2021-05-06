@@ -5,6 +5,7 @@ import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
 import cors from 'cors';
+import { WHITE_ROUTES } from './common/constants/constants';
 import { ENV } from './common/enums/enums';
 import { sequelize } from './data/db/connection';
 import { initApi } from './api/api';
@@ -13,7 +14,6 @@ import {
   errorHandler as errorHandlerMiddleware,
   socketInjector as socketInjectorMiddleware
 } from './middlewares/middlewares';
-import routesWhiteList from './config/routesWhiteListConfig';
 import { handlers as socketHandlers } from './socket/handlers';
 import './config/passport';
 
@@ -39,7 +39,7 @@ app.use(passport.initialize());
 
 app.use(socketInjectorMiddleware(io));
 
-app.use(ENV.APP.API_PATH, authorizationMiddleware(routesWhiteList));
+app.use(ENV.APP.API_PATH, authorizationMiddleware(WHITE_ROUTES));
 
 app.use(ENV.APP.API_PATH, initApi(Router));
 

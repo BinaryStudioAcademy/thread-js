@@ -1,3 +1,4 @@
+import { AuthApiPath } from '../../common/enums/enums';
 import {
   authentication as authenticationMiddleware,
   registration as registrationMiddleware,
@@ -10,15 +11,15 @@ const initAuth = (Router, services) => {
 
   // user added to the request (req.user) in a strategy, see passport config
   router
-    .post('/login', authenticationMiddleware, (req, res, next) => authService
+    .post(AuthApiPath.LOGIN, authenticationMiddleware, (req, res, next) => authService
       .login(req.user)
       .then(data => res.send(data))
       .catch(next))
-    .post('/register', registrationMiddleware, (req, res, next) => authService
+    .post(AuthApiPath.REGISTER, registrationMiddleware, (req, res, next) => authService
       .register(req.user)
       .then(data => res.send(data))
       .catch(next))
-    .get('/user', jwtMiddleware, (req, res, next) => userService
+    .get(AuthApiPath.USER, jwtMiddleware, (req, res, next) => userService
       .getUserById(req.user.id)
       .then(data => res.send(data))
       .catch(next));

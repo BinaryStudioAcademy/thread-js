@@ -1,3 +1,4 @@
+import { ApiPath } from '../common/enums/enums';
 import { auth, user, comment, post, image } from '../services/services';
 import { initAuth } from './auth/auth.api';
 import { initPost } from './post/post.api';
@@ -9,26 +10,26 @@ const initApi = Router => {
   const apiRouter = Router();
 
   apiRouter.use(
-    '/auth',
+    ApiPath.AUTH,
     initAuth(Router, {
       auth,
       user
     })
   );
   apiRouter.use(
-    '/posts',
+    ApiPath.POSTS,
     initPost(Router, {
       post
     })
   );
   apiRouter.use(
-    '/comments',
+    ApiPath.COMMENTS,
     initComment(Router, {
       comment
     })
   );
   apiRouter.use(
-    '/images',
+    ApiPath.IMAGES,
     initImage(Router, {
       image
     })
