@@ -11,8 +11,7 @@ import {
   PublicRoute,
   Notifications
 } from 'src/components/common/common';
-import LoginPage from 'src/components/login/login';
-import RegistrationPage from 'src/components/registration/registration';
+import SignPage from 'src/components/sign/sign';
 import NotFoundPage from 'src/components/not-found/not-found';
 import ProfilePage from 'src/components/profile/profile';
 import SharedPostPage from 'src/components/shared-post/shared-post';
@@ -54,12 +53,7 @@ const Routing = () => {
       )}
       <main className="fill">
         <Switch>
-          <PublicRoute exact path={AppRoute.LOGIN} component={LoginPage} />
-          <PublicRoute
-            exact
-            path="/registration"
-            component={RegistrationPage}
-          />
+          <PublicRoute exact path={[AppRoute.LOGIN, AppRoute.REGISTRATION]} component={SignPage} />
           <PrivateRoute exact path={AppRoute.ROOT} component={ThreadPage} />
           <PrivateRoute exact path={AppRoute.PROFILE} component={ProfilePage} />
           <PrivateRoute path={AppRoute.SHARE_$POSTHASH} component={SharedPostPage} />
