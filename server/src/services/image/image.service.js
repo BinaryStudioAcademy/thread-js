@@ -8,7 +8,7 @@ class Image {
 
   async upload(file) {
     const { link, deletehash } = await this._http.load(
-      'https://api.imgur.com/3/upload',
+      ENV.IMGUR.UPLOAD_API_URL,
       {
         method: HttpMethod.POST,
         data: {

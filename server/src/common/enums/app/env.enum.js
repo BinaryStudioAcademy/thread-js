@@ -13,7 +13,8 @@ const {
   DB_PORT,
   DB_DIALECT,
   IMGUR_ID,
-  IMGUR_SECRET
+  IMGUR_SECRET,
+  IMGUR_UPLOAD_API_URL
 } = process.env;
 
 const ENV = {
@@ -37,6 +38,7 @@ const ENV = {
   IMGUR: {
     ID: IMGUR_ID,
     SECRET: IMGUR_SECRET,
+    UPLOAD_API_URL: IMGUR_UPLOAD_API_URL,
     FILE_SIZE: 10000000
   }
 };
