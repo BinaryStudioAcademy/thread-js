@@ -1,5 +1,5 @@
-import { CommentModel, UserModel, ImageModel } from '../models';
-import { Abstract } from './abstract.repository';
+import { CommentModel, UserModel, ImageModel } from '../../models';
+import { Abstract } from '../abstract/abstract.repository';
 
 class Comment extends Abstract {
   getCommentById(id) {

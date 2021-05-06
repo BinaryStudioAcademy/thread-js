@@ -1,5 +1,5 @@
-import { PostReactionModel, PostModel } from '../models';
-import { Abstract } from './abstract.repository';
+import { PostReactionModel, PostModel } from '../../models';
+import { Abstract } from '../abstract/abstract.repository';
 
 class PostReaction extends Abstract {
   getPostReaction(userId, postId) {

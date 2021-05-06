@@ -1,8 +1,8 @@
-import comment from './comment.repository';
-import image from './image.repository';
-import postReaction from './post-reaction.repository';
-import post from './post.repository';
-import user from './user.repository';
+import comment from './comment/comment.repository';
+import image from './image/image.repository';
+import postReaction from './post-reaction/post-reaction.repository';
+import post from './post/post.repository';
+import user from './user/user.repository';
 
 const initRepositories = () => {};
 

@@ -1,5 +1,5 @@
-import { UserModel, ImageModel } from '../models';
-import { Abstract } from './abstract.repository';
+import { UserModel, ImageModel } from '../../models';
+import { Abstract } from '../abstract/abstract.repository';
 
 class UserRepository extends Abstract {
   addUser(user) {

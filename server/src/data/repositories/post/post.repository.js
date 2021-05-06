@@ -1,6 +1,12 @@
-import { sequelize } from '../db/connection';
-import { PostModel, CommentModel, UserModel, ImageModel, PostReactionModel } from '../models';
-import { Abstract } from './abstract.repository';
+import { sequelize } from '../../db/connection';
+import {
+  PostModel,
+  CommentModel,
+  UserModel,
+  ImageModel,
+  PostReactionModel
+} from '../../models';
+import { Abstract } from '../abstract/abstract.repository';
 
 const likeCase = bool => `CASE WHEN "postReactions"."isLike" = ${bool} THEN 1 ELSE 0 END`;
 
