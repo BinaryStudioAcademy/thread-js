@@ -19,6 +19,7 @@ const {
 
 const ENV = {
   APP: {
+    API_PATH: '/api',
     PORT: APP_PORT,
     SOCKET_PORT
   },

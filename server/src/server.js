@@ -1,5 +1,5 @@
 import fs from 'fs';
-import express from 'express';
+import express, { Router } from 'express';
 import path from 'path';
 import passport from 'passport';
 import http from 'http';
@@ -39,9 +39,9 @@ app.use(passport.initialize());
 
 app.use(socketInjectorMiddleware(io));
 
-app.use('/api/', authorizationMiddleware(routesWhiteList));
+app.use(ENV.APP.API_PATH, authorizationMiddleware(routesWhiteList));
 
-initApi(app);
+app.use(ENV.APP.API_PATH, initApi(Router));
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));

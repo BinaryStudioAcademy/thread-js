@@ -1,12 +1,15 @@
-import { Router } from 'express';
-import { image as imageService } from '../../services/services';
 import { image as imageMiddleware } from '../../middlewares/middlewares';
 
-const initImage = Router();
+const initImage = (Router, services) => {
+  const { image: imageService } = services;
+  const router = Router();
 
-initImage
-  .post('/', imageMiddleware, (req, res, next) => imageService.upload(req.file)
+  router.post('/', imageMiddleware, (req, res, next) => imageService
+    .upload(req.file)
     .then(image => res.send(image))
     .catch(next));
+
+  return router;
+};
 
 export { initImage };
