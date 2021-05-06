@@ -1,4 +1,4 @@
-import orm from '../db/connection';
+import { sequelize as orm } from '../db/connection';
 import associate from '../db/associations';
 
 const User = orm.import('./user');

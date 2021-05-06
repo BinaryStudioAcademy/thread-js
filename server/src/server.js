@@ -5,14 +5,14 @@ import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
 import cors from 'cors';
-import sequelize from './data/db/connection';
+import { ENV } from './common/enums/enums';
+import { sequelize } from './data/db/connection';
 import routes from './api/routes/index';
 import authorizationMiddleware from './api/middlewares/authorizationMiddleware';
 import errorHandlerMiddleware from './api/middlewares/errorHandlerMiddleware';
 import routesWhiteList from './config/routesWhiteListConfig';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
-import env from './env';
 import './config/passportConfig';
 
 const app = express();
@@ -50,8 +50,8 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandlerMiddleware);
-app.listen(env.app.port, () => {
-  console.info(`Server listening on port ${env.app.port}!`);
+app.listen(ENV.APP.PORT, () => {
+  console.info(`Server listening on port ${ENV.APP.PORT}!`);
 });
 
-socketServer.listen(env.app.socketPort);
+socketServer.listen(ENV.APP.SOCKET_PORT);

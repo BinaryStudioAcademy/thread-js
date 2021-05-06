@@ -1,4 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { secret, expiresIn } from '../config/jwtConfig';
+import { ENV } from '../common/enums/enums';
 
-export const createToken = data => jwt.sign(data, secret, { expiresIn });
+export const createToken = data => jwt.sign(data, ENV.JWT.SECRET, { expiresIn: ENV.JWT.EXPIRES_IN });

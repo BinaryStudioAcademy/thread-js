@@ -1,13 +1,13 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { secret } from './jwtConfig';
+import { ENV } from '../common/enums/enums';
 import userRepository from '../data/repositories/userRepository';
 import { compare } from '../helpers/cryptoHelper';
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: secret
+  secretOrKey: ENV.JWT.SECRET
 };
 
 passport.use(

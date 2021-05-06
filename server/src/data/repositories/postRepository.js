@@ -1,4 +1,4 @@
-import sequelize from '../db/connection';
+import { sequelize } from '../db/connection';
 import { PostModel, CommentModel, UserModel, ImageModel, PostReactionModel } from '../models/index';
 import BaseRepository from './baseRepository';
 

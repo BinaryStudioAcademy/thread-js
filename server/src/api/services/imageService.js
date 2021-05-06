@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { imgurId } from '../../config/imgurConfig';
+import { ENV } from '../../common/enums/enums';
 import imageRepository from '../../data/repositories/imageRepository';
 
 const uploadToImgur = async file => {
@@ -9,7 +9,7 @@ const uploadToImgur = async file => {
       {
         image: file.buffer.toString('base64')
       }, {
-        headers: { Authorization: `Client-ID ${imgurId}` }
+        headers: { Authorization: `Client-ID ${ENV.IMGUR.ID}` }
       }
     );
     return {

@@ -1,11 +1,11 @@
 import multer from 'multer';
-import { fileSize } from '../../config/imgurConfig';
+import { ENV } from '../../common/enums/enums';
 
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
-    fileSize
+    fileSize: ENV.IMGUR.FILE_SIZE
   }
 });
 
