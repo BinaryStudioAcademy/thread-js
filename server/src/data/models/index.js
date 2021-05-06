@@ -1,10 +1,10 @@
 import { sequelize as orm } from '../db/connection';
 import associate from '../db/associations';
-import { init as initUserModel } from './user.model';
-import { init as initPostModel } from './post.model';
-import { init as initPostReactionModel } from './post-reaction.model';
-import { init as initCommentModel } from './comment.model';
-import { init as initImageModel } from './image.model';
+import { init as initUserModel } from './user/user.model';
+import { init as initPostModel } from './post/post.model';
+import { init as initPostReactionModel } from './post-reaction/post-reaction.model';
+import { init as initCommentModel } from './comment/comment.model';
+import { init as initImageModel } from './image/image.model';
 
 const User = initUserModel(orm);
 const Post = initPostModel(orm);
