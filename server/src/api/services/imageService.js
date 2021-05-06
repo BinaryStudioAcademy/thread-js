@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ENV } from '../../common/enums/enums';
-import imageRepository from '../../data/repositories/imageRepository';
+import { image as imageRepository } from '../../data/repositories/repositories';
 
 const uploadToImgur = async file => {
   try {

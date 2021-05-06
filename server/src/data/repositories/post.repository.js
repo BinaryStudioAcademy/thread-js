@@ -1,10 +1,10 @@
 import { sequelize } from '../db/connection';
-import { PostModel, CommentModel, UserModel, ImageModel, PostReactionModel } from '../models/index';
-import BaseRepository from './baseRepository';
+import { PostModel, CommentModel, UserModel, ImageModel, PostReactionModel } from '../models';
+import { Abstract } from './abstract.repository';
 
 const likeCase = bool => `CASE WHEN "postReactions"."isLike" = ${bool} THEN 1 ELSE 0 END`;
 
-class PostRepository extends BaseRepository {
+class Post extends Abstract {
   async getPosts(filter) {
     const {
       from: offset,
@@ -106,4 +106,4 @@ class PostRepository extends BaseRepository {
   }
 }
 
-export default new PostRepository(PostModel);
+export default new Post(PostModel);

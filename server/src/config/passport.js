@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { ENV } from '../common/enums/enums';
-import userRepository from '../data/repositories/userRepository';
+import { user as userRepository } from '../data/repositories/repositories';
 import { compare } from '../helpers/cryptoHelper';
 
 const options = {

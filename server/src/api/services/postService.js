@@ -1,5 +1,7 @@
-import postRepository from '../../data/repositories/postRepository';
-import postReactionRepository from '../../data/repositories/postReactionRepository';
+import {
+  post as postRepository,
+  postReaction as postReactionRepository
+} from '../../data/repositories/repositories';
 
 export const getPosts = filter => postRepository.getPosts(filter);
 

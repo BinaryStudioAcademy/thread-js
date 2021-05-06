@@ -1,4 +1,4 @@
-export default class BaseRepository {
+class Abstract {
   constructor(model) {
     this.model = model;
   }
@@ -31,3 +31,5 @@ export default class BaseRepository {
     });
   }
 }
+
+export { Abstract };

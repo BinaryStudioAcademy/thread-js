@@ -1,4 +1,4 @@
-import commentRepository from '../../data/repositories/commentRepository';
+import { comment as commentRepository } from '../../data/repositories/repositories';
 
 export const create = (userId, comment) => commentRepository.create({
   ...comment,

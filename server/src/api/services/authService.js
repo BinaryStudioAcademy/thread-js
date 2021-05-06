@@ -1,6 +1,6 @@
 import { createToken } from '../../helpers/tokenHelper';
 import { encrypt } from '../../helpers/cryptoHelper';
-import userRepository from '../../data/repositories/userRepository';
+import { user as userRepository } from '../../data/repositories/repositories';
 
 export const login = async ({ id }) => ({
   token: createToken({ id }),
