@@ -1,0 +1,36 @@
+.headerWrp {
+  display: flex;
+  background-color: white;
+  padding: 1em 0 1em;
+}
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: black;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.logoutBtn,
+.logoutBtn:hover {
+  &:global(.ui.icon.button) {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.menuBtn {
+  color: gray;
+  &:hover {
+    color: black !important;
+  }
+}
+
+.menuBtn:global(.ui.icon.button) {
+  color: gray;
+  &:hover {
+    color: black !important;
+  }
+}

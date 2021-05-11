@@ -1,4 +1,5 @@
 extends:
+  - ../.stylelintrc.yml
   - stylelint-config-recommended-scss
 
 plugins:

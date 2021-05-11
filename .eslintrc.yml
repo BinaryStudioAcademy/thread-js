@@ -1,0 +1,30 @@
+env:
+  es6: true
+
+parserOptions:
+  ecmaVersion: 2020
+
+rules:
+  comma-dangle:
+    - error
+    - never
+  arrow-parens:
+    - error
+    - as-needed
+  no-multiple-empty-lines:
+    - error
+    - max: 1
+  no-underscore-dangle:
+    - error
+    - allowAfterThis: true
+  max-len:
+    - error
+    - code: 120
+  class-methods-use-this:
+    - off
+  object-curly-newline:
+    - off
+  no-param-reassign:
+    - off
+  import/prefer-default-export:
+    - off

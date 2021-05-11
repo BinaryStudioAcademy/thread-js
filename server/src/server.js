@@ -1,19 +1,21 @@
 import fs from 'fs';
-import express from 'express';
+import express, { Router } from 'express';
 import path from 'path';
 import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
 import cors from 'cors';
-import sequelize from './data/db/connection';
-import routes from './api/routes/index';
-import authorizationMiddleware from './api/middlewares/authorizationMiddleware';
-import errorHandlerMiddleware from './api/middlewares/errorHandlerMiddleware';
-import routesWhiteList from './config/routesWhiteListConfig';
-import socketInjector from './socket/injector';
-import socketHandlers from './socket/handlers';
-import env from './env';
-import './config/passportConfig';
+import { WHITE_ROUTES } from './common/constants/constants';
+import { ENV } from './common/enums/enums';
+import { sequelize } from './data/db/connection';
+import { initApi } from './api/api';
+import {
+  authorization as authorizationMiddleware,
+  errorHandler as errorHandlerMiddleware,
+  socketInjector as socketInjectorMiddleware
+} from './middlewares/middlewares';
+import { handlers as socketHandlers } from './socket/handlers';
+import './config/passport';
 
 const app = express();
 const socketServer = http.Server(app);
@@ -35,23 +37,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
-app.use(socketInjector(io));
+app.use(socketInjectorMiddleware(io));
 
-app.use('/api/', authorizationMiddleware(routesWhiteList));
+app.use(ENV.APP.API_PATH, authorizationMiddleware(WHITE_ROUTES));
 
-routes(app, io);
+app.use(ENV.APP.API_PATH, initApi(Router));
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
 
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
   res.end();
 });
 
 app.use(errorHandlerMiddleware);
-app.listen(env.app.port, () => {
-  console.info(`Server listening on port ${env.app.port}!`);
+app.listen(ENV.APP.PORT, () => {
+  console.info(`Server listening on port ${ENV.APP.PORT}!`);
 });
 
-socketServer.listen(env.app.socketPort);
+socketServer.listen(ENV.APP.SOCKET_PORT);

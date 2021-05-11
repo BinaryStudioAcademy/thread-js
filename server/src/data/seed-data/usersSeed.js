@@ -1,4 +1,4 @@
-import { encryptSync } from '../../helpers/cryptoHelper';
+import { encryptSync } from '../../helpers/helpers';
 
 const hash = password => encryptSync(password);
 const now = new Date();
