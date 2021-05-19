@@ -29,6 +29,8 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
       })
       .catch(() => {
         // TODO: show error
+      })
+      .finally(() => {
         setIsUploading(false);
       });
   };
