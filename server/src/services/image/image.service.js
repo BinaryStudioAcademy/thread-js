@@ -7,20 +7,17 @@ class Image {
   }
 
   async upload(file) {
-    const { link, deletehash } = await this._http.load(
-      ENV.IMGUR.UPLOAD_API_URL,
-      {
-        method: HttpMethod.POST,
-        data: {
-          image: file.buffer.toString('base64')
-        },
-        headers: { Authorization: `Client-ID ${ENV.IMGUR.ID}` }
-      }
-    );
+    const { data } = await this._http.load(ENV.IMGUR.UPLOAD_API_URL, {
+      method: HttpMethod.POST,
+      data: {
+        image: file.buffer.toString('base64')
+      },
+      headers: { Authorization: `Client-ID ${ENV.IMGUR.ID}` }
+    });
 
     return this._imageRepository.create({
-      link,
-      deletehash
+      link: data.link,
+      deleteHash: data.deletehash
     });
   }
 }
