@@ -6,7 +6,7 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
-    fileSize: ENV.IMGUR.FILE_SIZE
+    fileSize: ENV.GYAZO.FILE_SIZE
   }
 });
 
