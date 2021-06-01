@@ -1,3 +1,4 @@
+import FormData from 'form-data';
 import { ENV, HttpMethod } from '../../common/enums/enums';
 
 class Image {
@@ -7,17 +8,23 @@ class Image {
   }
 
   async upload(file) {
-    const { data } = await this._http.load(ENV.IMGUR.UPLOAD_API_URL, {
+    const formData = new FormData();
+
+    formData.append('imagedata', file.buffer, {
+      filename: file.originalname,
+      knownLength: file.size
+    });
+    formData.append('access_token', ENV.GYAZO.ACCESS_KEY);
+
+    const res = await this._http.load(ENV.GYAZO.UPLOAD_API_URL, {
       method: HttpMethod.POST,
-      data: {
-        image: file.buffer.toString('base64')
-      },
-      headers: { Authorization: `Client-ID ${ENV.IMGUR.ID}` }
+      data: formData,
+      headers: formData.getHeaders()
     });
 
     return this._imageRepository.create({
-      link: data.link,
-      deleteHash: data.deletehash
+      link: res.url,
+      deleteHash: ''
     });
   }
 }

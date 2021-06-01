@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { StorageKey } from 'src/common/enums/enums';
+import { HttpError } from 'src/exceptions/exceptions';
+import { HttpCode, StorageKey } from 'src/common/enums/enums';
 import {
   storage as storageService,
   auth as authService
@@ -35,9 +36,17 @@ const logout = () => dispatch => {
 };
 
 const loadCurrentUser = () => async dispatch => {
-  const user = await authService.getCurrentUser();
+  try {
+    const user = await authService.getCurrentUser();
 
-  dispatch(setUser(user));
+    dispatch(setUser(user));
+  } catch (err) {
+    const isHttpError = err instanceof HttpError;
+
+    if (isHttpError && err.status === HttpCode.UNAUTHORIZED) {
+      dispatch(logout());
+    }
+  }
 };
 
 export { setUser, login, register, logout, loadCurrentUser };

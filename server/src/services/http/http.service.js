@@ -30,7 +30,7 @@ class Http {
     const { response } = err;
     const { data } = response;
 
-    throw new Error(data.data.error);
+    throw new Error(data.toString());
   }
 }
 

@@ -1,3 +1,4 @@
+import { HttpError } from 'src/exceptions/exceptions';
 import { getStringifiedQuery } from 'src/helpers/helpers';
 import { StorageKey, HttpHeader, HttpMethod } from 'src/common/enums/enums';
 
@@ -47,9 +48,14 @@ class Http {
 
   async _checkStatus(response) {
     if (!response.ok) {
-      const parsedException = await response.json();
+      const parsedException = await response.json().catch(() => ({
+        message: response.statusText
+      }));
 
-      throw new Error(parsedException?.message ?? response.statusText);
+      throw new HttpError({
+        status: response.status,
+        message: parsedException?.message
+      });
     }
 
     return response;

@@ -104,7 +104,7 @@
     **Note**: файл **.env** содержит реальные ключи проекта и не должен сохраняться в репозиторий.
 
     Замените в файле **.env** значения ключей на действительные.
-    Для того, чтобы указать ключи для Imgur Storage, необходимо зарегистрироваться на сайте [Imgur](https://imgur.com/register "Imgur") и [зарегистрировать приложение](https://api.imgur.com/oauth2/addclient) указав *Anonymous usage without user authorization*. Затем в настройках профиля найдете ключи для Storage.
+    Для того, чтобы указать ключи для Gyazo Storage, необходимо зарегистрироваться на сайте [Gyazo](https://gyazo.com/captures) и [зарегистрировать приложение](https://gyazo.com/oauth/applications). Затем в **.env**  использовать `access token` из только что созданного приложения в Gyazo.
 
 4. Выполните [миграции](https://sequelize.org/master/manual/migrations.html) и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
 
@@ -197,7 +197,7 @@
 
 Необходимо изменить параметр autocrlf на input либо false в настройках Git. Возможно, понадобится стянуть проект заново.
 
-5. При регистрации приложения на сайте Imgur требуется указать Authorization callback URL
+5. При регистрации приложения на сайте Gyazo требуется указать Authorization callback URL
 
-Укажите localhost.
+Укажите https://www.google.com/.
 
