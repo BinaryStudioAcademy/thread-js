@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { threadActionCreator } from 'src/store/actions';
 import { image as imageService } from 'src/services/services';
 import { Post, Spinner, Checkbox } from 'src/components/common/common';
@@ -15,6 +15,7 @@ const postsFilter = {
 };
 
 const Thread = () => {
+  const dispatch = useDispatch();
   const { posts, hasMorePosts, expandedPost, userId } = useSelector(state => ({
     posts: state.posts.posts,
     hasMorePosts: state.posts.hasMorePosts,
@@ -23,7 +24,6 @@ const Thread = () => {
   }));
   const [sharedPostId, setSharedPostId] = React.useState(undefined);
   const [showOwnPosts, setShowOwnPosts] = React.useState(false);
-  const dispatch = useDispatch();
 
   const handlePostLike = React.useCallback(id => (
     dispatch(threadActionCreator.likePost(id))
@@ -41,9 +41,9 @@ const Thread = () => {
     dispatch(threadActionCreator.loadPosts(filtersPayload));
   };
 
-  const handleMorePostsLoad = filtersPayload => {
+  const handleMorePostsLoad = React.useCallback(filtersPayload => {
     dispatch(threadActionCreator.loadMorePosts(filtersPayload));
-  };
+  }, [dispatch]);
 
   const toggleShowOwnPosts = () => {
     setShowOwnPosts(!showOwnPosts);
@@ -53,15 +53,19 @@ const Thread = () => {
     postsFilter.from = postsFilter.count; // for the next scroll
   };
 
-  const getMorePosts = () => {
+  const getMorePosts = React.useCallback(() => {
     handleMorePostsLoad(postsFilter);
     const { from, count } = postsFilter;
     postsFilter.from = from + count;
-  };
+  }, [handleMorePostsLoad]);
 
   const sharePost = id => setSharedPostId(id);
 
   const uploadImage = file => imageService.uploadImage(file);
+
+  React.useEffect(() => {
+    getMorePosts();
+  }, [getMorePosts]);
 
   return (
     <div className={styles.threadContent}>
@@ -77,10 +81,11 @@ const Thread = () => {
         />
       </div>
       <InfiniteScroll
-        pageStart={0}
-        loadMore={getMorePosts}
+        dataLength={posts.length}
+        next={getMorePosts}
         hasMore={hasMorePosts}
         loader={<Spinner key="0" />}
+        scrollableTarget="root"
       >
         {posts.map(post => (
           <Post
