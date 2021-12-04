@@ -2,8 +2,8 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": "14.x.x",
-    "npm": "6.x.x"
+    "node": "16.x.x",
+    "npm": "8.x.x"
   },
   "proxy": "http://localhost:3001/",
   "scripts": {
@@ -19,8 +19,8 @@
     "dayjs": "1.10.4",
     "prop-types": "15.7.2",
     "query-string": "7.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-infinite-scroller": "1.2.4",
     "react-notifications": "1.7.2",
     "react-redux": "7.2.4",

@@ -2,8 +2,8 @@
   "name": "threadjs",
   "private": true,
   "engines": {
-    "node": "14.x.x",
-    "npm": "6.x.x"
+    "node": "16.x.x",
+    "npm": "8.x.x"
   },
   "scripts": {
     "install:client": "cd client && npm install",
