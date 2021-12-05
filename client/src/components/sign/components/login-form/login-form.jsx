@@ -86,7 +86,7 @@ const LoginForm = ({ onLogin }) => {
       <Message>
         New to us?
         {' '}
-        <NavLink exact to={AppRoute.REGISTRATION}>
+        <NavLink to={AppRoute.REGISTRATION}>
           Sign Up
         </NavLink>
       </Message>
