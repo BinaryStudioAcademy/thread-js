@@ -1,120 +1,108 @@
-import { createAction } from '@reduxjs/toolkit';
-import {
-  comment as commentService,
-  post as postService
-} from 'src/services/services';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ActionType } from './common';
 
-const ActionType = {
-  ADD_POST: 'thread/add-post',
-  LOAD_MORE_POSTS: 'thread/load-more-posts',
-  SET_ALL_POSTS: 'thread/set-all-posts',
-  SET_EXPANDED_POST: 'thread/set-expanded-post'
-};
-
-const setPosts = createAction(ActionType.SET_ALL_POSTS, posts => ({
-  payload: {
-    posts
+const loadPosts = createAsyncThunk(
+  ActionType.SET_ALL_POSTS,
+  async (filters, { extra: { services } }) => {
+    const posts = await services.post.getAllPosts(filters);
+    return { posts };
   }
-}));
+);
 
-const addMorePosts = createAction(ActionType.LOAD_MORE_POSTS, posts => ({
-  payload: {
-    posts
+const loadMorePosts = createAsyncThunk(
+  ActionType.LOAD_MORE_POSTS,
+  async (filters, { getState, extra: { services } }) => {
+    const {
+      posts: { posts }
+    } = getState();
+    const loadedPosts = await services.post.getAllPosts(filters);
+    const filteredPosts = loadedPosts.filter(
+      post => !(posts && posts.some(loadedPost => post.id === loadedPost.id))
+    );
+
+    return { posts: filteredPosts };
   }
-}));
+);
 
-const addPost = createAction(ActionType.ADD_POST, post => ({
-  payload: {
-    post
+const applyPost = createAsyncThunk(
+  ActionType.ADD_POST,
+  async (postId, { extra: { services } }) => {
+    const post = await services.post.getPost(postId);
+    return { post };
   }
-}));
+);
 
-const setExpandedPost = createAction(ActionType.SET_EXPANDED_POST, post => ({
-  payload: {
-    post
+const createPost = createAsyncThunk(
+  ActionType.ADD_POST,
+  async (post, { extra: { services } }) => {
+    const { id } = await services.post.addPost(post);
+    const newPost = await services.post.getPost(id);
+
+    return { post: newPost };
   }
-}));
+);
 
-const loadPosts = filter => async dispatch => {
-  const posts = await postService.getAllPosts(filter);
-  dispatch(setPosts(posts));
-};
-
-const loadMorePosts = filter => async (dispatch, getRootState) => {
-  const {
-    posts: { posts }
-  } = getRootState();
-  const loadedPosts = await postService.getAllPosts(filter);
-  const filteredPosts = loadedPosts.filter(
-    post => !(posts && posts.some(loadedPost => post.id === loadedPost.id))
-  );
-  dispatch(addMorePosts(filteredPosts));
-};
-
-const applyPost = postId => async dispatch => {
-  const post = await postService.getPost(postId);
-  dispatch(addPost(post));
-};
-
-const createPost = post => async dispatch => {
-  const { id } = await postService.addPost(post);
-  const newPost = await postService.getPost(id);
-  dispatch(addPost(newPost));
-};
-
-const toggleExpandedPost = postId => async dispatch => {
-  const post = postId ? await postService.getPost(postId) : undefined;
-  dispatch(setExpandedPost(post));
-};
-
-const likePost = postId => async (dispatch, getRootState) => {
-  const { id } = await postService.likePost(postId);
-  const diff = id ? 1 : -1; // if ID exists then the post was liked, otherwise - like was removed
-
-  const mapLikes = post => ({
-    ...post,
-    likeCount: Number(post.likeCount) + diff // diff is taken from the current closure
-  });
-
-  const {
-    posts: { posts, expandedPost }
-  } = getRootState();
-  const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
-
-  dispatch(setPosts(updated));
-
-  if (expandedPost && expandedPost.id === postId) {
-    dispatch(setExpandedPost(mapLikes(expandedPost)));
+const toggleExpandedPost = createAsyncThunk(
+  ActionType.SET_EXPANDED_POST,
+  async (postId, { extra: { services } }) => {
+    const post = postId ? await services.post.getPost(postId) : undefined;
+    return { post };
   }
-};
+);
 
-const addComment = request => async (dispatch, getRootState) => {
-  const { id } = await commentService.addComment(request);
-  const comment = await commentService.getComment(id);
+const likePost = createAsyncThunk(
+  ActionType.REACT,
+  async (postId, { getState, extra: { services } }) => {
+    const { id } = await services.post.likePost(postId);
+    const diff = id ? 1 : -1; // if ID exists then the post was liked, otherwise - like was removed
 
-  const mapComments = post => ({
-    ...post,
-    commentCount: Number(post.commentCount) + 1,
-    comments: [...(post.comments || []), comment] // comment is taken from the current closure
-  });
+    const mapLikes = post => ({
+      ...post,
+      likeCount: Number(post.likeCount) + diff // diff is taken from the current closure
+    });
 
-  const {
-    posts: { posts, expandedPost }
-  } = getRootState();
-  const updated = posts.map(post => (post.id !== comment.postId ? post : mapComments(post)));
+    const {
+      posts: { posts, expandedPost }
+    } = getState();
+    const updated = posts.map(post => (
+      post.id !== postId ? post : mapLikes(post)
+    ));
+    const updatedExpandedPost = expandedPost?.id === postId
+      ? mapLikes(expandedPost)
+      : undefined;
 
-  dispatch(setPosts(updated));
-
-  if (expandedPost && expandedPost.id === comment.postId) {
-    dispatch(setExpandedPost(mapComments(expandedPost)));
+    return { posts: updated, expandedPost: updatedExpandedPost };
   }
-};
+);
+
+const addComment = createAsyncThunk(
+  ActionType.COMMENT,
+  async (request, { getState, extra: { services } }) => {
+    const { id } = await services.comment.addComment(request);
+    const comment = await services.comment.getComment(id);
+
+    const mapComments = post => ({
+      ...post,
+      commentCount: Number(post.commentCount) + 1,
+      comments: [...(post.comments || []), comment] // comment is taken from the current closure
+    });
+
+    const {
+      posts: { posts, expandedPost }
+    } = getState();
+    const updated = posts.map(post => (
+      post.id !== comment.postId ? post : mapComments(post)
+    ));
+
+    const updatedExpandedPost = expandedPost?.id === comment.postId
+      ? mapComments(expandedPost)
+      : undefined;
+
+    return { posts: updated, expandedPost: updatedExpandedPost };
+  }
+);
 
 export {
-  setPosts,
-  addMorePosts,
-  addPost,
-  setExpandedPost,
   loadPosts,
   loadMorePosts,
   applyPost,
