@@ -37,7 +37,8 @@ rules:
     - error
     - 2
   react/function-component-definition:
-    - off
+    - 2
+    - namedComponents: arrow-function
   react/jsx-props-no-spreading:
     - off
   jsx-a11y/no-static-element-interactions:

@@ -58,7 +58,7 @@ const Routing = () => {
           <Route path={AppRoute.ROOT} element={<PrivateRoute component={ThreadPage} />} />
           <Route path={AppRoute.PROFILE} element={<PrivateRoute component={ProfilePage} />} />
           <Route path={AppRoute.SHARE_$POSTHASH} element={<PrivateRoute component={SharedPostPage} />} />
-          <Route path={AppRoute.ANY} exact element={<NotFoundPage />} />
+          <Route path={AppRoute.ANY} element={<NotFoundPage />} />
         </Routes>
       </main>
       <Notifications onPostApply={handlePostApply} user={user} />

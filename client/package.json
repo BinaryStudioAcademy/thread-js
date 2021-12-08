@@ -2,8 +2,8 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": "16.x.x",
-    "npm": "8.x.x"
+    "node": ">=16 <17",
+    "npm": ">=8 <9"
   },
   "proxy": "http://localhost:3001/",
   "scripts": {
