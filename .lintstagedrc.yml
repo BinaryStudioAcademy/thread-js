@@ -1,4 +1,4 @@
 '*': npm run lint:editorconfig
 frontend/src/**/*.{js,jsx}: npm run lint:client:js
-frontend/src/**/*.{scss}: npm run lint:client:css
+frontend/src/**/*.scss: npm run lint:client:css
 backend/**/*.js: npm run lint:server:js
