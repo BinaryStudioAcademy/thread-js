@@ -22,7 +22,12 @@ const app = fastify({
 });
 
 const socketServer = http.Server(app);
-const io = socketIO(socketServer);
+const io = socketIO(socketServer, {
+  cors: {
+    origin: '*',
+    credentials: true
+  }
+});
 
 sequelize
   .authenticate()

@@ -1,52 +1,55 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { HttpError } from 'src/exceptions/exceptions';
-import { HttpCode, StorageKey } from 'src/common/enums/enums';
-import {
-  storage as storageService,
-  auth as authService
-} from 'src/services/services';
+import { HttpCode, StorageKey, ExceptionMessage } from 'src/common/enums/enums';
 
-const ActionType = {
-  SET_USER: 'profile/set-user'
-};
+import { ActionType } from './common';
 
-const setUser = createAction(ActionType.SET_USER, user => ({
-  payload: {
-    user
+const login = createAsyncThunk(
+  ActionType.LOG_IN,
+  async (request, { extra: { services } }) => {
+    const { user, token } = await services.auth.login(request);
+
+    services.storage.setItem(StorageKey.TOKEN, token);
+
+    return user;
   }
-}));
+);
 
-const login = request => async dispatch => {
-  const { user, token } = await authService.login(request);
+const register = createAsyncThunk(
+  ActionType.REGISTER,
+  async (request, { extra: { services } }) => {
+    const { user, token } = await services.auth.registration(request);
 
-  storageService.setItem(StorageKey.TOKEN, token);
-  dispatch(setUser(user));
-};
+    services.storage.setItem(StorageKey.TOKEN, token);
 
-const register = request => async dispatch => {
-  const { user, token } = await authService.registration(request);
+    return user;
+  }
+);
 
-  storageService.setItem(StorageKey.TOKEN, token);
-  dispatch(setUser(user));
-};
+const logout = createAsyncThunk(
+  ActionType.LOG_OUT,
+  (_request, { extra: { services } }) => {
+    services.storage.removeItem(StorageKey.TOKEN);
 
-const logout = () => dispatch => {
-  storageService.removeItem(StorageKey.TOKEN);
-  dispatch(setUser(null));
-};
+    return null;
+  }
+);
 
-const loadCurrentUser = () => async dispatch => {
-  try {
-    const user = await authService.getCurrentUser();
+const loadCurrentUser = createAsyncThunk(
+  ActionType.LOG_IN,
+  async (_request, { dispatch, rejectWithValue, extra: { services } }) => {
+    try {
+      return await services.auth.getCurrentUser();
+    } catch (err) {
+      const isHttpError = err instanceof HttpError;
 
-    dispatch(setUser(user));
-  } catch (err) {
-    const isHttpError = err instanceof HttpError;
+      if (isHttpError && err.status === HttpCode.UNAUTHORIZED) {
+        dispatch(logout());
+      }
 
-    if (isHttpError && err.status === HttpCode.UNAUTHORIZED) {
-      dispatch(logout());
+      return rejectWithValue(err?.message ?? ExceptionMessage.UNKNOWN_ERROR);
     }
   }
-};
+);
 
-export { setUser, login, register, logout, loadCurrentUser };
+export { login, register, logout, loadCurrentUser };

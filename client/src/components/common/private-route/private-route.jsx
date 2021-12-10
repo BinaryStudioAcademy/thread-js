@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { AppRoute } from 'src/common/enums/enums';
@@ -12,18 +12,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   const hasUser = Boolean(user);
 
-  return (
-    <Route
-      {...rest}
-      render={props => (hasUser ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: AppRoute.LOGIN, state: { from: props.location } }}
-        />
-      ))}
-    />
-  );
+  return hasUser
+    ? <Component {...rest} />
+    : <Navigate to={{ pathname: AppRoute.LOGIN, state: { from: rest.location } }} />;
 };
 
 PrivateRoute.propTypes = {

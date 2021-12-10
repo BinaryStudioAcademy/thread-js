@@ -25,8 +25,7 @@ const Button = ({
 }) => {
   const hasIcon = Boolean(iconName);
 
-  // eslint-disable-next-line react/prop-types
-  const Btn = ({ children: childrenIcon }) => (
+  return (
     <ButtonUI
       className={className}
       onClick={onClick}
@@ -40,18 +39,10 @@ const Button = ({
       disabled={isDisabled}
     >
       <>
-        {childrenIcon}
+        {hasIcon && <Icon name={iconName} size={iconSize} />}
         {children}
       </>
     </ButtonUI>
-  );
-
-  return hasIcon ? (
-    <Btn>
-      <Icon name={iconName} size={iconSize} />
-    </Btn>
-  ) : (
-    <Btn />
   );
 };
 

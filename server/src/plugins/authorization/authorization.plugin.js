@@ -19,7 +19,7 @@ const authorization = fp((fastify, { routesWhiteList, services }, done) => {
         return;
       }
 
-      const [, token] = request.headers?.authorization?.split(' ');
+      const [, token] = request.headers?.authorization?.split(' ') ?? [];
       const { user, auth } = services;
       const { id } = await auth.verifyToken(token);
 
