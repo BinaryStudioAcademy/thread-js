@@ -1,30 +1,29 @@
 import { AuthApiPath } from '../../common/enums/enums';
-import {
-  authentication as authenticationMiddleware,
-  registration as registrationMiddleware,
-  jwt as jwtMiddleware
-} from '../../middlewares/middlewares';
+import { getErrorStatusCode } from '../../helpers/http/get-status-code.helper';
 
-const initAuth = (Router, services) => {
-  const { auth: authService, user: userService } = services;
-  const router = Router();
+const initAuth = (router, opts, done) => {
+  const { auth: authService, user: userService } = opts.services;
 
-  // user added to the request (req.user) in a strategy, see passport config
+  // user added to the request (req.user) in auth plugin, authorization.plugin.js
   router
-    .post(AuthApiPath.LOGIN, authenticationMiddleware, (req, res, next) => authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next))
-    .post(AuthApiPath.REGISTER, registrationMiddleware, (req, res, next) => authService
-      .register(req.user)
-      .then(data => res.send(data))
-      .catch(next))
-    .get(AuthApiPath.USER, jwtMiddleware, (req, res, next) => userService
-      .getUserById(req.user.id)
-      .then(data => res.send(data))
-      .catch(next));
+    .post(AuthApiPath.LOGIN, async (req, res) => {
+      try {
+        const user = await authService.verifyLoginCredentials(req.body);
+        return await authService.login(user);
+      } catch (err) {
+        return res.status(getErrorStatusCode(err)).send(err);
+      }
+    })
+    .post(AuthApiPath.REGISTER, async (req, res) => {
+      try {
+        return await authService.register(req.body);
+      } catch (err) {
+        return res.status(getErrorStatusCode(err)).send(err);
+      }
+    })
+    .get(AuthApiPath.USER, req => userService.getUserById(req.user.id));
 
-  return router;
+  done();
 };
 
 export { initAuth };
