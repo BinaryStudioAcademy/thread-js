@@ -1,63 +1,65 @@
-import fs from 'fs';
-import express, { Router } from 'express';
-import path from 'path';
-import passport from 'passport';
+import fastify from 'fastify';
+import cors from 'fastify-cors';
+import fastifyStatic from 'fastify-static';
 import http from 'http';
+import path from 'path';
+import qs from 'qs';
 import socketIO from 'socket.io';
-import cors from 'cors';
 import { Model } from 'objection';
 
-import { WHITE_ROUTES } from './common/constants/constants';
+import { initApi } from './api/api';
 import { ENV } from './common/enums/enums';
 import { knex } from './data/db/connection';
-import { initApi } from './api/api';
-import {
-  authorization as authorizationMiddleware,
-  errorHandler as errorHandlerMiddleware,
-  socketInjector as socketInjectorMiddleware
-} from './middlewares/middlewares';
+import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
+import * as services from './services/services';
 import { handlers as socketHandlers } from './socket/handlers';
-import './config/passport';
 
-const app = express();
+const app = fastify({
+  logger: {
+    prettyPrint: {
+      ignore: 'pid,hostname'
+    }
+  },
+  querystringParser: str => qs.parse(str, { comma: true })
+});
+
 const socketServer = http.Server(app);
-const io = socketIO(socketServer);
+const io = socketIO(socketServer, {
+  cors: {
+    origin: '*',
+    credentials: true
+  }
+});
 
 Model.knex(knex);
 /* sequelize
   .authenticate()
   .then(() => {
-    console.info('Connection has been established successfully.');
+    app.log.info('DB connection has been established successfully.');
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    app.log.error(`Unable to connect to the database: ${err}`);
   }); */
 
 io.on('connection', socketHandlers);
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
+app.register(cors);
+app.register(socketInjectorPlugin, { io });
+app.register(initApi, { services, prefix: ENV.APP.API_PATH });
 
-app.use(socketInjectorMiddleware(io));
+const staticPath = path.join(`${__dirname}/../client/build`);
+app.register(fastifyStatic, { root: staticPath, prefix: '/' });
 
-app.use(ENV.APP.API_PATH, authorizationMiddleware(WHITE_ROUTES));
+const startServer = async () => {
+  try {
+    await app.listen(ENV.APP.PORT);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+startServer();
 
-app.use(ENV.APP.API_PATH, initApi(Router));
-
-const staticPath = path.resolve(`${__dirname}/../client/build`);
-app.use(express.static(staticPath));
-
-app.get('*', (_req, res) => {
-  res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
-  res.end();
-});
-
-app.use(errorHandlerMiddleware);
-app.listen(ENV.APP.PORT, () => {
-  console.info(`Server listening on port ${ENV.APP.PORT}!`);
-});
 app.on('close', async () => {
   await knex.destroy();
 });

@@ -2,43 +2,43 @@
   "name": "server",
   "private": true,
   "engines": {
-    "node": "14.x.x",
-    "npm": "6.x.x"
+    "node": ">=16 <17",
+    "npm": ">=8 <9"
   },
   "scripts": {
-    "start": "nodemon src/server.js --exec babel-node",
+    "start": "nodemon src/server.js --exec ./node_modules/.bin/babel-node",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "0.24.0",
     "bcrypt": "5.0.1",
-    "body-parser": "1.19.0",
-    "cors": "2.8.5",
-    "dotenv": "9.0.0",
-    "express": "4.17.1",
+    "dotenv": "10.0.0",
+    "fastify": "3.24.1",
+    "fastify-cors": "6.0.2",
+    "fastify-multer": "2.0.2",
+    "fastify-plugin": "3.0.0",
+    "fastify-static": "4.5.0",
     "form-data": "4.0.0",
     "jsonwebtoken": "8.5.1",
     "knex": "0.95.14",
-    "multer": "1.4.2",
-    "nodemon": "2.0.7",
     "objection": "3.0.0",
-    "passport": "0.4.1",
-    "passport-jwt": "4.0.0",
-    "passport-local": "1.0.0",
+    "nodemon": "2.0.15",
     "path": "0.12.7",
-    "pg": "8.6.0",
-    "pg-hstore": "2.3.3",
+    "pg": "8.7.1",
+    "pg-hstore": "2.3.4",
+    "qs": "6.10.2",
     "sequelize": "6.6.2",
     "sequelize-cli": "6.2.0",
-    "socket.io": "2.3.0"
+    "socket.io": "4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.14.0",
-    "@babel/node": "7.13.13",
+    "@babel/core": "7.16.0",
+    "@babel/node": "7.16.0",
     "@babel/polyfill": "7.12.1",
-    "@babel/preset-env": "7.14.1",
-    "@babel/register": "7.13.16",
-    "eslint-config-airbnb-base": "14.2.1"
+    "@babel/preset-env": "7.16.4",
+    "@babel/register": "7.16.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "pino-pretty": "7.2.0"
   }
 }

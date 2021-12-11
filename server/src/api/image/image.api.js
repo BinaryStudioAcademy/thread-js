@@ -1,16 +1,14 @@
-import { ImagesApiPath } from '../../common/enums/enums';
-import { image as imageMiddleware } from '../../middlewares/middlewares';
+import { ControllerHook, ImagesApiPath } from '../../common/enums/enums';
+import { upload } from '../../middlewares/middlewares';
 
-const initImage = (Router, services) => {
-  const { image: imageService } = services;
-  const router = Router();
+const initImage = (router, opts, done) => {
+  const { image: imageService } = opts.services;
+  router.register(upload.contentParser);
 
-  router.post(ImagesApiPath.ROOT, imageMiddleware, (req, res, next) => imageService
-    .upload(req.file)
-    .then(image => res.send(image))
-    .catch(next));
+  router.post(ImagesApiPath.ROOT, { [ControllerHook.PRE_HANDLER]: upload.single('image') }, req => imageService
+    .upload(req.file));
 
-  return router;
+  done();
 };
 
 export { initImage };

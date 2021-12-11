@@ -1,4 +1,4 @@
-# BSA 2020 JS - mini-project Thread
+# BSA 2021 JS - mini-project Thread
 
 ## Описание
 [**Thread**](git@github.com:BinaryStudioAcademy/thread-js.git) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с готовой архитектурой и структурой, подключенным базовым стеком технологий и стартовым функционалом, предназначенный для самостоятельной практики студентов.
@@ -13,7 +13,7 @@
 Здесь перечислены основные фреймворки и библиотеки, используемые в проекте. Полный список используемых технологий для каждой части проекта находится в файлах package.json в папках client и server.
 
 ### Common
-1. ES2020
+1. ES2021
 2. [Git](https://git-scm.com/book/ru/v1/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git "Git")
 3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
 4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token "JWT")
@@ -31,15 +31,14 @@
 
 ### Backend
 1. [Node.js](https://nodejs.org/en/ "Node.js")
-2. [Express](https://expressjs.com/ru/guide/routing.html "Express")
-3. [Passport.js](http://www.passportjs.org/docs/ "Passport.js")
-4. [Sequelize](http://docs.sequelizejs.com/ "Sequelize")
-5. [axios](https://www.npmjs.com/package/axios "axios")
-6. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
-7. [Babel](https://babeljs.io/docs/en/index.html "Babel")
-8. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
-9. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
-10. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
+2. [Fastify](https://www.fastify.io/docs/v3.24.x/ "Fastify")
+3. [Sequelize](http://docs.sequelizejs.com/ "Sequelize")
+4. [axios](https://www.npmjs.com/package/axios "axios")
+5. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
+6. [Babel](https://babeljs.io/docs/en/index.html "Babel")
+7. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
+8. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
+9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
 
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")

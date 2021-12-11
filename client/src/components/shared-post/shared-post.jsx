@@ -1,25 +1,24 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { threadActionCreator } from 'src/store/actions';
 import { AppRoute } from 'src/common/enums/enums';
-import { routeMatchType } from 'src/common/prop-types/prop-types';
 
-const SharedPost = ({ match }) => {
+const SharedPost = () => {
   const dispatch = useDispatch();
   const handleToggleExpandedPost = id => {
     dispatch(threadActionCreator.toggleExpandedPost(id));
   };
+  const params = useParams();
 
   React.useEffect(() => {
-    handleToggleExpandedPost(match.params.postHash);
+    const { postHash = '' } = params;
+    if (postHash) {
+      handleToggleExpandedPost(postHash);
+    }
   });
 
-  return <Redirect to={AppRoute.ROOT} />;
-};
-
-SharedPost.propTypes = {
-  match: routeMatchType.isRequired
+  return <Navigate to={AppRoute.ROOT} />;
 };
 
 export default SharedPost;

@@ -18,7 +18,7 @@ const Header = ({ user, onUserLogout }) => (
     <Grid centered container columns="2">
       <Grid.Column>
         {user && (
-          <NavLink exact to={AppRoute.ROOT}>
+          <NavLink to={AppRoute.ROOT}>
             <div className={styles.userWrapper}>
               <Image
                 circular
@@ -33,12 +33,7 @@ const Header = ({ user, onUserLogout }) => (
         )}
       </Grid.Column>
       <Grid.Column textAlign="right">
-        <NavLink
-          exact
-          activeClassName="active"
-          to={AppRoute.PROFILE}
-          className={styles.menuBtn}
-        >
+        <NavLink to={AppRoute.PROFILE} className={styles.menuBtn}>
           <Icon name={IconName.USER_CIRCLE} size={IconSize.LARGE} />
         </NavLink>
         <Button

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StorageKey, AppRoute } from 'src/common/enums/enums';
 import { storage } from 'src/services/services';
@@ -52,13 +52,14 @@ const Routing = () => {
         </header>
       )}
       <main className="fill">
-        <Switch>
-          <PublicRoute exact path={[AppRoute.LOGIN, AppRoute.REGISTRATION]} component={SignPage} />
-          <PrivateRoute exact path={AppRoute.ROOT} component={ThreadPage} />
-          <PrivateRoute exact path={AppRoute.PROFILE} component={ProfilePage} />
-          <PrivateRoute path={AppRoute.SHARE_$POSTHASH} component={SharedPostPage} />
-          <Route path={AppRoute.ANY} exact component={NotFoundPage} />
-        </Switch>
+        <Routes>
+          <Route path={AppRoute.LOGIN} element={<PublicRoute component={SignPage} />} />
+          <Route path={AppRoute.REGISTRATION} element={<PublicRoute component={SignPage} />} />
+          <Route path={AppRoute.ROOT} element={<PrivateRoute component={ThreadPage} />} />
+          <Route path={AppRoute.PROFILE} element={<PrivateRoute component={ProfilePage} />} />
+          <Route path={AppRoute.SHARE_$POSTHASH} element={<PrivateRoute component={SharedPostPage} />} />
+          <Route path={AppRoute.ANY} element={<NotFoundPage />} />
+        </Routes>
       </main>
       <Notifications onPostApply={handlePostApply} user={user} />
     </div>
