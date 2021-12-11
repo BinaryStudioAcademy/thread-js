@@ -1,4 +1,4 @@
-import multer from 'multer';
+import multer from 'fastify-multer';
 import { ENV } from '../../common/enums/enums';
 
 const storage = multer.memoryStorage();
@@ -10,6 +10,4 @@ const upload = multer({
   }
 });
 
-const image = upload.single('image');
-
-export { image };
+export { upload };

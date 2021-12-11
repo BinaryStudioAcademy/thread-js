@@ -1,41 +1,52 @@
+import { WHITE_ROUTES } from '../common/constants/api.constants';
 import { ApiPath } from '../common/enums/enums';
-import { auth, user, comment, post, image } from '../services/services';
+import { authorization as authorizationPlugin } from '../plugins/plugins';
 import { initAuth } from './auth/auth.api';
-import { initPost } from './post/post.api';
 import { initComment } from './comment/comment.api';
 import { initImage } from './image/image.api';
+import { initPost } from './post/post.api';
 
 // register all routes
-const initApi = Router => {
-  const apiRouter = Router();
+const initApi = (
+  fastify,
+  { services: { auth, user, comment, post, image } },
+  done
+) => {
+  fastify.register(authorizationPlugin, {
+    services: {
+      user,
+      auth
+    },
+    routesWhiteList: WHITE_ROUTES
+  });
 
-  apiRouter.use(
-    ApiPath.AUTH,
-    initAuth(Router, {
+  fastify.register(initAuth, {
+    services: {
       auth,
       user
-    })
-  );
-  apiRouter.use(
-    ApiPath.POSTS,
-    initPost(Router, {
+    },
+    prefix: ApiPath.AUTH
+  });
+  fastify.register(initPost, {
+    services: {
       post
-    })
-  );
-  apiRouter.use(
-    ApiPath.COMMENTS,
-    initComment(Router, {
+    },
+    prefix: ApiPath.POSTS
+  });
+  fastify.register(initComment, {
+    services: {
       comment
-    })
-  );
-  apiRouter.use(
-    ApiPath.IMAGES,
-    initImage(Router, {
+    },
+    prefix: ApiPath.COMMENTS
+  });
+  fastify.register(initImage, {
+    services: {
       image
-    })
-  );
+    },
+    prefix: ApiPath.IMAGES
+  });
 
-  return apiRouter;
+  done();
 };
 
 export { initApi };
