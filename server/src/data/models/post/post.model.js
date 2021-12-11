@@ -1,20 +1,23 @@
 import { Model } from 'objection';
 
+import { DbTableName } from '../../../common/enums/enums';
 import BaseModel from '../base/base.model';
+import CommentModel from '../comment/comment.model';
 import ImageModel from '../image/image.model';
+import PostReactionModel from '../post-reaction/post-reaction.model';
 import UserModel from '../user/user.model';
 
 class Post extends BaseModel {
   static get tableName() {
-    return 'posts';
+    return DbTableName.POSTS;
   }
 
   static get jsonSchema() {
-    const baseSchema = super.jsonSchema();
+    const baseSchema = super.jsonSchema;
 
     return {
       type: baseSchema.type,
-      required: baseSchema.required.concat(['body', 'imageId', 'userId']),
+      required: ['body', 'userId'],
       properties: {
         ...baseSchema.properties,
         body: { type: 'string' },
@@ -26,22 +29,38 @@ class Post extends BaseModel {
 
   static get relationMappings() {
     return {
+      comments: {
+        relation: Model.HasManyRelation,
+        modelClass: CommentModel,
+        join: {
+          from: `${DbTableName.POSTS}.id`,
+          to: `${DbTableName.COMMENTS}.post_id`
+        }
+      },
       image: {
         relation: Model.HasOneRelation,
         modelClass: ImageModel,
         join: {
-          from: 'posts.image_id',
+          from: `${DbTableName.POSTS}.image_id`,
           filter: query => query.select('id', 'link'),
-          to: 'images.id'
+          to: `${DbTableName.IMAGES}.id`
+        }
+      },
+      postReactions: {
+        relation: Model.HasManyRelation,
+        modelClass: PostReactionModel,
+        join: {
+          from: `${DbTableName.POSTS}.id`,
+          to: `${DbTableName.POST_REACTIONS}.post_id`
         }
       },
       user: {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
-        filter: query => query.select('id', 'username'),
+        filter: query => query.select('id', 'username', 'image_id'),
         join: {
-          from: 'posts.user_id',
-          to: 'users.id'
+          from: `${DbTableName.POSTS}.user_id`,
+          to: `${DbTableName.USERS}.id`
         }
       }
     };

@@ -26,13 +26,13 @@ const usersSeed = [{
 
 // Do not add more images than the number of users.
 const userImagesSeed = [{
-  link: 'https://i.imgur.com/IZZYZdA.jpg'
+  link: 'https://i.imgur.com/RS2wGch.png'
 }, {
-  link: 'https://i.imgur.com/mYjQGZX.jpg'
+  link: 'https://i.imgur.com/7V9tqy6.png'
 }, {
-  link: 'https://i.imgur.com/oQLw1fP.jpg'
+  link: 'https://i.imgur.com/PhlZpUd.png'
 }, {
-  link: 'https://i.imgur.com/J8uoSoI.jpg'
+  link: 'https://i.imgur.com/3KHckHc.png'
 }];
 
 export {

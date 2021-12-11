@@ -32,14 +32,6 @@ const io = socketIO(socketServer, {
 });
 
 Model.knex(knex);
-/* sequelize
-  .authenticate()
-  .then(() => {
-    app.log.info('DB connection has been established successfully.');
-  })
-  .catch(err => {
-    app.log.error(`Unable to connect to the database: ${err}`);
-  }); */
 
 io.on('connection', socketHandlers);
 
@@ -59,9 +51,5 @@ const startServer = async () => {
   }
 };
 startServer();
-
-app.on('close', async () => {
-  await knex.destroy();
-});
 
 socketServer.listen(ENV.APP.SOCKET_PORT);

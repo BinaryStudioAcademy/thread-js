@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 const postsSeed = [
   'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
   'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
@@ -15,7 +13,7 @@ const postsSeed = [
 
 // Do not add more images than the number of posts.
 const postImagesSeed = [{
-  link: 'https://i.imgur.com/vrUT9gK.jpg'
+  link: 'https://i.imgur.com/HwBQh72.jpg'
 }];
 
 export {

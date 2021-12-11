@@ -1,16 +1,17 @@
+import { DbTableName } from '../../../common/enums/enums';
 import BaseModel from '../base/base.model';
 
 class Image extends BaseModel {
   static get tableName() {
-    return 'images';
+    return DbTableName.IMAGES;
   }
 
   static get jsonSchema() {
-    const baseSchema = super.jsonSchema();
+    const baseSchema = super.jsonSchema;
 
     return {
       type: baseSchema.type,
-      required: baseSchema.required.concat(['link']),
+      required: ['link'],
       properties: {
         ...baseSchema.properties,
         link: { type: 'string' }

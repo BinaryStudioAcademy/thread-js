@@ -18,3 +18,22 @@ rules:
       - info
   prefer-promise-reject-errors:
     - off
+  import/no-import-module-exports:
+    - off
+  import/no-relative-packages:
+    - off
+
+overrides:
+  - files:
+      - ./src/data/seeds/**/*
+      - ./src/data/seed-data/**/*
+    rules:
+      no-console:
+        - off
+      max-len:
+        - off
+  - files:
+      - ./src/data/models/**/*
+    rules:
+      import/no-cycle:
+        - off

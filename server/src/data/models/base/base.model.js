@@ -8,11 +8,10 @@ class BaseModel extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['id', 'createdAt', 'updatedAt'],
       properties: {
         id: { type: 'integer' },
-        createdAt: { type: 'date' },
-        updatedAt: { type: 'date' }
+        createdAt: { type: 'string' },
+        updatedAt: { type: 'string' }
       }
     };
   }

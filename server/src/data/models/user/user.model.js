@@ -1,19 +1,20 @@
 import { Model } from 'objection';
 
+import { DbTableName } from '../../../common/enums/enums';
 import BaseModel from '../base/base.model';
 import ImageModel from '../image/image.model';
 
 class User extends BaseModel {
   static get tableName() {
-    return 'users';
+    return DbTableName.USERS;
   }
 
   static get jsonSchema() {
-    const baseSchema = super.jsonSchema();
+    const baseSchema = super.jsonSchema;
 
     return {
       type: baseSchema.type,
-      required: baseSchema.required.concat(['email', 'username', 'password', 'imageId']),
+      required: ['email', 'username', 'password'],
       properties: {
         ...baseSchema.properties,
         email: { type: 'string' },
@@ -31,8 +32,8 @@ class User extends BaseModel {
         modelClass: ImageModel,
         filter: query => query.select('id', 'link'),
         join: {
-          from: 'users.image_id',
-          to: 'images.id'
+          from: `${DbTableName.USERS}.image_id`,
+          to: `${DbTableName.IMAGES}.id`
         }
       }
     };
