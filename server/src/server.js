@@ -6,7 +6,7 @@ import path from 'path';
 import qs from 'qs';
 import socketIO from 'socket.io';
 import { initApi } from './api/api';
-import { ENV } from './common/enums/enums';
+import { ENV, ExitCode } from './common/enums/enums';
 import { sequelize } from './data/db/connection';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
 import * as services from './services/services';
@@ -52,7 +52,7 @@ const startServer = async () => {
     await app.listen(ENV.APP.PORT);
   } catch (err) {
     app.log.error(err);
-    process.exit(1);
+    process.exit(ExitCode.ERROR);
   }
 };
 startServer();
