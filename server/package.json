@@ -9,7 +9,6 @@
     "migrate:make": "npx knex --esm migrate:make",
     "migrate:rollback": "npx knex --esm migrate:rollback",
     "migrate:run": "npx knex --esm migrate:latest",
-    "seed:run": "npx knex --esm seed:run",
     "start": "nodemon src/server.js --exec ./node_modules/.bin/babel-node",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js"

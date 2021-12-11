@@ -23,9 +23,6 @@ const knexConfig = {
     directory: './src/data/migrations',
     tableName: 'knex_migrations'
   },
-  seeds: {
-    directory: './src/data/seeds'
-  },
   debug
 };
 

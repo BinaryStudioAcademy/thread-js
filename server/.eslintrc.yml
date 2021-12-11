@@ -25,11 +25,8 @@ rules:
 
 overrides:
   - files:
-      - ./src/data/seeds/**/*
       - ./src/data/seed-data/**/*
     rules:
-      no-console:
-        - off
       max-len:
         - off
   - files:
