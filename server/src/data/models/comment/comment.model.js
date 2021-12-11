@@ -1,11 +1,11 @@
 import { Model } from 'objection';
 
 import { DbTableName } from '../../../common/enums/enums';
-import BaseModel from '../base/base.model';
+import AbstractModel from '../abstract/abstract.model';
 import PostModel from '../post/post.model';
 import UserModel from '../user/user.model';
 
-class Comment extends BaseModel {
+class Comment extends AbstractModel {
   static get tableName() {
     return DbTableName.COMMENTS;
   }

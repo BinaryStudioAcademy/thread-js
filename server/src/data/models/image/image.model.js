@@ -1,7 +1,7 @@
 import { DbTableName } from '../../../common/enums/enums';
-import BaseModel from '../base/base.model';
+import AbstractModel from '../abstract/abstract.model';
 
-class Image extends BaseModel {
+class Image extends AbstractModel {
   static get tableName() {
     return DbTableName.IMAGES;
   }

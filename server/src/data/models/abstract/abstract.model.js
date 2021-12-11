@@ -1,6 +1,6 @@
 import { Model, snakeCaseMappers } from 'objection';
 
-class BaseModel extends Model {
+class Abstract extends Model {
   static get columnNameMappers() {
     return snakeCaseMappers({ underscoreBetweenUppercaseLetters: true });
   }
@@ -27,4 +27,4 @@ class BaseModel extends Model {
   }
 }
 
-export default BaseModel;
+export default Abstract;

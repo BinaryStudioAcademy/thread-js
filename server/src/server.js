@@ -2,14 +2,15 @@ import fastify from 'fastify';
 import cors from 'fastify-cors';
 import fastifyStatic from 'fastify-static';
 import http from 'http';
+import Knex from 'knex';
+import { Model } from 'objection';
 import path from 'path';
 import qs from 'qs';
 import socketIO from 'socket.io';
-import { Model } from 'objection';
 
 import { initApi } from './api/api';
 import { ENV } from './common/enums/enums';
-import { knex } from './data/db/connection';
+import knexConfig from '../knexfile';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
 import * as services from './services/services';
 import { handlers as socketHandlers } from './socket/handlers';
@@ -31,6 +32,7 @@ const io = socketIO(socketServer, {
   }
 });
 
+const knex = Knex(knexConfig);
 Model.knex(knex);
 
 io.on('connection', socketHandlers);

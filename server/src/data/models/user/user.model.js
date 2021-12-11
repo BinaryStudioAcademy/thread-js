@@ -1,10 +1,10 @@
 import { Model } from 'objection';
 
 import { DbTableName } from '../../../common/enums/enums';
-import BaseModel from '../base/base.model';
+import AbstractModel from '../abstract/abstract.model';
 import ImageModel from '../image/image.model';
 
-class User extends BaseModel {
+class User extends AbstractModel {
   static get tableName() {
     return DbTableName.USERS;
   }
