@@ -31,15 +31,14 @@
 
 ### Backend
 1. [Node.js](https://nodejs.org/en/ "Node.js")
-2. [Express](https://expressjs.com/ru/guide/routing.html "Express")
-3. [Passport.js](http://www.passportjs.org/docs/ "Passport.js")
-4. [Sequelize](http://docs.sequelizejs.com/ "Sequelize")
-5. [axios](https://www.npmjs.com/package/axios "axios")
-6. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
-7. [Babel](https://babeljs.io/docs/en/index.html "Babel")
-8. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
-9. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
-10. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
+2. [Fastify](https://www.fastify.io/docs/v3.24.x/ "Fastify")
+3. [Sequelize](http://docs.sequelizejs.com/ "Sequelize")
+4. [axios](https://www.npmjs.com/package/axios "axios")
+5. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
+6. [Babel](https://babeljs.io/docs/en/index.html "Babel")
+7. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
+8. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
+9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
 
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
