@@ -8,9 +8,9 @@ import path from 'path';
 import qs from 'qs';
 import socketIO from 'socket.io';
 
-import { initApi } from './api/api';
-import { ENV } from './common/enums/enums';
 import knexConfig from '../knexfile';
+import { initApi } from './api/api';
+import { ENV, ExitCode } from './common/enums/enums';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
 import * as services from './services/services';
 import { handlers as socketHandlers } from './socket/handlers';
@@ -49,7 +49,7 @@ const startServer = async () => {
     await app.listen(ENV.APP.PORT);
   } catch (err) {
     app.log.error(err);
-    process.exit(1);
+    process.exit(ExitCode.ERROR);
   }
 };
 startServer();
