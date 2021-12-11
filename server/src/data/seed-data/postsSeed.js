@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
-const now = new Date();
 
-export const postsSeed = [
+const postsSeed = [
   'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
   'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
   'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
@@ -12,18 +11,14 @@ export const postsSeed = [
   'dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae',
   'consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas',
   'quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error'
-].map(body => ({
-  body,
-  createdAt: now,
-  updatedAt: now
-}));
+].map(body => ({ body }));
 
 // Do not add more images than the number of posts.
-export const postImagesSeed = [{
-  link: 'https://i.imgur.com/4riVa24.png',
-  deleteHash: 'uMgQ2392bVx4t6y'
-}].map(image => ({
-  ...image,
-  createdAt: now,
-  updatedAt: now
-}));
+const postImagesSeed = [{
+  link: 'https://i.imgur.com/vrUT9gK.jpg'
+}];
+
+export {
+  postImagesSeed,
+  postsSeed
+};

@@ -1,21 +1,30 @@
-import { sequelize } from '../../db/connection';
+// import { sequelize } from '../../db/connection';
 import { Abstract } from '../abstract/abstract.repository';
 
-const likeCase = bool => `CASE WHEN "postReactions"."isLike" = ${bool} THEN 1 ELSE 0 END`;
+const getReactionSelectQuery = bool => `
+  (SELECT COUNT(*)
+  FROM "post_reactions" as "reaction"
+  WHERE "post"."id" = "reaction"."post_id" AND "reaction"."is_like" = ${bool})
+`;
+const getCommentCountQuery = () => `
+  (SELECT COUNT(*)
+  FROM "comments" as "comment"
+  WHERE "post"."id" = "comment"."post_id") as commentCount
+`;
 
 class Post extends Abstract {
   constructor({
-    postModel,
-    commentModel,
-    userModel,
-    imageModel,
-    postReactionModel
+    postModel// ,
+    // commentModel,
+    // userModel,
+    // imageModel,
+    // postReactionModel
   }) {
     super(postModel);
-    this._commentModel = commentModel;
-    this._userModel = userModel;
-    this._imageModel = imageModel;
-    this._postReactionModel = postReactionModel;
+    // this._commentModel = commentModel;
+    // this._userModel = userModel;
+    // this._imageModel = imageModel;
+    // this._postReactionModel = postReactionModel;
   }
 
   async getPosts(filter) {
@@ -30,6 +39,18 @@ class Post extends Abstract {
       Object.assign(where, { userId });
     }
 
+    return this.model.query()
+      .select(
+        'posts.*',
+        `${getCommentCountQuery()}`,
+        `${getReactionSelectQuery(true)} as likeCount`,
+        `${getReactionSelectQuery(false)} as dislikeCount`
+      )
+      .where(where)
+      .withGraphFetched(['image, user.image, postReaction'])
+      .orderBy('createdAt', 'desc')
+      .page(offset, limit);
+    /*
     return this.model.findAll({
       where,
       attributes: {
@@ -66,11 +87,21 @@ class Post extends Abstract {
       order: [['createdAt', 'DESC']],
       offset,
       limit
-    });
+    }); */
   }
 
   getPostById(id) {
-    return this.model.findOne({
+    return this.model.query()
+      .select(
+        'posts.*',
+        `${getCommentCountQuery()}`,
+        `${getReactionSelectQuery(true)} as likeCount`,
+        `${getReactionSelectQuery(false)} as dislikeCount`
+      )
+      .where({ id })
+      .withGraphFetched(['comment.user.image, user.image, image, postReaction']);
+
+    /* return this.model.findOne({
       group: [
         'post.id',
         'comments.id',
@@ -115,7 +146,7 @@ class Post extends Abstract {
         model: this._postReactionModel,
         attributes: []
       }]
-    });
+    }); */
   }
 }
 

@@ -1,13 +1,17 @@
 import { Abstract } from '../abstract/abstract.repository';
 
 class PostReaction extends Abstract {
-  constructor({ postReactionModel, postModel }) {
+  constructor({ postReactionModel }) {
     super(postReactionModel);
-    this._postModel = postModel;
+    // this._postModel = postModel;
   }
 
   getPostReaction(userId, postId) {
-    return this.model.findOne({
+    return this.model.query()
+      .select()
+      .where({ userId, postId })
+      .withGraphFetched('[post]');
+    /* return this.model.findOne({
       group: ['postReaction.id', 'post.id'],
       where: { userId, postId },
       include: [
@@ -16,7 +20,7 @@ class PostReaction extends Abstract {
           attributes: ['id', 'userId']
         }
       ]
-    });
+    }); */
   }
 }
 

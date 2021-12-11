@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-const now = new Date();
 
 export default [
   'laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium',
@@ -30,8 +29,4 @@ export default [
   'incidunt sapiente eaque dolor eos\nad est molestias\nquas sit et nihil exercitationem at cumque ullam\nnihil magnam et',
   'nisi vel quas ut laborum ratione\nrerum magni eum\nunde et voluptatem saepe\nvoluptas corporis modi amet ipsam eos saepe porro',
   'voluptatem repellendus quo alias at laudantium\nmollitia quidem esse\ntemporibus consequuntur vitae rerum illum\nid corporis sit id'
-].map(body => ({
-  body,
-  createdAt: now,
-  updatedAt: now
-}));
+].map(body => ({ body }));

@@ -1,4 +1,4 @@
-import { ENV } from '../common/enums/enums';
+import { ENV } from './src/common/enums/enums';
 
 const {
   DATABASE: database,
@@ -20,10 +20,13 @@ const knexConfig = {
     password
   },
   migrations: {
-    directory: '../data/migrations',
+    directory: './src/data/migrations',
     tableName: 'knex_migrations'
+  },
+  seeds: {
+    directory: './src/data/seeds'
   },
   debug
 };
 
-export { knexConfig };
+export default knexConfig;

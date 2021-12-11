@@ -1,6 +1,9 @@
-import Sequelize from 'sequelize';
-import * as dbConfig from '../../config/config';
+// import Sequelize from 'sequelize';
+import Knex from 'knex';
+import knexConfig from '../../../knexfile';
 
-const sequelize = new Sequelize(dbConfig);
+// const sequelize = new Sequelize(dbConfig);
+const knex = Knex(knexConfig);
 
-export { sequelize };
+export { knex };
+// export { sequelize };

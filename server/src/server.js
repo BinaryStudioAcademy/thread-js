@@ -5,9 +5,11 @@ import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
 import cors from 'cors';
+import { Model } from 'objection';
+
 import { WHITE_ROUTES } from './common/constants/constants';
 import { ENV } from './common/enums/enums';
-import { sequelize } from './data/db/connection';
+import { knex } from './data/db/connection';
 import { initApi } from './api/api';
 import {
   authorization as authorizationMiddleware,
@@ -21,14 +23,15 @@ const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
 
-sequelize
+Model.knex(knex);
+/* sequelize
   .authenticate()
   .then(() => {
     console.info('Connection has been established successfully.');
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);
-  });
+  }); */
 
 io.on('connection', socketHandlers);
 
@@ -54,6 +57,9 @@ app.get('*', (_req, res) => {
 app.use(errorHandlerMiddleware);
 app.listen(ENV.APP.PORT, () => {
   console.info(`Server listening on port ${ENV.APP.PORT}!`);
+});
+app.on('close', async () => {
+  await knex.destroy();
 });
 
 socketServer.listen(ENV.APP.SOCKET_PORT);

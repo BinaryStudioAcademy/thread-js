@@ -1,14 +1,17 @@
 import { Abstract } from '../abstract/abstract.repository';
 
 class Comment extends Abstract {
-  constructor({ commentModel, userModel, imageModel }) {
+  constructor({ commentModel/* , userModel, imageModel */ }) {
     super(commentModel);
-    this._userModel = userModel;
-    this._imageModel = imageModel;
+    // this._userModel = userModel;
+    // this._imageModel = imageModel;
   }
 
   getCommentById(id) {
-    return this.model.findOne({
+    return this.model.query()
+      .findById(id)
+      .withGraphFetched('[user.image]');
+    /* return this.model.findOne({
       group: ['comment.id', 'user.id', 'user->image.id'],
       where: { id },
       include: [
@@ -21,7 +24,7 @@ class Comment extends Abstract {
           }
         }
       ]
-    });
+    }); */
   }
 }
 

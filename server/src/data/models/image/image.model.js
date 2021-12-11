@@ -1,24 +1,22 @@
-import { DataTypes } from 'sequelize';
+import BaseModel from '../base/base.model';
 
-const init = orm => {
-  const Image = orm.define(
-    'image',
-    {
-      link: {
-        allowNull: false,
-        type: DataTypes.STRING
-      },
-      deleteHash: {
-        allowNull: false,
-        type: DataTypes.STRING
-      },
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
-    },
-    {}
-  );
+class Image extends BaseModel {
+  static get tableName() {
+    return 'images';
+  }
 
-  return Image;
-};
+  static get jsonSchema() {
+    const baseSchema = super.jsonSchema();
 
-export { init };
+    return {
+      type: baseSchema.type,
+      required: baseSchema.required.concat(['link']),
+      properties: {
+        ...baseSchema.properties,
+        link: { type: 'string' }
+      }
+    };
+  }
+}
+
+export default Image;
