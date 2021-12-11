@@ -1,6 +1,6 @@
-import { usersSeed, userImagesSeed } from '../seed-data/usersSeed';
-import { postsSeed, postImagesSeed } from '../seed-data/postsSeed';
-import commentsSeed from '../seed-data/commentsSeed';
+import { usersSeed, userImagesSeed } from '../seed-data/users-seed';
+import { postsSeed, postImagesSeed } from '../seed-data/posts-seed';
+import commentsSeed from '../seed-data/comments-seed';
 
 const TableName = {
   USERS: 'users',
@@ -17,7 +17,7 @@ const ColumnName = {
   USER_ID: 'user_id'
 };
 
-const randomIndex = length => Math.floor(Math.random() * length);
+const getRandomIndex = length => Math.floor(Math.random() * length);
 const mapLinks = images => images.map(image => image.link);
 
 export function up(knex) {
@@ -44,7 +44,7 @@ export function up(knex) {
     // Add posts.
     const postsMappedSeed = postsSeed.map((post, idx) => ({
       ...post,
-      [ColumnName.USER_ID]: users[randomIndex(users.length)].id,
+      [ColumnName.USER_ID]: users[getRandomIndex(users.length)].id,
       [ColumnName.IMAGE_ID]: postImages[idx] ? postImages[idx].id : null
     }));
     const posts = await trx(TableName.POSTS).insert(postsMappedSeed).returning('*');
@@ -52,8 +52,8 @@ export function up(knex) {
     // Add comments.
     const commentsMappedSeed = commentsSeed.map(comment => ({
       ...comment,
-      [ColumnName.USER_ID]: users[randomIndex(users.length)].id,
-      [ColumnName.POST_ID]: posts[randomIndex(posts.length)].id
+      [ColumnName.USER_ID]: users[getRandomIndex(users.length)].id,
+      [ColumnName.POST_ID]: posts[getRandomIndex(posts.length)].id
     }));
     await trx(TableName.COMMENTS).insert(commentsMappedSeed);
 
@@ -61,7 +61,7 @@ export function up(knex) {
     const postReactionsMappedSeed = users.map(user => ({
       [ColumnName.IS_LIKE]: true,
       [ColumnName.USER_ID]: user.id,
-      [ColumnName.POST_ID]: posts[randomIndex(posts.length)].id
+      [ColumnName.POST_ID]: posts[getRandomIndex(posts.length)].id
     }));
     await trx(TableName.POST_REACTIONS).insert(postReactionsMappedSeed);
   });
