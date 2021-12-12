@@ -11,6 +11,7 @@ const commentType = PropTypes.exact({
   user: PropTypes.exact({
     id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
+    imageId: PropTypes.number,
     image: imageType
   }).isRequired
 });

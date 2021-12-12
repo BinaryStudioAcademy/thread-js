@@ -9,9 +9,9 @@ const postType = PropTypes.exact({
   createdAt: PropTypes.string.isRequired,
   image: imageType,
   imageId: PropTypes.number,
-  likeCount: PropTypes.string.isRequired,
-  dislikeCount: PropTypes.string.isRequired,
-  commentCount: PropTypes.string.isRequired,
+  likeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  dislikeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  commentCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   comments: PropTypes.arrayOf(commentType),
   userId: PropTypes.number.isRequired,
   user: PropTypes.exact({
