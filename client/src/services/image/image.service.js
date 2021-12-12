@@ -1,4 +1,4 @@
-import { HttpMethod } from 'src/common/enums/enums';
+import { HttpMethod } from 'common/enums/enums';
 
 class Image {
   constructor({ http }) {

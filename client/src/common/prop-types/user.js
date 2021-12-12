@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { imageType } from 'src/common/prop-types/image';
+import { imageType } from 'common/prop-types/image';
 
 const userType = PropTypes.exact({
   id: PropTypes.string.isRequired,

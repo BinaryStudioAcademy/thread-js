@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { useState, useRef } from 'hooks/hooks';
 import PropTypes from 'prop-types';
-import { IconName, IconColor } from 'src/common/enums/enums';
-import { Icon, Modal, Input } from 'src/components/common/common';
+import { IconName, IconColor } from 'common/enums/enums';
+import { Icon, Modal, Input } from 'components/common/common';
 
 import styles from './styles.module.scss';
 
 const SharedPostLink = ({ postId, close }) => {
-  const [isCopied, setIsCopied] = React.useState(false);
-  let input = React.useRef();
+  const [isCopied, setIsCopied] = useState(false);
+  let input = useRef();
 
   const copyToClipboard = ({ target }) => {
     input.select();

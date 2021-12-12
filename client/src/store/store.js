@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import * as services from 'src/services/services';
+import * as services from 'services/services';
 import { profileReducer, threadReducer } from './root-reducer';
 
 const store = configureStore({

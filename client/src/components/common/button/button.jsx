@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Button as ButtonUI } from 'semantic-ui-react';
 import {
@@ -6,8 +5,8 @@ import {
   ButtonColor,
   IconName,
   IconSize
-} from 'src/common/enums/enums';
-import { Icon } from 'src/components/common/common';
+} from 'common/enums/enums';
+import { Icon } from 'components/common/common';
 
 const Button = ({
   onClick,

@@ -1,4 +1,4 @@
-import { HttpMethod, ContentType } from 'src/common/enums/enums';
+import { HttpMethod, ContentType } from 'common/enums/enums';
 
 class Post {
   constructor({ http }) {

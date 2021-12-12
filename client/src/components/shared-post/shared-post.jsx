@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useDispatch } from 'hooks/hooks';
 import { Navigate, useParams } from 'react-router-dom';
-import { threadActionCreator } from 'src/store/actions';
-import { AppRoute } from 'src/common/enums/enums';
+import { threadActionCreator } from 'store/actions';
+import { AppRoute } from 'common/enums/enums';
 
 const SharedPost = () => {
   const dispatch = useDispatch();
@@ -11,7 +10,7 @@ const SharedPost = () => {
   };
   const params = useParams();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { postHash = '' } = params;
     if (postHash) {
       handleToggleExpandedPost(postHash);

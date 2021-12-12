@@ -1,12 +1,8 @@
 {
-    "compilerOptions": {
-        "target": "es2020",
-        "baseUrl": ".",
-        "paths": {
-            "src": ["./src/*"]
-        }
-    },
-    "exclude": [
-        "node_modules"
-    ]
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "es2020",
+    "baseUrl": "src"
+  }
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { HttpError } from 'src/exceptions/exceptions';
-import { HttpCode, StorageKey, ExceptionMessage } from 'src/common/enums/enums';
+import { HttpError } from 'exceptions/exceptions';
+import { HttpCode, StorageKey, ExceptionMessage } from 'common/enums/enums';
 
 import { ActionType } from './common';
 

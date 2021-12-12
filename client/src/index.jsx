@@ -1,18 +1,20 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import App from 'src/components/app';
-import store from 'src/store/store';
+import App from 'components/app';
+import store from 'store/store';
 
 import 'semantic-ui-css/semantic.min.css';
 import './styles/common.scss';
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+render(
+  <StrictMode>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
+  </StrictMode>,
   document.getElementById('root')
 );

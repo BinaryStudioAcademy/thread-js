@@ -1,21 +1,20 @@
-import * as React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { StorageKey, AppRoute } from 'src/common/enums/enums';
-import { storage } from 'src/services/services';
-import { profileActionCreator, threadActionCreator } from 'src/store/actions';
+import { useCallback, useEffect, useDispatch, useSelector } from 'hooks/hooks';
+import { StorageKey, AppRoute } from 'common/enums/enums';
+import { storage } from 'services/services';
+import { profileActionCreator, threadActionCreator } from 'store/actions';
 import {
   Spinner,
   Header,
   PrivateRoute,
   PublicRoute,
   Notifications
-} from 'src/components/common/common';
-import SignPage from 'src/components/sign/sign';
-import NotFoundPage from 'src/components/not-found/not-found';
-import ProfilePage from 'src/components/profile/profile';
-import SharedPostPage from 'src/components/shared-post/shared-post';
-import ThreadPage from 'src/components/thread/thread';
+} from 'components/common/common';
+import SignPage from 'components/sign/sign';
+import NotFoundPage from 'components/not-found/not-found';
+import ProfilePage from 'components/profile/profile';
+import SharedPostPage from 'components/shared-post/shared-post';
+import ThreadPage from 'components/thread/thread';
 
 const Routing = () => {
   const { user } = useSelector(state => ({
@@ -26,15 +25,15 @@ const Routing = () => {
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
   const hasUser = Boolean(user);
 
-  const handlePostApply = React.useCallback(id => (
+  const handlePostApply = useCallback(id => (
     dispatch(threadActionCreator.applyPost(id))
   ), [dispatch]);
 
-  const handleUserLogout = React.useCallback(() => (
+  const handleUserLogout = useCallback(() => (
     dispatch(profileActionCreator.logout())
   ), [dispatch]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (hasToken) {
       dispatch(profileActionCreator.loadCurrentUser());
     }

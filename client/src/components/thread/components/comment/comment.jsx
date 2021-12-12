@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { getFromNowTime } from 'src/helpers/helpers';
-import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
-import { Comment as CommentUI } from 'src/components/common/common';
-import { commentType } from 'src/common/prop-types/prop-types';
+import { getFromNowTime } from 'helpers/helpers';
+import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
+import { Comment as CommentUI } from 'components/common/common';
+import { commentType } from 'common/prop-types/prop-types';
 
 import styles from './styles.module.scss';
 

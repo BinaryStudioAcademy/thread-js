@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 import {
@@ -6,24 +6,24 @@ import {
   ButtonSize,
   ButtonColor,
   AppRoute
-} from 'src/common/enums/enums';
+} from 'common/enums/enums';
 import {
   Button,
   Form,
   Segment,
   Message,
   NavLink
-} from 'src/components/common/common';
+} from 'components/common/common';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [isLoading, setLoading] = React.useState(false);
-  const [isEmailValid, setEmailValid] = React.useState(true);
-  const [isUsernameValid, setUsernameValid] = React.useState(true);
-  const [isPasswordValid, setPasswordValid] = React.useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const [isEmailValid, setEmailValid] = useState(true);
+  const [isUsernameValid, setUsernameValid] = useState(true);
+  const [isPasswordValid, setPasswordValid] = useState(true);
 
   const emailChanged = value => {
     setEmail(value);

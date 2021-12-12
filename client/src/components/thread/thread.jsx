@@ -1,9 +1,14 @@
-import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useDispatch,
+  useSelector
+} from 'hooks/hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { threadActionCreator } from 'src/store/actions';
-import { image as imageService } from 'src/services/services';
-import { Post, Spinner, Checkbox } from 'src/components/common/common';
+import { threadActionCreator } from 'store/actions';
+import { image as imageService } from 'services/services';
+import { Post, Spinner, Checkbox } from 'components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 
 import styles from './styles.module.scss';
@@ -22,28 +27,34 @@ const Thread = () => {
     expandedPost: state.posts.expandedPost,
     userId: state.profile.user.id
   }));
-  const [sharedPostId, setSharedPostId] = React.useState(undefined);
-  const [showOwnPosts, setShowOwnPosts] = React.useState(false);
+  const [sharedPostId, setSharedPostId] = useState(undefined);
+  const [showOwnPosts, setShowOwnPosts] = useState(false);
 
-  const handlePostLike = React.useCallback(id => (
-    dispatch(threadActionCreator.likePost(id))
-  ), [dispatch]);
+  const handlePostLike = useCallback(
+    id => dispatch(threadActionCreator.likePost(id)),
+    [dispatch]
+  );
 
-  const handleExpandedPostToggle = React.useCallback(id => (
-    dispatch(threadActionCreator.toggleExpandedPost(id))
-  ), [dispatch]);
+  const handleExpandedPostToggle = useCallback(
+    id => dispatch(threadActionCreator.toggleExpandedPost(id)),
+    [dispatch]
+  );
 
-  const handlePostAdd = React.useCallback(postPayload => (
-    dispatch(threadActionCreator.createPost(postPayload))
-  ), [dispatch]);
+  const handlePostAdd = useCallback(
+    postPayload => dispatch(threadActionCreator.createPost(postPayload)),
+    [dispatch]
+  );
 
   const handlePostsLoad = filtersPayload => {
     dispatch(threadActionCreator.loadPosts(filtersPayload));
   };
 
-  const handleMorePostsLoad = React.useCallback(filtersPayload => {
-    dispatch(threadActionCreator.loadMorePosts(filtersPayload));
-  }, [dispatch]);
+  const handleMorePostsLoad = useCallback(
+    filtersPayload => {
+      dispatch(threadActionCreator.loadMorePosts(filtersPayload));
+    },
+    [dispatch]
+  );
 
   const toggleShowOwnPosts = () => {
     setShowOwnPosts(!showOwnPosts);
@@ -53,7 +64,7 @@ const Thread = () => {
     postsFilter.from = postsFilter.count; // for the next scroll
   };
 
-  const getMorePosts = React.useCallback(() => {
+  const getMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
     const { from, count } = postsFilter;
     postsFilter.from = from + count;
@@ -63,7 +74,7 @@ const Thread = () => {
 
   const uploadImage = file => imageService.uploadImage(file);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getMorePosts();
   }, [getMorePosts]);
 

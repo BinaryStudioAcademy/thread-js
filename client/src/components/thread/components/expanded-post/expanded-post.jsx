@@ -1,8 +1,7 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { threadActionCreator } from 'src/store/actions';
-import { Spinner, Post, Modal, Comment as CommentUI } from 'src/components/common/common';
+import { useCallback, useDispatch, useSelector } from 'hooks/hooks';
+import { threadActionCreator } from 'store/actions';
+import { Spinner, Post, Modal, Comment as CommentUI } from 'components/common/common';
 import AddComment from '../add-comment/add-comment';
 import Comment from '../comment/comment';
 import { getSortedComments } from './helpers/helpers';
@@ -15,15 +14,15 @@ const ExpandedPost = ({
     post: state.posts.expandedPost
   }));
 
-  const handlePostLike = React.useCallback(id => (
+  const handlePostLike = useCallback(id => (
     dispatch(threadActionCreator.likePost(id))
   ), [dispatch]);
 
-  const handleCommentAdd = React.useCallback(commentPayload => (
+  const handleCommentAdd = useCallback(commentPayload => (
     dispatch(threadActionCreator.addComment(commentPayload))
   ), [dispatch]);
 
-  const handleExpandedPostToggle = React.useCallback(id => (
+  const handleExpandedPostToggle = useCallback(id => (
     dispatch(threadActionCreator.toggleExpandedPost(id))
   ), [dispatch]);
 

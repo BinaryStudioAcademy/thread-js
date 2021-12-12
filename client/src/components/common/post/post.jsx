@@ -1,9 +1,8 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
-import { getFromNowTime } from 'src/helpers/helpers';
-import { IconName } from 'src/common/enums/enums';
-import { postType } from 'src/common/prop-types/prop-types';
-import { Icon, Card, Image, Label } from 'src/components/common/common';
+import { getFromNowTime } from 'helpers/helpers';
+import { IconName } from 'common/enums/enums';
+import { postType } from 'common/prop-types/prop-types';
+import { Icon, Card, Image, Label } from 'components/common/common';
 
 import styles from './styles.module.scss';
 

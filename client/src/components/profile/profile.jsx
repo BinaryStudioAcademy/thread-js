@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { Grid, Image, Input } from 'src/components/common/common';
-import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
+import { useSelector } from 'hooks/hooks';
+import { Grid, Image, Input } from 'components/common/common';
+import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
 
 const Profile = () => {
   const { user } = useSelector(state => ({

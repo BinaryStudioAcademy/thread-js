@@ -1,15 +1,14 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
-import { IconName, IconSize, ButtonType, AppRoute } from 'src/common/enums/enums';
-import { DEFAULT_USER_AVATAR } from 'src/common/constants/constants';
-import { userType } from 'src/common/prop-types/prop-types';
+import { IconName, IconSize, ButtonType, AppRoute } from 'common/enums/enums';
+import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
+import { userType } from 'common/prop-types/prop-types';
 import {
   Button,
   Icon,
   Image,
   Grid,
   NavLink
-} from 'src/components/common/common';
+} from 'components/common/common';
 
 import styles from './styles.module.scss';
 

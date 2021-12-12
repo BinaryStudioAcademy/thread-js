@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { imageType } from 'src/common/prop-types/image';
-import { commentType } from 'src/common/prop-types/comment';
+import { imageType } from 'common/prop-types/image';
+import { commentType } from 'common/prop-types/comment';
 
 const postType = PropTypes.exact({
   id: PropTypes.string.isRequired,

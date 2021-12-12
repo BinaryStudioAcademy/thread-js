@@ -1,9 +1,7 @@
-import * as React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppRoute } from 'src/common/enums/enums';
-import { profileActionCreator } from 'src/store/actions';
-import { Grid, Image } from 'src/components/common/common';
+import { useCallback, useDispatch, useLocation } from 'hooks/hooks';
+import { AppRoute } from 'common/enums/enums';
+import { profileActionCreator } from 'store/actions';
+import { Grid, Image } from 'components/common/common';
 import { LoginForm, RegistrationForm } from './components/components';
 import styles from './styles.module.scss';
 
@@ -11,12 +9,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  const handleLogin = React.useCallback(
+  const handleLogin = useCallback(
     loginPayload => dispatch(profileActionCreator.login(loginPayload)),
     [dispatch]
   );
 
-  const handleRegister = React.useCallback(
+  const handleRegister = useCallback(
     registerPayload => dispatch(profileActionCreator.register(registerPayload)),
     [dispatch]
   );

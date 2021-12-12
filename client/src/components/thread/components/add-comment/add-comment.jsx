@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonType } from 'src/common/enums/enums';
-import { Button, Form } from 'src/components/common/common';
+import { ButtonType } from 'common/enums/enums';
+import { Button, Form } from 'components/common/common';
 
 const AddComment = ({ postId, onCommentAdd }) => {
-  const [body, setBody] = React.useState('');
+  const [body, setBody] = useState('');
 
   const handleAddComment = async () => {
     if (!body) {
