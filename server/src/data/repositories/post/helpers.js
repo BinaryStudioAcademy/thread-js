@@ -5,13 +5,13 @@ const getReactionsQuery = model => isLike => {
 
   return model.relatedQuery('postReactions')
     .count()
-    .where('is_like', isLike)
+    .where({ isLike })
     .as(col);
 };
 
 const getWhereUserIdQuery = userId => builder => {
   if (userId) {
-    builder.where('user_id', userId);
+    builder.where({ userId });
   }
 };
 

@@ -19,7 +19,7 @@ class User extends Abstract {
 
   getUserById(id) {
     return this.model.query()
-      .select('id', 'created_at', 'email', 'updated_at', 'username')
+      .select('id', 'createdAt', 'email', 'updatedAt', 'username')
       .where({ id })
       .withGraphFetched('[image]')
       .first();

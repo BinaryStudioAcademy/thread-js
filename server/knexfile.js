@@ -1,3 +1,4 @@
+import { knexSnakeCaseMappers } from 'objection';
 import { ENV } from './src/common/enums/enums';
 
 const {
@@ -23,7 +24,8 @@ const knexConfig = {
     directory: './src/data/migrations',
     tableName: 'knex_migrations'
   },
-  debug
+  debug,
+  ...knexSnakeCaseMappers({ underscoreBetweenUppercaseLetters: true })
 };
 
 export default knexConfig;

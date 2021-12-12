@@ -1,10 +1,6 @@
-import { Model, snakeCaseMappers } from 'objection';
+import { Model } from 'objection';
 
 class Abstract extends Model {
-  static get columnNameMappers() {
-    return snakeCaseMappers({ underscoreBetweenUppercaseLetters: true });
-  }
-
   static get jsonSchema() {
     return {
       type: 'object',

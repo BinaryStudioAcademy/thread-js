@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { imageType } from 'src/common/prop-types/image';
 
 const commentType = PropTypes.exact({
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   body: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   updatedAt: PropTypes.string.isRequired,
-  postId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  postId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
   user: PropTypes.exact({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
     image: imageType
   }).isRequired

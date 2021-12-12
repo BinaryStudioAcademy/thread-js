@@ -22,7 +22,7 @@ class Post extends Abstract {
       )
       .where(getWhereUserIdQuery(userId))
       .withGraphFetched('[image, user.image]')
-      .orderBy('created_at', 'desc')
+      .orderBy('createdAt', 'desc')
       .page(offset, limit);
   }
 

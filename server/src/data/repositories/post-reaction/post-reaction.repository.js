@@ -8,8 +8,8 @@ class PostReaction extends Abstract {
   getPostReaction(userId, postId) {
     return this.model.query()
       .select()
-      .where('user_id', userId)
-      .andWhere('post_id', postId)
+      .where({ userId })
+      .andWhere({ postId })
       .withGraphFetched('[post]')
       .first();
   }

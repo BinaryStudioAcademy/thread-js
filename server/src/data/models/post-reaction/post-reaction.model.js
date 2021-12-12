@@ -31,16 +31,16 @@ class PostReaction extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.POST_REACTIONS}.post_id`,
+          from: `${DbTableName.POST_REACTIONS}.postId`,
           to: `${DbTableName.POSTS}.id`
         }
       },
       user: {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
-        filter: query => query.select('id', 'user_id'),
+        filter: query => query.select('id', 'userId'),
         join: {
-          from: `${DbTableName.POST_REACTIONS}.user_id`,
+          from: `${DbTableName.POST_REACTIONS}.userId`,
           to: `${DbTableName.USERS}.id`
         }
       }

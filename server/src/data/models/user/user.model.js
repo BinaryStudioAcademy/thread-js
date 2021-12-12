@@ -32,7 +32,7 @@ class User extends AbstractModel {
         modelClass: ImageModel,
         filter: query => query.select('id', 'link'),
         join: {
-          from: `${DbTableName.USERS}.image_id`,
+          from: `${DbTableName.USERS}.imageId`,
           to: `${DbTableName.IMAGES}.id`
         }
       }

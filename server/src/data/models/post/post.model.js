@@ -34,14 +34,14 @@ class Post extends AbstractModel {
         modelClass: CommentModel,
         join: {
           from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.COMMENTS}.post_id`
+          to: `${DbTableName.COMMENTS}.postId`
         }
       },
       image: {
         relation: Model.HasOneRelation,
         modelClass: ImageModel,
         join: {
-          from: `${DbTableName.POSTS}.image_id`,
+          from: `${DbTableName.POSTS}.imageId`,
           filter: query => query.select('id', 'link'),
           to: `${DbTableName.IMAGES}.id`
         }
@@ -51,15 +51,15 @@ class Post extends AbstractModel {
         modelClass: PostReactionModel,
         join: {
           from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.POST_REACTIONS}.post_id`
+          to: `${DbTableName.POST_REACTIONS}.postId`
         }
       },
       user: {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
-        filter: query => query.select('id', 'username', 'image_id'),
+        filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.POSTS}.user_id`,
+          from: `${DbTableName.POSTS}.userId`,
           to: `${DbTableName.USERS}.id`
         }
       }

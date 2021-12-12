@@ -1,7 +1,7 @@
 const DbTableName = {
   COMMENTS: 'comments',
   IMAGES: 'images',
-  POST_REACTIONS: 'post_reactions',
+  POST_REACTIONS: 'postReactions',
   POSTS: 'posts',
   USERS: 'users'
 };

@@ -31,16 +31,16 @@ class Comment extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.COMMENTS}.post_id`,
+          from: `${DbTableName.COMMENTS}.postId`,
           to: `${DbTableName.POSTS}.id`
         }
       },
       user: {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
-        filter: query => query.select('id', 'username', 'image_id'),
+        filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.COMMENTS}.user_id`,
+          from: `${DbTableName.COMMENTS}.userId`,
           to: `${DbTableName.USERS}.id`
         }
       }

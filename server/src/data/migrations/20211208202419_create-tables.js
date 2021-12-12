@@ -24,36 +24,36 @@ export async function up(knex) {
     table.string(ColumnName.EMAIL).notNullable().unique();
     table.string(ColumnName.USERNAME).notNullable().unique();
     table.string(ColumnName.PASSWORD).notNullable();
-    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(new Date().toISOString());
-    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(new Date().toISOString());
+    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(knex.fn.now());
+    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable(TableName.POSTS, table => {
     table.increments(ColumnName.ID).primary();
     table.text(ColumnName.BODY).notNullable();
-    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(new Date().toISOString());
-    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(new Date().toISOString());
+    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(knex.fn.now());
+    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable(TableName.COMMENTS, table => {
     table.increments(ColumnName.ID).primary();
     table.text(ColumnName.BODY).notNullable();
-    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(new Date().toISOString());
-    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(new Date().toISOString());
+    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(knex.fn.now());
+    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable(TableName.POST_REACTIONS, table => {
     table.increments(ColumnName.ID).primary();
     table.boolean(ColumnName.IS_LIKE).notNullable().defaultTo(true);
-    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(new Date().toISOString());
-    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(new Date().toISOString());
+    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(knex.fn.now());
+    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable(TableName.IMAGES, table => {
     table.increments(ColumnName.ID).primary();
     table.string(ColumnName.LINK).notNullable();
-    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(new Date().toISOString());
-    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(new Date().toISOString());
+    table.dateTime(ColumnName.CREATED_AT).notNullable().defaultTo(knex.fn.now());
+    table.dateTime(ColumnName.UPDATED_AT).notNullable().defaultTo(knex.fn.now());
   });
 }
 
