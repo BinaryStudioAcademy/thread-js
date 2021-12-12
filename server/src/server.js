@@ -2,12 +2,15 @@ import fastify from 'fastify';
 import cors from 'fastify-cors';
 import fastifyStatic from 'fastify-static';
 import http from 'http';
+import Knex from 'knex';
+import { Model } from 'objection';
 import path from 'path';
 import qs from 'qs';
 import socketIO from 'socket.io';
+
+import knexConfig from '../knexfile';
 import { initApi } from './api/api';
 import { ENV, ExitCode } from './common/enums/enums';
-import { sequelize } from './data/db/connection';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
 import * as services from './services/services';
 import { handlers as socketHandlers } from './socket/handlers';
@@ -29,14 +32,8 @@ const io = socketIO(socketServer, {
   }
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    app.log.info('DB connection has been established successfully.');
-  })
-  .catch(err => {
-    app.log.error(`Unable to connect to the database: ${err}`);
-  });
+const knex = Knex(knexConfig);
+Model.knex(knex);
 
 io.on('connection', socketHandlers);
 

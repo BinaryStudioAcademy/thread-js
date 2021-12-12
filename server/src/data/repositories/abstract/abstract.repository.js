@@ -4,31 +4,23 @@ class Abstract {
   }
 
   getAll() {
-    return this.model.findAll();
+    return this.model.query();
   }
 
   getById(id) {
-    return this.model.findByPk(id);
+    return this.model.query().findById(id);
   }
 
   create(data) {
-    return this.model.create(data);
+    return this.model.query().insert(data);
   }
 
-  async updateById(id, data) {
-    const result = await this.model.update(data, {
-      where: { id },
-      returning: true,
-      plain: true
-    });
-
-    return result[1];
+  updateById(id, data) {
+    return this.model.query().patchAndFetchById(id, data);
   }
 
   deleteById(id) {
-    return this.model.destroy({
-      where: { id }
-    });
+    return this.model.query().deleteById(id);
   }
 }
 

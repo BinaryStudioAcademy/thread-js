@@ -11,7 +11,7 @@ const {
   DB_PASSWORD,
   DB_HOST,
   DB_PORT,
-  DB_DIALECT,
+  DB_CLIENT,
   GYAZO_UPLOAD_API_URL,
   GYAZO_ACCESS_TOKEN
 } = process.env;
@@ -32,8 +32,8 @@ const ENV = {
     PASSWORD: DB_PASSWORD,
     HOST: DB_HOST,
     PORT: DB_PORT,
-    DIALECT: DB_DIALECT,
-    LOGGING: false
+    CLIENT: DB_CLIENT,
+    DEBUG: false
   },
   GYAZO: {
     ACCESS_KEY: GYAZO_ACCESS_TOKEN,

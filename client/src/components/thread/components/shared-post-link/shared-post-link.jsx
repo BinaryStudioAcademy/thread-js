@@ -48,7 +48,7 @@ const SharedPostLink = ({ postId, close }) => {
 };
 
 SharedPostLink.propTypes = {
-  postId: PropTypes.string.isRequired,
+  postId: PropTypes.number.isRequired,
   close: PropTypes.func.isRequired
 };
 

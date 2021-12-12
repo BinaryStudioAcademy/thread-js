@@ -32,13 +32,14 @@
 ### Backend
 1. [Node.js](https://nodejs.org/en/ "Node.js")
 2. [Fastify](https://www.fastify.io/docs/v3.24.x/ "Fastify")
-3. [Sequelize](http://docs.sequelizejs.com/ "Sequelize")
-4. [axios](https://www.npmjs.com/package/axios "axios")
-5. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
-6. [Babel](https://babeljs.io/docs/en/index.html "Babel")
-7. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
-8. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
-9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
+3. [Knex](https://knexjs.org/ "Knex")
+4. [Objection](https://vincit.github.io/objection.js/ "Objection")
+5. [axios](https://www.npmjs.com/package/axios "axios")
+6. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
+7. [Babel](https://babeljs.io/docs/en/index.html "Babel")
+8. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
+9. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
+10. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
 
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
@@ -105,11 +106,11 @@
     Замените в файле **.env** значения ключей на действительные.
     Для того, чтобы указать ключи для Gyazo Storage, необходимо зарегистрироваться на сайте [Gyazo](https://gyazo.com/captures) и [зарегистрировать приложение](https://gyazo.com/oauth/applications). Затем в **.env**  использовать `access token` из только что созданного приложения в Gyazo.
 
-4. Выполните [миграции](https://sequelize.org/master/manual/migrations.html) и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
+4. Выполните [миграции](https://knexjs.org/#Migrations) и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
 
     ```
-    npx sequelize-cli db:migrate
-    npx sequelize-cli db:seed:all
+    npm run migrate:run
+    npm run seed:run
     ```
 
     Проверьте базу данных на наличие демо-данных.
