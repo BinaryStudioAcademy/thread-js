@@ -1,24 +1,23 @@
-import { DataTypes } from 'sequelize';
+import { DbTableName } from '../../../common/enums/enums';
+import AbstractModel from '../abstract/abstract.model';
 
-const init = orm => {
-  const Image = orm.define(
-    'image',
-    {
-      link: {
-        allowNull: false,
-        type: DataTypes.STRING
-      },
-      deleteHash: {
-        allowNull: false,
-        type: DataTypes.STRING
-      },
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
-    },
-    {}
-  );
+class Image extends AbstractModel {
+  static get tableName() {
+    return DbTableName.IMAGES;
+  }
 
-  return Image;
-};
+  static get jsonSchema() {
+    const baseSchema = super.jsonSchema;
 
-export { init };
+    return {
+      type: baseSchema.type,
+      required: ['link'],
+      properties: {
+        ...baseSchema.properties,
+        link: { type: 'string' }
+      }
+    };
+  }
+}
+
+export default Image;

@@ -12,9 +12,7 @@ import { Post } from './post/post.repository';
 import { User } from './user/user.repository';
 
 const comment = new Comment({
-  commentModel: CommentModel,
-  userModel: UserModel,
-  imageModel: ImageModel
+  commentModel: CommentModel
 });
 
 const image = new Image({
@@ -22,21 +20,15 @@ const image = new Image({
 });
 
 const postReaction = new PostReaction({
-  postReactionModel: PostReactionModel,
-  postModel: PostModel
-});
-
-const post = new Post({
-  postModel: PostModel,
-  commentModel: CommentModel,
-  userModel: UserModel,
-  imageModel: ImageModel,
   postReactionModel: PostReactionModel
 });
 
+const post = new Post({
+  postModel: PostModel
+});
+
 const user = new User({
-  userModel: UserModel,
-  imageModel: ImageModel
+  userModel: UserModel
 });
 
 export { comment, image, postReaction, post, user };

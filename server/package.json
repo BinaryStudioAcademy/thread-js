@@ -6,6 +6,10 @@
     "npm": ">=8 <9"
   },
   "scripts": {
+    "migrate:make": "npx knex --esm migrate:make",
+    "migrate:rollback": "npx knex --esm migrate:rollback",
+    "migrate:run": "npx knex --esm migrate:latest",
+    "seed:run": "npx knex --esm seed:run",
     "start": "nodemon src/server.js --exec ./node_modules/.bin/babel-node",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js"
@@ -21,13 +25,13 @@
     "fastify-static": "4.5.0",
     "form-data": "4.0.0",
     "jsonwebtoken": "8.5.1",
+    "knex": "0.95.14",
     "nodemon": "2.0.15",
+    "objection": "3.0.0",
     "path": "0.12.7",
     "pg": "8.7.1",
     "pg-hstore": "2.3.4",
     "qs": "6.10.2",
-    "sequelize": "6.6.2",
-    "sequelize-cli": "6.2.0",
     "socket.io": "4.4.0"
   },
   "devDependencies": {

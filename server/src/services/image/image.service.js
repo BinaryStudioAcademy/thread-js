@@ -22,10 +22,7 @@ class Image {
       headers: formData.getHeaders()
     });
 
-    return this._imageRepository.create({
-      link: res.url,
-      deleteHash: ''
-    });
+    return this._imageRepository.create({ link: res.url });
   }
 }
 
