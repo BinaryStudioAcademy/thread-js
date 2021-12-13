@@ -17,32 +17,34 @@ const SharedPostLink = ({ postId, close }) => {
   };
 
   return (
-    <Modal open onClose={close}>
-      <Modal.Header className={styles.header}>
-        <span>Share Post</span>
-        {isCopied && (
-          <span>
-            <Icon name={IconName.COPY} color={IconColor.GREEN} />
-            Copied
-          </span>
-        )}
-      </Modal.Header>
-      <Modal.Content>
-        <Input
-          fluid
-          action={{
-            color: 'teal',
-            labelPosition: 'right',
-            icon: 'copy',
-            content: 'Copy',
-            onClick: copyToClipboard
-          }}
-          value={`${window.location.origin}/share/${postId}`}
-          ref={ref => {
-            input = ref;
-          }}
-        />
-      </Modal.Content>
+    <Modal isOpen centered onClose={close}>
+      <>
+        <header className={styles.header}>
+          <span>Share Post</span>
+          {isCopied && (
+            <span>
+              <Icon name={IconName.COPY} color={IconColor.GREEN} />
+              Copied
+            </span>
+          )}
+        </header>
+        <section>
+          <Input
+            fluid
+            action={{
+              color: 'teal',
+              labelPosition: 'right',
+              icon: 'copy',
+              content: 'Copy',
+              onClick: copyToClipboard
+            }}
+            value={`${window.location.origin}/share/${postId}`}
+            ref={ref => {
+              input = ref;
+            }}
+          />
+        </section>
+      </>
     </Modal>
   );
 };

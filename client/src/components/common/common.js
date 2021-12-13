@@ -1,20 +1,20 @@
-import {
-  Form,
-  Segment,
-  Grid,
-  Modal,
-  Input,
-  Comment,
-  Message,
-  Checkbox,
-  Card,
-  Label
-} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import Image from './image/image';
+import {
+  Card,
+  Checkbox,
+  Comment,
+  Form,
+  Grid,
+  Input,
+  Label,
+  Message,
+  Segment
+} from 'semantic-ui-react';
 import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
+import Image from './image/image';
+import Modal from './modal/modal';
 import Notifications from './notifications/notifications';
 import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
