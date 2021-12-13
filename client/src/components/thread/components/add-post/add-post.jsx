@@ -46,7 +46,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
         />
         {image?.imageLink && (
           <div className={styles.imageWrapper}>
-            <Image className={styles.image} src={image?.imageLink} alt="post" />
+            <Image className={styles.image} src={image?.imageLink} alt="post image" />
           </div>
         )}
         <div className={styles.btnWrapper}>

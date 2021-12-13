@@ -24,7 +24,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
 
   return (
     <Card style={{ width: '100%' }}>
-      {image && <Image src={image.link} wrapped ui={false} />}
+      {image && <Image src={image.link} alt="post image" />}
       <Card.Content>
         <Card.Meta>
           <span className="date">

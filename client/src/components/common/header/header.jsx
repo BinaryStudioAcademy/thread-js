@@ -24,6 +24,7 @@ const Header = ({ user, onUserLogout }) => (
                 width="45"
                 height="45"
                 src={user.image?.link ?? DEFAULT_USER_AVATAR}
+                alt="user avatar"
               />
               {' '}
               {user.username}

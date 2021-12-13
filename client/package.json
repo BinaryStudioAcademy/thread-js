@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.6.2",
+    "clsx": "1.1.1",
     "dayjs": "1.10.7",
     "prop-types": "15.7.2",
     "query-string": "7.0.1",

@@ -38,6 +38,7 @@ const Login = () => {
       <Grid.Column style={{ maxWidth: 450 }}>
         <h2 className={styles.logoWrapper}>
           <Image
+            alt="Thread logo"
             width="75"
             height="75"
             circular

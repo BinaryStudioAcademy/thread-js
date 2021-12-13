@@ -1,7 +1,6 @@
 import {
   Form,
   Segment,
-  Image,
   Grid,
   Modal,
   Input,
@@ -12,6 +11,7 @@ import {
   Label
 } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import Image from './image/image';
 import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
