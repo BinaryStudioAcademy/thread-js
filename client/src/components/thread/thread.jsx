@@ -8,7 +8,7 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { threadActionCreator } from 'store/actions';
 import { image as imageService } from 'services/services';
-import { Post, Spinner, Checkbox } from 'components/common/common';
+import { Post, Spinner, ToggleCheckbox } from 'components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 
 import styles from './styles.module.scss';
@@ -84,10 +84,9 @@ const Thread = () => {
         <AddPost onPostAdd={handlePostAdd} uploadImage={uploadImage} />
       </div>
       <div className={styles.toolbar}>
-        <Checkbox
-          toggle
-          label="Show only my posts"
+        <ToggleCheckbox
           checked={showOwnPosts}
+          label="Show only my posts"
           onChange={toggleShowOwnPosts}
         />
       </div>

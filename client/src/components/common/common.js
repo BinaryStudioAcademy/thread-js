@@ -7,7 +7,6 @@ import {
   Input,
   Comment,
   Message,
-  Checkbox,
   Card,
   Label
 } from 'semantic-ui-react';
@@ -20,6 +19,7 @@ import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
 import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
+import ToggleCheckbox from './toggle-checkbox/toggle-checkbox';
 
 export {
   Form,
@@ -30,7 +30,6 @@ export {
   Input,
   Comment,
   Message,
-  Checkbox,
   Card,
   Label,
   Button,
@@ -41,5 +40,6 @@ export {
   PrivateRoute,
   PublicRoute,
   Spinner,
+  ToggleCheckbox,
   NavLink
 };

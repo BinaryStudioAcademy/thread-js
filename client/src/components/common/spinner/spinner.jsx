@@ -1,13 +1,16 @@
-import { Dimmer, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-const Spinner = ({ isOverflow }) => (isOverflow ? (
-  <Dimmer active inverted>
-    <Loader active inline="centered" />
-  </Dimmer>
-) : (
-  <Loader active inline="centered" />
-));
+import styles from './styles.module.scss';
+
+const Spinner = ({ isOverflow }) => (isOverflow
+  ? (
+    <div className={styles.container}>
+      <div className={styles.loader}>Loading...</div>
+    </div>
+  )
+  : (
+    <div className={styles.loader}>Loading...</div>
+  ));
 
 Spinner.propTypes = {
   isOverflow: PropTypes.bool
