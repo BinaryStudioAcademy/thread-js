@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
-import { Button as ButtonUI } from 'semantic-ui-react';
+/* eslint-disable react/button-has-type */
+import clsx from 'clsx';
 import {
-  ButtonType,
-  ButtonColor,
-  IconName,
+  ButtonColor, ButtonType, IconName,
   IconSize
 } from 'common/enums/enums';
-import { Icon } from 'components/common/common';
+import { useMemo } from 'hooks/hooks';
+import PropTypes from 'prop-types';
+import Icon from '../icon/icon';
+import { isCorrectType } from './helpers/helpers';
+import styles from './styles.module.scss';
 
 const Button = ({
   onClick,
@@ -23,25 +25,26 @@ const Button = ({
   children
 }) => {
   const hasIcon = Boolean(iconName);
+  const btnType = useMemo(() => (isCorrectType(type) ? type : ButtonType.BUTTON), [type]);
 
   return (
-    <ButtonUI
-      className={className}
-      onClick={onClick}
-      type={type}
-      color={color}
-      icon={hasIcon}
-      basic={isBasic}
-      fluid={isFluid}
-      loading={isLoading}
-      primary={isPrimary}
+    <button
       disabled={isDisabled}
+      onClick={onClick}
+      className={clsx(
+        styles.btn,
+        isLoading && styles.loading,
+        isFluid && styles.fluid,
+        isBasic && styles.basic,
+        isPrimary && styles.primary,
+        color && styles[`btn__${color}`],
+        className
+      )}
+      type={btnType}
     >
-      <>
-        {hasIcon && <Icon name={iconName} size={iconSize} />}
-        {children}
-      </>
-    </ButtonUI>
+      {hasIcon && <Icon name={iconName} size={iconSize} />}
+      {children}
+    </button>
   );
 };
 

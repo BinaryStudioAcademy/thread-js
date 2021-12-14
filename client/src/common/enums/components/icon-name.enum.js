@@ -7,7 +7,8 @@ const IconName = {
   SHARE_ALTERNATE: 'share alternate',
   FROWN: 'frown',
   IMAGE: 'image',
-  COPY: 'copy'
+  COPY: 'copy',
+  SPINNER: 'spinner'
 };
 
 export { IconName };

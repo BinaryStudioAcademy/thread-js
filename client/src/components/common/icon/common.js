@@ -8,7 +8,8 @@ import {
   faShareAlt,
   faFrown,
   faImage,
-  faCopy
+  faCopy,
+  faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 
 const iconNameToSvgIcon = {
@@ -20,7 +21,8 @@ const iconNameToSvgIcon = {
   [IconName.SHARE_ALTERNATE]: faShareAlt,
   [IconName.FROWN]: faFrown,
   [IconName.IMAGE]: faImage,
-  [IconName.COPY]: faCopy
+  [IconName.COPY]: faCopy,
+  [IconName.SPINNER]: faCircleNotch
 };
 
 export { iconNameToSvgIcon };
