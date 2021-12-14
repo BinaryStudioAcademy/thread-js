@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
-import { Icon as IconUI } from 'semantic-ui-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconColor, IconName, IconSize } from 'common/enums/enums';
+import { iconNameToSvgIcon } from './common';
 
 const Icon = ({ name, size, color }) => (
-  <IconUI name={name} size={size} color={color} />
+  <FontAwesomeIcon
+    icon={iconNameToSvgIcon[name]}
+    size={size}
+    color={color}
+  />
 );
 
 Icon.propTypes = {

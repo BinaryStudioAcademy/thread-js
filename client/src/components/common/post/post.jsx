@@ -46,11 +46,11 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           onClick={handlePostLike}
         >
           <Icon name={IconName.THUMBS_UP} />
-          {likeCount}
+          <span className={styles.reactionCount}>{likeCount}</span>
         </Label>
         <Label basic size="small" as="a" className={styles.toolbarBtn}>
           <Icon name={IconName.THUMBS_DOWN} />
-          {dislikeCount}
+          <span className={styles.reactionCount}>{dislikeCount}</span>
         </Label>
         <Label
           basic
@@ -60,7 +60,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           onClick={handleExpandedPostToggle}
         >
           <Icon name={IconName.COMMENT} />
-          {commentCount}
+          <span className={styles.reactionCount}>{commentCount}</span>
         </Label>
         <Label
           basic
