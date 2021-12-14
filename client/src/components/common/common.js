@@ -5,8 +5,6 @@ import {
   Grid,
   Modal,
   Input,
-  Comment,
-  Message,
   Card,
   Label
 } from 'semantic-ui-react';
@@ -14,6 +12,7 @@ import { NavLink } from 'react-router-dom';
 import Button from './button/button';
 import Header from './header/header';
 import Icon from './icon/icon';
+import Message from './message/message';
 import Notifications from './notifications/notifications';
 import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
@@ -28,7 +27,6 @@ export {
   Grid,
   Modal,
   Input,
-  Comment,
   Message,
   Card,
   Label,

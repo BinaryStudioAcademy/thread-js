@@ -101,11 +101,8 @@ const RegistrationForm = ({ onRegister }) => {
         </Segment>
       </Form>
       <Message>
-        Alredy with us?
-        {' '}
-        <NavLink to={AppRoute.LOGIN}>
-          Sign In
-        </NavLink>
+        <span>Already with us?</span>
+        <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>
       </Message>
     </>
   );

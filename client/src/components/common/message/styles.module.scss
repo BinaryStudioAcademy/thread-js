@@ -1,0 +1,11 @@
+.message {
+  background-color: #f8f8f9;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0 1px rgb(34 36 38 / 22%) inset, 0 0 0 0 transparent;
+  margin-top: 1rem;
+  padding: 1rem;
+
+  & > *:not(:last-child) {
+    margin-right: 5px;
+  }
+}

@@ -84,11 +84,8 @@ const LoginForm = ({ onLogin }) => {
         </Segment>
       </Form>
       <Message>
-        New to us?
-        {' '}
-        <NavLink to={AppRoute.REGISTRATION}>
-          Sign Up
-        </NavLink>
+        <span>New to us?</span>
+        <NavLink to={AppRoute.REGISTRATION}>Sign Up</NavLink>
       </Message>
     </>
   );
