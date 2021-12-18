@@ -1,0 +1,10 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.errorWrapper {
+  margin-top: 5px;
+  color: #df1c3d;
+  align-self: flex-start;
+}

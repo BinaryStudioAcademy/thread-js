@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Button from './button/button';
+import FormInput from './form-input/form-input';
 import Header from './header/header';
 import Icon from './icon/icon';
 import Notifications from './notifications/notifications';
@@ -34,6 +35,7 @@ export {
   Card,
   Label,
   Button,
+  FormInput,
   Header,
   Icon,
   Notifications,
