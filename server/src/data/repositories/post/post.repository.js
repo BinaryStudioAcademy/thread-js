@@ -23,7 +23,8 @@ class Post extends Abstract {
       .where(getWhereUserIdQuery(userId))
       .withGraphFetched('[image, user.image]')
       .orderBy('createdAt', 'desc')
-      .page(offset, limit);
+      .offset(offset)
+      .limit(limit);
   }
 
   getPostById(id) {

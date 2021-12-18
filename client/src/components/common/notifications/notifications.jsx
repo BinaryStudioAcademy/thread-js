@@ -4,11 +4,11 @@ import {
   NotificationContainer,
   NotificationManager
 } from 'react-notifications';
-import { useEffect } from 'hooks/hooks';
-import { ENV } from 'common/enums/enums';
-import { userType } from 'common/prop-types/prop-types';
-
 import 'react-notifications/lib/notifications.css';
+
+import { useEffect } from 'hooks/hooks';
+import { ENV, NotificationMessage, SocketEvent } from 'common/enums/enums';
+import { userType } from 'common/prop-types/prop-types';
 
 const socket = io(ENV.SOCKET_URL);
 
@@ -18,20 +18,21 @@ const Notifications = ({ user, onPostApply }) => {
       return undefined;
     }
     const { id } = user;
-    socket.emit('createRoom', id);
-    socket.on('like', () => {
-      NotificationManager.info('Your post was liked!');
+    socket.emit(SocketEvent.CREATE_ROOM, id);
+    socket.on(SocketEvent.LIKE, () => {
+      NotificationManager.info(NotificationMessage.LIKED_POST);
     });
-    socket.on('new_post', post => {
+    socket.on(SocketEvent.NEW_POST, post => {
       if (post.userId !== id) {
         onPostApply(post.id);
       }
     });
 
     return () => {
-      socket.close();
+      socket.emit(SocketEvent.LEAVE_ROOM, id);
+      socket.removeAllListeners();
     };
-  });
+  }, [user, onPostApply]);
 
   return <NotificationContainer />;
 };
