@@ -4,15 +4,15 @@ import {
   Image,
   Grid,
   Modal,
-  Card,
-  Label
+  Card
 } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Button from './button/button';
 import CopyBufferInput from './copy-buffer-input/copy-buffer-input';
 import Header from './header/header';
 import Icon from './icon/icon';
-import InputCust from './input/input';
+import IconButton from './icon-button/icon-button';
+import Input from './input/input';
 import Message from './message/message';
 import Notifications from './notifications/notifications';
 import Post from './post/post';
@@ -29,12 +29,12 @@ export {
   Modal,
   Message,
   Card,
-  Label,
   Button,
   CopyBufferInput,
   Header,
   Icon,
-  InputCust,
+  IconButton,
+  Input,
   Notifications,
   Post,
   PrivateRoute,

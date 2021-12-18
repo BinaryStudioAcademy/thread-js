@@ -1,5 +1,5 @@
 import { useSelector } from 'hooks/hooks';
-import { Grid, Icon, Image, InputCust } from 'components/common/common';
+import { Grid, Icon, Image, Input } from 'components/common/common';
 import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
 
 const Profile = () => {
@@ -17,7 +17,7 @@ const Profile = () => {
           circular
         />
         <br />
-        <InputCust
+        <Input
           icon={<Icon name="user" />}
           placeholder="Username"
           value={user.username}
@@ -25,7 +25,7 @@ const Profile = () => {
         />
         <br />
         <br />
-        <InputCust
+        <Input
           icon={<Icon name="at" />}
           placeholder="Email"
           type="email"

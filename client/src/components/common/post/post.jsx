@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import { getFromNowTime } from 'helpers/helpers';
 import { IconName } from 'common/enums/enums';
 import { postType } from 'common/prop-types/prop-types';
-import { Icon, Card, Image, Label } from 'components/common/common';
-
-import styles from './styles.module.scss';
+import { Icon, IconButton, Card, Image } from 'components/common/common';
 
 const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
   const {
@@ -38,39 +36,25 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Label
-          basic
-          size="small"
-          as="a"
-          className={styles.toolbarBtn}
+        <IconButton
+          icon={<Icon name={IconName.THUMBS_UP} />}
+          label={likeCount}
           onClick={handlePostLike}
-        >
-          <Icon name={IconName.THUMBS_UP} />
-          {likeCount}
-        </Label>
-        <Label basic size="small" as="a" className={styles.toolbarBtn}>
-          <Icon name={IconName.THUMBS_DOWN} />
-          {dislikeCount}
-        </Label>
-        <Label
-          basic
-          size="small"
-          as="a"
-          className={styles.toolbarBtn}
+        />
+        <IconButton
+          icon={<Icon name={IconName.THUMBS_DOWN} />}
+          label={dislikeCount}
+          onClick={() => {}}
+        />
+        <IconButton
+          icon={<Icon name={IconName.COMMENT} />}
+          label={commentCount}
           onClick={handleExpandedPostToggle}
-        >
-          <Icon name={IconName.COMMENT} />
-          {commentCount}
-        </Label>
-        <Label
-          basic
-          size="small"
-          as="a"
-          className={styles.toolbarBtn}
+        />
+        <IconButton
+          icon={<Icon name={IconName.SHARE_ALTERNATE} />}
           onClick={() => sharePost(id)}
-        >
-          <Icon name={IconName.SHARE_ALTERNATE} />
-        </Label>
+        />
       </Card.Content>
     </Card>
   );
