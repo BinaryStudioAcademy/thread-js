@@ -94,9 +94,9 @@ const Thread = () => {
       <InfiniteScroll
         dataLength={posts.length}
         next={getMorePosts}
+        scollTreshold={0.8}
         hasMore={hasMorePosts}
         loader={<Spinner key="0" />}
-        scrollableTarget="root"
       >
         {posts.map(post => (
           <Post
