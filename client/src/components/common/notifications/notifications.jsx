@@ -30,7 +30,7 @@ const Notifications = ({ user, onPostApply }) => {
 
     return () => {
       socket.emit(SocketEvent.LEAVE_ROOM, id);
-      socket.close();
+      socket.removeAllListeners();
     };
   }, [user, onPostApply]);
 
