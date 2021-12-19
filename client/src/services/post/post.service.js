@@ -6,20 +6,20 @@ class Post {
   }
 
   getAllPosts(filter) {
-    return this._http.load('/api/posts', {
+    return this._http.load('/posts', {
       method: HttpMethod.GET,
       query: filter
     });
   }
 
   getPost(id) {
-    return this._http.load(`/api/posts/${id}`, {
+    return this._http.load(`/posts/${id}`, {
       method: HttpMethod.GET
     });
   }
 
   addPost(payload) {
-    return this._http.load('/api/posts', {
+    return this._http.load('/posts', {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload)
@@ -27,7 +27,7 @@ class Post {
   }
 
   likePost(postId) {
-    return this._http.load('/api/posts/react', {
+    return this._http.load('/posts/react', {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
       payload: JSON.stringify({

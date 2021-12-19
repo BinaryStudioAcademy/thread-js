@@ -6,7 +6,7 @@ class Auth {
   }
 
   login(payload) {
-    return this._http.load('/api/auth/login', {
+    return this._http.load('/auth/login', {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       hasAuth: false,
@@ -15,7 +15,7 @@ class Auth {
   }
 
   registration(payload) {
-    return this._http.load('/api/auth/register', {
+    return this._http.load('/auth/register', {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       hasAuth: false,
@@ -24,7 +24,7 @@ class Auth {
   }
 
   getCurrentUser() {
-    return this._http.load('/api/auth/user', {
+    return this._http.load('/auth/user', {
       method: HttpMethod.GET
     });
   }

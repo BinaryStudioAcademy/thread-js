@@ -10,7 +10,7 @@ class Image {
 
     formData.append('image', image);
 
-    return this._http.load('/api/images', {
+    return this._http.load('/images', {
       method: HttpMethod.POST,
       payload: formData
     });

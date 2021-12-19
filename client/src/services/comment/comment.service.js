@@ -6,13 +6,13 @@ class Comment {
   }
 
   getComment(id) {
-    return this._http.load(`/api/comments/${id}`, {
+    return this._http.load(`/comments/${id}`, {
       method: HttpMethod.GET
     });
   }
 
   addComment(payload) {
-    return this._http.load('/api/comments', {
+    return this._http.load('/comments', {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload)

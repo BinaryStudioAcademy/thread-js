@@ -1,3 +1,4 @@
+import { ENV } from 'common/enums/enums';
 import { Auth } from './auth/auth.service';
 import { Comment } from './comment/comment.service';
 import { Http } from './http/http.service';
@@ -10,6 +11,7 @@ const storage = new Storage({
 });
 
 const http = new Http({
+  apiPath: ENV.API_PATH,
   storage
 });
 
