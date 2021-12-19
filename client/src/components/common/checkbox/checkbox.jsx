@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-const Checkbox = ({ checked, label, onChange }) => (
+const Checkbox = ({ isChecked, label, onChange }) => (
   <div className={styles.container}>
     <input
-      checked={checked}
+      checked={isChecked}
       className={`${styles.switch} ${styles.pointer}`}
       id="toggle-checkbox"
       onChange={onChange}
@@ -16,7 +16,7 @@ const Checkbox = ({ checked, label, onChange }) => (
 );
 
 Checkbox.propTypes = {
-  checked: PropTypes.bool.isRequired,
+  isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 };

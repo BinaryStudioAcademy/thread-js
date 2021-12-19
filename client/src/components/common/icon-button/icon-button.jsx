@@ -11,7 +11,7 @@ const IconButton = ({
   onClick
 }) => (
   <button className={styles.iconButton} type="button" onClick={onClick}>
-    {<Icon name={iconName} />}
+    <Icon name={iconName} />
     {label}
   </button>
 );
