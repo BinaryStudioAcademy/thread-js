@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@hookform/error-message": "2.0.0",
-    "@hookform/resolvers": "^2.8.5",
+    "@hookform/resolvers": "2.8.5",
     "@reduxjs/toolkit": "1.6.2",
     "dayjs": "1.10.7",
     "joi": "17.5.0",
