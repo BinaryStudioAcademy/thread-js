@@ -25,7 +25,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
 
   return (
     <div className={styles.card}>
-      {image && <Image src={image.link} wrapped ui={false} />}
+      {image && <Image src={image.link} alt="post image" />}
       <div className={styles.content}>
         <div className={styles.meta}>
           <span>{`posted by ${user.username} - ${date}`}</span>

@@ -1,3 +1,6 @@
+@import 'src/styles/colors';
+@import 'src/styles/mixins';
+
 .inputContainer {
   display: inline-flex;
   position: relative;
@@ -10,27 +13,20 @@
   position: absolute;
   text-align: center;
   top: 0.55rem;
-
-  & > i {
-    margin: 0;
-  }
 }
 
 .input {
-  background-color: white;
-  border: 1px solid rgba(34,36,38,.15);
-  border-radius: 0.25rem;
+  @include border;
+
+  background-color: $white;
   box-shadow: none;
   font-weight: 400;
   outline: none;
   padding: 0.6rem 1rem;
+  width: 100%;
 
   &.withIcon {
-    /*
-    * "!important" used to rewrite semantic ui form passed style
-    * could be removed after semantic ui form component replacement
-    */
-    padding: 0.6rem 1rem 0.6rem 2rem !important;
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
   }
 
   &:disabled {

@@ -10,7 +10,6 @@ import {
 } from 'common/enums/enums';
 import {
   Button,
-  Form,
   FormInput,
   Message,
   NavLink,
@@ -41,7 +40,7 @@ const LoginForm = ({ onLogin }) => {
   return (
     <>
       <h2 className={styles.title}>Login to your account</h2>
-      <Form name="loginForm" size="large" onSubmit={handleSubmit(handleLogin)}>
+      <form name="loginForm" onSubmit={handleSubmit(handleLogin)}>
         <UiSegment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
             <FormInput
@@ -72,7 +71,7 @@ const LoginForm = ({ onLogin }) => {
             </Button>
           </fieldset>
         </UiSegment>
-      </Form>
+      </form>
       <Message>
         <span>New to us?</span>
         <NavLink to={AppRoute.REGISTRATION}>Sign Up</NavLink>

@@ -1,4 +1,6 @@
+@import './colors';
+
 @mixin border {
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid $light-shadow;
   border-radius: 0.29rem;
 }

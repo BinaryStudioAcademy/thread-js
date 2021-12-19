@@ -1,28 +1,34 @@
-import { IconName } from 'common/enums/enums';
 import {
-  faUserCircle,
-  faSignOutAlt,
-  faThumbsUp,
-  faThumbsDown,
+  faAt,
+  faCircleNotch,
   faComment,
-  faShareAlt,
+  faCopy,
   faFrown,
   faImage,
-  faCopy,
-  faCircleNotch
+  faLock,
+  faShareAlt,
+  faSignOutAlt,
+  faThumbsDown,
+  faThumbsUp,
+  faUser,
+  faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { IconName } from 'common/enums/enums';
 
 const iconNameToSvgIcon = {
-  [IconName.USER_CIRCLE]: faUserCircle,
-  [IconName.LOG_OUT]: faSignOutAlt,
-  [IconName.THUMBS_UP]: faThumbsUp,
-  [IconName.THUMBS_DOWN]: faThumbsDown,
+  [IconName.AT]: faAt,
   [IconName.COMMENT]: faComment,
-  [IconName.SHARE_ALTERNATE]: faShareAlt,
+  [IconName.COPY]: faCopy,
   [IconName.FROWN]: faFrown,
   [IconName.IMAGE]: faImage,
-  [IconName.COPY]: faCopy,
-  [IconName.SPINNER]: faCircleNotch
+  [IconName.LOCK]: faLock,
+  [IconName.LOG_OUT]: faSignOutAlt,
+  [IconName.SHARE_ALTERNATE]: faShareAlt,
+  [IconName.SPINNER]: faCircleNotch,
+  [IconName.THUMBS_UP]: faThumbsUp,
+  [IconName.THUMBS_DOWN]: faThumbsDown,
+  [IconName.USER]: faUser,
+  [IconName.USER_CIRCLE]: faUserCircle
 };
 
 export { iconNameToSvgIcon };

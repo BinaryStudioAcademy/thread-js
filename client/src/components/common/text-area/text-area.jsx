@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 import styles from './styles.module.scss';
 
-const TextArea = ({ name, onChange, placeholder, rows, value }) => (
+const TextArea = ({ name, className, onChange, placeholder, rows, value }) => (
   <textarea
-    className={styles.textArea}
+    className={clsx(styles.textArea, className)}
     name={name}
     onChange={onChange}
     placeholder={placeholder}
@@ -15,6 +16,7 @@ const TextArea = ({ name, onChange, placeholder, rows, value }) => (
 
 TextArea.propTypes = {
   name: PropTypes.string,
+  className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   rows: PropTypes.number,
@@ -22,6 +24,7 @@ TextArea.propTypes = {
 };
 
 TextArea.defaultProps = {
+  className: undefined,
   name: '',
   rows: 3
 };

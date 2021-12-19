@@ -10,7 +10,6 @@ import {
 } from 'common/enums/enums';
 import {
   Button,
-  Form,
   FormInput,
   Message,
   NavLink,
@@ -41,9 +40,8 @@ const RegistrationForm = ({ onRegister }) => {
   return (
     <>
       <h2 className={styles.title}>Register for free account</h2>
-      <Form
+      <form
         name="registrationForm"
-        size="large"
         onSubmit={handleSubmit(handleRegister)}
       >
         <UiSegment>
@@ -84,7 +82,7 @@ const RegistrationForm = ({ onRegister }) => {
             </Button>
           </fieldset>
         </UiSegment>
-      </Form>
+      </form>
       <Message>
         <span>Already with us?</span>
         <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>
