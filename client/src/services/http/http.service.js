@@ -62,9 +62,7 @@ class Http {
   }
 
   _getUrl(url, query) {
-    const queryString = query ? `?${getStringifiedQuery(query)}` : '';
-
-    return `${url}${queryString}`;
+    return `${url}${query ? `?${getStringifiedQuery(query)}` : ''}`;
   }
 
   _parseJSON(response) {
