@@ -5,6 +5,7 @@ import {
   ButtonSize,
   ButtonColor,
   AppRoute,
+  IconName,
   UserPayloadKey
 } from 'common/enums/enums';
 import {
@@ -51,7 +52,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.USERNAME}
               type="text"
               placeholder="Username"
-              icon="user"
+              iconName={IconName.USER}
               control={control}
               errors={errors}
             />
@@ -59,7 +60,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
-              icon="at"
+              iconName={IconName.AT}
               control={control}
               errors={errors}
             />
@@ -67,7 +68,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
-              icon="lock"
+              iconName={IconName.LOCK}
               control={control}
               errors={errors}
             />
@@ -85,8 +86,7 @@ const RegistrationForm = ({ onRegister }) => {
         </Segment>
       </Form>
       <Message>
-        Alredy with us?
-        {' '}
+        <span>Already with us?</span>
         <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>
       </Message>
     </>

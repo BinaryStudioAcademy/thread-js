@@ -5,6 +5,7 @@ import {
   ButtonSize,
   ButtonColor,
   AppRoute,
+  IconName,
   UserPayloadKey
 } from 'common/enums/enums';
 import {
@@ -47,7 +48,7 @@ const LoginForm = ({ onLogin }) => {
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
-              icon="at"
+              iconName={IconName.AT}
               control={control}
               errors={errors}
             />
@@ -55,7 +56,7 @@ const LoginForm = ({ onLogin }) => {
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
-              icon="lock"
+              iconName={IconName.LOCK}
               control={control}
               errors={errors}
             />
@@ -73,8 +74,7 @@ const LoginForm = ({ onLogin }) => {
         </Segment>
       </Form>
       <Message>
-        New to us?
-        {' '}
+        <span>New to us?</span>
         <NavLink to={AppRoute.REGISTRATION}>Sign Up</NavLink>
       </Message>
     </>

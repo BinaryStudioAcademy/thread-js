@@ -1,6 +1,7 @@
 import { useSelector } from 'hooks/hooks';
 import { Grid, Image, Input } from 'components/common/common';
 import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
+import { IconName } from 'common/enums/enums';
 
 const Profile = () => {
   const { user } = useSelector(state => ({
@@ -18,22 +19,19 @@ const Profile = () => {
         />
         <br />
         <Input
-          icon="user"
-          iconPosition="left"
+          iconName={IconName.USER}
           placeholder="Username"
-          type="text"
-          disabled
           value={user.username}
+          disabled
         />
         <br />
         <br />
         <Input
-          icon="at"
-          iconPosition="left"
+          iconName={IconName.AT}
           placeholder="Email"
           type="email"
-          disabled
           value={user.email}
+          disabled
         />
       </Grid.Column>
     </Grid>
