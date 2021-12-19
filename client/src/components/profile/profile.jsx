@@ -1,7 +1,7 @@
 import { useSelector } from 'hooks/hooks';
 import { Image, Input } from 'components/common/common';
 import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
-import { ImageSize } from 'common/enums/enums';
+import { ImageSize, IconName } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 const Profile = () => {
@@ -19,20 +19,17 @@ const Profile = () => {
         isCircular
       />
       <Input
-        icon="user"
-        iconPosition="left"
+        iconName={IconName.USER}
         placeholder="Username"
-        type="text"
-        disabled
         value={user.username}
+        disabled
       />
       <Input
-        icon="at"
-        iconPosition="left"
+        iconName={IconName.AT}
         placeholder="Email"
         type="email"
-        disabled
         value={user.email}
+        disabled
       />
     </div>
   );

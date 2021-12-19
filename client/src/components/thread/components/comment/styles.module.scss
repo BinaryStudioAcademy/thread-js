@@ -1,5 +1,24 @@
-:global(.ui) {
-  .comment {
-    overflow: auto;
+.comment {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  .avatar {
+    width: 2.5rem;
+    height: auto;
+  }
+
+  .author {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .date {
+    color: rgba(black, 0.4);
+    font-size: 0.85rem;
   }
 }

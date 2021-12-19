@@ -85,9 +85,8 @@ const Thread = () => {
       </div>
       <div className={styles.toolbar}>
         <Checkbox
-          toggle
+          isChecked={showOwnPosts}
           label="Show only my posts"
-          checked={showOwnPosts}
           onChange={toggleShowOwnPosts}
         />
       </div>

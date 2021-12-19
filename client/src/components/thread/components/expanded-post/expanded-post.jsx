@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useDispatch, useSelector } from 'hooks/hooks';
 import { threadActionCreator } from 'store/actions';
-import { Spinner, Post, Modal, Comment as CommentUI } from 'components/common/common';
+import { Spinner, Post, Modal } from 'components/common/common';
 import AddComment from '../add-comment/add-comment';
 import Comment from '../comment/comment';
 import { getSortedComments } from './helpers/helpers';
@@ -43,13 +43,13 @@ const ExpandedPost = ({
             onExpandedPostToggle={handleExpandedPostToggle}
             sharePost={sharePost}
           />
-          <CommentUI.Group style={{ maxWidth: '100%' }}>
+          <div>
             <h3>Comments</h3>
             {sortedComments.map(comment => (
               <Comment key={comment.id} comment={comment} />
             ))}
             <AddComment postId={post.id} onCommentAdd={handleCommentAdd} />
-          </CommentUI.Group>
+          </div>
         </>
       ) : (
         <Spinner />

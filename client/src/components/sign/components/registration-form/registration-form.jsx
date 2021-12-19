@@ -1,111 +1,93 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import validator from 'validator';
+import { useAppForm, useState } from 'hooks/hooks';
 import {
   ButtonType,
   ButtonSize,
   ButtonColor,
-  AppRoute
+  AppRoute,
+  IconName,
+  UserPayloadKey
 } from 'common/enums/enums';
 import {
   Button,
   Form,
+  FormInput,
   Message,
   NavLink,
   UiSegment
 } from 'components/common/common';
+import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [isLoading, setLoading] = useState(false);
-  const [isEmailValid, setEmailValid] = useState(true);
-  const [isUsernameValid, setUsernameValid] = useState(true);
-  const [isPasswordValid, setPasswordValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const { control, errors, handleSubmit } = useAppForm({
+    defaultValues: DEFAULT_REGISTRATION_PAYLOAD,
+    validationSchema: registrationValidationSchema
+  });
 
-  const emailChanged = value => {
-    setEmail(value);
-    setEmailValid(true);
-  };
+  const handleRegister = values => {
+    setIsLoading(true);
 
-  const usernameChanged = value => {
-    setUsername(value);
-    setUsernameValid(true);
-  };
-
-  const passwordChanged = value => {
-    setPassword(value);
-    setPasswordValid(true);
-  };
-
-  const register = async () => {
-    const isValid = isEmailValid && isUsernameValid && isPasswordValid;
-    if (!isValid || isLoading) {
-      return;
-    }
-    setLoading(true);
-    try {
-      await onRegister({ email, password, username });
-    } catch {
-      setLoading(false);
-    }
+    onRegister(values)
+      .unwrap()
+      .catch(() => {
+        // TODO: show error
+        setIsLoading(false);
+      });
   };
 
   return (
     <>
       <h2 className={styles.title}>Register for free account</h2>
-      <Form name="registrationForm" size="large" onSubmit={register}>
+      <Form
+        name="registrationForm"
+        size="large"
+        onSubmit={handleSubmit(handleRegister)}
+      >
         <UiSegment>
-          <Form.Input
-            fluid
-            icon="at"
-            iconPosition="left"
-            placeholder="Email"
-            type="email"
-            error={!isEmailValid}
-            onChange={ev => emailChanged(ev.target.value)}
-            onBlur={() => setEmailValid(validator.isEmail(email))}
-          />
-          <Form.Input
-            fluid
-            icon="user"
-            iconPosition="left"
-            placeholder="Username"
-            type="text"
-            error={!isUsernameValid}
-            onChange={ev => usernameChanged(ev.target.value)}
-            onBlur={() => setUsernameValid(Boolean(username))}
-          />
-          <Form.Input
-            fluid
-            icon="lock"
-            iconPosition="left"
-            placeholder="Password"
-            type="password"
-            onChange={ev => passwordChanged(ev.target.value)}
-            error={!isPasswordValid}
-            onBlur={() => setPasswordValid(Boolean(password))}
-          />
-          <Button
-            type={ButtonType.SUBMIT}
-            color={ButtonColor.TEAL}
-            size={ButtonSize.LARGE}
-            isLoading={isLoading}
-            isFluid
-            isPrimary
-          >
-            Register
-          </Button>
+          <fieldset disabled={isLoading} className={styles.fieldset}>
+            <FormInput
+              name={UserPayloadKey.USERNAME}
+              type="text"
+              placeholder="Username"
+              iconName={IconName.USER}
+              control={control}
+              errors={errors}
+            />
+            <FormInput
+              name={UserPayloadKey.EMAIL}
+              type="email"
+              placeholder="Email"
+              iconName={IconName.AT}
+              control={control}
+              errors={errors}
+            />
+            <FormInput
+              name={UserPayloadKey.PASSWORD}
+              type="password"
+              placeholder="Password"
+              iconName={IconName.LOCK}
+              control={control}
+              errors={errors}
+            />
+            <Button
+              type={ButtonType.SUBMIT}
+              color={ButtonColor.TEAL}
+              size={ButtonSize.LARGE}
+              isLoading={isLoading}
+              isFluid
+              isPrimary
+            >
+              Register
+            </Button>
+          </fieldset>
         </UiSegment>
       </Form>
       <Message>
-        Alredy with us?
-        {' '}
-        <NavLink to={AppRoute.LOGIN}>
-          Sign In
-        </NavLink>
+        <span>Already with us?</span>
+        <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>
       </Message>
     </>
   );

@@ -41,8 +41,15 @@ app.register(cors);
 app.register(socketInjectorPlugin, { io });
 app.register(initApi, { services, prefix: ENV.APP.API_PATH });
 
-const staticPath = path.join(`${__dirname}/../client/build`);
-app.register(fastifyStatic, { root: staticPath, prefix: '/' });
+const staticPath = path.join(__dirname, '../../client/build');
+app.register(fastifyStatic, {
+  root: staticPath,
+  prefix: '/'
+});
+
+app.setNotFoundHandler((req, res) => {
+  res.sendFile('index.html');
+});
 
 const startServer = async () => {
   try {
