@@ -19,7 +19,7 @@ import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
 import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
-import ToggleCheckbox from './toggle-checkbox/toggle-checkbox';
+import Checkbox from './checkbox/checkbox';
 
 export {
   Form,
@@ -40,6 +40,6 @@ export {
   PrivateRoute,
   PublicRoute,
   Spinner,
-  ToggleCheckbox,
+  Checkbox,
   NavLink
 };

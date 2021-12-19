@@ -5,13 +5,13 @@ import {
   ButtonSize,
   ButtonColor,
   AppRoute,
+  IconName,
   UserPayloadKey
 } from 'common/enums/enums';
 import {
   Button,
   Form,
   FormInput,
-  Icon,
   Segment,
   Message,
   NavLink
@@ -52,7 +52,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.USERNAME}
               type="text"
               placeholder="Username"
-              icon={<Icon name="user" />}
+              iconName={IconName.USER}
               control={control}
               errors={errors}
             />
@@ -60,7 +60,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
-              icon={<Icon name="at" />}
+              iconName={IconName.AT}
               control={control}
               errors={errors}
             />
@@ -68,7 +68,7 @@ const RegistrationForm = ({ onRegister }) => {
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
-              icon={<Icon name="lock" />}
+              iconName={IconName.LOCK}
               control={control}
               errors={errors}
             />

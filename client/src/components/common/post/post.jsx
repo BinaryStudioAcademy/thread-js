@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+
 import { getFromNowTime } from 'helpers/helpers';
 import { IconName } from 'common/enums/enums';
 import { postType } from 'common/prop-types/prop-types';
-import { Icon, IconButton, Image } from 'components/common/common';
+import { IconButton, Image } from 'components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -33,22 +34,22 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
       </div>
       <div className={styles.extra}>
         <IconButton
-          icon={<Icon name={IconName.THUMBS_UP} />}
+          iconName={IconName.THUMBS_UP}
           label={likeCount}
           onClick={handlePostLike}
         />
         <IconButton
-          icon={<Icon name={IconName.THUMBS_DOWN} />}
+          iconName={IconName.THUMBS_DOWN}
           label={dislikeCount}
           onClick={() => {}}
         />
         <IconButton
-          icon={<Icon name={IconName.COMMENT} />}
+          iconName={IconName.COMMENT}
           label={commentCount}
           onClick={handleExpandedPostToggle}
         />
         <IconButton
-          icon={<Icon name={IconName.SHARE_ALTERNATE} />}
+          iconName={IconName.SHARE_ALTERNATE}
           onClick={() => sharePost(id)}
         />
       </div>

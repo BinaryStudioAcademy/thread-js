@@ -1,6 +1,7 @@
 import { useSelector } from 'hooks/hooks';
-import { Grid, Icon, Image, Input } from 'components/common/common';
+import { Grid, Image, Input } from 'components/common/common';
 import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
+import { IconName } from 'common/enums/enums';
 
 const Profile = () => {
   const { user } = useSelector(state => ({
@@ -18,7 +19,7 @@ const Profile = () => {
         />
         <br />
         <Input
-          icon={<Icon name="user" />}
+          iconName={IconName.USER}
           placeholder="Username"
           value={user.username}
           disabled
@@ -26,7 +27,7 @@ const Profile = () => {
         <br />
         <br />
         <Input
-          icon={<Icon name="at" />}
+          iconName={IconName.AT}
           placeholder="Email"
           type="email"
           value={user.email}

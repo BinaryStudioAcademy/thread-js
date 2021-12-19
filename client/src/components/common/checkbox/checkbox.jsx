@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-const ToggleCheckbox = ({ checked, label, onChange }) => (
+const Checkbox = ({ checked, label, onChange }) => (
   <div className={styles.container}>
     <input
       checked={checked}
@@ -15,10 +15,10 @@ const ToggleCheckbox = ({ checked, label, onChange }) => (
   </div>
 );
 
-ToggleCheckbox.propTypes = {
+Checkbox.propTypes = {
   checked: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
-export default ToggleCheckbox;
+export default Checkbox;
