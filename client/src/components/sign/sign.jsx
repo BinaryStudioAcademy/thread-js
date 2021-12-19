@@ -1,7 +1,7 @@
 import { useCallback, useDispatch, useLocation } from 'hooks/hooks';
 import { AppRoute } from 'common/enums/enums';
 import { profileActionCreator } from 'store/actions';
-import { Grid, Image } from 'components/common/common';
+import { Image } from 'components/common/common';
 import { LoginForm, RegistrationForm } from './components/components';
 import styles from './styles.module.scss';
 
@@ -34,8 +34,8 @@ const Login = () => {
   };
 
   return (
-    <Grid textAlign="center" verticalAlign="middle" className="fill">
-      <Grid.Column style={{ maxWidth: 450 }}>
+    <div className={styles.login}>
+      <section className={styles.form}>
         <h2 className={styles.logoWrapper}>
           <Image
             alt="Thread logo"
@@ -47,8 +47,8 @@ const Login = () => {
           Thread
         </h2>
         {getScreen(pathname)}
-      </Grid.Column>
-    </Grid>
+      </section>
+    </div>
   );
 };
 

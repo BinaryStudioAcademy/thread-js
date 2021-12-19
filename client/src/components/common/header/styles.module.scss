@@ -1,7 +1,9 @@
 .headerWrp {
   display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
   background-color: white;
-  padding: 1em 0 1em;
+  padding: 1em 2em 1em;
 }
 
 .userWrapper {

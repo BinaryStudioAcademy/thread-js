@@ -1,3 +1,20 @@
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.form {
+  align-self: center;
+  text-align: center;
+  width: 100%;
+  max-width: 450px;
+  padding: 1rem;
+}
+
 .logoWrapper {
   display: flex;
   justify-content: center;
