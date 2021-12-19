@@ -18,6 +18,7 @@ import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
 import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
+import TextArea from './text-area/text-area';
 import UiSegment from './ui-segment/ui-segment';
 
 export {
@@ -38,6 +39,7 @@ export {
   PrivateRoute,
   PublicRoute,
   Spinner,
+  TextArea,
   UiSegment,
   NavLink
 };

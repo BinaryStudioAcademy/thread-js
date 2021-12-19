@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonType } from 'common/enums/enums';
-import { Button, Form } from 'components/common/common';
+import { Button, Form, TextArea } from 'components/common/common';
 
 const AddComment = ({ postId, onCommentAdd }) => {
   const [body, setBody] = useState('');
@@ -13,10 +13,10 @@ const AddComment = ({ postId, onCommentAdd }) => {
     await onCommentAdd({ postId, body });
     setBody('');
   };
-
+  // TODO fix TextArea height after Form component substitution
   return (
     <Form reply onSubmit={handleAddComment}>
-      <Form.TextArea
+      <TextArea
         value={body}
         placeholder="Type a comment..."
         onChange={ev => setBody(ev.target.value)}
