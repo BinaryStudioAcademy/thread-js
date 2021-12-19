@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonType } from 'common/enums/enums';
 import { Button, TextArea } from 'components/common/common';
@@ -16,18 +16,23 @@ const AddComment = ({ postId, onCommentAdd }) => {
     setBody('');
   };
 
+  const handleTextChange = useCallback(
+    ev => setBody(ev.target.value),
+    [setBody]
+  );
+
   return (
-    <form name="comment" onSubmit={handleAddComment}>
+    <>
       <TextArea
         className={styles.commentArea}
         value={body}
         placeholder="Type a comment..."
-        onChange={ev => setBody(ev.target.value)}
+        onChange={handleTextChange}
       />
-      <Button type={ButtonType.SUBMIT} isPrimary>
+      <Button type={ButtonType.BUTTON} onClick={handleAddComment} isPrimary>
         Post comment
       </Button>
-    </form>
+    </>
   );
 };
 

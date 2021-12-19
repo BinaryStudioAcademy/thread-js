@@ -10,7 +10,8 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
   const [image, setImage] = useState(undefined);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleAddPost = async () => {
+  const handleAddPost = async ev => {
+    ev.preventDefault();
     if (!body) {
       return;
     }
