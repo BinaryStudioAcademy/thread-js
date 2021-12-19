@@ -1,21 +1,51 @@
-import { DataTypes } from 'sequelize';
+import { Model } from 'objection';
 
-const init = orm => {
-  const PostReaction = orm.define(
-    'postReaction',
-    {
-      isLike: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+import { DbTableName } from '../../../common/enums/enums';
+import AbstractModel from '../abstract/abstract.model';
+import PostModel from '../post/post.model';
+import UserModel from '../user/user.model';
+
+class PostReaction extends AbstractModel {
+  static get tableName() {
+    return DbTableName.POST_REACTIONS;
+  }
+
+  static get jsonSchema() {
+    const baseSchema = super.jsonSchema;
+
+    return {
+      type: baseSchema.type,
+      required: ['isLike', 'userId', 'postId'],
+      properties: {
+        ...baseSchema.properties,
+        isLike: { type: 'boolean' },
+        postId: { type: ['integer', 'null'] },
+        userId: { type: ['integer', 'null'] }
+      }
+    };
+  }
+
+  static get relationMappings() {
+    return {
+      post: {
+        relation: Model.HasOneRelation,
+        modelClass: PostModel,
+        join: {
+          from: `${DbTableName.POST_REACTIONS}.postId`,
+          to: `${DbTableName.POSTS}.id`
+        }
       },
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
-    },
-    {}
-  );
+      user: {
+        relation: Model.HasOneRelation,
+        modelClass: UserModel,
+        filter: query => query.select('id', 'userId'),
+        join: {
+          from: `${DbTableName.POST_REACTIONS}.userId`,
+          to: `${DbTableName.USERS}.id`
+        }
+      }
+    };
+  }
+}
 
-  return PostReaction;
-};
-
-export { init };
+export default PostReaction;

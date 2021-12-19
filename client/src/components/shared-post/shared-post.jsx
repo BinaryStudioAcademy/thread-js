@@ -1,5 +1,5 @@
-import { useEffect, useDispatch } from 'hooks/hooks';
-import { Navigate, useParams } from 'react-router-dom';
+import { useEffect, useDispatch, useParams } from 'hooks/hooks';
+import { Navigate } from 'react-router-dom';
 import { threadActionCreator } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 

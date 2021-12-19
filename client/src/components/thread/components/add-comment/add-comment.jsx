@@ -30,7 +30,7 @@ const AddComment = ({ postId, onCommentAdd }) => {
 
 AddComment.propTypes = {
   onCommentAdd: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.number.isRequired
 };
 
 export default AddComment;

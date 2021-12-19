@@ -1,22 +1,17 @@
 import { Abstract } from '../abstract/abstract.repository';
 
 class PostReaction extends Abstract {
-  constructor({ postReactionModel, postModel }) {
+  constructor({ postReactionModel }) {
     super(postReactionModel);
-    this._postModel = postModel;
   }
 
   getPostReaction(userId, postId) {
-    return this.model.findOne({
-      group: ['postReaction.id', 'post.id'],
-      where: { userId, postId },
-      include: [
-        {
-          model: this._postModel,
-          attributes: ['id', 'userId']
-        }
-      ]
-    });
+    return this.model.query()
+      .select()
+      .where({ userId })
+      .andWhere({ postId })
+      .withGraphFetched('[post]')
+      .first();
   }
 }
 
