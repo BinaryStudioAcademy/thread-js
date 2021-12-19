@@ -11,23 +11,26 @@ const storage = new Storage({
 });
 
 const http = new Http({
-  apiPath: ENV.API_PATH,
   storage
 });
 
 const auth = new Auth({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const comment = new Comment({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const post = new Post({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const image = new Image({
+  apiPath: ENV.API_PATH,
   http
 });
 

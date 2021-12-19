@@ -3,8 +3,7 @@ import { getStringifiedQuery } from 'helpers/helpers';
 import { StorageKey, HttpHeader, HttpMethod } from 'common/enums/enums';
 
 class Http {
-  constructor({ apiPath, storage }) {
-    this._apiPath = apiPath;
+  constructor({ storage }) {
     this._storage = storage;
   }
 
@@ -65,7 +64,7 @@ class Http {
   _getUrl(url, query) {
     const queryString = query ? `?${getStringifiedQuery(query)}` : '';
 
-    return `${this._apiPath}${url}${queryString}`;
+    return `${url}${queryString}`;
   }
 
   _parseJSON(response) {

@@ -1,18 +1,19 @@
 import { HttpMethod, ContentType } from 'common/enums/enums';
 
 class Comment {
-  constructor({ http }) {
+  constructor({ apiPath, http }) {
+    this._apiPath = apiPath;
     this._http = http;
   }
 
   getComment(id) {
-    return this._http.load(`/comments/${id}`, {
+    return this._http.load(`${this._apiPath}/comments/${id}`, {
       method: HttpMethod.GET
     });
   }
 
   addComment(payload) {
-    return this._http.load('/comments', {
+    return this._http.load(`${this._apiPath}/comments`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload)
