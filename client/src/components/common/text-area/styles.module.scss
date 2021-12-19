@@ -3,8 +3,9 @@
 
 .textArea {
   @include border;
-
   color: rgba(0, 0, 0, 0.87);
+  font-family: sans-serif;
+  font-size: 100%;
   background: $white;
   width: 100%;
   line-height: 1.29;

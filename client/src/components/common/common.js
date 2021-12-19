@@ -1,7 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import {
-  Form
-} from 'semantic-ui-react';
 import Button from './button/button';
 import CopyBufferInput from './copy-buffer-input/copy-buffer-input';
 import FormInput from './form-input/form-input';
@@ -22,7 +19,6 @@ import UiSegment from './ui-segment/ui-segment';
 import Checkbox from './checkbox/checkbox';
 
 export {
-  Form,
   Image,
   Modal,
   Message,
