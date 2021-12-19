@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import { getFromNowTime } from 'helpers/helpers';
 import { IconName } from 'common/enums/enums';
 import { postType } from 'common/prop-types/prop-types';
-import { Icon, IconButton, Card, Image } from 'components/common/common';
+import { Icon, IconButton, Image } from 'components/common/common';
+
+import styles from './styles.module.scss';
 
 const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
   const {
@@ -21,21 +23,15 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
   const handleExpandedPostToggle = () => onExpandedPostToggle(id);
 
   return (
-    <Card style={{ width: '100%' }}>
+    <div className={styles.card}>
       {image && <Image src={image.link} wrapped ui={false} />}
-      <Card.Content>
-        <Card.Meta>
-          <span className="date">
-            posted by
-            {' '}
-            {user.username}
-            {' - '}
-            {date}
-          </span>
-        </Card.Meta>
-        <Card.Description>{body}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
+      <div className={styles.content}>
+        <div className={styles.meta}>
+          <span>{`posted by ${user.username} - ${date}`}</span>
+        </div>
+        <p className={styles.description}>{body}</p>
+      </div>
+      <div className={styles.extra}>
         <IconButton
           icon={<Icon name={IconName.THUMBS_UP} />}
           label={likeCount}
@@ -55,8 +51,8 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
           icon={<Icon name={IconName.SHARE_ALTERNATE} />}
           onClick={() => sharePost(id)}
         />
-      </Card.Content>
-    </Card>
+      </div>
+    </div>
   );
 };
 

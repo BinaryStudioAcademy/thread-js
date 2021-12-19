@@ -1,3 +1,30 @@
-:global(.ui.basic.label).toolbarBtn {
-  border: none
+.card {
+  background-color: white;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+
+  .content {
+    padding: 1rem;
+
+    .meta {
+      color: rgba(black, 0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      color: rgba(black,.68)
+    }
+  }
+
+  .extra {
+    border-top: 1px solid rgba(black, 0.05);
+    padding: 1rem;
+  }
 }

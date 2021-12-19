@@ -3,8 +3,7 @@ import {
   Segment,
   Image,
   Grid,
-  Modal,
-  Card
+  Modal
 } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Button from './button/button';
@@ -28,7 +27,6 @@ export {
   Grid,
   Modal,
   Message,
-  Card,
   Button,
   CopyBufferInput,
   Header,
