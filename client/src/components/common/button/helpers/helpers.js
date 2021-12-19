@@ -1,1 +1,1 @@
-export * from './isCorrectType.helper';
+export * from './check-is-valid-btn-type.helper';

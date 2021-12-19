@@ -7,7 +7,7 @@ import {
 import { useMemo } from 'hooks/hooks';
 import PropTypes from 'prop-types';
 import Icon from '../icon/icon';
-import { isCorrectType } from './helpers/helpers';
+import { checkIsValidBtnType } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 const Button = ({
@@ -25,7 +25,7 @@ const Button = ({
   children
 }) => {
   const hasIcon = Boolean(iconName);
-  const btnType = useMemo(() => (isCorrectType(type) ? type : ButtonType.BUTTON), [type]);
+  const btnType = useMemo(() => (checkIsValidBtnType(type) ? type : ButtonType.BUTTON), [type]);
 
   return (
     <button
