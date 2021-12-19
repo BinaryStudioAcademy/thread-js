@@ -1,3 +1,12 @@
 .title {
   color: #00b5ad;
 }
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+  border: none;
+}
