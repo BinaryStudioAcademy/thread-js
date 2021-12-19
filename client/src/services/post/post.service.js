@@ -1,25 +1,26 @@
 import { HttpMethod, ContentType } from 'common/enums/enums';
 
 class Post {
-  constructor({ http }) {
+  constructor({ apiPath, http }) {
+    this._apiPath = apiPath;
     this._http = http;
   }
 
   getAllPosts(filter) {
-    return this._http.load('/api/posts', {
+    return this._http.load(`${this._apiPath}/posts`, {
       method: HttpMethod.GET,
       query: filter
     });
   }
 
   getPost(id) {
-    return this._http.load(`/api/posts/${id}`, {
+    return this._http.load(`${this._apiPath}/posts/${id}`, {
       method: HttpMethod.GET
     });
   }
 
   addPost(payload) {
-    return this._http.load('/api/posts', {
+    return this._http.load(`${this._apiPath}/posts`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload)
@@ -27,7 +28,7 @@ class Post {
   }
 
   likePost(postId) {
-    return this._http.load('/api/posts/react', {
+    return this._http.load(`${this._apiPath}/posts/react`, {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
       payload: JSON.stringify({

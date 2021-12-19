@@ -1,3 +1,4 @@
+import { ENV } from 'common/enums/enums';
 import { Auth } from './auth/auth.service';
 import { Comment } from './comment/comment.service';
 import { Http } from './http/http.service';
@@ -14,18 +15,22 @@ const http = new Http({
 });
 
 const auth = new Auth({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const comment = new Comment({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const post = new Post({
+  apiPath: ENV.API_PATH,
   http
 });
 
 const image = new Image({
+  apiPath: ENV.API_PATH,
   http
 });
 
