@@ -13,7 +13,7 @@ const AddComment = ({ postId, onCommentAdd }) => {
     await onCommentAdd({ postId, body });
     setBody('');
   };
-  // TODO fix TextArea height after Form component substitution
+
   return (
     <Form reply onSubmit={handleAddComment}>
       <TextArea

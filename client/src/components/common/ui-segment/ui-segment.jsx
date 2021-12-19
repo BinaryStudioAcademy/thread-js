@@ -9,7 +9,7 @@ const UiSegment = ({ children }) => (
 );
 
 UiSegment.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.node.isRequired
 };
 
 export default UiSegment;

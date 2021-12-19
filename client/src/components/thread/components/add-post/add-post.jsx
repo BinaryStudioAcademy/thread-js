@@ -36,7 +36,6 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
   };
 
   const handleTextAreaChange = useCallback(ev => setBody(ev.target.value), [setBody]);
-  // TODO margin-bottom 1em for text area
   return (
     <UiSegment>
       <Form onSubmit={handleAddPost}>
