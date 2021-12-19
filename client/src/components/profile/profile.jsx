@@ -13,10 +13,10 @@ const Profile = () => {
     <div className={styles.profile}>
       <Image
         alt="profile avatar"
-        centered
+        isCentered
         src={user.image?.link ?? DEFAULT_USER_AVATAR}
         size={ImageSize.MEDIUM}
-        circular
+        isCircular
       />
       <Input
         icon="user"

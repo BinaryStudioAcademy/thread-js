@@ -6,8 +6,8 @@ import styles from './styles.module.scss';
 
 const Image = ({
   alt,
-  centered,
-  circular,
+  isCentered,
+  isCircular,
   className,
   height,
   size,
@@ -17,8 +17,8 @@ const Image = ({
   <img
     className={clsx(
       styles.image,
-      circular && styles.circular,
-      centered && styles.centered,
+      isCircular && styles.circular,
+      isCentered && styles.centered,
       size && styles[`imageSize__${size}`],
       className
     )}
@@ -31,8 +31,8 @@ const Image = ({
 
 Image.propTypes = {
   alt: PropTypes.string.isRequired,
-  centered: PropTypes.bool,
-  circular: PropTypes.bool,
+  isCentered: PropTypes.bool,
+  isCircular: PropTypes.bool,
   className: PropTypes.string,
   height: PropTypes.string,
   size: PropTypes.oneOf(Object.values(ImageSize)),
@@ -41,8 +41,8 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-  centered: undefined,
-  circular: false,
+  isCentered: undefined,
+  isCircular: false,
   className: undefined,
   height: undefined,
   size: undefined,

@@ -41,7 +41,7 @@ const Login = () => {
             alt="Thread logo"
             width="75"
             height="75"
-            circular
+            isCircular
             src="http://s1.iconbird.com/ico/2013/8/428/w256h2561377930292cattied.png"
           />
           Thread

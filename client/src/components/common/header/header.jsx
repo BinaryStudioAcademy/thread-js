@@ -12,7 +12,7 @@ const Header = ({ user, onUserLogout }) => (
       <NavLink to={AppRoute.ROOT}>
         <div className={styles.userWrapper}>
           <Image
-            circular
+            isCircular
             width="45"
             height="45"
             src={user.image?.link ?? DEFAULT_USER_AVATAR}

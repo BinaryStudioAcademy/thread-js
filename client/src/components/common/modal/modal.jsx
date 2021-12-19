@@ -4,7 +4,7 @@ import Portal from '../portal/portal';
 import { useModal } from './hooks/hooks';
 import styles from './styles.module.scss';
 
-const Modal = ({ isOpen, centered = false, onClose, children }) => {
+const Modal = ({ isOpen, isCentered, onClose, children }) => {
   const { disableContentContainerClick, onOutsideClick } = useModal({
     onClose
   });
@@ -15,7 +15,7 @@ const Modal = ({ isOpen, centered = false, onClose, children }) => {
 
   return (
     <Portal>
-      <div className={clsx(styles.modal, centered && styles.centered)} onClick={onOutsideClick}>
+      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={onOutsideClick}>
         <div className={styles.content} onClick={disableContentContainerClick}>
           {children}
         </div>
@@ -25,14 +25,14 @@ const Modal = ({ isOpen, centered = false, onClose, children }) => {
 };
 
 Modal.propTypes = {
-  centered: PropTypes.bool,
+  isCentered: PropTypes.bool,
   children: PropTypes.element.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
 Modal.defaultProps = {
-  centered: false
+  isCentered: false
 };
 
 export default Modal;

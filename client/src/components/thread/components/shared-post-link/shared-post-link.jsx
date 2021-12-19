@@ -17,7 +17,7 @@ const SharedPostLink = ({ postId, close }) => {
   };
 
   return (
-    <Modal isOpen centered onClose={close}>
+    <Modal isOpen isCentered onClose={close}>
       <>
         <header className={styles.header}>
           <span>Share Post</span>
