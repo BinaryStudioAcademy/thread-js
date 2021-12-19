@@ -26,7 +26,11 @@
   padding: 0.6rem 1rem;
 
   &.withIcon {
-    padding: 0.6rem 1rem 0.6rem 2rem;
+    /*
+    * "!important" used to rewrite semantic ui form passed style
+    * could be removed after semantic ui form component replacement
+    */
+    padding: 0.6rem 1rem 0.6rem 2rem !important;
   }
 
   &:disabled {

@@ -11,6 +11,7 @@ import {
   Button,
   Form,
   FormInput,
+  Icon,
   Segment,
   Message,
   NavLink
@@ -47,7 +48,7 @@ const LoginForm = ({ onLogin }) => {
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
-              icon="at"
+              icon={<Icon name="at" />}
               control={control}
               errors={errors}
             />
@@ -55,7 +56,7 @@ const LoginForm = ({ onLogin }) => {
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
-              icon="lock"
+              icon={<Icon name="lock" />}
               control={control}
               errors={errors}
             />

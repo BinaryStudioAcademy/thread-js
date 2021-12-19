@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import { Input } from 'semantic-ui-react';
 import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+
+import Input from '../input/input';
 
 import styles from './styles.module.scss';
 
@@ -15,7 +16,6 @@ const FormInput = ({ name, control, errors, type, placeholder, icon }) => {
         type={type}
         placeholder={placeholder}
         icon={icon}
-        iconPosition="left"
       />
       <span className={styles.errorWrapper}>
         <ErrorMessage errors={errors} name={name} />
@@ -30,7 +30,7 @@ FormInput.propTypes = {
   errors: PropTypes.oneOfType([PropTypes.object]).isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired
+  icon: PropTypes.element.isRequired
 };
 
 export default FormInput;

@@ -1,25 +1,29 @@
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-const Input = ({
+const Input = forwardRef(({
   disabled,
   icon,
   placeholder,
   type,
-  value
-}) => (
+  value,
+  ...fieldControls
+}, ref) => (
   <div className={styles.inputContainer}>
     {icon && <span className={styles.icon}>{icon}</span>}
     <input
       className={`${styles.input} ${icon ? styles.withIcon : ''}`}
       placeholder={placeholder}
+      ref={ref}
       type={type}
       disabled={disabled}
       value={value}
+      {...fieldControls}
     />
   </div>
-);
+));
 
 Input.propTypes = {
   disabled: PropTypes.bool,
