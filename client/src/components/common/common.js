@@ -6,8 +6,7 @@ import {
   Form,
   Input,
   Label,
-  Message,
-  Segment
+  Message
 } from 'semantic-ui-react';
 import Button from './button/button';
 import Header from './header/header';
@@ -19,10 +18,10 @@ import Post from './post/post';
 import PrivateRoute from './private-route/private-route';
 import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
+import UiSegment from './ui-segment/ui-segment';
 
 export {
   Form,
-  Segment,
   Image,
   Modal,
   Input,
@@ -39,5 +38,6 @@ export {
   PrivateRoute,
   PublicRoute,
   Spinner,
+  UiSegment,
   NavLink
 };

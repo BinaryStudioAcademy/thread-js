@@ -10,9 +10,9 @@ import {
 import {
   Button,
   Form,
-  Segment,
   Message,
-  NavLink
+  NavLink,
+  UiSegment
 } from 'components/common/common';
 import styles from './styles.module.scss';
 
@@ -50,7 +50,7 @@ const LoginForm = ({ onLogin }) => {
     <>
       <h2 className={styles.title}>Login to your account</h2>
       <Form name="loginForm" size="large" onSubmit={handleLoginClick}>
-        <Segment>
+        <UiSegment>
           <Form.Input
             fluid
             icon="at"
@@ -81,7 +81,7 @@ const LoginForm = ({ onLogin }) => {
           >
             Login
           </Button>
-        </Segment>
+        </UiSegment>
       </Form>
       <Message>
         New to us?

@@ -10,9 +10,9 @@ import {
 import {
   Button,
   Form,
-  Segment,
   Message,
-  NavLink
+  NavLink,
+  UiSegment
 } from 'components/common/common';
 import styles from './styles.module.scss';
 
@@ -57,7 +57,7 @@ const RegistrationForm = ({ onRegister }) => {
     <>
       <h2 className={styles.title}>Register for free account</h2>
       <Form name="registrationForm" size="large" onSubmit={register}>
-        <Segment>
+        <UiSegment>
           <Form.Input
             fluid
             icon="at"
@@ -98,7 +98,7 @@ const RegistrationForm = ({ onRegister }) => {
           >
             Register
           </Button>
-        </Segment>
+        </UiSegment>
       </Form>
       <Message>
         Alredy with us?

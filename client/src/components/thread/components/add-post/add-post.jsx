@@ -1,7 +1,7 @@
 import { useState } from 'hooks/hooks';
 import PropTypes from 'prop-types';
 import { ButtonColor, ButtonType, IconName } from 'common/enums/enums';
-import { Button, Form, Image, Segment } from 'components/common/common';
+import { Button, Form, Image, UiSegment } from 'components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -36,7 +36,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
   };
 
   return (
-    <Segment>
+    <UiSegment>
       <Form onSubmit={handleAddPost}>
         <Form.TextArea
           name="body"
@@ -71,7 +71,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
           </Button>
         </div>
       </Form>
-    </Segment>
+    </UiSegment>
   );
 };
 
