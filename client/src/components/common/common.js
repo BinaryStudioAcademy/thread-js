@@ -8,6 +8,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import Button from './button/button';
 import CopyBufferInput from './copy-buffer-input/copy-buffer-input';
+import FormInput from './form-input/form-input';
 import Header from './header/header';
 import Icon from './icon/icon';
 import IconButton from './icon-button/icon-button';
@@ -29,6 +30,7 @@ export {
   Message,
   Button,
   CopyBufferInput,
+  FormInput,
   Header,
   Icon,
   IconButton,

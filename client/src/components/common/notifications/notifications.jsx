@@ -7,9 +7,8 @@ import {
 import 'react-notifications/lib/notifications.css';
 
 import { useEffect } from 'hooks/hooks';
-import { ENV } from 'common/enums/enums';
+import { ENV, NotificationMessage, SocketEvent } from 'common/enums/enums';
 import { userType } from 'common/prop-types/prop-types';
-import { NotificationMessage, SocketEvent } from './common';
 
 const socket = io(ENV.SOCKET_URL);
 
@@ -31,7 +30,7 @@ const Notifications = ({ user, onPostApply }) => {
 
     return () => {
       socket.emit(SocketEvent.LEAVE_ROOM, id);
-      socket.close();
+      socket.removeAllListeners();
     };
   }, [user, onPostApply]);
 

@@ -1,86 +1,75 @@
 import PropTypes from 'prop-types';
-import validator from 'validator';
-import { useState } from 'hooks/hooks';
+import { useAppForm, useState } from 'hooks/hooks';
 import {
   ButtonType,
   ButtonSize,
   ButtonColor,
-  AppRoute
+  AppRoute,
+  UserPayloadKey
 } from 'common/enums/enums';
 import {
   Button,
   Form,
+  FormInput,
   Segment,
   Message,
   NavLink
 } from 'components/common/common';
+import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
+import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
 const LoginForm = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const { control, errors, handleSubmit } = useAppForm({
+    defaultValues: DEFAULT_LOGIN_PAYLOAD,
+    validationSchema: loginValidationSchema
+  });
 
-  const emailChanged = data => {
-    setEmail(data);
-    setIsEmailValid(true);
-  };
-
-  const passwordChanged = data => {
-    setPassword(data);
-    setIsPasswordValid(true);
-  };
-
-  const handleLoginClick = () => {
-    const isValid = isEmailValid && isPasswordValid;
-    if (!isValid || isLoading) {
-      return;
-    }
+  const handleLogin = values => {
     setIsLoading(true);
 
-    onLogin({ email, password }).catch(() => {
-      // TODO: show error
-      setIsLoading(false);
-    });
+    onLogin(values)
+      .unwrap()
+      .catch(() => {
+        // TODO: show error
+        setIsLoading(false);
+      });
   };
 
   return (
     <>
       <h2 className={styles.title}>Login to your account</h2>
-      <Form name="loginForm" size="large" onSubmit={handleLoginClick}>
+      <Form name="loginForm" size="large" onSubmit={handleSubmit(handleLogin)}>
         <Segment>
-          <Form.Input
-            fluid
-            icon="at"
-            iconPosition="left"
-            placeholder="Email"
-            type="email"
-            error={!isEmailValid}
-            onChange={ev => emailChanged(ev.target.value)}
-            onBlur={() => setIsEmailValid(validator.isEmail(email))}
-          />
-          <Form.Input
-            fluid
-            icon="lock"
-            iconPosition="left"
-            placeholder="Password"
-            type="password"
-            error={!isPasswordValid}
-            onChange={ev => passwordChanged(ev.target.value)}
-            onBlur={() => setIsPasswordValid(Boolean(password))}
-          />
-          <Button
-            type={ButtonType.SUBMIT}
-            color={ButtonColor.TEAL}
-            size={ButtonSize.LARGE}
-            isLoading={isLoading}
-            isFluid
-            isPrimary
-          >
-            Login
-          </Button>
+          <fieldset disabled={isLoading} className={styles.fieldset}>
+            <FormInput
+              name={UserPayloadKey.EMAIL}
+              type="email"
+              placeholder="Email"
+              icon="at"
+              control={control}
+              errors={errors}
+            />
+            <FormInput
+              name={UserPayloadKey.PASSWORD}
+              type="password"
+              placeholder="Password"
+              icon="lock"
+              control={control}
+              errors={errors}
+            />
+            <Button
+              type={ButtonType.SUBMIT}
+              color={ButtonColor.TEAL}
+              size={ButtonSize.LARGE}
+              isLoading={isLoading}
+              isFluid
+              isPrimary
+            >
+              Login
+            </Button>
+          </fieldset>
         </Segment>
       </Form>
       <Message>

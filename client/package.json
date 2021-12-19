@@ -15,12 +15,16 @@
     "lint:js": "npx eslint --ext .js,jsx src"
   },
   "dependencies": {
+    "@hookform/error-message": "2.0.0",
+    "@hookform/resolvers": "2.8.5",
     "@reduxjs/toolkit": "1.6.2",
     "dayjs": "1.10.7",
+    "joi": "17.5.0",
     "prop-types": "15.7.2",
     "query-string": "7.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "7.22.2",
     "react-infinite-scroll-component": "6.1.0",
     "react-notifications": "1.7.2",
     "react-redux": "7.2.6",
@@ -28,8 +32,7 @@
     "react-scripts": "4.0.3",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "2.0.4",
-    "socket.io-client": "4.4.0",
-    "validator": "13.7.0"
+    "socket.io-client": "4.4.0"
   },
   "browserslist": [
     ">0.2%",
