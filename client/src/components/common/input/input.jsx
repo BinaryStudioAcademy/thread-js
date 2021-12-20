@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { IconName } from 'common/enums/enums';
@@ -17,7 +18,7 @@ const Input = forwardRef(({
   <div className={styles.inputContainer}>
     {iconName && <span className={styles.icon}><Icon name={iconName} /></span>}
     <input
-      className={`${styles.input} ${iconName ? styles.withIcon : ''}`}
+      className={clsx(styles.input, iconName && styles.withIcon)}
       placeholder={placeholder}
       ref={ref}
       type={type}

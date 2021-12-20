@@ -1,7 +1,8 @@
 import { useSelector } from 'hooks/hooks';
-import { Grid, Image, Input } from 'components/common/common';
+import { Image, Input } from 'components/common/common';
 import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
-import { IconName } from 'common/enums/enums';
+import { ImageSize, IconName } from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 const Profile = () => {
   const { user } = useSelector(state => ({
@@ -9,32 +10,28 @@ const Profile = () => {
   }));
 
   return (
-    <Grid container textAlign="center" style={{ paddingTop: 30 }}>
-      <Grid.Column>
-        <Image
-          centered
-          src={user.image?.link ?? DEFAULT_USER_AVATAR}
-          size="medium"
-          circular
-        />
-        <br />
-        <Input
-          iconName={IconName.USER}
-          placeholder="Username"
-          value={user.username}
-          disabled
-        />
-        <br />
-        <br />
-        <Input
-          iconName={IconName.AT}
-          placeholder="Email"
-          type="email"
-          value={user.email}
-          disabled
-        />
-      </Grid.Column>
-    </Grid>
+    <div className={styles.profile}>
+      <Image
+        alt="profile avatar"
+        isCentered
+        src={user.image?.link ?? DEFAULT_USER_AVATAR}
+        size={ImageSize.MEDIUM}
+        isCircular
+      />
+      <Input
+        iconName={IconName.USER}
+        placeholder="Username"
+        value={user.username}
+        disabled
+      />
+      <Input
+        iconName={IconName.AT}
+        placeholder="Email"
+        type="email"
+        value={user.email}
+        disabled
+      />
+    </div>
   );
 };
 

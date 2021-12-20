@@ -9,4 +9,8 @@
   &:hover {
     color: #1e70bf;
   }
+
+  :first-child {
+    margin-right: 0.5rem;
+  }
 }

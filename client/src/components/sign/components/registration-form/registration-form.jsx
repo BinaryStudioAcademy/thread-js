@@ -10,11 +10,10 @@ import {
 } from 'common/enums/enums';
 import {
   Button,
-  Form,
   FormInput,
-  Segment,
   Message,
-  NavLink
+  NavLink,
+  Segment
 } from 'components/common/common';
 import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
@@ -41,9 +40,8 @@ const RegistrationForm = ({ onRegister }) => {
   return (
     <>
       <h2 className={styles.title}>Register for free account</h2>
-      <Form
+      <form
         name="registrationForm"
-        size="large"
         onSubmit={handleSubmit(handleRegister)}
       >
         <Segment>
@@ -84,7 +82,7 @@ const RegistrationForm = ({ onRegister }) => {
             </Button>
           </fieldset>
         </Segment>
-      </Form>
+      </form>
       <Message>
         <span>Already with us?</span>
         <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>

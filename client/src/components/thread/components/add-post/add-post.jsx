@@ -1,7 +1,7 @@
-import { useState } from 'hooks/hooks';
+import { useCallback, useState } from 'hooks/hooks';
 import PropTypes from 'prop-types';
 import { ButtonColor, ButtonType, IconName } from 'common/enums/enums';
-import { Button, Form, Image, Segment } from 'components/common/common';
+import { Button, Image, TextArea, Segment } from 'components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -10,7 +10,8 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
   const [image, setImage] = useState(undefined);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleAddPost = async () => {
+  const handleAddPost = async ev => {
+    ev.preventDefault();
     if (!body) {
       return;
     }
@@ -35,18 +36,19 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
       });
   };
 
+  const handleTextAreaChange = useCallback(ev => setBody(ev.target.value), [setBody]);
   return (
     <Segment>
-      <Form onSubmit={handleAddPost}>
-        <Form.TextArea
+      <form onSubmit={handleAddPost}>
+        <TextArea
           name="body"
           value={body}
           placeholder="What is the news?"
-          onChange={ev => setBody(ev.target.value)}
+          onChange={handleTextAreaChange}
         />
         {image?.imageLink && (
           <div className={styles.imageWrapper}>
-            <Image className={styles.image} src={image?.imageLink} alt="post" />
+            <Image className={styles.image} src={image?.imageLink} alt="post image" />
           </div>
         )}
         <div className={styles.btnWrapper}>
@@ -70,7 +72,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
             Post
           </Button>
         </div>
-      </Form>
+      </form>
     </Segment>
   );
 };

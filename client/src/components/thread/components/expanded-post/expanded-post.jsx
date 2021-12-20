@@ -32,13 +32,11 @@ const ExpandedPost = ({
 
   return (
     <Modal
-      dimmer="blurring"
-      centered={false}
-      open
+      isOpen
       onClose={handleExpandedPostClose}
     >
       {post ? (
-        <Modal.Content>
+        <>
           <Post
             post={post}
             onPostLike={handlePostLike}
@@ -52,7 +50,7 @@ const ExpandedPost = ({
             ))}
             <AddComment postId={post.id} onCommentAdd={handleCommentAdd} />
           </div>
-        </Modal.Content>
+        </>
       ) : (
         <Spinner />
       )}

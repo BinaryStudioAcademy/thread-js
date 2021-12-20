@@ -1,7 +1,9 @@
 .headerWrp {
   display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
   background-color: white;
-  padding: 1em 0 1em;
+  padding: 1em 2em 1em;
 }
 
 .userWrapper {
@@ -15,20 +17,11 @@
 
 .logoutBtn,
 .logoutBtn:hover {
-  &:global(.ui.icon.button) {
-    border: none;
-    box-shadow: none;
-  }
+  border: none;
+  box-shadow: none;
 }
 
 .menuBtn {
-  color: gray;
-  &:hover {
-    color: black !important;
-  }
-}
-
-.menuBtn:global(.ui.icon.button) {
   color: gray;
   &:hover {
     color: black !important;

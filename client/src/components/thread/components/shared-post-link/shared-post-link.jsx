@@ -16,8 +16,8 @@ const SharedPostLink = ({ postId, close }) => {
   };
 
   return (
-    <Modal open onClose={close}>
-      <Modal.Header className={styles.header}>
+    <Modal isOpen isCentered onClose={close}>
+      <header className={styles.header}>
         <span>Share Post</span>
         {isCopied && (
           <span>
@@ -25,14 +25,14 @@ const SharedPostLink = ({ postId, close }) => {
             Copied
           </span>
         )}
-      </Modal.Header>
-      <Modal.Content>
+      </header>
+      <div>
         <CopyBufferInput
           onCopy={copyToClipboard}
           value={`${window.location.origin}/share/${postId}`}
           ref={input}
         />
-      </Modal.Content>
+      </div>
     </Modal>
   );
 };

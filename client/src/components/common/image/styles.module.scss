@@ -1,0 +1,32 @@
+.image {
+  display: block;
+  max-width: 100%;
+  background-color: transparent;
+
+  &Size__small {
+    width: 150px;
+    height: auto;
+    font-size: 0.93rem;
+  }
+
+  &Size__medium {
+    width: 300px;
+    height: auto;
+    font-size: 1rem;
+  }
+
+  &Size__large {
+    width: 450px;
+    height: auto;
+    font-size: 1.14rem;
+  }
+}
+
+.circular {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.centered {
+  margin: auto;
+}

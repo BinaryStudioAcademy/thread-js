@@ -17,8 +17,6 @@
   height: 1.5rem;
   width: 3.5rem;
   outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   transition: 0.3s;
 }
@@ -28,10 +26,11 @@
 }
 
 .switch::after {
-  content: "";
-  background: #fff linear-gradient(transparent,rgba(0,0,0,.05));
+  content: '';
+  background: #fff linear-gradient(transparent, rgba(0, 0, 0, 0.05));
   border-radius: 50%;
-  box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%), 0 0 0 1px rgb(34 36 38 / 15%) inset;
+  box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%),
+    0 0 0 1px rgb(34 36 38 / 15%) inset;
   display: inline-block;
   position: absolute;
   height: 1.5rem;

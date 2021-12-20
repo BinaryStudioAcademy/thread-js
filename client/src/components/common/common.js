@@ -1,45 +1,19 @@
-import {
-  Form,
-  Segment,
-  Image,
-  Grid,
-  Modal
-} from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
-import Button from './button/button';
-import CopyBufferInput from './copy-buffer-input/copy-buffer-input';
-import FormInput from './form-input/form-input';
-import Header from './header/header';
-import Icon from './icon/icon';
-import IconButton from './icon-button/icon-button';
-import Input from './input/input';
-import Message from './message/message';
-import Notifications from './notifications/notifications';
-import Post from './post/post';
-import PrivateRoute from './private-route/private-route';
-import PublicRoute from './public-route/public-route';
-import Spinner from './spinner/spinner';
-import Checkbox from './checkbox/checkbox';
-
-export {
-  Form,
-  Segment,
-  Image,
-  Grid,
-  Modal,
-  Message,
-  Button,
-  CopyBufferInput,
-  FormInput,
-  Header,
-  Icon,
-  IconButton,
-  Input,
-  Notifications,
-  Post,
-  PrivateRoute,
-  PublicRoute,
-  Spinner,
-  Checkbox,
-  NavLink
-};
+export { NavLink } from 'react-router-dom';
+export { default as Button } from './button/button';
+export { default as CopyBufferInput } from './copy-buffer-input/copy-buffer-input';
+export { default as FormInput } from './form-input/form-input';
+export { default as Header } from './header/header';
+export { default as Icon } from './icon/icon';
+export { default as Image } from './image/image';
+export { default as Modal } from './modal/modal';
+export { default as IconButton } from './icon-button/icon-button';
+export { default as Input } from './input/input';
+export { default as Message } from './message/message';
+export { default as Notifications } from './notifications/notifications';
+export { default as Post } from './post/post';
+export { default as PrivateRoute } from './private-route/private-route';
+export { default as PublicRoute } from './public-route/public-route';
+export { default as Spinner } from './spinner/spinner';
+export { default as TextArea } from './text-area/text-area';
+export { default as Segment } from './segment/segment';
+export { default as Checkbox } from './checkbox/checkbox';
