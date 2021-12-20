@@ -4,10 +4,8 @@ import {
   ButtonColor, ButtonType, IconName,
   IconSize
 } from 'common/enums/enums';
-import { useMemo } from 'hooks/hooks';
 import PropTypes from 'prop-types';
 import Icon from '../icon/icon';
-import { checkIsValidBtnType } from './helpers/helpers';
 import styles from './styles.module.scss';
 
 const Button = ({
@@ -25,7 +23,6 @@ const Button = ({
   children
 }) => {
   const hasIcon = Boolean(iconName);
-  const btnType = useMemo(() => (checkIsValidBtnType(type) ? type : ButtonType.BUTTON), [type]);
 
   return (
     <button
@@ -40,7 +37,7 @@ const Button = ({
         color && styles[`btn__${color}`],
         className
       )}
-      type={btnType}
+      type={type}
     >
       {hasIcon && <Icon name={iconName} size={iconSize} />}
       {children}
