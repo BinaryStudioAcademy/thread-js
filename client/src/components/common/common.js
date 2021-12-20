@@ -15,7 +15,7 @@ import PrivateRoute from './private-route/private-route';
 import PublicRoute from './public-route/public-route';
 import Spinner from './spinner/spinner';
 import TextArea from './text-area/text-area';
-import UiSegment from './ui-segment/ui-segment';
+import Segment from './segment/segment';
 import Checkbox from './checkbox/checkbox';
 
 export {
@@ -35,7 +35,7 @@ export {
   PublicRoute,
   Spinner,
   TextArea,
-  UiSegment,
+  Segment,
   Checkbox,
   NavLink
 };

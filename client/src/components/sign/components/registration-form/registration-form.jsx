@@ -13,7 +13,7 @@ import {
   FormInput,
   Message,
   NavLink,
-  UiSegment
+  Segment
 } from 'components/common/common';
 import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
@@ -44,7 +44,7 @@ const RegistrationForm = ({ onRegister }) => {
         name="registrationForm"
         onSubmit={handleSubmit(handleRegister)}
       >
-        <UiSegment>
+        <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
             <FormInput
               name={UserPayloadKey.USERNAME}
@@ -81,7 +81,7 @@ const RegistrationForm = ({ onRegister }) => {
               Register
             </Button>
           </fieldset>
-        </UiSegment>
+        </Segment>
       </form>
       <Message>
         <span>Already with us?</span>

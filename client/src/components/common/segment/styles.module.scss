@@ -1,7 +1,7 @@
 @import 'src/styles/colors';
 @import 'src/styles/mixins';
 
-.uiSegment {
+.segment {
   @include border;
 
   font-size: 1rem;

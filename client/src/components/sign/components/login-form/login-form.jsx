@@ -13,7 +13,7 @@ import {
   FormInput,
   Message,
   NavLink,
-  UiSegment
+  Segment
 } from 'components/common/common';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
@@ -41,7 +41,7 @@ const LoginForm = ({ onLogin }) => {
     <>
       <h2 className={styles.title}>Login to your account</h2>
       <form name="loginForm" onSubmit={handleSubmit(handleLogin)}>
-        <UiSegment>
+        <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
             <FormInput
               name={UserPayloadKey.EMAIL}
@@ -70,7 +70,7 @@ const LoginForm = ({ onLogin }) => {
               Login
             </Button>
           </fieldset>
-        </UiSegment>
+        </Segment>
       </form>
       <Message>
         <span>New to us?</span>

@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-const UiSegment = ({ children }) => (
-  <div className={styles.uiSegment}>
+const Segment = ({ children }) => (
+  <div className={styles.segment}>
     {children}
   </div>
 );
 
-UiSegment.propTypes = {
+Segment.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default UiSegment;
+export default Segment;
 
