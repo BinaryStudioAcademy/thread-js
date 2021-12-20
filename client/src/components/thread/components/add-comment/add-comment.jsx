@@ -8,7 +8,8 @@ import styles from './styles.module.scss';
 const AddComment = ({ postId, onCommentAdd }) => {
   const [body, setBody] = useState('');
 
-  const handleAddComment = async () => {
+  const handleAddComment = async ev => {
+    ev.preventDefault();
     if (!body) {
       return;
     }
@@ -22,17 +23,17 @@ const AddComment = ({ postId, onCommentAdd }) => {
   );
 
   return (
-    <>
+    <form name="comment" onSubmit={handleAddComment}>
       <TextArea
         className={styles.commentArea}
         value={body}
         placeholder="Type a comment..."
         onChange={handleTextChange}
       />
-      <Button type={ButtonType.BUTTON} onClick={handleAddComment} isPrimary>
+      <Button type={ButtonType.SUBMIT} isPrimary>
         Post comment
       </Button>
-    </>
+    </form>
   );
 };
 
