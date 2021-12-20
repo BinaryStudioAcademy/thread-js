@@ -41,7 +41,7 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-  isCentered: undefined,
+  isCentered: false,
   isCircular: false,
   className: undefined,
   height: undefined,
