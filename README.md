@@ -24,11 +24,10 @@
 ### Frontend
 1. [React](https://reactjs.org/docs/getting-started.html "React")
 2. [React Redux](https://redux.js.org/introduction/getting-started "React Redux")
-3. [React Semantic UI](https://react.semantic-ui.com/ "React Semantic UI")
-4. [React Hook Form](https://react-hook-form.com/get-started "React Hook Form")
-5. [joi](https://www.npmjs.com/package/joi "joi")
-6. [dayjs](https://day.js.org/)
-7. [history](https://www.npmjs.com/package/history "history")
+3. [React Hook Form](https://react-hook-form.com/get-started "React Hook Form")
+4. [joi](https://www.npmjs.com/package/joi "joi")
+5. [dayjs](https://day.js.org/)
+6. [history](https://www.npmjs.com/package/history "history")
 
 ### Backend
 1. [Node.js](https://nodejs.org/en/ "Node.js")
