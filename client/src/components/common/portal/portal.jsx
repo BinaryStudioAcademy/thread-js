@@ -13,12 +13,15 @@ const Portal = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const wasOverflowHidden = document.body.classList.contains(styles.noOverflow);
     document.body.appendChild(portalContainer);
     document.body.classList.add(styles.noOverflow);
 
     return () => {
       document.body.removeChild(portalContainer);
-      document.body.classList.remove(styles.noOverflow);
+      if (!wasOverflowHidden) {
+        document.body.classList.remove(styles.noOverflow);
+      }
     };
   }, [portalContainer]);
 
