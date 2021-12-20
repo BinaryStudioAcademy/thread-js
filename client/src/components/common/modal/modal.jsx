@@ -15,8 +15,8 @@ const Modal = ({ isOpen, isCentered, onClose, children }) => {
 
   return (
     <Portal>
-      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={handleDisableContentContainerClick}>
-        <div className={styles.content} onClick={handleOutsideClick}>
+      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={handleOutsideClick}>
+        <div className={styles.content} onClick={handleDisableContentContainerClick}>
           {children}
         </div>
       </div>
