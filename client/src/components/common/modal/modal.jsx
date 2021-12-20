@@ -5,7 +5,7 @@ import { useModal } from './hooks/hooks';
 import styles from './styles.module.scss';
 
 const Modal = ({ isOpen, isCentered, onClose, children }) => {
-  const { disableContentContainerClick, onOutsideClick } = useModal({
+  const { handleDisableContentContainerClick, handleOutsideClick } = useModal({
     onClose
   });
 
@@ -15,8 +15,8 @@ const Modal = ({ isOpen, isCentered, onClose, children }) => {
 
   return (
     <Portal>
-      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={onOutsideClick}>
-        <div className={styles.content} onClick={disableContentContainerClick}>
+      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={handleDisableContentContainerClick}>
+        <div className={styles.content} onClick={handleOutsideClick}>
           {children}
         </div>
       </div>

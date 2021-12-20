@@ -1,17 +1,17 @@
 import { useCallback } from 'hooks/hooks';
 
 const useModal = ({ onClose }) => {
-  const onOutsideClick = useCallback(() => {
+  const handleOutsideClick = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  const disableContentContainerClick = useCallback(ev => {
+  const handleDisableContentContainerClick = useCallback(ev => {
     ev.stopPropagation();
   }, []);
 
   return {
-    onOutsideClick,
-    disableContentContainerClick
+    handleOutsideClick,
+    handleDisableContentContainerClick
   };
 };
 
