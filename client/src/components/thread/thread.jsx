@@ -93,7 +93,7 @@ const Thread = () => {
       <InfiniteScroll
         dataLength={posts.length}
         next={getMorePosts}
-        scollTreshold={0.8}
+        scrollThreshold={0.8}
         hasMore={hasMorePosts}
         loader={<Spinner key="0" />}
       >
