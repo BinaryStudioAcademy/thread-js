@@ -48,7 +48,6 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
       <form onSubmit={handleSubmit(handleAddPost)}>
         <FormTextarea
           name={PostPayloadKey.BODY}
-          className={styles.commentArea}
           placeholder="What is the news?"
           control={control}
         />
