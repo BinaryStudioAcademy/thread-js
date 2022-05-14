@@ -5,6 +5,7 @@ const useAppForm = ({ validationSchema, defaultValues }) => {
   const {
     control,
     formState: { errors },
+    reset,
     handleSubmit
   } = useForm({
     defaultValues,
@@ -14,6 +15,7 @@ const useAppForm = ({ validationSchema, defaultValues }) => {
   return {
     control,
     errors,
+    reset,
     handleSubmit
   };
 };

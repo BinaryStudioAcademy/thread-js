@@ -1,10 +1,15 @@
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import styles from './styles.module.scss';
 
-const TextArea = ({ name, className, onChange, placeholder, rows, value }) => (
+const TextArea = forwardRef((
+  { name, className, onChange, placeholder, rows, value },
+  ref
+) => (
   <textarea
+    ref={ref}
     className={clsx(styles.textArea, className)}
     name={name}
     onChange={onChange}
@@ -12,7 +17,7 @@ const TextArea = ({ name, className, onChange, placeholder, rows, value }) => (
     rows={rows}
     value={value}
   />
-);
+));
 
 TextArea.propTypes = {
   name: PropTypes.string,

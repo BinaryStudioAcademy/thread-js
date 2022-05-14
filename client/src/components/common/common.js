@@ -2,6 +2,7 @@ export { NavLink } from 'react-router-dom';
 export { default as Button } from './button/button';
 export { default as CopyBufferInput } from './copy-buffer-input/copy-buffer-input';
 export { default as FormInput } from './form-input/form-input';
+export { default as FormTextarea } from './form-textarea/form-textarea';
 export { default as Header } from './header/header';
 export { default as Icon } from './icon/icon';
 export { default as Image } from './image/image';
