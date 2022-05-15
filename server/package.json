@@ -35,11 +35,6 @@
     "socket.io": "4.5.0"
   },
   "devDependencies": {
-    "@babel/core": "7.16.0",
-    "@babel/node": "7.16.0",
-    "@babel/polyfill": "7.12.1",
-    "@babel/preset-env": "7.16.4",
-    "@babel/register": "7.16.0",
     "eslint-config-airbnb-base": "15.0.0",
     "pino-pretty": "7.6.1"
   }
