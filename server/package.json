@@ -7,10 +7,10 @@
     "npm": ">=8 <9"
   },
   "scripts": {
-    "migrate:make": "npx knex --esm migrate:make",
-    "migrate:rollback": "npx knex --esm migrate:rollback",
-    "migrate:run": "npx knex --esm migrate:latest",
-    "seed:run": "npx knex --esm seed:run",
+    "migrate:make": "npx knex migrate:make",
+    "migrate:rollback": "npx knex migrate:rollback",
+    "migrate:run": "npx knex migrate:latest",
+    "seed:run": "npx knex seed:run",
     "start": "nodemon src/server.js",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js"
