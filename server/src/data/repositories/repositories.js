@@ -4,12 +4,12 @@ import {
   ImageModel,
   PostModel,
   PostReactionModel
-} from '../models';
-import { Comment } from './comment/comment.repository';
-import { Image } from './image/image.repository';
-import { PostReaction } from './post-reaction/post-reaction.repository';
-import { Post } from './post/post.repository';
-import { User } from './user/user.repository';
+} from '../models/index.js';
+import { Comment } from './comment/comment.repository.js';
+import { Image } from './image/image.repository.js';
+import { PostReaction } from './post-reaction/post-reaction.repository.js';
+import { Post } from './post/post.repository.js';
+import { User } from './user/user.repository.js';
 
 const comment = new Comment({
   commentModel: CommentModel

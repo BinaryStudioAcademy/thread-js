@@ -4,16 +4,15 @@ import fastifyStatic from '@fastify/static';
 import http from 'http';
 import Knex from 'knex';
 import { Model } from 'objection';
-import path from 'path';
 import qs from 'qs';
-import socketIO from 'socket.io';
+import { Server as SocketServer } from 'socket.io';
 
-import knexConfig from '../knexfile';
-import { initApi } from './api/api';
-import { ENV, ExitCode } from './common/enums/enums';
-import { socketInjector as socketInjectorPlugin } from './plugins/plugins';
-import * as services from './services/services';
-import { handlers as socketHandlers } from './socket/handlers';
+import knexConfig from '../knexfile.js';
+import { initApi } from './api/api.js';
+import { ENV, ExitCode } from './common/enums/enums.js';
+import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
+import * as services from './services/services.js';
+import { handlers as socketHandlers } from './socket/handlers.js';
 
 const app = fastify({
   logger: {
@@ -25,7 +24,7 @@ const app = fastify({
 });
 
 const socketServer = http.Server(app);
-const io = socketIO(socketServer, {
+const io = new SocketServer(socketServer, {
   cors: {
     origin: '*',
     credentials: true
@@ -41,9 +40,9 @@ app.register(cors);
 app.register(socketInjectorPlugin, { io });
 app.register(initApi, { services, prefix: ENV.APP.API_PATH });
 
-const staticPath = path.join(__dirname, '../../client/build');
+const staticPath = new URL('../../client/build', import.meta.url);
 app.register(fastifyStatic, {
-  root: staticPath,
+  root: staticPath.pathname,
   prefix: '/'
 });
 

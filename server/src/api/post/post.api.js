@@ -1,4 +1,4 @@
-import { PostsApiPath } from '../../common/enums/enums';
+import { PostsApiPath } from '../../common/enums/enums.js';
 
 const initPost = (router, opts, done) => {
   const { post: postService } = opts.services;

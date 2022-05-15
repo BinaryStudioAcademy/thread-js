@@ -28,3 +28,6 @@ rules:
     - off
   import/prefer-default-export:
     - off
+  import/extensions:
+    - error
+    - js: off

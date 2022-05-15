@@ -3,8 +3,8 @@ import {
   ExceptionMessage,
   ControllerHook,
   HttpCode
-} from '../../common/enums/enums';
-import { InvalidCredentialsError } from '../../exceptions/exceptions';
+} from '../../common/enums/enums.js';
+import { InvalidCredentialsError } from '../../exceptions/exceptions.js';
 
 const authorization = fp((fastify, { routesWhiteList, services }, done) => {
   fastify.decorateRequest('user', null);
