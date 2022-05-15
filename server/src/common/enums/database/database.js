@@ -1,1 +1,1 @@
-export * from './db-table-name.enum';
+export * from './db-table-name.enum.js';

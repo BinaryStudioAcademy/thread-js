@@ -1,4 +1,4 @@
-import { Abstract } from '../abstract/abstract.repository';
+import { Abstract } from '../abstract/abstract.repository.js';
 
 class PostReaction extends Abstract {
   constructor({ postReactionModel }) {
@@ -6,7 +6,8 @@ class PostReaction extends Abstract {
   }
 
   getPostReaction(userId, postId) {
-    return this.model.query()
+    return this.model
+      .query()
       .select()
       .where({ userId })
       .andWhere({ postId })

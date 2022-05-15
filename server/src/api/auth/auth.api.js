@@ -1,5 +1,5 @@
-import { AuthApiPath } from '../../common/enums/enums';
-import { getErrorStatusCode } from '../../helpers/http/get-status-code.helper';
+import { AuthApiPath } from '../../common/enums/enums.js';
+import { getErrorStatusCode } from '../../helpers/http/get-status-code.helper.js';
 
 const initAuth = (router, opts, done) => {
   const { auth: authService, user: userService } = opts.services;

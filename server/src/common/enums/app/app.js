@@ -1,2 +1,2 @@
-export * from './env.enum';
-export * from './exit-code.enum';
+export * from './env.enum.js';
+export * from './exit-code.enum.js';

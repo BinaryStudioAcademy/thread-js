@@ -1,5 +1,5 @@
-import { DbTableName } from '../../../common/enums/enums';
-import AbstractModel from '../abstract/abstract.model';
+import { DbTableName } from '../../../common/enums/enums.js';
+import AbstractModel from '../abstract/abstract.model.js';
 
 class Image extends AbstractModel {
   static get tableName() {
