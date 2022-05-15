@@ -1,6 +1,6 @@
 import fastify from 'fastify';
-import cors from 'fastify-cors';
-import fastifyStatic from 'fastify-static';
+import cors from '@fastify/cors';
+import fastifyStatic from '@fastify/static';
 import http from 'http';
 import Knex from 'knex';
 import { Model } from 'objection';
