@@ -10,8 +10,6 @@ export { default as Segment } from './segment/segment.jsx';
 export { default as Message } from './message/message.jsx';
 export { default as Spinner } from './spinner/spinner.jsx';
 export { default as Checkbox } from './checkbox/checkbox.jsx';
-export { default as TextArea } from './text-area/text-area.jsx';
-export { default as FormInput } from './form-input/form-input.jsx';
 export { default as IconButton } from './icon-button/icon-button.jsx';
 export { default as PublicRoute } from './public-route/public-route.jsx';
 export { default as PrivateRoute } from './private-route/private-route.jsx';
