@@ -1,5 +1,5 @@
 import { knexSnakeCaseMappers } from 'objection';
-import { ENV } from './src/common/enums/enums';
+import { ENV } from './src/common/enums/enums.js';
 
 const {
   DATABASE: database,

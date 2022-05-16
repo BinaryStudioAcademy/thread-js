@@ -1,9 +1,9 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums';
-import AbstractModel from '../abstract/abstract.model';
-import PostModel from '../post/post.model';
-import UserModel from '../user/user.model';
+import { DbTableName } from '../../../common/enums/enums.js';
+import AbstractModel from '../abstract/abstract.model.js';
+import PostModel from '../post/post.model.js';
+import UserModel from '../user/user.model.js';
 
 class Comment extends AbstractModel {
   static get tableName() {

@@ -1,5 +1,5 @@
 import fp from 'fastify-plugin';
-import { ControllerHook } from '../../common/enums/enums';
+import { ControllerHook } from '../../common/enums/enums.js';
 
 const socketInjector = fp((fastify, { io }, done) => {
   fastify.decorateRequest('io', null);

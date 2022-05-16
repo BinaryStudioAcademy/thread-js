@@ -1,11 +1,11 @@
-import { ExceptionMessage } from '../../common/enums/enums';
-import { InvalidCredentialsError } from '../../exceptions/exceptions';
+import { ExceptionMessage } from '../../common/enums/enums.js';
+import { InvalidCredentialsError } from '../../exceptions/exceptions.js';
 import {
   createToken,
   cryptCompare,
   encrypt,
   verifyToken
-} from '../../helpers/helpers';
+} from '../../helpers/helpers.js';
 
 class Auth {
   constructor({ userRepository }) {

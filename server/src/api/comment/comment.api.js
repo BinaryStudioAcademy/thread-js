@@ -1,4 +1,4 @@
-import { CommentsApiPath } from '../../common/enums/enums';
+import { CommentsApiPath } from '../../common/enums/enums.js';
 
 const initComment = (router, opts, done) => {
   const { comment: commentService } = opts.services;

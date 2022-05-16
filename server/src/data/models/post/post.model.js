@@ -1,11 +1,11 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums';
-import AbstractModel from '../abstract/abstract.model';
-import CommentModel from '../comment/comment.model';
-import ImageModel from '../image/image.model';
-import PostReactionModel from '../post-reaction/post-reaction.model';
-import UserModel from '../user/user.model';
+import { DbTableName } from '../../../common/enums/enums.js';
+import AbstractModel from '../abstract/abstract.model.js';
+import CommentModel from '../comment/comment.model.js';
+import ImageModel from '../image/image.model.js';
+import PostReactionModel from '../post-reaction/post-reaction.model.js';
+import UserModel from '../user/user.model.js';
 
 class Post extends AbstractModel {
   static get tableName() {
