@@ -13,15 +13,18 @@ rules:
   no-console:
     - warn
     - allow:
-      - warn
-      - error
-      - info
+        - warn
+        - error
+        - info
   prefer-promise-reject-errors:
     - off
   import/no-import-module-exports:
     - off
   import/no-relative-packages:
     - off
+  import/extensions:
+    - error
+    - js: off
 
 overrides:
   - files:

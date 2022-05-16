@@ -1,6 +1,6 @@
-import { usersSeed, userImagesSeed } from '../seed-data/users-seed';
-import { postsSeed, postImagesSeed } from '../seed-data/posts-seed';
-import commentsSeed from '../seed-data/comments-seed';
+import { usersSeed, userImagesSeed } from '../seed-data/users-seed.js';
+import { postsSeed, postImagesSeed } from '../seed-data/posts-seed.js';
+import commentsSeed from '../seed-data/comments-seed.js';
 
 const TableName = {
   USERS: 'users',
@@ -32,15 +32,21 @@ export async function seed(knex) {
       // Add images.
       await trx(TableName.IMAGES).insert(userImagesSeed.concat(postImagesSeed));
 
-      const userImages = await trx(TableName.IMAGES).select('id').whereIn('link', mapLinks(userImagesSeed));
-      const postImages = await trx(TableName.IMAGES).select('id').whereIn('link', mapLinks(postImagesSeed));
+      const userImages = await trx(TableName.IMAGES)
+        .select('id')
+        .whereIn('link', mapLinks(userImagesSeed));
+      const postImages = await trx(TableName.IMAGES)
+        .select('id')
+        .whereIn('link', mapLinks(postImagesSeed));
 
       // Add users.
       const usersMappedSeed = usersSeed.map((user, idx) => ({
         ...user,
         [ColumnName.IMAGE_ID]: userImages[idx] ? userImages[idx].id : null
       }));
-      const users = await trx(TableName.USERS).insert(usersMappedSeed).returning('*');
+      const users = await trx(TableName.USERS)
+        .insert(usersMappedSeed)
+        .returning('*');
 
       // Add posts.
       const postsMappedSeed = postsSeed.map((post, idx) => ({
@@ -48,7 +54,9 @@ export async function seed(knex) {
         [ColumnName.USER_ID]: users[getRandomIndex(users.length)].id,
         [ColumnName.IMAGE_ID]: postImages[idx] ? postImages[idx].id : null
       }));
-      const posts = await trx(TableName.POSTS).insert(postsMappedSeed).returning('*');
+      const posts = await trx(TableName.POSTS)
+        .insert(postsMappedSeed)
+        .returning('*');
 
       // Add comments.
       const commentsMappedSeed = commentsSeed.map(comment => ({
