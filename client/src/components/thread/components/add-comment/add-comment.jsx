@@ -1,34 +1,32 @@
-import { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { ButtonType } from 'common/enums/enums';
-import { Button, TextArea } from 'components/common/common';
 
-import styles from './styles.module.scss';
+import PropTypes from 'prop-types';
+import { useAppForm, useCallback } from 'hooks/hooks';
+import { ButtonType, CommentPayloadKey } from 'common/enums/enums';
+import { Button, Input } from 'components/common/common';
+import { DEFAULT_ADD_COMMENT_PAYLOAD } from './common/constants';
 
 const AddComment = ({ postId, onCommentAdd }) => {
-  const [body, setBody] = useState('');
+  const { control, handleSubmit, reset } = useAppForm({
+    defaultValues: DEFAULT_ADD_COMMENT_PAYLOAD
+  });
 
-  const handleAddComment = async ev => {
-    ev.preventDefault();
-    if (!body) {
-      return;
-    }
-    await onCommentAdd({ postId, body });
-    setBody('');
-  };
-
-  const handleTextChange = useCallback(
-    ev => setBody(ev.target.value),
-    [setBody]
+  const handleAddComment = useCallback(
+    values => {
+      if (!values.body) {
+        return;
+      }
+      onCommentAdd({ postId, body: values.body }).then(() => reset());
+    },
+    [postId, reset, onCommentAdd]
   );
 
   return (
-    <form name="comment" onSubmit={handleAddComment}>
-      <TextArea
-        className={styles.commentArea}
-        value={body}
+    <form name="comment" onSubmit={handleSubmit(handleAddComment)}>
+      <Input
+        name={CommentPayloadKey.BODY}
         placeholder="Type a comment..."
-        onChange={handleTextChange}
+        rows={10}
+        control={control}
       />
       <Button type={ButtonType.SUBMIT} isPrimary>
         Post comment

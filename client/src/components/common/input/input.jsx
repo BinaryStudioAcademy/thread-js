@@ -1,46 +1,76 @@
-import { forwardRef } from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { useController } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import clsx from 'clsx';
 
 import { IconName } from 'common/enums/enums';
-import Icon from '../icon/icon';
+import Icon from 'components/common/icon/icon';
 
 import styles from './styles.module.scss';
 
-const Input = forwardRef(({
+const Input = ({
+  name,
+  control,
+  type,
+  rows,
+  errors,
   disabled,
   iconName,
   placeholder,
-  type,
-  value,
-  ...fieldControls
-}, ref) => (
-  <div className={styles.inputContainer}>
-    {iconName && <span className={styles.icon}><Icon name={iconName} /></span>}
-    <input
-      className={clsx(styles.input, iconName && styles.withIcon)}
-      placeholder={placeholder}
-      ref={ref}
-      type={type}
-      disabled={disabled}
-      value={value}
-      {...fieldControls}
-    />
-  </div>
-));
+  className
+}) => {
+  const { field } = useController({ name, control });
+  const isTextarea = Boolean(rows);
+
+  return (
+    <div className={styles.inputWrapper}>
+      <div className={styles.inputContainer}>
+        {iconName && <span className={styles.icon}><Icon name={iconName} /></span>}
+        {isTextarea ? (
+          <textarea
+            {...field}
+            name={name}
+            rows={rows}
+            placeholder={placeholder}
+            className={clsx(styles.textArea, className)}
+          />
+        ) : (
+          <input
+            {...field}
+            type={type}
+            disabled={disabled}
+            placeholder={placeholder}
+            className={clsx(styles.input, iconName && styles.withIcon, className)}
+          />
+        )}
+      </div>
+      <span className={styles.errorWrapper}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
+    </div>
+
+  );
+};
 
 Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  errors: PropTypes.oneOfType([PropTypes.object]),
   disabled: PropTypes.bool,
   iconName: PropTypes.oneOf(Object.values(IconName)),
   placeholder: PropTypes.string.isRequired,
+  className: PropTypes.string,
   type: PropTypes.oneOf(['email', 'password', 'submit', 'text']),
-  value: PropTypes.string.isRequired
+  rows: PropTypes.number
 };
 
 Input.defaultProps = {
   disabled: false,
   iconName: null,
-  type: 'text'
+  className: '',
+  type: 'text',
+  rows: 0,
+  errors: {}
 };
 
 export default Input;

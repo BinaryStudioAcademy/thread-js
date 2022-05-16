@@ -2,14 +2,17 @@ import {
   useState,
   useCallback,
   useEffect,
+  useAppForm,
   useDispatch,
   useSelector
 } from 'hooks/hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { threadActionCreator } from 'store/actions';
 import { image as imageService } from 'services/services';
+import { ThreadToolbarKey, UseFormMode } from 'common/enums/enums';
 import { Post, Spinner, Checkbox } from 'components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
+import { DEFAULT_THREAD_TOOLBAR } from './common/constants';
 
 import styles from './styles.module.scss';
 
@@ -28,7 +31,31 @@ const Thread = () => {
     userId: state.profile.user.id
   }));
   const [sharedPostId, setSharedPostId] = useState(undefined);
-  const [showOwnPosts, setShowOwnPosts] = useState(false);
+
+  const { control, watch } = useAppForm({
+    defaultValues: DEFAULT_THREAD_TOOLBAR,
+    mode: UseFormMode.ON_CHANGE
+  });
+
+  const showOwnPosts = watch(ThreadToolbarKey.SHOW_OWN_POSTS);
+
+  const handlePostsLoad = useCallback(filtersPayload => {
+    dispatch(threadActionCreator.loadPosts(filtersPayload));
+  }, [dispatch]);
+
+  const toggleShowOwnPosts = useCallback(
+    () => {
+      postsFilter.userId = showOwnPosts ? userId : undefined;
+      postsFilter.from = 0;
+      handlePostsLoad(postsFilter);
+      postsFilter.from = postsFilter.count; // for the next scroll
+    },
+    [userId, showOwnPosts, handlePostsLoad]
+  );
+
+  useEffect(() => {
+    toggleShowOwnPosts();
+  }, [showOwnPosts, toggleShowOwnPosts]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -45,24 +72,12 @@ const Thread = () => {
     [dispatch]
   );
 
-  const handlePostsLoad = filtersPayload => {
-    dispatch(threadActionCreator.loadPosts(filtersPayload));
-  };
-
   const handleMorePostsLoad = useCallback(
     filtersPayload => {
       dispatch(threadActionCreator.loadMorePosts(filtersPayload));
     },
     [dispatch]
   );
-
-  const toggleShowOwnPosts = () => {
-    setShowOwnPosts(!showOwnPosts);
-    postsFilter.userId = showOwnPosts ? undefined : userId;
-    postsFilter.from = 0;
-    handlePostsLoad(postsFilter);
-    postsFilter.from = postsFilter.count; // for the next scroll
-  };
 
   const getMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
@@ -83,13 +98,15 @@ const Thread = () => {
       <div className={styles.addPostForm}>
         <AddPost onPostAdd={handlePostAdd} uploadImage={uploadImage} />
       </div>
-      <div className={styles.toolbar}>
-        <Checkbox
-          isChecked={showOwnPosts}
-          label="Show only my posts"
-          onChange={toggleShowOwnPosts}
-        />
-      </div>
+      <form name="thread-toolbar">
+        <div className={styles.toolbar}>
+          <Checkbox
+            name={ThreadToolbarKey.SHOW_OWN_POSTS}
+            control={control}
+            label="Show only my posts"
+          />
+        </div>
+      </form>
       <InfiniteScroll
         dataLength={posts.length}
         next={getMorePosts}

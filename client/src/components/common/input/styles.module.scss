@@ -1,6 +1,11 @@
 @import 'src/styles/colors';
 @import 'src/styles/mixins';
 
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .inputContainer {
   display: inline-flex;
   position: relative;
@@ -32,4 +37,27 @@
   &:disabled {
     opacity: 0.45;
   }
+}
+
+.textArea {
+  @include border;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: sans-serif;
+  font-size: 100%;
+  background: $white;
+  width: 100%;
+  line-height: 1.29;
+  margin: 0 0 1rem 0;
+  padding: 0.75rem 1rem;
+  outline: 0;
+  resize: vertical;
+}
+
+.errorWrapper {
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  margin-top: 3px;
+  min-height: calc(0.8rem + 3px);
+  color: #df1c3d;
+  align-self: flex-start;
 }

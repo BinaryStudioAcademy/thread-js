@@ -1,24 +1,31 @@
-import { useCallback, useState } from 'hooks/hooks';
+import { useCallback, useState, useAppForm } from 'hooks/hooks';
 import PropTypes from 'prop-types';
-import { ButtonColor, ButtonType, IconName } from 'common/enums/enums';
-import { Button, Image, TextArea, Segment } from 'components/common/common';
+import { ButtonColor, ButtonType, IconName, PostPayloadKey } from 'common/enums/enums';
+import { Button, Image, Input, Segment } from 'components/common/common';
+import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants';
 
 import styles from './styles.module.scss';
 
 const AddPost = ({ onPostAdd, uploadImage }) => {
-  const [body, setBody] = useState('');
   const [image, setImage] = useState(undefined);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleAddPost = async ev => {
-    ev.preventDefault();
-    if (!body) {
-      return;
-    }
-    await onPostAdd({ imageId: image?.imageId, body });
-    setBody('');
-    setImage(undefined);
-  };
+  const { control, handleSubmit, reset } = useAppForm({
+    defaultValues: DEFAULT_ADD_POST_PAYLOAD
+  });
+
+  const handleAddPost = useCallback(
+    values => {
+      if (!values.body) {
+        return;
+      }
+      onPostAdd({ imageId: image?.imageId, body: values.body }).then(() => {
+        reset();
+        setImage(undefined);
+      });
+    },
+    [image, reset, onPostAdd]
+  );
 
   const handleUploadFile = ({ target }) => {
     setIsUploading(true);
@@ -36,15 +43,14 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
       });
   };
 
-  const handleTextAreaChange = useCallback(ev => setBody(ev.target.value), [setBody]);
   return (
     <Segment>
-      <form onSubmit={handleAddPost}>
-        <TextArea
-          name="body"
-          value={body}
+      <form onSubmit={handleSubmit(handleAddPost)}>
+        <Input
+          name={PostPayloadKey.BODY}
           placeholder="What is the news?"
-          onChange={handleTextAreaChange}
+          rows={5}
+          control={control}
         />
         {image?.imageLink && (
           <div className={styles.imageWrapper}>

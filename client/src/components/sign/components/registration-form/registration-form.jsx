@@ -10,7 +10,7 @@ import {
 } from 'common/enums/enums';
 import {
   Button,
-  FormInput,
+  Input,
   Message,
   NavLink,
   Segment
@@ -46,7 +46,7 @@ const RegistrationForm = ({ onRegister }) => {
       >
         <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
-            <FormInput
+            <Input
               name={UserPayloadKey.USERNAME}
               type="text"
               placeholder="Username"
@@ -54,7 +54,7 @@ const RegistrationForm = ({ onRegister }) => {
               control={control}
               errors={errors}
             />
-            <FormInput
+            <Input
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
@@ -62,7 +62,7 @@ const RegistrationForm = ({ onRegister }) => {
               control={control}
               errors={errors}
             />
-            <FormInput
+            <Input
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
