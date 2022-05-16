@@ -9,7 +9,7 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { threadActionCreator } from 'store/actions';
 import { image as imageService } from 'services/services';
-import { ThreadToolbarKey } from 'common/enums/enums';
+import { ThreadToolbarKey, UseFormMode } from 'common/enums/enums';
 import { Post, Spinner, Checkbox } from 'components/common/common';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 import { DEFAULT_THREAD_TOOLBAR } from './common/constants';
@@ -34,7 +34,7 @@ const Thread = () => {
 
   const { control, watch } = useAppForm({
     defaultValues: DEFAULT_THREAD_TOOLBAR,
-    mode: 'onChange'
+    mode: UseFormMode.ON_CHANGE
   });
 
   const showOwnPosts = watch(ThreadToolbarKey.SHOW_OWN_POSTS);
