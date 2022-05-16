@@ -1,10 +1,10 @@
-import { ENV } from 'common/enums/enums';
-import { Auth } from './auth/auth.service';
-import { Comment } from './comment/comment.service';
-import { Http } from './http/http.service';
-import { Image } from './image/image.service';
-import { Post } from './post/post.service';
-import { Storage } from './storage/storage.service';
+import { ENV } from 'common/enums/enums.js';
+import { Auth } from './auth/auth.service.js';
+import { Comment } from './comment/comment.service.js';
+import { Http } from './http/http.service.js';
+import { Image } from './image/image.service.js';
+import { Post } from './post/post.service.js';
+import { Storage } from './storage/storage.service.js';
 
 const storage = new Storage({
   storage: localStorage

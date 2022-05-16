@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useAppForm, useState } from 'hooks/hooks';
+import { useAppForm, useState } from 'hooks/hooks.js';
 import {
   ButtonType,
   ButtonSize,
@@ -7,16 +7,16 @@ import {
   AppRoute,
   IconName,
   UserPayloadKey
-} from 'common/enums/enums';
+} from 'common/enums/enums.js';
 import {
   Button,
   Input,
   Message,
   NavLink,
   Segment
-} from 'components/common/common';
-import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
-import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
+} from 'components/common/common.js';
+import { login as loginValidationSchema } from 'validation-schemas/validation-schemas.js';
+import { DEFAULT_LOGIN_PAYLOAD } from './common/constants.js';
 import styles from './styles.module.scss';
 
 const LoginForm = ({ onLogin }) => {

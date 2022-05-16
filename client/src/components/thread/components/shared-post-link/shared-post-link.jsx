@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'hooks/hooks';
-import { IconName, IconColor } from 'common/enums/enums';
-import { CopyBufferInput, Icon, Modal } from 'components/common/common';
+import { useState, useRef } from 'hooks/hooks.js';
+import { IconName, IconColor } from 'common/enums/enums.js';
+import { CopyBufferInput, Icon, Modal } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 

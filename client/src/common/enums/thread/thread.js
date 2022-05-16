@@ -1,1 +1,1 @@
-export * from './thread-toolbar-key.enum';
+export * from './thread-toolbar-key.enum.js';
