@@ -3,6 +3,7 @@ export * from './file/file';
 export * from './http/http';
 export * from './user/user';
 export * from './post/post';
+export * from './thread/thread';
 export * from './comment/comment';
 export * from './exception/exception';
 export * from './components/components';
