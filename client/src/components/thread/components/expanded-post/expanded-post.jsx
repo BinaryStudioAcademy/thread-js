@@ -7,7 +7,7 @@ import Comment from '../comment/comment.jsx';
 import { getSortedComments } from './helpers/helpers.js';
 
 const ExpandedPost = ({
-  sharePost
+  onSharePost
 }) => {
   const dispatch = useDispatch();
   const { post } = useSelector(state => ({
@@ -41,7 +41,7 @@ const ExpandedPost = ({
             post={post}
             onPostLike={handlePostLike}
             onExpandedPostToggle={handleExpandedPostToggle}
-            sharePost={sharePost}
+            onSharePost={onSharePost}
           />
           <div>
             <h3>Comments</h3>
@@ -59,7 +59,7 @@ const ExpandedPost = ({
 };
 
 ExpandedPost.propTypes = {
-  sharePost: PropTypes.func.isRequired
+  onSharePost: PropTypes.func.isRequired
 };
 
 export default ExpandedPost;
