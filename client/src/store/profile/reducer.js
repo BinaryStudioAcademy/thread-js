@@ -1,5 +1,5 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
-import * as profileActions from './actions';
+import * as profileActions from './actions.js';
 
 const initialState = {
   user: null

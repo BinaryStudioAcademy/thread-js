@@ -1,1 +1,1 @@
-export * from './use-form-mode.enum';
+export * from './use-form-mode.enum.js';

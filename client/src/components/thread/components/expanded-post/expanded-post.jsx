@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useCallback, useDispatch, useSelector } from 'hooks/hooks';
-import { threadActionCreator } from 'store/actions';
-import { Spinner, Post, Modal } from 'components/common/common';
-import { Comment, AddComment } from 'components/thread/components/components';
-import { getSortedComments } from './helpers/helpers';
+import { useCallback, useDispatch, useSelector } from 'hooks/hooks.js';
+import { threadActionCreator } from 'store/actions.js';
+import { Spinner, Post, Modal } from 'components/common/common.js';
+import { Comment, AddComment } from 'components/thread/components/components.js';
+import { getSortedComments } from './helpers/helpers.js';
 
 const ExpandedPost = ({
   sharePost

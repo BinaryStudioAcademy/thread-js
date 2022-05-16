@@ -1,8 +1,8 @@
-import { useCallback, useState, useAppForm } from 'hooks/hooks';
 import PropTypes from 'prop-types';
-import { ButtonColor, ButtonType, IconName, PostPayloadKey } from 'common/enums/enums';
-import { Button, Image, Input, Segment } from 'components/common/common';
-import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants';
+import { useCallback, useState, useAppForm } from 'hooks/hooks.js';
+import { ButtonColor, ButtonType, IconName, PostPayloadKey } from 'common/enums/enums.js';
+import { Button, Image, Input, Segment } from 'components/common/common.js';
+import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants.js';
 
 import styles from './styles.module.scss';
 

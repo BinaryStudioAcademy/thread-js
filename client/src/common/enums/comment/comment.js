@@ -1,1 +1,1 @@
-export * from './comment-payload-key.enum';
+export * from './comment-payload-key.enum.js';

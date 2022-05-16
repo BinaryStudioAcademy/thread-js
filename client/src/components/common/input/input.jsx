@@ -3,8 +3,8 @@ import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 
-import { IconName } from 'common/enums/enums';
-import { Icon } from 'components/common/common';
+import { IconName } from 'common/enums/enums.js';
+import { Icon } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 

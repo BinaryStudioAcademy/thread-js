@@ -1,1 +1,1 @@
-export * from './http-error/http-error.exception';
+export * from './http-error/http-error.exception.js';

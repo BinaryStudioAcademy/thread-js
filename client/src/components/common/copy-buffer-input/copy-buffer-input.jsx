@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { IconName } from 'common/enums/enums';
-import { Icon } from 'components/common/common';
+import { IconName } from 'common/enums/enums.js';
+import { Icon } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 

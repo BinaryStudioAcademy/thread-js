@@ -1,4 +1,4 @@
-import { UserValidationRule } from './user-validation-rule.enum';
+import { UserValidationRule } from './user-validation-rule.enum.js';
 
 const UserValidationMessage = {
   USERNAME_REQUIRE: 'Username is required',

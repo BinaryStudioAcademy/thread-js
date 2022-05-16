@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { Portal } from 'components/common/common';
-import { useModal } from './hooks/hooks';
+import { Portal } from 'components/common/common.js';
+import { useModal } from './hooks/hooks.js';
 
 import styles from './styles.module.scss';
 
