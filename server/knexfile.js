@@ -31,4 +31,4 @@ const knexConfig = {
   ...knexSnakeCaseMappers({ underscoreBetweenUppercaseLetters: true })
 };
 
-export { knexConfig };
+export default knexConfig;
