@@ -2,10 +2,8 @@
 import PropTypes from 'prop-types';
 import { useAppForm, useCallback } from 'hooks/hooks';
 import { ButtonType, CommentPayloadKey } from 'common/enums/enums';
-import { Button, FormTextarea } from 'components/common/common';
+import { Button, Input } from 'components/common/common';
 import { DEFAULT_ADD_COMMENT_PAYLOAD } from './common/constants';
-
-import styles from './styles.module.scss';
 
 const AddComment = ({ postId, onCommentAdd }) => {
   const { control, handleSubmit, reset } = useAppForm({
@@ -24,10 +22,10 @@ const AddComment = ({ postId, onCommentAdd }) => {
 
   return (
     <form name="comment" onSubmit={handleSubmit(handleAddComment)}>
-      <FormTextarea
+      <Input
         name={CommentPayloadKey.BODY}
-        className={styles.commentArea}
         placeholder="Type a comment..."
+        rows={10}
         control={control}
       />
       <Button type={ButtonType.SUBMIT} isPrimary>

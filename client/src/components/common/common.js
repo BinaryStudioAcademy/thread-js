@@ -1,8 +1,6 @@
 export { NavLink } from 'react-router-dom';
 export { default as Button } from './button/button';
 export { default as CopyBufferInput } from './copy-buffer-input/copy-buffer-input';
-export { default as FormInput } from './form-input/form-input';
-export { default as FormTextarea } from './form-textarea/form-textarea';
 export { default as Header } from './header/header';
 export { default as Icon } from './icon/icon';
 export { default as Image } from './image/image';
@@ -15,6 +13,5 @@ export { default as Post } from './post/post';
 export { default as PrivateRoute } from './private-route/private-route';
 export { default as PublicRoute } from './public-route/public-route';
 export { default as Spinner } from './spinner/spinner';
-export { default as TextArea } from './text-area/text-area';
 export { default as Segment } from './segment/segment';
 export { default as Checkbox } from './checkbox/checkbox';

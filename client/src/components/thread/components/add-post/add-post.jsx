@@ -1,7 +1,7 @@
 import { useCallback, useState, useAppForm } from 'hooks/hooks';
 import PropTypes from 'prop-types';
 import { ButtonColor, ButtonType, IconName, PostPayloadKey } from 'common/enums/enums';
-import { Button, Image, FormTextarea, Segment } from 'components/common/common';
+import { Button, Image, Input, Segment } from 'components/common/common';
 import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants';
 
 import styles from './styles.module.scss';
@@ -46,9 +46,10 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
   return (
     <Segment>
       <form onSubmit={handleSubmit(handleAddPost)}>
-        <FormTextarea
+        <Input
           name={PostPayloadKey.BODY}
           placeholder="What is the news?"
+          rows={5}
           control={control}
         />
         {image?.imageLink && (
