@@ -5,7 +5,7 @@ import { Image } from 'components/common/common.js';
 import { LoginForm, RegistrationForm } from './components/components.js';
 import styles from './styles.module.scss';
 
-const Login = () => {
+const Sign = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
@@ -52,4 +52,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Sign };

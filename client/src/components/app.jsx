@@ -10,13 +10,13 @@ import {
   PublicRoute,
   Notifications
 } from 'components/common/common';
-import { Login as SignPage } from 'components/sign/sign';
-import { NotFound as NotFoundPage } from 'components/not-found/not-found';
-import { Profile as ProfilePage } from 'components/profile/profile';
-import { SharedPost as SharedPostPage } from 'components/shared-post/shared-post';
-import { Thread as ThreadPage } from 'components/thread/thread';
+import { Sign } from 'components/sign/sign';
+import { NotFound } from 'components/not-found/not-found';
+import { Profile } from 'components/profile/profile';
+import { SharedPost } from 'components/shared-post/shared-post';
+import { Thread } from 'components/thread/thread';
 
-const Routing = () => {
+const App = () => {
   const { user } = useSelector(state => ({
     user: state.profile.user
   }));
@@ -52,12 +52,12 @@ const Routing = () => {
       )}
       <main className="fill">
         <Routes>
-          <Route path={AppRoute.LOGIN} element={<PublicRoute component={SignPage} />} />
-          <Route path={AppRoute.REGISTRATION} element={<PublicRoute component={SignPage} />} />
-          <Route path={AppRoute.ROOT} element={<PrivateRoute component={ThreadPage} />} />
-          <Route path={AppRoute.PROFILE} element={<PrivateRoute component={ProfilePage} />} />
-          <Route path={AppRoute.SHARE_$POSTHASH} element={<PrivateRoute component={SharedPostPage} />} />
-          <Route path={AppRoute.ANY} element={<NotFoundPage />} />
+          <Route path={AppRoute.LOGIN} element={<PublicRoute component={Sign} />} />
+          <Route path={AppRoute.REGISTRATION} element={<PublicRoute component={Sign} />} />
+          <Route path={AppRoute.ROOT} element={<PrivateRoute component={Thread} />} />
+          <Route path={AppRoute.PROFILE} element={<PrivateRoute component={Profile} />} />
+          <Route path={AppRoute.SHARE_$POSTHASH} element={<PrivateRoute component={SharedPost} />} />
+          <Route path={AppRoute.ANY} element={<NotFound />} />
         </Routes>
       </main>
       <Notifications onPostApply={handlePostApply} user={user} />
@@ -65,4 +65,4 @@ const Routing = () => {
   );
 };
 
-export { Routing };
+export { App };

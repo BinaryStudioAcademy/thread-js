@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Routing as App } from 'components/app';
+import { App } from 'components/app';
 import { store } from 'store/store';
 
 import './styles/common.scss';
