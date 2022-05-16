@@ -1,11 +1,13 @@
 /* eslint-disable react/button-has-type */
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
-  ButtonColor, ButtonType, IconName,
+  ButtonColor,
+  ButtonType,
+  IconName,
   IconSize
 } from 'common/enums/enums';
-import PropTypes from 'prop-types';
-import Icon from '../icon/icon';
+import { Icon } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const Button = ({
@@ -75,4 +77,4 @@ Button.defaultProps = {
   isDisabled: false
 };
 
-export default Button;
+export { Button };

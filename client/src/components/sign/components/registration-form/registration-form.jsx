@@ -95,4 +95,4 @@ RegistrationForm.propTypes = {
   onRegister: PropTypes.func.isRequired
 };
 
-export default RegistrationForm;
+export { RegistrationForm };

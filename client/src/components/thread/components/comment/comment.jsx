@@ -23,4 +23,4 @@ Comment.propTypes = {
   comment: commentType.isRequired
 };
 
-export default Comment;
+export { Comment };

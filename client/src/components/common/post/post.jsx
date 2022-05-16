@@ -64,4 +64,4 @@ Post.propTypes = {
   sharePost: PropTypes.func.isRequired
 };
 
-export default Post;
+export { Post };

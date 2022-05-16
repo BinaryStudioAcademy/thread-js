@@ -10,11 +10,11 @@ import {
   PublicRoute,
   Notifications
 } from 'components/common/common';
-import SignPage from 'components/sign/sign';
-import NotFoundPage from 'components/not-found/not-found';
-import ProfilePage from 'components/profile/profile';
-import SharedPostPage from 'components/shared-post/shared-post';
-import ThreadPage from 'components/thread/thread';
+import { Login as SignPage } from 'components/sign/sign';
+import { NotFound as NotFoundPage } from 'components/not-found/not-found';
+import { Profile as ProfilePage } from 'components/profile/profile';
+import { SharedPost as SharedPostPage } from 'components/shared-post/shared-post';
+import { Thread as ThreadPage } from 'components/thread/thread';
 
 const Routing = () => {
   const { user } = useSelector(state => ({
@@ -65,4 +65,4 @@ const Routing = () => {
   );
 };
 
-export default Routing;
+export { Routing };

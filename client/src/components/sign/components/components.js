@@ -1,4 +1,2 @@
-import LoginForm from './login-form/login-form';
-import RegistrationForm from './registration-form/registration-form';
-
-export { LoginForm, RegistrationForm };
+export * from './login-form/login-form';
+export * from './registration-form/registration-form';

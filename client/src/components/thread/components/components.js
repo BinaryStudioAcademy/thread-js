@@ -1,5 +1,5 @@
-import AddPost from './add-post/add-post';
-import ExpandedPost from './expanded-post/expanded-post';
-import SharedPostLink from './shared-post-link/shared-post-link';
-
-export { AddPost, ExpandedPost, SharedPostLink };
+export * from './comment/comment';
+export * from './add-post/add-post';
+export * from './add-comment/add-comment';
+export * from './expanded-post/expanded-post';
+export * from './shared-post-link/shared-post-link';

@@ -46,4 +46,4 @@ Notifications.propTypes = {
   onPostApply: PropTypes.func.isRequired
 };
 
-export default Notifications;
+export { Notifications };

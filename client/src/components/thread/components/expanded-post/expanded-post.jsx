@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useDispatch, useSelector } from 'hooks/hooks';
 import { threadActionCreator } from 'store/actions';
 import { Spinner, Post, Modal } from 'components/common/common';
-import AddComment from '../add-comment/add-comment';
-import Comment from '../comment/comment';
+import { Comment, AddComment } from 'components/thread/components/components';
 import { getSortedComments } from './helpers/helpers';
 
 const ExpandedPost = ({
@@ -62,4 +61,4 @@ ExpandedPost.propTypes = {
   sharePost: PropTypes.func.isRequired
 };
 
-export default ExpandedPost;
+export { ExpandedPost };

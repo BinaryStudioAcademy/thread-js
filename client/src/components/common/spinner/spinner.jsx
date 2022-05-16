@@ -20,4 +20,4 @@ Spinner.defaultProps = {
   isOverflow: false
 };
 
-export default Spinner;
+export { Spinner };
