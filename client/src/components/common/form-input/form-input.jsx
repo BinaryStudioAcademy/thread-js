@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
-import { IconName } from 'common/enums/enums';
-import Input from '../input/input';
+import { IconName } from 'common/enums/enums.js';
+import Input from '../input/input.jsx';
 
 import styles from './styles.module.scss';
 

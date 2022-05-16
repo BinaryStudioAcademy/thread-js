@@ -4,12 +4,12 @@ import {
   useEffect,
   useDispatch,
   useSelector
-} from 'hooks/hooks';
+} from 'hooks/hooks.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { threadActionCreator } from 'store/actions';
-import { image as imageService } from 'services/services';
-import { Post, Spinner, Checkbox } from 'components/common/common';
-import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
+import { threadActionCreator } from 'store/actions.js';
+import { image as imageService } from 'services/services.js';
+import { Post, Spinner, Checkbox } from 'components/common/common.js';
+import { ExpandedPost, SharedPostLink, AddPost } from './components/components.js';
 
 import styles from './styles.module.scss';
 

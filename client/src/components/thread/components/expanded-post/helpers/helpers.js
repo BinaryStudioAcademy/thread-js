@@ -1,1 +1,1 @@
-export * from './get-sorted-comments/get-sorted-comments.helper';
+export * from './get-sorted-comments/get-sorted-comments.helper.js';

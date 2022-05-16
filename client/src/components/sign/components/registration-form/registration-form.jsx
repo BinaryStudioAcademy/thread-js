@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useAppForm, useState } from 'hooks/hooks';
+import { useAppForm, useState } from 'hooks/hooks.js';
 import {
   ButtonType,
   ButtonSize,
@@ -7,16 +7,16 @@ import {
   AppRoute,
   IconName,
   UserPayloadKey
-} from 'common/enums/enums';
+} from 'common/enums/enums.js';
 import {
   Button,
   FormInput,
   Message,
   NavLink,
   Segment
-} from 'components/common/common';
-import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas';
-import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
+} from 'components/common/common.js';
+import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas.js';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants.js';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {

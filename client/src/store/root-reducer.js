@@ -1,2 +1,2 @@
-export { reducer as profileReducer } from './profile/reducer';
-export { reducer as threadReducer } from './thread/reducer';
+export { reducer as profileReducer } from './profile/reducer.js';
+export { reducer as threadReducer } from './thread/reducer.js';

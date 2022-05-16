@@ -22,9 +22,6 @@ rules:
     - off
   import/no-relative-packages:
     - off
-  import/extensions:
-    - error
-    - js: always
 
 overrides:
   - files:

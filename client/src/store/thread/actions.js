@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ActionType } from './common';
+import { ActionType } from './common.js';
 
 const loadPosts = createAsyncThunk(
   ActionType.SET_ALL_POSTS,

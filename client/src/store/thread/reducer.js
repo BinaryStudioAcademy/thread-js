@@ -1,5 +1,5 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
-import * as threadActions from './actions';
+import * as threadActions from './actions.js';
 
 const initialState = {
   posts: [],

@@ -1,1 +1,1 @@
-export * from './user-payload-key.enum';
+export * from './user-payload-key.enum.js';
