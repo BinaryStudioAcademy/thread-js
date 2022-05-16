@@ -1,9 +1,9 @@
 import {
-  CommentModel,
-  UserModel,
-  ImageModel,
-  PostModel,
-  PostReactionModel
+  Comment as CommentModel,
+  User as UserModel,
+  Image as ImageModel,
+  Post as PostModel,
+  PostReaction as PostReactionModel
 } from '../models/index.js';
 import { Comment } from './comment/comment.repository.js';
 import { Image } from './image/image.repository.js';

@@ -23,4 +23,4 @@ class Abstract extends Model {
   }
 }
 
-export default Abstract;
+export { Abstract };

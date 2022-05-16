@@ -7,7 +7,7 @@ import { Model } from 'objection';
 import qs from 'qs';
 import { Server as SocketServer } from 'socket.io';
 
-import knexConfig from '../knexfile.js';
+import { knexConfig } from '../knexfile.js';
 import { initApi } from './api/api.js';
 import { ENV, ExitCode } from './common/enums/enums.js';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
