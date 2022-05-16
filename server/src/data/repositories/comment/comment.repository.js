@@ -1,4 +1,4 @@
-import { Abstract } from '../abstract/abstract.repository';
+import { Abstract } from '../abstract/abstract.repository.js';
 
 class Comment extends Abstract {
   constructor({ commentModel }) {
@@ -6,9 +6,7 @@ class Comment extends Abstract {
   }
 
   getCommentById(id) {
-    return this.model.query()
-      .findById(id)
-      .withGraphFetched('[user.image]');
+    return this.model.query().findById(id).withGraphFetched('[user.image]');
   }
 }
 

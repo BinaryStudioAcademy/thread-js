@@ -4,13 +4,13 @@ import {
   image as imageRepository,
   post as postRepository,
   postReaction as postReactionRepository
-} from '../data/repositories/repositories';
-import { Auth } from './auth/auth.service';
-import { Comment } from './comment/comment.service';
-import { Http } from './http/http.service';
-import { Image } from './image/image.service';
-import { Post } from './post/post.service';
-import { User } from './user/user.service';
+} from '../data/repositories/repositories.js';
+import { Auth } from './auth/auth.service.js';
+import { Comment } from './comment/comment.service.js';
+import { Http } from './http/http.service.js';
+import { Image } from './image/image.service.js';
+import { Post } from './post/post.service.js';
+import { User } from './user/user.service.js';
 
 const http = new Http();
 

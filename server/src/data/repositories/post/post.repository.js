@@ -1,5 +1,9 @@
-import { Abstract } from '../abstract/abstract.repository';
-import { getCommentsCountQuery, getReactionsQuery, getWhereUserIdQuery } from './helpers';
+import { Abstract } from '../abstract/abstract.repository.js';
+import {
+  getCommentsCountQuery,
+  getReactionsQuery,
+  getWhereUserIdQuery
+} from './helpers.js';
 
 class Post extends Abstract {
   constructor({ postModel }) {
@@ -7,13 +11,10 @@ class Post extends Abstract {
   }
 
   getPosts(filter) {
-    const {
-      from: offset,
-      count: limit,
-      userId
-    } = filter;
+    const { from: offset, count: limit, userId } = filter;
 
-    return this.model.query()
+    return this.model
+      .query()
       .select(
         'posts.*',
         getCommentsCountQuery(this.model),
@@ -28,7 +29,8 @@ class Post extends Abstract {
   }
 
   getPostById(id) {
-    return this.model.query()
+    return this.model
+      .query()
       .select(
         'posts.*',
         getCommentsCountQuery(this.model),

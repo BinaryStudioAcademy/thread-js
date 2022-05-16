@@ -1,4 +1,4 @@
-import { Abstract } from '../abstract/abstract.repository';
+import { Abstract } from '../abstract/abstract.repository.js';
 
 class User extends Abstract {
   constructor({ userModel }) {
@@ -18,7 +18,8 @@ class User extends Abstract {
   }
 
   getUserById(id) {
-    return this.model.query()
+    return this.model
+      .query()
       .select('id', 'createdAt', 'email', 'updatedAt', 'username')
       .where({ id })
       .withGraphFetched('[image]')
