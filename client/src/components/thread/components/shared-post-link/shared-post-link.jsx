@@ -42,4 +42,4 @@ SharedPostLink.propTypes = {
   onClose: PropTypes.func.isRequired
 };
 
-export default SharedPostLink;
+export { SharedPostLink };

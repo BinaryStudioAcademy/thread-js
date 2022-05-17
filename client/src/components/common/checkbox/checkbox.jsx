@@ -26,4 +26,4 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired
 };
 
-export default Checkbox;
+export { Checkbox };

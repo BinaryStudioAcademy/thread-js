@@ -88,4 +88,4 @@ AddPost.propTypes = {
   onUploadImage: PropTypes.func.isRequired
 };
 
-export default AddPost;
+export { AddPost };

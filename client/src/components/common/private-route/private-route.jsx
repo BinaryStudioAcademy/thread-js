@@ -25,4 +25,4 @@ PrivateRoute.defaultProps = {
   location: undefined
 };
 
-export default PrivateRoute;
+export { PrivateRoute };

@@ -40,4 +40,4 @@ AddComment.propTypes = {
   postId: PropTypes.number.isRequired
 };
 
-export default AddComment;
+export { AddComment };

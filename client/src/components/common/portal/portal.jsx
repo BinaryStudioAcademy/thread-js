@@ -32,4 +32,4 @@ Portal.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-export default Portal;
+export { Portal };

@@ -137,4 +137,4 @@ const Thread = () => {
   );
 };
 
-export default Thread;
+export { Thread };

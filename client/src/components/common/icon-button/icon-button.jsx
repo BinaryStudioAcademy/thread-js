@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { IconName } from 'common/enums/enums.js';
-import Icon from '../icon/icon.jsx';
+import { Icon } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 
@@ -26,4 +26,4 @@ IconButton.defaultProps = {
   label: ''
 };
 
-export default IconButton;
+export { IconButton };

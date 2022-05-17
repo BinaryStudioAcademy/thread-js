@@ -84,4 +84,4 @@ LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired
 };
 
-export default LoginForm;
+export { LoginForm };

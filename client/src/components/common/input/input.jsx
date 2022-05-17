@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 
 import { IconName } from 'common/enums/enums.js';
-import Icon from '../icon/icon.jsx';
+import { Icon } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 
@@ -73,4 +73,4 @@ Input.defaultProps = {
   errors: {}
 };
 
-export default Input;
+export { Input };

@@ -28,4 +28,4 @@ Icon.defaultProps = {
   isLoading: false
 };
 
-export default Icon;
+export { Icon };

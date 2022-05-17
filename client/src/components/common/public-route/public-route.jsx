@@ -25,4 +25,4 @@ PublicRoute.defaultProps = {
   location: undefined
 };
 
-export default PublicRoute;
+export { PublicRoute };

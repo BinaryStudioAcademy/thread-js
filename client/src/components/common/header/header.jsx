@@ -44,4 +44,4 @@ Header.propTypes = {
   user: userType.isRequired
 };
 
-export default Header;
+export { Header };
