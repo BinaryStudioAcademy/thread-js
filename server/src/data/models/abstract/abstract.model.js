@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 
-class AbstractModel extends Model {
+class Abstract extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
@@ -23,4 +23,4 @@ class AbstractModel extends Model {
   }
 }
 
-export { AbstractModel };
+export { Abstract };

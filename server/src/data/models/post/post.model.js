@@ -1,13 +1,13 @@
 import { Model } from 'objection';
 
 import { DbTableName } from '../../../common/enums/enums.js';
-import { AbstractModel } from '../abstract/abstract.model.js';
-import { CommentModel } from '../comment/comment.model.js';
-import { ImageModel } from '../image/image.model.js';
-import { PostReactionModel } from '../post-reaction/post-reaction.model.js';
-import { UserModel } from '../user/user.model.js';
+import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
+import { Comment as CommentModel } from '../comment/comment.model.js';
+import { Image as ImageModel } from '../image/image.model.js';
+import { PostReaction as PostReactionModel } from '../post-reaction/post-reaction.model.js';
+import { User as UserModel } from '../user/user.model.js';
 
-class PostModel extends AbstractModel {
+class Post extends AbstractModel {
   static get tableName() {
     return DbTableName.POSTS;
   }
@@ -67,4 +67,4 @@ class PostModel extends AbstractModel {
   }
 }
 
-export { PostModel };
+export { Post };

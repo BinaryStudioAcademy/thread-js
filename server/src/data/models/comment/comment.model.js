@@ -1,11 +1,11 @@
 import { Model } from 'objection';
 
 import { DbTableName } from '../../../common/enums/enums.js';
-import { AbstractModel } from '../abstract/abstract.model.js';
-import { PostModel } from '../post/post.model.js';
-import { UserModel } from '../user/user.model.js';
+import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
+import { Post as PostModel } from '../post/post.model.js';
+import { User as UserModel } from '../user/user.model.js';
 
-class CommentModel extends AbstractModel {
+class Comment extends AbstractModel {
   static get tableName() {
     return DbTableName.COMMENTS;
   }
@@ -48,4 +48,4 @@ class CommentModel extends AbstractModel {
   }
 }
 
-export { CommentModel };
+export { Comment };
