@@ -43,7 +43,7 @@ const Thread = () => {
     dispatch(threadActionCreator.loadPosts(filtersPayload));
   }, [dispatch]);
 
-  const toggleShowOwnPosts = useCallback(
+  const handleToggleShowOwnPosts = useCallback(
     () => {
       postsFilter.userId = showOwnPosts ? userId : undefined;
       postsFilter.from = 0;
@@ -54,8 +54,8 @@ const Thread = () => {
   );
 
   useEffect(() => {
-    toggleShowOwnPosts();
-  }, [showOwnPosts, toggleShowOwnPosts]);
+    handleToggleShowOwnPosts();
+  }, [showOwnPosts, handleToggleShowOwnPosts]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -79,24 +79,26 @@ const Thread = () => {
     [dispatch]
   );
 
-  const getMorePosts = useCallback(() => {
+  const handleGetMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
     const { from, count } = postsFilter;
     postsFilter.from = from + count;
   }, [handleMorePostsLoad]);
 
-  const sharePost = id => setSharedPostId(id);
+  const handleSharePost = id => setSharedPostId(id);
 
-  const uploadImage = file => imageService.uploadImage(file);
+  const handleUploadImage = file => imageService.uploadImage(file);
+
+  const handleCloseSharedPostLink = () => setSharedPostId(undefined);
 
   useEffect(() => {
-    getMorePosts();
-  }, [getMorePosts]);
+    handleGetMorePosts();
+  }, [handleGetMorePosts]);
 
   return (
     <div className={styles.threadContent}>
       <div className={styles.addPostForm}>
-        <AddPost onPostAdd={handlePostAdd} uploadImage={uploadImage} />
+        <AddPost onPostAdd={handlePostAdd} onUploadImage={handleUploadImage} />
       </div>
       <form name="thread-toolbar">
         <div className={styles.toolbar}>
@@ -109,7 +111,7 @@ const Thread = () => {
       </form>
       <InfiniteScroll
         dataLength={posts.length}
-        next={getMorePosts}
+        next={handleGetMorePosts}
         scrollThreshold={0.8}
         hasMore={hasMorePosts}
         loader={<Spinner key="0" />}
@@ -119,16 +121,16 @@ const Thread = () => {
             post={post}
             onPostLike={handlePostLike}
             onExpandedPostToggle={handleExpandedPostToggle}
-            sharePost={sharePost}
+            onSharePost={handleSharePost}
             key={post.id}
           />
         ))}
       </InfiniteScroll>
-      {expandedPost && <ExpandedPost sharePost={sharePost} />}
+      {expandedPost && <ExpandedPost onSharePost={handleSharePost} />}
       {sharedPostId && (
         <SharedPostLink
           postId={sharedPostId}
-          close={() => setSharedPostId(undefined)}
+          onClose={handleCloseSharedPostLink}
         />
       )}
     </div>

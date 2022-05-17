@@ -6,7 +6,7 @@ import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants.js';
 
 import styles from './styles.module.scss';
 
-const AddPost = ({ onPostAdd, uploadImage }) => {
+const AddPost = ({ onPostAdd, onUploadImage }) => {
   const [image, setImage] = useState(undefined);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -31,7 +31,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
     setIsUploading(true);
     const [file] = target.files;
 
-    uploadImage(file)
+    onUploadImage(file)
       .then(({ id: imageId, link: imageLink }) => {
         setImage({ imageId, imageLink });
       })
@@ -85,7 +85,7 @@ const AddPost = ({ onPostAdd, uploadImage }) => {
 
 AddPost.propTypes = {
   onPostAdd: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired
+  onUploadImage: PropTypes.func.isRequired
 };
 
 export default AddPost;
