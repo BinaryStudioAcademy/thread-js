@@ -6,7 +6,9 @@ plugins:
   - stylelint-scss
 
 rules:
-    selector-pseudo-class-no-unknown:
+  selector-class-pattern: null
+  declaration-colon-newline-after: null
+  selector-pseudo-class-no-unknown:
     - true
     - ignorePseudoClasses:
-      - global
+        - global
