@@ -9,7 +9,7 @@ const SharedPostLink = ({ postId, onClose }) => {
   const [isCopied, setIsCopied] = useState(false);
   const input = useRef();
 
-  const copyToClipboard = ({ target }) => {
+  const handleCopy = ({ target }) => {
     navigator.clipboard.writeText(input.current?.value ?? '');
     target.focus();
     setIsCopied(true);
@@ -28,7 +28,7 @@ const SharedPostLink = ({ postId, onClose }) => {
       </header>
       <div>
         <CopyBufferInput
-          onCopy={copyToClipboard}
+          onCopy={handleCopy}
           value={`${window.location.origin}/share/${postId}`}
           ref={input}
         />
