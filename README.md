@@ -1,16 +1,16 @@
 # ThreadJS
 
-## Описание
-[**Thread**](git@github.com:BinaryStudioAcademy/thread-js.git) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с готовой архитектурой и структурой, подключенным базовым стеком технологий и стартовым функционалом, предназначенный для самостоятельной практики студентов.
+## Description
+[**Thread**](git@github.com:BinaryStudioAcademy/thread-js.git) - this is [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") with a ready-made architecture and structure, a connected basic technology stack and start-up functionality, designed for individual practice of students.
 
-Тематика проекта - социальная сеть, похожая на Twitter.
+The main theme of the project is a social network similar to Twitter.
 
-Основная идея проекта -  ознакомить студентов с нашим виденьем того, как реальный проект должен выглядеть изнутри, и дать возможность самостоятельно исследовать, как устроена архитектура и структура проекта, посмотреть его возможные конфигурации, попробовать покопаться и разобраться в чужом коде.
+The main idea of the project is to onboard students with our vision of how a real project should look like from the inside, and give them the opportunity to individually explore how the architecture and structure of the project works, see its possible configurations, try to deeply understand someone else's code.
 
 
-## Технологии
+## Technologies
 
-Здесь перечислены основные фреймворки и библиотеки, используемые в проекте. Полный список используемых технологий для каждой части проекта находится в файлах package.json в папках client и server.
+The main frameworks and libraries used in the project are listed here. A complete list of technologies used for each part of the project is in the ```package.json``` files in the ```client``` and ```server``` folders.
 
 ### Common
 1. ESLatest
@@ -44,78 +44,78 @@
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
 
-## Установка
+## Installation
 
-1. Установить последнюю стабильную версию [Node.js](https://nodejs.org/en/ "Node.js") (LTS). **Note:** npm будет установлен автоматически. Проверьте корректность установки: для этого выполните в командной строке (терминале):
+1. Get the latest stable version [Node.js](https://nodejs.org/en/ "Node.js") (LTS). **Note:** npm will be installed automatically. Check the correctness of the installation: to do this, run in the command line (terminal):
 
     ```
-    node -v  // для проверки версии Node.js
-    npm -v // для проверки версии npm
+    node -v  // for checking Node.js version
+    npm -v // for checking npm version
     ```
 
-2. Установить последнюю стабильную версию [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL") для вашей OS. Проверьте корректность работы - попробуйте создать базу, таблицу, - для этого можете использовать [pgAdmin](https://www.pgadmin.org/ "pgAdmin") или другой удобный способ, который найдете.
+2. Get the latest stable version [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL") for your OS. Check the correctness of the work - try to create a database, a table - for this you can use [pgAdmin](https://www.pgadmin.org/ "pgAdmin") or any other convenient way you find.
 
-3. Создайте в PostgreSQL **пустую** базу данных для проекта. Например, *thread*.
+3. Create in PostgreSQL **empty** database for the project. For example, *thread*.
 
-4. Установите Git.
+4. Install Git.
 
-5. Склонировать [репозиторий](https://github.com/BinaryStudioAcademy/thread-js) проекта:
+5. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
 
     ```
     git clone git@github.com:BinaryStudioAcademy/thread-js.git
     ```
 
-6. **Создать репозиторий на [Bitbucket](https://bitbucket.org/) и вести дальнейшую разработку там.**
+6. **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
 
-### Корень проекта
+### Root of project
 
-1. В руте проекта можно установить все зависимости одной командой:
+1. In the root of the project, you can install all the dependencies with one command:
 
     ```
       npm run install:all
     ```
 
-    Это установит зависимости для рутовой директории, frontend'а и backend'a. Можно установить для каждой папки отедьно (смотрите ниже).
+    This will install the dependencies for the root directory, frontend and backend. Can be installed for each folder separately (see below).
 
-2. После установки пакетов, в руте проекта нужно запустить команду для [git-хуков](https://www.npmjs.com/package/simple-git-hooks):
+2. After installing the packages, in the root of the project, you need to run the command to [git-hooks](https://www.npmjs.com/package/simple-git-hooks):
 
     ```
       npx simple-git-hooks
     ```
 
-    **Теперь на каждый ваш коммит будет запускаться линтер и проверять ваш код.**
+    **Now, for each of your commits, the linter will be launched and check your code.**
 
 ### Backend
 
-1. В командной строке (терминале) зайдите в папку server:
+1. In the command line (terminal) go to the folder server:
 
     ```
-    cd /* путь к папке server */
+    cd /* path to server folder */
     ```
 
-2. Установите все необходимы пакеты из package.json командой:
+2. Install all required packages from ```package.json``` with the command:
 
     ```
     npm install
     ```
 
-3.  В папке server создайте файл **.env** и скопируйте в него содержимое из файла **.env.example**.
+3.  In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
 
-    **Note**: файл **.env** содержит реальные ключи проекта и не должен сохраняться в репозиторий.
+    **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
-    Замените в файле **.env** значения ключей на действительные.
-    Для того, чтобы указать ключи для Gyazo Storage, необходимо зарегистрироваться на сайте [Gyazo](https://gyazo.com/captures) и [зарегистрировать приложение](https://gyazo.com/oauth/applications). Затем в **.env**  использовать `access token` из только что созданного приложения в Gyazo.
+    Replace in file **.env** key values to real.
+    In order to specify the keys for Gyazo Storage, you need to register on the site [Gyazo](https://gyazo.com/captures) and [register the app](https://gyazo.com/oauth/applications). Then, in **.env**  use `access token` from the recently created application to Gyazo.
 
-4. Выполните [миграции](https://knexjs.org/#Migrations) и сиды для того, чтобы заполнить базу данных демо-данными. Для этого в командной строке (терминале) в папке server выполните:
+4. Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
 
     ```
     npm run migrate:run
     npm run seed:run
     ```
 
-    Проверьте базу данных на наличие демо-данных.
+    Check the database for demo data.
 
-5. Для запуска сервера в командной строке (терминале) в папке сервера выполните:
+5. To start the server in the command line (terminal) in the server folder, run:
 
     ```
     npm start
@@ -123,59 +123,61 @@
 
 ### Frontend
 
-1. В командной строке (терминале) зайдите в папку client:
+1. In the command line (terminal) go to the ```client``` folder:
 
     ```
-    cd /* путь к папке client */
+    cd /* path to client folder */
     ```
 
-2. Установите все необходимы пакеты из package.json командой:
+2. Install all required packages from package.json with the command:
 
     ```
     npm install
     ```
 
-3.  В папке client создайте файл **.env** и скопируйте в него содержимое из файла **.env.example**.
+3.  In the ```client``` folder create a file **.env** and copy the contents of the file into it **.env.example**.
 
-    **Note**: файл **.env** содержит реальные ключи проекта и не должен сохраняться в репозиторий.
+    **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
-    Замените в файле **.env** значения ключей на действительные.
+    Replace in file **.env** key values to real.
 
-4. Для запуска клиента в командной строке (терминале) в папке клиента выполните:
+4. To run the client from the command line (terminal) in the client folder, run:
 
     ```
     npm start
     ```
 
-    Приложение должно само автоматически открыться в брузере по умолчанию.
+    The app should automatically open in your default browser.
 ## PS
 
-Весь список тасков также можно найти на доске [**Trello**](https://trello.com/b/9Y9ZIr6j "**Trello**") в колонке **To Do**. Доску нужно скопировать себе и по ней работать. Это поможет вам отслеживать весь процесс своей работы, а нам - определить, что уже готово. Таск будет считаться выполненным, если он полностью завершен и фича работает. Посмотрим на ее реализацию и оценим, правильно ли распределили логику в проекте. Это покажет, насколько вы разобрались в архитектуре. Также дадим комментарии по коду.
+The entire list of tasks can also be found on the board [**Trello**](https://trello.com/b/9Y9ZIr6j "**Trello**") in the column **To Do**. You need to copy the board for yourself and work on it. This will help you track the entire process of your work, and we will determine what is already ready. The task will be considered completed if it is fully completed and the feature works. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code..
 
-Основной результат работы можно определить тем, как глубоко вы смогли разобраться в проекте и понять его, и как далеко продвинулись в личном обучении.
+The main result of the work can be determined by how deeply you were able to understand the project and understand it, and how far you have advanced in personal learning.
 
-Ссылки:
-1. [Репозиторий](https://github.com/BinaryStudioAcademy/thread-js).
+Links:
+1. [Repo](https://github.com/BinaryStudioAcademy/thread-js).
 2. [Trello](https://trello.com/b/9Y9ZIr6j).
 
 ## FAQ:
 
-1. Какие фреймворки, библиотеки и их фичи можно использовать?
+1. What frameworks, libraries and their features can be used?
 
-Полная свобода действий, используйте то, что считаете нужным.
+Complete freedom of action, feel free, use whatever you want.
 
-2. Можно ли изменять базу данных (добавлять колонки, таблицы)?
+2. Is it possible to change the database (add columns, tables)?
 
-Можно, а в некоторых задачах даже нужно. Для этого вам необходимо создавать новые миграции. Существующие миграции изменять нельзя.
+It is possible, and in some tasks it is even necessary. To do this, you need to create new migrations. Existing migrations cannot be changed!!! Please do not forget it.
 
-3. Не устанавливается bcrypt
+3. Error: Expected linebreaks to be 'LF' but found 'CRLF'  linebreak-style
 
-Скорее всего, ему не хватает зависимостей на вашем компьютере. В документации bcrypt можно найти какие именно необходимы для вашей системы.
+You need to change the ```autocrlf``` setting to input or false in the Git settings.
 
-4. Ошибка: Expected linebreaks to be 'LF' but found 'CRLF'  linebreak-style
+```
+git config --global core.autocrlf false
+```
 
-Необходимо изменить параметр autocrlf на input либо false в настройках Git. Возможно, понадобится стянуть проект заново.
+You may need to pull the project again.
 
-5. При регистрации приложения на сайте Gyazo требуется указать Authorization callback URL
+4. When registering an application on the Gyazo website, you must provide ```Authorization callback URL```
 
-Укажите https://www.google.com/.
+Use https://www.google.com/.
