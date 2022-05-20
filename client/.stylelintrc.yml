@@ -1,6 +1,6 @@
 extends:
   - ../.stylelintrc.yml
-  - stylelint-config-recommended-scss
+  - stylelint-config-standard-scss
 
 plugins:
   - stylelint-scss
