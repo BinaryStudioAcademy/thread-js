@@ -17,14 +17,13 @@
     "lint:server": "cd server && npm run lint",
     "lint": "npm run lint:editorconfig && npm run lint:client && npm run lint:server"
   },
-  "dependencies": {},
   "devDependencies": {
     "editorconfig-checker": "4.0.2",
-    "eslint": "7.32.0",
-    "eslint-plugin-import": "2.25.3",
-    "lint-staged": "12.1.2",
+    "eslint": "8.15.0",
+    "eslint-plugin-import": "2.26.0",
+    "lint-staged": "12.4.1",
     "simple-git-hooks": "2.7.0",
-    "stylelint": "14.1.0",
+    "stylelint": "14.8.2",
     "stylelint-config-standard": "25.0.0"
   },
   "simple-git-hooks": {
