@@ -1,5 +1,3 @@
-@import "src/styles/colors";
-
 @mixin spinner {
   position: absolute;
   content: "";
@@ -81,7 +79,7 @@
 }
 
 .primary {
-  box-shadow: 0 0 0 1px var(--blue inset);
+  box-shadow: 0 0 0 1px var(--blue) inset;
   color: #fff;
   background-color: var(--blue);
 }
