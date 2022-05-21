@@ -1,0 +1,4 @@
+@mixin border {
+  border: 1px solid var(--light-shadow);
+  border-radius: 0.29rem;
+}
