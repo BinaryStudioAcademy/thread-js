@@ -31,13 +31,13 @@
   border-radius: 0.28rem;
 
   &__teal {
-    color: $white;
-    background-color: $teal;
+    color: var(--white);
+    background-color: var(--teal);
   }
 
   &__blue {
-    color: $white;
-    background-color: $blue;
+    color: var(--white);
+    background-color: var(--blue);
   }
 
   &.loading {
@@ -81,9 +81,9 @@
 }
 
 .primary {
-  box-shadow: 0 0 0 1px $blue inset;
+  box-shadow: 0 0 0 1px var(--blue inset);
   color: #fff;
-  background-color: $blue;
+  background-color: var(--blue);
 }
 
 @keyframes button-spin {

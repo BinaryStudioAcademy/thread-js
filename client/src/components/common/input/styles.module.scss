@@ -23,7 +23,7 @@
 .input {
   @include border;
 
-  background-color: $white;
+  background-color: var(--white);
   box-shadow: none;
   font-weight: 400;
   outline: none;
@@ -45,7 +45,7 @@
   color: rgba(0 0 0 / 87%);
   font-family: sans-serif;
   font-size: 100%;
-  background: $white;
+  background: var(--white);
   width: 100%;
   line-height: 1.29;
   margin: 0 0 1rem;
