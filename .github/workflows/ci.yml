@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - production
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install Dependencies
+        run: |
+          npm run install:all
+
+      - name: Code Linting
+        run: |
+          npm run lint
