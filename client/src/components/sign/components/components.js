@@ -1,4 +1,2 @@
-import LoginForm from './login-form/login-form';
-import RegistrationForm from './registration-form/registration-form';
-
-export { LoginForm, RegistrationForm };
+export { LoginForm } from './login-form/login-form.jsx';
+export { RegistrationForm } from './registration-form/registration-form.jsx';

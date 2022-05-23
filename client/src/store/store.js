@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { http, storage, auth, comment, post, image } from 'services/services';
-import { profileReducer, threadReducer } from './root-reducer';
+import { http, storage, auth, comment, post, image } from 'services/services.js';
+import { profileReducer, threadReducer } from './root-reducer.js';
 
 const store = configureStore({
   reducer: {
@@ -24,4 +24,4 @@ const store = configureStore({
   })
 });
 
-export default store;
+export { store };

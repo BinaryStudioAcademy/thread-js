@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
-import { useCallback, useDispatch, useSelector } from 'hooks/hooks';
-import { threadActionCreator } from 'store/actions';
-import { Spinner, Post, Modal } from 'components/common/common';
-import AddComment from '../add-comment/add-comment';
-import Comment from '../comment/comment';
-import { getSortedComments } from './helpers/helpers';
+import { useCallback, useDispatch, useSelector } from 'hooks/hooks.js';
+import { threadActionCreator } from 'store/actions.js';
+import { Spinner, Post, Modal } from 'components/common/common.js';
+import { Comment, AddComment } from 'components/thread/components/components.js';
+import { getSortedComments } from './helpers/helpers.js';
 
 const ExpandedPost = ({
-  sharePost
+  onSharePost
 }) => {
   const dispatch = useDispatch();
   const { post } = useSelector(state => ({
@@ -41,7 +40,7 @@ const ExpandedPost = ({
             post={post}
             onPostLike={handlePostLike}
             onExpandedPostToggle={handleExpandedPostToggle}
-            sharePost={sharePost}
+            onSharePost={onSharePost}
           />
           <div>
             <h3>Comments</h3>
@@ -59,7 +58,7 @@ const ExpandedPost = ({
 };
 
 ExpandedPost.propTypes = {
-  sharePost: PropTypes.func.isRequired
+  onSharePost: PropTypes.func.isRequired
 };
 
-export default ExpandedPost;
+export { ExpandedPost };

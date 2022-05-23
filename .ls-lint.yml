@@ -1,0 +1,25 @@
+ls:
+  .github/workflows:
+    .yml: kebab-case
+  server/src/data/migrations:
+    .js: snake_case
+  server/src/data/seeds:
+    .js: snake_case
+  .dir: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .scss: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .js: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .jsx: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .ts: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .tsx: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .json: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .md: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .woff2: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .svg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .png: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .jpg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+
+ignore:
+  - node_modules
+  - client/build
+  - client/node_modules
+  - server/node_modules

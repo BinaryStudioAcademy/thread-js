@@ -1,8 +1,8 @@
 import { Model } from 'objection';
 
 import { DbTableName } from '../../../common/enums/enums.js';
-import AbstractModel from '../abstract/abstract.model.js';
-import ImageModel from '../image/image.model.js';
+import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
+import { Image as ImageModel } from '../image/image.model.js';
 
 class User extends AbstractModel {
   static get tableName() {
@@ -40,4 +40,4 @@ class User extends AbstractModel {
   }
 }
 
-export default User;
+export { User };

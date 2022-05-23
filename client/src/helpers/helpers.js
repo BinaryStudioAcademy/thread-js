@@ -1,2 +1,2 @@
-export { getDiff, getFromNowTime } from './date/date';
-export { getStringifiedQuery } from './http/http';
+export { getDiff, getFromNowTime } from './date/date.js';
+export { getStringifiedQuery } from './http/http.js';

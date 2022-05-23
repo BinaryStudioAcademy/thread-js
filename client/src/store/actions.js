@@ -1,4 +1,4 @@
-import { login, register, logout, loadCurrentUser } from './profile/actions';
+import { login, register, logout, loadCurrentUser } from './profile/actions.js';
 import {
   loadPosts,
   loadMorePosts,
@@ -7,7 +7,7 @@ import {
   toggleExpandedPost,
   likePost,
   addComment
-} from './thread/actions';
+} from './thread/actions.js';
 
 export const profileActionCreator = {
   login,

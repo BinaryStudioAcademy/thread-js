@@ -1,3 +1,3 @@
-export { HttpCode } from './http-code.enum';
-export { HttpHeader } from './http-header.enum';
-export { HttpMethod } from './http-method.enum';
+export { HttpCode } from './http-code.enum.js';
+export { HttpHeader } from './http-header.enum.js';
+export { HttpMethod } from './http-method.enum.js';

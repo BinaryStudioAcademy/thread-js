@@ -1,24 +1,29 @@
 import PropTypes from 'prop-types';
+import { useController } from 'react-hook-form';
 
 import styles from './styles.module.scss';
 
-const Checkbox = ({ isChecked, label, onChange }) => (
-  <div className={styles.container}>
-    <input
-      checked={isChecked}
-      className={`${styles.switch} ${styles.pointer}`}
-      id="toggle-checkbox"
-      onChange={onChange}
-      type="checkbox"
-    />
-    <label className={styles.pointer} htmlFor="toggle-checkbox">{label}</label>
-  </div>
-);
+const Checkbox = ({ name, label, control }) => {
+  const { field } = useController({ name, control });
 
-Checkbox.propTypes = {
-  isChecked: PropTypes.bool.isRequired,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  return (
+    <div className={styles.container}>
+      <input
+        {...field}
+        name={name}
+        type="checkbox"
+        id="toggle-checkbox"
+        className={`${styles.switch} ${styles.pointer}`}
+      />
+      <label className={styles.pointer} htmlFor="toggle-checkbox">{label}</label>
+    </div>
+  );
 };
 
-export default Checkbox;
+Checkbox.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  label: PropTypes.string.isRequired
+};
+
+export { Checkbox };

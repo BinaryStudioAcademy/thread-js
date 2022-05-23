@@ -2,14 +2,17 @@ import {
   useState,
   useCallback,
   useEffect,
+  useAppForm,
   useDispatch,
   useSelector
-} from 'hooks/hooks';
+} from 'hooks/hooks.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { threadActionCreator } from 'store/actions';
-import { image as imageService } from 'services/services';
-import { Post, Spinner, Checkbox } from 'components/common/common';
-import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
+import { threadActionCreator } from 'store/actions.js';
+import { image as imageService } from 'services/services.js';
+import { ThreadToolbarKey, UseFormMode } from 'common/enums/enums.js';
+import { Post, Spinner, Checkbox } from 'components/common/common.js';
+import { ExpandedPost, SharedPostLink, AddPost } from './components/components.js';
+import { DEFAULT_THREAD_TOOLBAR } from './common/constants.js';
 
 import styles from './styles.module.scss';
 
@@ -28,7 +31,31 @@ const Thread = () => {
     userId: state.profile.user.id
   }));
   const [sharedPostId, setSharedPostId] = useState(undefined);
-  const [showOwnPosts, setShowOwnPosts] = useState(false);
+
+  const { control, watch } = useAppForm({
+    defaultValues: DEFAULT_THREAD_TOOLBAR,
+    mode: UseFormMode.ON_CHANGE
+  });
+
+  const showOwnPosts = watch(ThreadToolbarKey.SHOW_OWN_POSTS);
+
+  const handlePostsLoad = useCallback(filtersPayload => {
+    dispatch(threadActionCreator.loadPosts(filtersPayload));
+  }, [dispatch]);
+
+  const handleToggleShowOwnPosts = useCallback(
+    () => {
+      postsFilter.userId = showOwnPosts ? userId : undefined;
+      postsFilter.from = 0;
+      handlePostsLoad(postsFilter);
+      postsFilter.from = postsFilter.count; // for the next scroll
+    },
+    [userId, showOwnPosts, handlePostsLoad]
+  );
+
+  useEffect(() => {
+    handleToggleShowOwnPosts();
+  }, [showOwnPosts, handleToggleShowOwnPosts]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -45,10 +72,6 @@ const Thread = () => {
     [dispatch]
   );
 
-  const handlePostsLoad = filtersPayload => {
-    dispatch(threadActionCreator.loadPosts(filtersPayload));
-  };
-
   const handleMorePostsLoad = useCallback(
     filtersPayload => {
       dispatch(threadActionCreator.loadMorePosts(filtersPayload));
@@ -56,43 +79,39 @@ const Thread = () => {
     [dispatch]
   );
 
-  const toggleShowOwnPosts = () => {
-    setShowOwnPosts(!showOwnPosts);
-    postsFilter.userId = showOwnPosts ? undefined : userId;
-    postsFilter.from = 0;
-    handlePostsLoad(postsFilter);
-    postsFilter.from = postsFilter.count; // for the next scroll
-  };
-
-  const getMorePosts = useCallback(() => {
+  const handleGetMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
     const { from, count } = postsFilter;
     postsFilter.from = from + count;
   }, [handleMorePostsLoad]);
 
-  const sharePost = id => setSharedPostId(id);
+  const handleSharePost = id => setSharedPostId(id);
 
-  const uploadImage = file => imageService.uploadImage(file);
+  const handleUploadImage = file => imageService.uploadImage(file);
+
+  const handleCloseSharedPostLink = () => setSharedPostId(undefined);
 
   useEffect(() => {
-    getMorePosts();
-  }, [getMorePosts]);
+    handleGetMorePosts();
+  }, [handleGetMorePosts]);
 
   return (
     <div className={styles.threadContent}>
       <div className={styles.addPostForm}>
-        <AddPost onPostAdd={handlePostAdd} uploadImage={uploadImage} />
+        <AddPost onPostAdd={handlePostAdd} onUploadImage={handleUploadImage} />
       </div>
-      <div className={styles.toolbar}>
-        <Checkbox
-          isChecked={showOwnPosts}
-          label="Show only my posts"
-          onChange={toggleShowOwnPosts}
-        />
-      </div>
+      <form name="thread-toolbar">
+        <div className={styles.toolbar}>
+          <Checkbox
+            name={ThreadToolbarKey.SHOW_OWN_POSTS}
+            control={control}
+            label="Show only my posts"
+          />
+        </div>
+      </form>
       <InfiniteScroll
         dataLength={posts.length}
-        next={getMorePosts}
+        next={handleGetMorePosts}
         scrollThreshold={0.8}
         hasMore={hasMorePosts}
         loader={<Spinner key="0" />}
@@ -102,20 +121,20 @@ const Thread = () => {
             post={post}
             onPostLike={handlePostLike}
             onExpandedPostToggle={handleExpandedPostToggle}
-            sharePost={sharePost}
+            onSharePost={handleSharePost}
             key={post.id}
           />
         ))}
       </InfiniteScroll>
-      {expandedPost && <ExpandedPost sharePost={sharePost} />}
+      {expandedPost && <ExpandedPost onSharePost={handleSharePost} />}
       {sharedPostId && (
         <SharedPostLink
           postId={sharedPostId}
-          close={() => setSharedPostId(undefined)}
+          onClose={handleCloseSharedPostLink}
         />
       )}
     </div>
   );
 };
 
-export default Thread;
+export { Thread };

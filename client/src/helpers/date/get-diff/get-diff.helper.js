@@ -1,4 +1,4 @@
-import { dayjs } from '../dayjs/dayjs';
+import { dayjs } from '../dayjs/dayjs.js';
 
 const getDiff = (a, b) => dayjs(a).diff(b);
 

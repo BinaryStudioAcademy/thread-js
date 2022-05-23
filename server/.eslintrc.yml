@@ -22,9 +22,6 @@ rules:
     - off
   import/no-relative-packages:
     - off
-  import/extensions:
-    - error
-    - js: off
 
 overrides:
   - files:
@@ -39,4 +36,9 @@ overrides:
       - ./src/data/models/**/*
     rules:
       import/no-cycle:
+        - off
+  - files:
+    - knexfile.js
+    rules:
+      'import/no-default-export':
         - off

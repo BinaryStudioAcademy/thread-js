@@ -1,11 +1,11 @@
-import { useCallback, useDispatch, useLocation } from 'hooks/hooks';
-import { AppRoute } from 'common/enums/enums';
-import { profileActionCreator } from 'store/actions';
-import { Image } from 'components/common/common';
-import { LoginForm, RegistrationForm } from './components/components';
+import { useCallback, useDispatch, useLocation } from 'hooks/hooks.js';
+import { AppRoute } from 'common/enums/enums.js';
+import { profileActionCreator } from 'store/actions.js';
+import { Image } from 'components/common/common.js';
+import { LoginForm, RegistrationForm } from './components/components.js';
 import styles from './styles.module.scss';
 
-const Login = () => {
+const Sign = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
@@ -52,4 +52,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export { Sign };

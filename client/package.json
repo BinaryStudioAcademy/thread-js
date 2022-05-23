@@ -15,26 +15,26 @@
     "lint:js": "npx eslint --ext .js,jsx src"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.36",
-    "@fortawesome/free-solid-svg-icons": "5.15.4",
-    "@fortawesome/react-fontawesome": "0.1.16",
+    "@fortawesome/fontawesome-svg-core": "6.1.1",
+    "@fortawesome/free-solid-svg-icons": "6.1.1",
+    "@fortawesome/react-fontawesome": "0.1.18",
     "@hookform/error-message": "2.0.0",
-    "@hookform/resolvers": "2.8.5",
-    "@reduxjs/toolkit": "1.6.2",
+    "@hookform/resolvers": "2.8.9",
+    "@reduxjs/toolkit": "1.8.1",
     "clsx": "1.1.1",
-    "dayjs": "1.10.7",
-    "joi": "17.5.0",
-    "prop-types": "15.7.2",
-    "query-string": "7.0.1",
+    "dayjs": "1.11.2",
+    "joi": "17.6.0",
+    "prop-types": "15.8.1",
+    "query-string": "7.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "7.22.2",
+    "react-hook-form": "7.31.1",
     "react-infinite-scroll-component": "6.1.0",
-    "react-notifications": "1.7.2",
-    "react-redux": "7.2.6",
-    "react-router-dom": "6.0.2",
-    "react-scripts": "4.0.3",
-    "socket.io-client": "4.4.0"
+    "react-notifications": "1.7.3",
+    "react-redux": "8.0.1",
+    "react-router-dom": "6.3.0",
+    "react-scripts": "5.0.1",
+    "socket.io-client": "4.5.0"
   },
   "browserslist": [
     ">0.2%",
@@ -43,11 +43,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-config-airbnb": "19.0.2",
+    "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-jsx-a11y": "6.5.1",
-    "eslint-plugin-react": "7.27.1",
-    "sass": "1.44.0",
-    "stylelint-config-recommended-scss": "5.0.2",
-    "stylelint-scss": "4.0.0"
+    "eslint-plugin-react": "7.29.4",
+    "sass": "1.51.0",
+    "stylelint-config-standard-scss": "3.0.0",
+    "stylelint-scss": "4.2.0"
   }
 }

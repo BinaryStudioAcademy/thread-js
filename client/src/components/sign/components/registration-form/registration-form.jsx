@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useAppForm, useState } from 'hooks/hooks';
+import { useAppForm, useState } from 'hooks/hooks.js';
 import {
   ButtonType,
   ButtonSize,
@@ -7,16 +7,16 @@ import {
   AppRoute,
   IconName,
   UserPayloadKey
-} from 'common/enums/enums';
+} from 'common/enums/enums.js';
 import {
   Button,
-  FormInput,
+  Input,
   Message,
   NavLink,
   Segment
-} from 'components/common/common';
-import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas';
-import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
+} from 'components/common/common.js';
+import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas.js';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants.js';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {
@@ -46,7 +46,7 @@ const RegistrationForm = ({ onRegister }) => {
       >
         <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
-            <FormInput
+            <Input
               name={UserPayloadKey.USERNAME}
               type="text"
               placeholder="Username"
@@ -54,7 +54,7 @@ const RegistrationForm = ({ onRegister }) => {
               control={control}
               errors={errors}
             />
-            <FormInput
+            <Input
               name={UserPayloadKey.EMAIL}
               type="email"
               placeholder="Email"
@@ -62,7 +62,7 @@ const RegistrationForm = ({ onRegister }) => {
               control={control}
               errors={errors}
             />
-            <FormInput
+            <Input
               name={UserPayloadKey.PASSWORD}
               type="password"
               placeholder="Password"
@@ -95,4 +95,4 @@ RegistrationForm.propTypes = {
   onRegister: PropTypes.func.isRequired
 };
 
-export default RegistrationForm;
+export { RegistrationForm };

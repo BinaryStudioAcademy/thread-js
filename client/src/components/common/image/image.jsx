@@ -49,4 +49,4 @@ Image.defaultProps = {
   width: undefined
 };
 
-export default Image;
+export { Image };

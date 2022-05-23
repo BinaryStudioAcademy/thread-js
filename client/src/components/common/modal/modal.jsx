@@ -1,7 +1,9 @@
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import Portal from '../portal/portal';
-import { useModal } from './hooks/hooks';
+import clsx from 'clsx';
+
+import { Portal } from 'components/common/common.js';
+import { useModal } from './hooks/hooks.js';
+
 import styles from './styles.module.scss';
 
 const Modal = ({ isOpen, isCentered, onClose, children }) => {
@@ -35,4 +37,4 @@ Modal.defaultProps = {
   isCentered: false
 };
 
-export default Modal;
+export { Modal };

@@ -7,7 +7,7 @@ import { IconButton, Image } from 'components/common/common';
 
 import styles from './styles.module.scss';
 
-const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
+const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
   const {
     id,
     image,
@@ -22,6 +22,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
 
   const handlePostLike = () => onPostLike(id);
   const handleExpandedPostToggle = () => onExpandedPostToggle(id);
+  const handleSharePost = () => onSharePost(id);
 
   return (
     <div className={styles.card}>
@@ -41,7 +42,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
         <IconButton
           iconName={IconName.THUMBS_DOWN}
           label={dislikeCount}
-          onClick={() => {}}
+          onClick={() => { }}
         />
         <IconButton
           iconName={IconName.COMMENT}
@@ -50,7 +51,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, sharePost }) => {
         />
         <IconButton
           iconName={IconName.SHARE_ALTERNATE}
-          onClick={() => sharePost(id)}
+          onClick={handleSharePost}
         />
       </div>
     </div>
@@ -61,7 +62,7 @@ Post.propTypes = {
   post: postType.isRequired,
   onPostLike: PropTypes.func.isRequired,
   onExpandedPostToggle: PropTypes.func.isRequired,
-  sharePost: PropTypes.func.isRequired
+  onSharePost: PropTypes.func.isRequired
 };
 
-export default Post;
+export { Post };

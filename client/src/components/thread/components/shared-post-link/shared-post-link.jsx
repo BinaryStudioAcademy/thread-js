@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'hooks/hooks';
-import { IconName, IconColor } from 'common/enums/enums';
-import { CopyBufferInput, Icon, Modal } from 'components/common/common';
+import { useState, useRef } from 'hooks/hooks.js';
+import { IconName, IconColor } from 'common/enums/enums.js';
+import { CopyBufferInput, Icon, Modal } from 'components/common/common.js';
 
 import styles from './styles.module.scss';
 
-const SharedPostLink = ({ postId, close }) => {
+const SharedPostLink = ({ postId, onClose }) => {
   const [isCopied, setIsCopied] = useState(false);
   const input = useRef();
 
-  const copyToClipboard = ({ target }) => {
+  const handleCopy = ({ target }) => {
     navigator.clipboard.writeText(input.current?.value ?? '');
     target.focus();
     setIsCopied(true);
   };
 
   return (
-    <Modal isOpen isCentered onClose={close}>
+    <Modal isOpen isCentered onClose={onClose}>
       <header className={styles.header}>
         <span>Share Post</span>
         {isCopied && (
@@ -28,7 +28,7 @@ const SharedPostLink = ({ postId, close }) => {
       </header>
       <div>
         <CopyBufferInput
-          onCopy={copyToClipboard}
+          onCopy={handleCopy}
           value={`${window.location.origin}/share/${postId}`}
           ref={input}
         />
@@ -39,7 +39,7 @@ const SharedPostLink = ({ postId, close }) => {
 
 SharedPostLink.propTypes = {
   postId: PropTypes.number.isRequired,
-  close: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 };
 
-export default SharedPostLink;
+export { SharedPostLink };

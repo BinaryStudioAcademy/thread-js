@@ -7,7 +7,7 @@ import {
   addComment,
   applyPost,
   createPost
-} from './actions';
+} from './actions.js';
 
 const initialState = {
   posts: [],

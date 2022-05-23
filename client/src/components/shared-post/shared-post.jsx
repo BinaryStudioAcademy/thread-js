@@ -20,4 +20,4 @@ const SharedPost = () => {
   return <Navigate to={AppRoute.ROOT} />;
 };
 
-export default SharedPost;
+export { SharedPost };
