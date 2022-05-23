@@ -1,3 +1,3 @@
-export * from './env.enum.js';
-export * from './app-route.enum.js';
-export * from './storage-key.enum.js';
+export { AppRoute } from './app-route.enum.js';
+export { ENV } from './env.enum.js';
+export { StorageKey } from './storage-key.enum.js';

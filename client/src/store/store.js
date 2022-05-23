@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import * as services from 'services/services.js';
+import { http, storage, auth, comment, post, image } from 'services/services.js';
 import { profileReducer, threadReducer } from './root-reducer.js';
 
 const store = configureStore({
@@ -8,11 +8,20 @@ const store = configureStore({
     profile: profileReducer,
     posts: threadReducer
   },
-  middleware: getDefaultMiddleware => (getDefaultMiddleware({
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
     thunk: {
-      extraArgument: { services }
+      extraArgument: {
+        services: {
+          http,
+          storage,
+          auth,
+          comment,
+          post,
+          image
+        }
+      }
     }
-  }))
+  })
 });
 
 export { store };

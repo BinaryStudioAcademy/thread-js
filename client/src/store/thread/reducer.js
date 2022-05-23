@@ -1,5 +1,13 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
-import * as threadActions from './actions.js';
+import {
+  loadPosts,
+  loadMorePosts,
+  toggleExpandedPost,
+  likePost,
+  addComment,
+  applyPost,
+  createPost
+} from './actions.js';
 
 const initialState = {
   posts: [],
@@ -8,39 +16,42 @@ const initialState = {
 };
 
 const reducer = createReducer(initialState, builder => {
-  builder.addCase(threadActions.loadPosts.fulfilled, (state, action) => {
+  builder.addCase(loadPosts.fulfilled, (state, action) => {
     const { posts } = action.payload;
 
     state.posts = posts;
     state.hasMorePosts = Boolean(posts.length);
   });
-  builder.addCase(threadActions.loadMorePosts.pending, state => {
+  builder.addCase(loadMorePosts.pending, state => {
     state.hasMorePosts = null;
   });
-  builder.addCase(threadActions.loadMorePosts.fulfilled, (state, action) => {
+  builder.addCase(loadMorePosts.fulfilled, (state, action) => {
     const { posts } = action.payload;
 
     state.posts = state.posts.concat(posts);
     state.hasMorePosts = Boolean(posts.length);
   });
-  builder.addCase(threadActions.toggleExpandedPost.fulfilled, (state, action) => {
+  builder.addCase(toggleExpandedPost.fulfilled, (state, action) => {
     const { post } = action.payload;
 
     state.expandedPost = post;
   });
-  builder.addMatcher(isAnyOf(threadActions.likePost.fulfilled, threadActions.addComment.fulfilled), (state, action) => {
-    const { posts, expandedPost } = action.payload;
-    state.posts = posts;
-    state.expandedPost = expandedPost;
-  });
-  builder.addMatcher(isAnyOf(
-    threadActions.applyPost.fulfilled,
-    threadActions.createPost.fulfilled
-  ), (state, action) => {
-    const { post } = action.payload;
+  builder.addMatcher(
+    isAnyOf(likePost.fulfilled, addComment.fulfilled),
+    (state, action) => {
+      const { posts, expandedPost } = action.payload;
+      state.posts = posts;
+      state.expandedPost = expandedPost;
+    }
+  );
+  builder.addMatcher(
+    isAnyOf(applyPost.fulfilled, createPost.fulfilled),
+    (state, action) => {
+      const { post } = action.payload;
 
-    state.posts = [post, ...state.posts];
-  });
+      state.posts = [post, ...state.posts];
+    }
+  );
 });
 
 export { reducer };

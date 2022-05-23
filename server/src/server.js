@@ -11,7 +11,7 @@ import knexConfig from '../knexfile.js';
 import { initApi } from './api/api.js';
 import { ENV, ExitCode } from './common/enums/enums.js';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
-import * as services from './services/services.js';
+import { auth, comment, image, post, user } from './services/services.js';
 import { handlers as socketHandlers } from './socket/handlers.js';
 
 const app = fastify({
@@ -38,7 +38,16 @@ io.on('connection', socketHandlers);
 
 app.register(cors);
 app.register(socketInjectorPlugin, { io });
-app.register(initApi, { services, prefix: ENV.APP.API_PATH });
+app.register(initApi, {
+  services: {
+    auth,
+    comment,
+    image,
+    post,
+    user
+  },
+  prefix: ENV.APP.API_PATH
+});
 
 const staticPath = new URL('../../client/build', import.meta.url);
 app.register(fastifyStatic, {

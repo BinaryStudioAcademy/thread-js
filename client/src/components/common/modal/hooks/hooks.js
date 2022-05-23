@@ -1,1 +1,1 @@
-export * from './use-modal/use-modal.hook.js';
+export { useModal } from './use-modal/use-modal.hook.js';
