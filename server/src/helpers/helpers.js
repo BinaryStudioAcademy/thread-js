@@ -1,2 +1,2 @@
-export * from './crypt/crypt.js';
-export * from './token/token.js';
+export { cryptCompare, encrypt, encryptSync } from './crypt/crypt.js';
+export { createToken, verifyToken } from './token/token.js';

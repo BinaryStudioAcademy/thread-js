@@ -1,2 +1,2 @@
-export * from './authorization/authorization.plugin.js';
-export * from './socket-injector/socket-injector.plugin.js';
+export { authorization } from './authorization/authorization.plugin.js';
+export { socketInjector } from './socket-injector/socket-injector.plugin.js';

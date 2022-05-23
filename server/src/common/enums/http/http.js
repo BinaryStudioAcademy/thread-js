@@ -1,2 +1,2 @@
-export * from './http-code.enum.js';
-export * from './http-method.enum.js';
+export { HttpCode } from './http-code.enum.js';
+export { HttpMethod } from './http-method.enum.js';

@@ -1,1 +1,1 @@
-export * from './content-type.enum';
+export { ContentType } from './content-type.enum';

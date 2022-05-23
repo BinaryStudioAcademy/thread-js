@@ -1,5 +1,5 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
-import * as profileActions from './actions';
+import { login, logout, register, loadCurrentUser } from './actions';
 
 const initialState = {
   user: null
@@ -9,10 +9,10 @@ const reducer = createReducer(initialState, builder => {
   builder
     .addMatcher(
       isAnyOf(
-        profileActions.login.fulfilled,
-        profileActions.logout.fulfilled,
-        profileActions.register.fulfilled,
-        profileActions.loadCurrentUser.fulfilled
+        login.fulfilled,
+        logout.fulfilled,
+        register.fulfilled,
+        loadCurrentUser.fulfilled
       ),
       (state, action) => {
         state.user = action.payload;
@@ -20,10 +20,10 @@ const reducer = createReducer(initialState, builder => {
     )
     .addMatcher(
       isAnyOf(
-        profileActions.login.rejected,
-        profileActions.logout.rejected,
-        profileActions.register.rejected,
-        profileActions.loadCurrentUser.rejected
+        login.rejected,
+        logout.rejected,
+        register.rejected,
+        loadCurrentUser.rejected
       ),
       state => {
         state.user = null;
