@@ -1,8 +1,14 @@
 .profile {
   display: grid;
-  grid-template-rows: auto;
-  gap: 2rem;
   justify-content: center;
-  margin: 0 auto;
   padding: 2rem 0 0;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0 0;
+  padding: 0;
+  gap: 10px;
+  border: none;
 }

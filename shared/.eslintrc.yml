@@ -1,0 +1,7 @@
+extends:
+  - eslint:recommended
+  - plugin:import/recommended
+  - ../.eslintrc.yml
+
+env:
+  node: true

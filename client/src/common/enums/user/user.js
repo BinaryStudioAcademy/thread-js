@@ -1,1 +1,1 @@
-export { UserPayloadKey } from './user-payload-key.enum.js';
+export { UserPayloadKey } from 'shared/src/common/enums/enums.js';

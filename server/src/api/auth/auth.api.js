@@ -1,5 +1,13 @@
-import { AuthApiPath, ControllerHook, HttpMethod } from '../../common/enums/enums.js';
-import { getErrorStatusCode } from '../../helpers/http/get-status-code.helper.js';
+import {
+  AuthApiPath,
+  ControllerHook,
+  HttpMethod
+} from '../../common/enums/enums.js';
+import { getErrorStatusCode } from '../../helpers/helpers.js';
+import {
+  login as loginValidationSchema,
+  registration as registrationValidationSchema
+} from '../../validation-schemas/validation-schemas.js';
 
 const initAuth = (fastify, opts, done) => {
   const { auth: authService, user: userService } = opts.services;
@@ -8,6 +16,9 @@ const initAuth = (fastify, opts, done) => {
   fastify.route({
     method: HttpMethod.POST,
     url: AuthApiPath.LOGIN,
+    schema: {
+      body: loginValidationSchema
+    },
     async [ControllerHook.HANDLER](req, res) {
       try {
         const user = await authService.verifyLoginCredentials(req.body);
@@ -20,6 +31,9 @@ const initAuth = (fastify, opts, done) => {
   fastify.route({
     method: HttpMethod.POST,
     url: AuthApiPath.REGISTER,
+    schema: {
+      body: registrationValidationSchema
+    },
     async [ControllerHook.HANDLER](req, res) {
       try {
         return await authService.register(req.body);

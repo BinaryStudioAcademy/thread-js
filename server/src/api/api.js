@@ -12,6 +12,10 @@ const initApi = (
   { services: { auth, user, comment, post, image } },
   done
 ) => {
+  fastify.setValidatorCompiler(({ schema }) => {
+    return data => schema.validate(data);
+  });
+
   fastify.register(authorizationPlugin, {
     services: {
       user,

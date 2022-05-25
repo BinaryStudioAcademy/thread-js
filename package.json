@@ -6,17 +6,20 @@
     "npm": ">=8 <9"
   },
   "scripts": {
+    "install:shared": "cd shared && npm install",
     "install:client": "cd client && npm install",
     "install:server": "cd server && npm install",
-    "install:all": "npm install && npm run install:client && npm run install:server",
+    "install:all": "npm install && npm run install:shared && npm run install:client && npm run install:server",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
+    "lint:shared:js": "cd shared && npm run lint:js",
+    "lint:shared": "cd shared && npm run lint",
     "lint:client:css": "cd client && npm run lint:css",
     "lint:client:js": "cd client && npm run lint:js",
     "lint:client": "cd client && npm run lint",
     "lint:server:js": "cd server && npm run lint:js",
     "lint:server": "cd server && npm run lint",
-    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:client && npm run lint:server"
+    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:client && npm run lint:server"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.0",

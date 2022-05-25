@@ -3,19 +3,9 @@ import {
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
-} from 'common/enums/enums';
+} from '../../common/enums/enums.js';
 
-const registration = Joi.object({
-  [UserPayloadKey.USERNAME]: Joi.string()
-    .trim()
-    .min(UserValidationRule.USERNAME_MIN_LENGTH)
-    .max(UserValidationRule.USERNAME_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': UserValidationMessage.USERNAME_REQUIRE,
-      'string.min': UserValidationMessage.USERNAME_MIN_LENGTH,
-      'string.max': UserValidationMessage.USERNAME_MAX_LENGTH
-    }),
+const login = Joi.object({
   [UserPayloadKey.EMAIL]: Joi.string()
     .trim()
     .email({ tlds: { allow: false } })
@@ -36,4 +26,4 @@ const registration = Joi.object({
     })
 });
 
-export { registration };
+export { login };

@@ -1,4 +1,9 @@
-import { HttpMethod, ContentType } from 'common/enums/enums';
+import {
+  ApiPath,
+  AuthApiPath,
+  HttpMethod,
+  ContentType
+} from 'common/enums/enums';
 
 class Auth {
   constructor({ apiPath, http }) {
@@ -7,27 +12,36 @@ class Auth {
   }
 
   login(payload) {
-    return this._http.load(`${this._apiPath}/auth/login`, {
-      method: HttpMethod.POST,
-      contentType: ContentType.JSON,
-      hasAuth: false,
-      payload: JSON.stringify(payload)
-    });
+    return this._http.load(
+      `${this._apiPath}${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        hasAuth: false,
+        payload: JSON.stringify(payload)
+      }
+    );
   }
 
   registration(payload) {
-    return this._http.load(`${this._apiPath}/auth/register`, {
-      method: HttpMethod.POST,
-      contentType: ContentType.JSON,
-      hasAuth: false,
-      payload: JSON.stringify(payload)
-    });
+    return this._http.load(
+      `${this._apiPath}${ApiPath.AUTH}${AuthApiPath.REGISTER}`,
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        hasAuth: false,
+        payload: JSON.stringify(payload)
+      }
+    );
   }
 
   getCurrentUser() {
-    return this._http.load(`${this._apiPath}/auth/user`, {
-      method: HttpMethod.GET
-    });
+    return this._http.load(
+      `${this._apiPath}${ApiPath.AUTH}${AuthApiPath.USER}`,
+      {
+        method: HttpMethod.GET
+      }
+    );
   }
 }
 

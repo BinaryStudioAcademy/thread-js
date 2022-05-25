@@ -17,22 +17,21 @@ const Profile = () => {
   });
 
   return (
-    <form name="profile">
-      <div className={styles.profile}>
-        <Image
-          alt="profile avatar"
-          isCentered
-          src={user.image?.link ?? DEFAULT_USER_AVATAR}
-          size={ImageSize.MEDIUM}
-          isCircular
-        />
+    <form name="profile" className={styles.profile}>
+      <Image
+        alt="profile avatar"
+        isCentered
+        src={user.image?.link ?? DEFAULT_USER_AVATAR}
+        size={ImageSize.MEDIUM}
+        isCircular
+      />
+      <fieldset disabled className={styles.fieldset}>
         <Input
           iconName={IconName.USER}
           placeholder="Username"
           name="username"
           value={user.username}
           control={control}
-          disabled
         />
         <Input
           iconName={IconName.AT}
@@ -41,9 +40,8 @@ const Profile = () => {
           type="email"
           value={user.email}
           control={control}
-          disabled
         />
-      </div>
+      </fieldset>
     </form>
   );
 };
