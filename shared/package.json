@@ -11,6 +11,7 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "dayjs": "1.11.2",
     "joi": "17.6.0"
   }
 }

@@ -1,1 +1,1 @@
-export { CommentPayloadKey } from 'shared/src/common/enums/enums';
+export { CommentPayloadKey } from 'shared/src/common/enums/enums.js';

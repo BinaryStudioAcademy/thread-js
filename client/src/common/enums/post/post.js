@@ -1,1 +1,1 @@
-export { PostPayloadKey } from 'shared/src/common/enums/enums';
+export { PostPayloadKey } from 'shared/src/common/enums/enums.js';

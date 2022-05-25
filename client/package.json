@@ -22,7 +22,6 @@
     "@hookform/resolvers": "2.8.9",
     "@reduxjs/toolkit": "1.8.1",
     "clsx": "1.1.1",
-    "dayjs": "1.11.2",
     "prop-types": "15.8.1",
     "query-string": "7.1.1",
     "react": "17.0.2",
