@@ -1,1 +1,1 @@
-export { HttpError } from './http-error/http-error.exception.js';
+export { HttpError } from 'shared/src/exceptions/exceptions.js';

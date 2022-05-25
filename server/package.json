@@ -32,7 +32,8 @@
     "pg": "8.7.3",
     "pg-hstore": "2.3.4",
     "qs": "6.10.3",
-    "socket.io": "4.5.0"
+    "socket.io": "4.5.0",
+    "shared": "file:../shared"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "15.0.0",

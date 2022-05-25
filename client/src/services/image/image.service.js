@@ -1,4 +1,4 @@
-import { HttpMethod } from 'common/enums/enums';
+import { ApiPath, HttpMethod } from 'common/enums/enums';
 
 class Image {
   constructor({ apiPath, http }) {
@@ -11,7 +11,7 @@ class Image {
 
     formData.append('image', image);
 
-    return this._http.load(`${this._apiPath}/images`, {
+    return this._http.load(`${this._apiPath}${ApiPath.IMAGES}`, {
       method: HttpMethod.POST,
       payload: formData
     });

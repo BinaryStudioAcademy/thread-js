@@ -1,2 +1,2 @@
+export { SocketEvent } from 'shared/src/common/enums/enums.js';
 export { NotificationMessage } from './notification-message.enum.js';
-export { SocketEvent } from './socket-event.enum.js';

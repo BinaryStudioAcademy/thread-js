@@ -1,4 +1,9 @@
-import { HttpMethod, ContentType } from 'common/enums/enums';
+import {
+  ApiPath,
+  PostsApiPath,
+  HttpMethod,
+  ContentType
+} from 'common/enums/enums';
 
 class Post {
   constructor({ apiPath, http }) {
@@ -7,20 +12,23 @@ class Post {
   }
 
   getAllPosts(filter) {
-    return this._http.load(`${this._apiPath}/posts`, {
+    return this._http.load(`${this._apiPath}${ApiPath.POSTS}`, {
       method: HttpMethod.GET,
       query: filter
     });
   }
 
   getPost(id) {
-    return this._http.load(`${this._apiPath}/posts/${id}`, {
-      method: HttpMethod.GET
-    });
+    return this._http.load(
+      `${this._apiPath}${ApiPath.POSTS}${PostsApiPath.ROOT}${id}`,
+      {
+        method: HttpMethod.GET
+      }
+    );
   }
 
   addPost(payload) {
-    return this._http.load(`${this._apiPath}/posts`, {
+    return this._http.load(`${this._apiPath}${ApiPath.POSTS}`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload)
@@ -28,14 +36,17 @@ class Post {
   }
 
   likePost(postId) {
-    return this._http.load(`${this._apiPath}/posts/react`, {
-      method: HttpMethod.PUT,
-      contentType: ContentType.JSON,
-      payload: JSON.stringify({
-        postId,
-        isLike: true
-      })
-    });
+    return this._http.load(
+      `${this._apiPath}${ApiPath.POSTS}${PostsApiPath.REACT}`,
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify({
+          postId,
+          isLike: true
+        })
+      }
+    );
   }
 }
 

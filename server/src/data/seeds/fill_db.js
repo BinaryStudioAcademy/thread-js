@@ -1,6 +1,6 @@
 import { usersSeed, userImagesSeed } from '../seed-data/users-seed.js';
 import { postsSeed, postImagesSeed } from '../seed-data/posts-seed.js';
-import commentsSeed from '../seed-data/comments-seed.js';
+import { commentsSeed } from '../seed-data/comments-seed.js';
 
 const TableName = {
   USERS: 'users',

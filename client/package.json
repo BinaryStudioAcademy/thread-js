@@ -23,7 +23,6 @@
     "@reduxjs/toolkit": "1.8.1",
     "clsx": "1.1.1",
     "dayjs": "1.11.2",
-    "joi": "17.6.0",
     "prop-types": "15.8.1",
     "query-string": "7.1.1",
     "react": "17.0.2",
@@ -34,6 +33,7 @@
     "react-redux": "8.0.1",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
+    "shared": "file:../shared",
     "socket.io-client": "4.5.0"
   },
   "browserslist": [
