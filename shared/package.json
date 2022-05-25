@@ -12,8 +12,5 @@
   },
   "dependencies": {
     "joi": "17.6.0"
-  },
-  "devDependencies": {
-    "eslint-config-airbnb-base": "15.0.0"
   }
 }

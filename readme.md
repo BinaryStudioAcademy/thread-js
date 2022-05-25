@@ -85,6 +85,22 @@ The main frameworks and libraries used in the project are listed here. A complet
 
     **Now, for each of your commits, the linter will be launched and check your code.**
 
+### Shared
+
+Shared package contains code that is used for both frontend and backend.
+
+1. In the command line (terminal) go to the ```client``` folder:
+
+    ```
+    cd /* path to client folder */
+    ```
+
+2. Install all required packages from package.json with the command:
+
+    ```
+    npm install
+    ```
+
 ### Backend
 
 1. In the command line (terminal) go to the folder server:
