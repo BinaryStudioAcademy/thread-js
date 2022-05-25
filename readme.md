@@ -89,10 +89,10 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 Shared package contains code that is used for both frontend and backend.
 
-1. In the command line (terminal) go to the ```client``` folder:
+1. In the command line (terminal) go to the ```shared``` folder:
 
     ```
-    cd /* path to client folder */
+    cd /* path to shared folder */
     ```
 
 2. Install all required packages from package.json with the command:
