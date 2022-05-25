@@ -5,23 +5,3 @@ extends:
 
 env:
   node: true
-
-parserOptions:
-  sourceType: module
-
-rules:
-  no-plusplus:
-    - error
-    - allowForLoopAfterthoughts: true
-  no-console:
-    - warn
-    - allow:
-        - warn
-        - error
-        - info
-  prefer-promise-reject-errors:
-    - off
-  import/no-import-module-exports:
-    - off
-  import/no-relative-packages:
-    - off
