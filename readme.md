@@ -14,32 +14,31 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 ### Common
 1. ESLatest
-2. [Git](https://git-scm.com/book/ru/v1/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git "Git")
-3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
-4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token "JWT")
-5. [Socket.IO](https://socket.io/docs/ "Socket.IO")
+2. [Git](https://git-scm.com/doc)
+3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html)
+4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
+5. [Socket.IO](https://socket.io/docs/)
 6. [npm](https://en.wikipedia.org/wiki/Npm_(software))
-7. [ESLint](https://eslint.org/docs/user-guide/getting-started "ESLint")
+7. [ESLint](https://eslint.org/docs/user-guide/getting-started)
+8. [joi](https://www.npmjs.com/package/joi)
+9. [dayjs](https://day.js.org/)
 
 ### Frontend
-1. [React](https://reactjs.org/docs/getting-started.html "React")
-2. [React Redux](https://redux.js.org/introduction/getting-started "React Redux")
-3. [React Hook Form](https://react-hook-form.com/get-started "React Hook Form")
-4. [joi](https://www.npmjs.com/package/joi "joi")
-5. [dayjs](https://day.js.org/)
-6. [history](https://www.npmjs.com/package/history "history")
+1. [React](https://reactjs.org/docs/getting-started.html)
+2. [React Redux](https://redux.js.org/introduction/getting-started)
+3. [React Hook Form](https://react-hook-form.com/get-started)
+4. [history](https://www.npmjs.com/package/history)
 
 ### Backend
-1. [Node.js](https://nodejs.org/en/ "Node.js")
-2. [Fastify](https://www.fastify.io/docs/v3.24.x/ "Fastify")
-3. [Knex](https://knexjs.org/ "Knex")
-4. [Objection](https://vincit.github.io/objection.js/ "Objection")
-5. [axios](https://www.npmjs.com/package/axios "axios")
-6. [bcrypt](https://www.npmjs.com/package/bcrypt "bcrypt")
-7. [Babel](https://babeljs.io/docs/en/index.html "Babel")
-8. [nodemon](https://www.npmjs.com/package/nodemon "nodemon")
-9. [dotenv](https://www.npmjs.com/package/dotenv "dotenv")
-10. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken "jsonwebtoken")
+1. [Node.js](https://nodejs.org/en/)
+2. [Fastify](https://www.fastify.io/docs/v3.24.x/)
+3. [Knex](https://knexjs.org/)
+4. [Objection](https://vincit.github.io/objection.js/)
+5. [axios](https://www.npmjs.com/package/axios)
+6. [bcrypt](https://www.npmjs.com/package/bcrypt)
+7. [nodemon](https://www.npmjs.com/package/nodemon)
+8. [dotenv](https://www.npmjs.com/package/dotenv)
+9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
