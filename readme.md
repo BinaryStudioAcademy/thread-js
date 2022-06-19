@@ -58,6 +58,13 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 4. Install Git.
 
+  **Note**: If you are using Windows, do these two additional steps before cloning the repo:
+  * Change ```eol``` setting in your code editor to ```lf```.
+  * Change the ```autocrlf``` setting to ```input``` in the Git settings:
+    ```
+    git config --global core.autocrlf input
+    ```
+
 5. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
 
     ```
@@ -183,16 +190,6 @@ Complete freedom of action, feel free, use whatever you want.
 
 It is possible, and in some tasks it is even necessary. To do this, you need to create new migrations. Existing migrations cannot be changed!!! Please do not forget it.
 
-3. Error: Expected linebreaks to be 'LF' but found 'CRLF'  linebreak-style
-
-You need to change the ```autocrlf``` setting to input or false in the Git settings.
-
-```
-git config --global core.autocrlf false
-```
-
-You may need to pull the project again.
-
-4. When registering an application on the Gyazo website, you must provide ```Authorization callback URL```
+3. When registering an application on the Gyazo website, you must provide ```Authorization callback URL```
 
 Use https://www.google.com/.
