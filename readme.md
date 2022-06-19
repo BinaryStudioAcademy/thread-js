@@ -58,23 +58,20 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 4. Install Git.
 
-5. Change ```eol``` setting in your code editor to ```lf```.
+  **Note**: If you are using Windows, do these two additional steps before cloning the repo:
+  * Change ```eol``` setting in your code editor to ```lf```.
+  * Change the ```autocrlf``` setting to ```input``` in the Git settings:
+    ```
+    git config --global core.autocrlf input
+    ```
 
-6. Change the ```autocrlf``` setting to ```input``` in the Git settings
-
-```
-git config --global core.autocrlf false
-```
-
-  **Note**: make sure you do this step before cloning the repo
-
-7. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
+5. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
 
     ```
     git clone git@github.com:BinaryStudioAcademy/thread-js.git
     ```
 
-8. **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
+6. **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
 
 ### Root of project
 
