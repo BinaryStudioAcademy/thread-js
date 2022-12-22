@@ -25,7 +25,7 @@
     "fastify-multer": "2.0.2",
     "fastify-plugin": "3.0.1",
     "form-data": "4.0.0",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "knex": "2.0.0",
     "nodemon": "2.0.16",
     "objection": "3.0.1",
