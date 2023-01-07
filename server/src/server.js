@@ -25,7 +25,12 @@ socket.initializeIo(app.server);
 const knex = Knex(knexConfig);
 Model.knex(knex);
 
-app.register(cors);
+app.register(cors, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: '*'
+  }
+});
 app.register(socketInjectorPlugin, { io: socket.io });
 app.register(initApi, {
   services: {
