@@ -24,6 +24,8 @@ export {
   ImageSize
 } from './components/components.js';
 export {
+  NotificationType,
   NotificationMessage,
-  SocketEvent
+  NotificationSocketEvent
 } from './notifications/notifications.js';
+export { SocketEvent, SocketNamespace } from './socket/socket.js';
