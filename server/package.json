@@ -17,7 +17,8 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --detectOpenHandles --forceExit",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/starter/",
     "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",
-    "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/"
+    "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/",
+    "test:delete-post": "npm run test -- --verbose --rootDir=tests/api/3-delete-post/"
   },
   "dependencies": {
     "@fastify/cors": "7.0.0",
