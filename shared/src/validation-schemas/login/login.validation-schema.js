@@ -12,6 +12,7 @@ const login = Joi.object({
     .required()
     .messages({
       'string.email': UserValidationMessage.EMAIL_WRONG,
+      'any.required': UserValidationMessage.EMAIL_REQUIRE,
       'string.empty': UserValidationMessage.EMAIL_REQUIRE
     }),
   [UserPayloadKey.PASSWORD]: Joi.string()
@@ -20,6 +21,7 @@ const login = Joi.object({
     .max(UserValidationRule.PASSWORD_MAX_LENGTH)
     .required()
     .messages({
+      'any.required': UserValidationMessage.PASSWORD_REQUIRE,
       'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
       'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH,
       'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH
