@@ -1,4 +1,4 @@
-import { PostsApiPath, ControllerHook, HttpMethod } from '../../common/enums/enums.js';
+import { PostsApiPath, ControllerHook, HttpMethod, HttpCode } from '../../common/enums/enums.js';
 
 const initPost = (fastify, opts, done) => {
   const { post: postService } = opts.services;
@@ -16,10 +16,10 @@ const initPost = (fastify, opts, done) => {
   fastify.route({
     method: HttpMethod.POST,
     url: PostsApiPath.ROOT,
-    [ControllerHook.HANDLER]: async req => {
+    [ControllerHook.HANDLER]: async (req, res) => {
       const post = await postService.create(req.user.id, req.body);
       req.io.emit('new_post', post); // notify all users that a new post was created
-      return post;
+      return res.status(HttpCode.CREATED).send(post);
     }
   });
   fastify.route({

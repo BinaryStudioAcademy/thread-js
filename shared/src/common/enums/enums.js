@@ -8,6 +8,7 @@ export {
 export { HttpCode, HttpMethod } from './http/http.js';
 export { UserPayloadKey } from './user/user.js';
 export { PostPayloadKey } from './post/post.js';
+export { ImagePayloadKey } from './image/image.js';
 export { CommentPayloadKey } from './comment/comment.js';
 export { ExceptionMessage, ExceptionName } from './exception/exception.js';
 export {

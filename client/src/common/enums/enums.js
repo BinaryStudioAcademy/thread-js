@@ -10,6 +10,7 @@ export { ContentType } from './file/file.js';
 export { HttpCode, HttpHeader, HttpMethod } from './http/http.js';
 export { UserPayloadKey } from './user/user.js';
 export { PostPayloadKey } from './post/post.js';
+export { ImagePayloadKey } from './image/image.js';
 export { UseFormMode } from './form/form.js';
 export { ThreadToolbarKey } from './thread/thread.js';
 export { CommentPayloadKey } from './comment/comment.js';

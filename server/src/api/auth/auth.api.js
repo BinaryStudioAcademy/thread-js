@@ -1,6 +1,7 @@
 import {
   AuthApiPath,
   ControllerHook,
+  HttpCode,
   HttpMethod
 } from '../../common/enums/enums.js';
 import { getErrorStatusCode } from '../../helpers/helpers.js';
@@ -36,7 +37,9 @@ const initAuth = (fastify, opts, done) => {
     },
     async [ControllerHook.HANDLER](req, res) {
       try {
-        return await authService.register(req.body);
+        const createdUser = await authService.register(req.body);
+
+        return res.status(HttpCode.CREATED).send(createdUser);
       } catch (err) {
         return res.status(getErrorStatusCode(err)).send(err);
       }
