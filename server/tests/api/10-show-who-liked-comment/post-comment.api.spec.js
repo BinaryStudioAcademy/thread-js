@@ -8,17 +8,19 @@ import {
   AuthApiPath,
   PostsApiPath,
   UserPayloadKey,
-  PostPayloadKey
+  PostPayloadKey,
+  CommentsApiPath
 } from '../../../src/common/enums/enums.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} and ${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMainId;
   let userMinorId;
-  let posts;
+  let post;
+  let comment;
 
   beforeAll(async () => {
     const testMainUser = {
@@ -50,101 +52,106 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     userMainId = registerMainUserResponse.json().user.id;
     userMinorId = registerMinorUserResponse.json().user.id;
 
-    const testPosts = Array.from({ length: 2 }, (_, index) => ({
-      [PostPayloadKey.BODY]: faker.lorem.paragraph(),
-      token: !index ? tokenMainUser : tokenMinorUser
-    }));
+    const testPost = {
+      [PostPayloadKey.BODY]: faker.lorem.paragraph()
+    };
 
-    const postsResponse = await Promise.all(testPosts.map(config => app.inject()
+    const createPostResponse = app.inject()
       .post(
         `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
       )
-      .headers({ authorization: `Bearer ${config.token}` })
+      .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body({
-        [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
-      })));
-    posts = postsResponse.map(response => response.json());
+        [PostPayloadKey.BODY]: testPost[PostPayloadKey.BODY]
+      });
 
-    await app.inject()
-      .put(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
+    post = createPostResponse.json();
+
+    const testComment = {
+      [PostPayloadKey.BODY]: faker.lorem.paragraph()
+    };
+
+    const commentResponse = await app.inject()
+      .post(
+        `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.ROOT}`
       )
       .headers({ authorization: `Bearer ${tokenMainUser}` })
-      .body({ postId: posts[1].id });
+      .body({
+        postId: post.id,
+        [PostPayloadKey.BODY]: testComment[PostPayloadKey.BODY]
+      });
+    comment = commentResponse.json();
 
     await app.inject()
       .put(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
+        `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
       )
       .headers({ authorization: `Bearer ${tokenMinorUser}` })
-      .body({ postId: posts[0].id, isLike: false });
+      .body({ commentId: comment.id, isLike: false });
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT} (${HttpMethod.GET}) endpoint`,
+    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
-        `should return ${HttpCode.OK} with likes and dislikes of posts`,
+        `should return ${HttpCode.OK} with likes and dislikes of comment`,
         async () => {
           const response = await app.inject()
             .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
-            .headers({ authorization: `Bearer ${tokenMainUser}` });
-
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toEqual([
-            expect.objectContaining({
-              id: posts[0].id,
-              userId: userMainId,
-              likes: expect.arrayContaining([]),
-              dislikes: expect.arrayContaining([
-                expect.objectContaining({
-                  userId: userMinorId
-                })
-              ])
-            }),
-            expect.objectContaining({
-              id: posts[1].id,
-              userId: userMinorId,
-              likes: expect.arrayContaining([
-                expect.objectContaining({
-                  userId: userMainId
-                })
-              ]),
-              dislikes: expect.arrayContaining([])
-            })
-          ]);
-        }
-      );
-    }
-  );
-
-  describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
-    () => {
-      it(
-        `should return ${HttpCode.OK} with likes and dislikes of post`,
-        async () => {
-          const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(
+              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
                 ':id',
-                posts[1].id
+                comment.id
               )}`
             )
             .headers({ authorization: `Bearer ${tokenMainUser}` });
 
           expect(response.statusCode).toBe(HttpCode.OK);
           expect(response.json()).toEqual(expect.objectContaining({
-            id: posts[1].id,
-            userId: userMinorId,
+            id: comment.id,
+            userId: userMainId,
             likes: expect.arrayContaining([
               expect.objectContaining({
-                userId: userMainId
+                userId: userMinorId
               })
             ]),
             dislikes: expect.arrayContaining([])
+          }));
+        }
+      );
+    }
+  );
+
+  describe(
+    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
+    () => {
+      it(
+        `should return ${HttpCode.OK} with likes and dislikes of post's comment`,
+        async () => {
+          const response = await app.inject()
+            .get(
+              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(
+                ':id',
+                post.id
+              )}`
+            )
+            .headers({ authorization: `Bearer ${tokenMainUser}` });
+
+          expect(response.statusCode).toBe(HttpCode.OK);
+          expect(response.json()).toEqual(expect.objectContaining({
+            id: comment.id,
+            userId: userMainId,
+            comments: expect.arrayContaining([
+              expect.objectContaining({
+                id: comment.id,
+                userId: userMainId,
+                likes: expect.arrayContaining([
+                  expect.objectContaining({
+                    userId: userMinorId
+                  })
+                ]),
+                dislikes: expect.arrayContaining([])
+              })
+            ])
           }));
         }
       );
