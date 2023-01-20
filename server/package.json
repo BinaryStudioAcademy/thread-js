@@ -16,7 +16,8 @@
     "lint": "npm run lint:js",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --detectOpenHandles --forceExit",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/starter/",
-    "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/"
+    "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",
+    "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/"
   },
   "dependencies": {
     "@fastify/cors": "7.0.0",
