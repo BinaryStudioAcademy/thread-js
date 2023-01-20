@@ -20,7 +20,8 @@
     "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/",
     "test:delete-post": "npm run test -- --verbose --rootDir=tests/api/3-delete-post/",
     "test:update-comment": "npm run test -- --verbose --rootDir=tests/api/4-update-comment/",
-    "test:delete-comment": "npm run test -- --verbose --rootDir=tests/api/5-delete-comment/"
+    "test:delete-comment": "npm run test -- --verbose --rootDir=tests/api/5-delete-comment/",
+    "test:like-dislike-comment": "npm run test -- --verbose --rootDir=tests/api/6-like-dislike-comment/"
   },
   "dependencies": {
     "@fastify/cors": "7.0.0",
