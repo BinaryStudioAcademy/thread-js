@@ -23,7 +23,8 @@
     "test:delete-comment": "npm run test -- --verbose --rootDir=tests/api/5-delete-comment/",
     "test:like-dislike-comment": "npm run test -- --verbose --rootDir=tests/api/6-like-dislike-comment/",
     "test:show-hide-own-posts": "npm run test -- --verbose --rootDir=tests/api/7-show-hide-own-posts/",
-    "test:show-liked-by-own-posts": "npm run test -- --verbose --rootDir=tests/api/8-show-liked-by-own-posts/"
+    "test:show-liked-by-own-posts": "npm run test -- --verbose --rootDir=tests/api/8-show-liked-by-own-posts/",
+    "test:show-who-liked-post": "npm run test -- --verbose --rootDir=tests/api/9-show-who-liked-post/"
   },
   "dependencies": {
     "@fastify/cors": "7.0.0",
