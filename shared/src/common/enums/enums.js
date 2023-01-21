@@ -4,7 +4,8 @@ export {
   CommentsApiPath,
   ImagesApiPath,
   PostsApiPath,
-  UsersApiPath
+  UsersApiPath,
+  PasswordApiPath
 } from './api/api.js';
 export { HttpCode, HttpMethod } from './http/http.js';
 export { UserPayloadKey } from './user/user.js';

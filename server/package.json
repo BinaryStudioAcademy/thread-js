@@ -27,7 +27,8 @@
     "test:show-who-liked-post": "npm run test -- --verbose --rootDir=tests/api/9-show-who-liked-post/",
     "test:show-who-liked-comment": "npm run test -- --verbose --rootDir=tests/api/10-show-who-liked-comment/",
     "test:update-profile": "npm run test -- --verbose --rootDir=tests/api/11-update-profile/",
-    "test:set-user-status": "npm run test -- --verbose --rootDir=tests/api/12-set-user-status/"
+    "test:set-user-status": "npm run test -- --verbose --rootDir=tests/api/12-set-user-status/",
+    "test:reset-set-password": "npm run test -- --verbose --rootDir=tests/api/13-reset-set-password/"
   },
   "dependencies": {
     "@fastify/cors": "7.0.0",

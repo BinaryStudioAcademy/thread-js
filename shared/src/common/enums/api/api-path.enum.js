@@ -3,7 +3,8 @@ const ApiPath = {
   POSTS: '/posts',
   COMMENTS: '/comments',
   IMAGES: '/images',
-  USERS: '/users'
+  USERS: '/users',
+  PASSWORD: '/password'
 };
 
 export { ApiPath };
