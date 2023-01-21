@@ -47,6 +47,9 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
       )
       .body(testMinorUser);
 
+    tokenMainUser = registerMainUserResponse.json().token;
+    tokenMinorUser = registerMinorUserResponse.json().token;
+
     const createPostResponse = await app.inject()
       .post(
         `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
@@ -54,8 +57,6 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body(testPost);
 
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
     post = createPostResponse.json();
   });
 

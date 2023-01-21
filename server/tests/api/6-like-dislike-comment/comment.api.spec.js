@@ -40,6 +40,8 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
       )
       .body(testUser);
 
+    token = registerResponse.json().token;
+
     const createPostResponse = await app.inject()
       .post(
         `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
@@ -56,7 +58,6 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
       .headers({ authorization: `Bearer ${token}` })
       .body({ ...testComment, postId });
 
-    token = registerResponse.json().token;
     commentId = createCommentResponse.json().id;
   });
 

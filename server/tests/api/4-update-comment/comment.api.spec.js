@@ -53,6 +53,9 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
       )
       .body(testMinorUser);
 
+    tokenMainUser = registerMainUserResponse.json().token;
+    tokenMinorUser = registerMinorUserResponse.json().token;
+
     const createPostResponse = await app.inject()
       .post(
         `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
@@ -68,8 +71,6 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body({ ...testComment, postId });
 
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
     comment = createCommentResponse.json();
   });
 
