@@ -1,7 +1,8 @@
 const UserPayloadKey = {
   USERNAME: 'username',
   EMAIL: 'email',
-  PASSWORD: 'password'
+  PASSWORD: 'password',
+  STATUS: 'status'
 };
 
 export { UserPayloadKey };
