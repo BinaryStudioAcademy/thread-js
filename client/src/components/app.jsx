@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useCallback, useEffect, useDispatch, useSelector } from 'hooks/hooks';
 import { StorageKey, AppRoute } from 'common/enums/enums';
 import { storage } from 'services/services';
-import { profileActionCreator, threadActionCreator } from 'store/actions';
+import { profileActionCreator } from 'store/actions';
 import {
   Spinner,
   Header,
@@ -24,10 +24,6 @@ const App = () => {
 
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
   const hasUser = Boolean(user);
-
-  const handlePostApply = useCallback(id => (
-    dispatch(threadActionCreator.applyPost(id))
-  ), [dispatch]);
 
   const handleUserLogout = useCallback(() => (
     dispatch(profileActionCreator.logout())
@@ -60,7 +56,7 @@ const App = () => {
           <Route path={AppRoute.ANY} element={<NotFound />} />
         </Routes>
       </main>
-      <Notifications onPostApply={handlePostApply} user={user} />
+      <Notifications user={user} />
     </div>
   );
 };

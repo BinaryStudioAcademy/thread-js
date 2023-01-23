@@ -1,22 +1,22 @@
 import qs from 'qs';
-import { ENV, ExitCode } from './common/enums/enums.js';
-import { buildServer } from './server.js';
+import { ExitCode } from './common/enums/enums.js';
+import { App } from './server.js';
 
 (async () => {
-  const { app, socketServer } = await buildServer({
+  const appInstance = new App({
+    prefixAvoidTrailingSlash: true,
     logger: {
-      prettyPrint: {
-        ignore: 'pid,hostname'
+      transport: {
+        target: 'pino-pretty'
       }
     },
     querystringParser: str => qs.parse(str, { comma: true })
   });
 
   try {
-    await app.listen(ENV.APP.PORT);
-    await socketServer.listen(ENV.APP.SOCKET_PORT);
+    await appInstance.start();
   } catch (err) {
-    app.log.error(err);
+    appInstance.log.error(err);
     process.exit(ExitCode.ERROR);
   }
 })();

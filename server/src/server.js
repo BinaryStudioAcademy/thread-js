@@ -1,59 +1,94 @@
 import fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
-import http from 'http';
 import Knex from 'knex';
 import { Model } from 'objection';
 
-import { Server as SocketServer } from 'socket.io';
-
 import knexConfig from '../knexfile.js';
-import { initApi } from './api/api.js';
-import { ENV } from './common/enums/enums.js';
-import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
-import { auth, comment, image, post, user } from './services/services.js';
-import { handlers as socketHandlers } from './socket/handlers.js';
+import { ENV, ExitCode } from './common/enums/enums.js';
+import {
+  socketInjector as socketInjectorPlugin,
+  authorization as authorizationPlugin
+} from './plugins/plugins.js';
+import { upload as uploadMiddleware } from './middlewares/middlewares.js';
+import { auth, comment, image, post, user, socket } from './services/services.js';
+import { initControllers } from './controllers/controllers.js';
+import { WHITE_ROUTES } from './common/constants/constants.js';
 
-const buildServer = opts => {
-  const app = fastify(opts);
+class App {
+  #app;
 
-  const socketServer = http.Server(app);
-  const io = new SocketServer(socketServer, {
-    cors: {
-      origin: '*',
-      credentials: true
+  constructor(opts) {
+    this.#app = this.#initApp(opts);
+  }
+
+  get app() {
+    return this.#app;
+  }
+
+  #initApp(opts) {
+    const app = fastify(opts);
+    socket.initializeIo(app.server);
+
+    this.#registerPlugins(app);
+    this.#initDB();
+
+    return app;
+  }
+
+  #registerPlugins(app) {
+    app.register(cors, {
+      cors: {
+        origin: 'http://localhost:3000',
+        methods: '*',
+        credentials: true
+      }
+    });
+
+    const staticPath = new URL('../../client/build', import.meta.url);
+    app.register(fastifyStatic, {
+      root: staticPath.pathname,
+      prefix: '/'
+    });
+
+    app.register(authorizationPlugin, {
+      services: {
+        auth,
+        user
+      },
+      routesWhiteList: WHITE_ROUTES
+    });
+    app.register(uploadMiddleware.contentParser);
+    app.register(socketInjectorPlugin, { io: socket.io });
+    app.register(initControllers, {
+      services: {
+        auth,
+        comment,
+        image,
+        post,
+        user
+      },
+      prefix: ENV.APP.API_PATH
+    });
+
+    app.setNotFoundHandler((req, res) => {
+      res.sendFile('index.html');
+    });
+  }
+
+  #initDB() {
+    const knex = Knex(knexConfig);
+    Model.knex(knex);
+  }
+
+  start = async () => {
+    try {
+      await this.#app.listen(ENV.APP.PORT);
+    } catch (err) {
+      this.#app.log.error(err);
+      process.exit(ExitCode.ERROR);
     }
-  });
+  };
+}
 
-  const knex = Knex(knexConfig);
-  Model.knex(knex);
-
-  io.on('connection', socketHandlers);
-
-  app.register(cors);
-  app.register(socketInjectorPlugin, { io });
-  app.register(initApi, {
-    services: {
-      auth,
-      comment,
-      image,
-      post,
-      user
-    },
-    prefix: ENV.APP.API_PATH
-  });
-
-  const staticPath = new URL('../../client/build', import.meta.url);
-  app.register(fastifyStatic, {
-    root: staticPath.pathname,
-    prefix: '/'
-  });
-
-  app.setNotFoundHandler((req, res) => {
-    res.sendFile('index.html');
-  });
-
-  return { app, socketServer };
-};
-
-export { buildServer };
+export { App };

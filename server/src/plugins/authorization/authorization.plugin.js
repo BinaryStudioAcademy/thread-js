@@ -6,7 +6,7 @@ import {
 } from '../../common/enums/enums.js';
 import { InvalidCredentialsError } from '../../exceptions/exceptions.js';
 
-const authorization = fp((fastify, { routesWhiteList, services }, done) => {
+const authorization = fp(async (fastify, { routesWhiteList, services }) => {
   fastify.decorateRequest('user', null);
 
   fastify.addHook(ControllerHook.ON_REQUEST, async (request, reply) => {
@@ -33,8 +33,6 @@ const authorization = fp((fastify, { routesWhiteList, services }, done) => {
       reply.code(HttpCode.UNAUTHORIZED).send(err);
     }
   });
-
-  done();
 });
 
 export { authorization };

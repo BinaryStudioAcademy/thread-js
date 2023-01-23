@@ -4,27 +4,48 @@ import {
   ENV,
   ApiPath,
   HttpCode,
+  HttpMethod,
   AuthApiPath,
   UserPayloadKey,
   UserValidationRule,
   UserValidationMessage
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.AUTH
+))} routes`, () => {
   const app = buildApp();
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER} endpoints`, () => {
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const loginEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.LOGIN
+  ));
+
+  const userEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.USER
+  ));
+
+  describe(`${registerEndpoint} (${HttpMethod.POST}) endpoint`, () => {
     it(
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.USERNAME} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({});
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.USERNAME_REQUIRE);
       }
     );
@@ -33,9 +54,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.USERNAME} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.USERNAME]: faker.random.alpha(
               UserValidationRule.USERNAME_MIN_LENGTH - 1
@@ -44,7 +63,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             [UserPayloadKey.PASSWORD]: faker.internet.password()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.USERNAME_MIN_LENGTH);
       }
     );
@@ -53,9 +72,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.USERNAME} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.USERNAME]: faker.random.alpha(
               UserValidationRule.USERNAME_MAX_LENGTH + 2
@@ -64,7 +81,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             [UserPayloadKey.PASSWORD]: faker.internet.password()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.USERNAME_MAX_LENGTH);
       }
     );
@@ -73,15 +90,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.USERNAME]: faker.name.firstName(),
             [UserPayloadKey.PASSWORD]: faker.internet.password()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
       }
     );
@@ -90,16 +105,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.name.firstName(),
             [UserPayloadKey.USERNAME]: faker.name.firstName(),
             [UserPayloadKey.PASSWORD]: faker.internet.password()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
       }
     );
@@ -108,15 +121,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email(),
             [UserPayloadKey.USERNAME]: faker.name.firstName()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_REQUIRE);
       }
     );
@@ -125,9 +136,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email(),
             [UserPayloadKey.USERNAME]: faker.name.firstName(),
@@ -136,7 +145,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             )
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_MIN_LENGTH);
       }
     );
@@ -145,9 +154,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email(),
             [UserPayloadKey.USERNAME]: faker.name.firstName(),
@@ -156,7 +163,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             )
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_MAX_LENGTH);
       }
     );
@@ -171,9 +178,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
         };
 
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body(testUser);
 
         expect(response.statusCode).toBe(HttpCode.CREATED);
@@ -187,17 +192,15 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
     );
   });
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN} endpoints`, () => {
+  describe(`${loginEndpoint} (${HttpMethod.POST}) endpoint`, () => {
     it(
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({});
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
       }
     );
@@ -206,12 +209,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({ [UserPayloadKey.EMAIL]: faker.name.fullName() });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
       }
     );
@@ -220,14 +221,12 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email()
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_REQUIRE);
       }
     );
@@ -236,9 +235,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email(),
             [UserPayloadKey.PASSWORD]: faker.internet.password(
@@ -246,7 +243,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             )
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_MIN_LENGTH);
       }
     );
@@ -255,9 +252,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email(),
             [UserPayloadKey.PASSWORD]: faker.internet.password(
@@ -265,7 +260,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
             )
           });
 
-        expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
+        expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
         expect(response.json().message).toBe(UserValidationMessage.PASSWORD_MAX_LENGTH);
       }
     );
@@ -280,15 +275,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
         };
 
         await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body(testUser);
 
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: testUser[UserPayloadKey.EMAIL],
             [UserPayloadKey.PASSWORD]: testUser[UserPayloadKey.PASSWORD]
@@ -305,7 +296,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
     );
   });
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.USER} endpoints`, () => {
+  describe(`${userEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(
       `should return ${HttpCode.OK} with auth user`,
       async () => {
@@ -316,15 +307,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
         };
 
         const registerResponse = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-          )
+          .post(registerEndpoint)
           .body(testUser);
 
         const response = await app.inject()
-          .get(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.USER}`
-          )
+          .get(userEndpoint)
           .headers({ authorization: `Bearer ${registerResponse.json().token}` });
 
         expect(response.statusCode).toBe(HttpCode.OK);

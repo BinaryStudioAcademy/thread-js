@@ -26,7 +26,12 @@ const loadMorePosts = createAsyncThunk(
 
 const applyPost = createAsyncThunk(
   ActionType.ADD_POST,
-  async (postId, { extra: { services } }) => {
+  async ({ id: postId, userId }, { getState, extra: { services } }) => {
+    const { profile: { user } } = getState();
+    if (userId === user.id) {
+      return { post: null };
+    }
+
     const post = await services.post.getPost(postId);
     return { post };
   }

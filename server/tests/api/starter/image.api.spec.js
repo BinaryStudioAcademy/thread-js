@@ -12,9 +12,13 @@ import {
   UserPayloadKey,
   ImagePayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.IMAGES} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.IMAGES
+))} routes`, () => {
   const app = buildApp();
   let token;
 
@@ -34,8 +38,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.IMAGES} routes`, () => {
     token = registerResponse.json().token;
   });
 
+  const imagesEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.IMAGES,
+    ImagesApiPath.ROOT
+  ));
+
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.IMAGES}${ImagesApiPath.ROOT} (${HttpMethod.POST}) endpoint`,
+    `${imagesEndpoint} (${HttpMethod.POST}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with uploaded image`,
@@ -47,9 +57,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.IMAGES} routes`, () => {
           ));
 
           const response = await app.inject()
-            .post(
-              `${ENV.APP.API_PATH}${ApiPath.IMAGES}${ImagesApiPath.ROOT}`
-            )
+            .post(imagesEndpoint)
             .headers({ authorization: `Bearer ${token}`, ...formData.getHeaders() })
             .body(formData);
 

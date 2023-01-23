@@ -10,12 +10,22 @@ import {
   UserPayloadKey,
   PostPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let token;
   let userId;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
 
   beforeAll(async () => {
     const testUser = {
@@ -25,27 +35,41 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testUser);
 
     token = registerResponse.json().token;
     userId = registerResponse.json().user.id;
   });
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT} (${HttpMethod.POST}) endpoint`, () => {
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const postEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.$ID
+  ));
+
+  const postReactEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.REACT
+  ));
+
+  describe(`${postsEndpoint} (${HttpMethod.POST}) endpoint`, () => {
     it(
-      `should return ${HttpCode.OK} with a new post`,
+      `should return ${HttpCode.CREATED} with a new post`,
       async () => {
         const testPost = {
           [PostPayloadKey.BODY]: faker.lorem.paragraph()
         };
 
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-          )
+          .post(postsEndpoint)
           .headers({ authorization: `Bearer ${token}` })
           .body(testPost);
 
@@ -62,7 +86,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
+    `${postEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with post by id`,
@@ -72,17 +96,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
           };
 
           const createResponse = await app.inject()
-            .post(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .post(postsEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body(testPost);
 
           const { id: postId } = createResponse.json();
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
 
           expect(response.statusCode).toBe(HttpCode.OK);
@@ -104,7 +124,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   );
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT} (${HttpMethod.GET}) endpoint`,
+    `${postsEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with all posts`,
@@ -115,17 +135,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
 
           const createResponse = await Promise.all(testPosts.map(testPost => (
             app.inject()
-              .post(
-                `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-              )
+              .post(postsEndpoint)
               .headers({ authorization: `Bearer ${token}` })
               .body(testPost)
           )));
 
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .get(postsEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .query({ from: 0, count: testPosts.length, userId });
 
@@ -157,7 +173,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   );
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT} (${HttpMethod.PUT}) endpoint`,
+    `${postReactEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       let postId;
 
@@ -167,9 +183,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         };
 
         const createResponse = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-          )
+          .post(postsEndpoint)
           .headers({ authorization: `Bearer ${token}` })
           .body(testPost);
         postId = createResponse.json().id;
@@ -179,20 +193,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with liked post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const likePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId });
           const getPostAfterLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
 
           expect(likePostResponse.statusCode).toBe(HttpCode.OK);
@@ -213,20 +221,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with removed user's like post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const likePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId });
           const getPostAfterLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
 
           expect(likePostResponse.statusCode).toBe(HttpCode.OK);

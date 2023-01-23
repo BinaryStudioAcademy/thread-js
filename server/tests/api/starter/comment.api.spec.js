@@ -12,13 +12,29 @@ import {
   CommentsApiPath,
   CommentPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.COMMENTS
+))} routes`, () => {
   const app = buildApp();
   let token;
   let userId;
   let postId;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
 
   beforeAll(async () => {
     const testUser = {
@@ -28,32 +44,41 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
     };
 
     const registerResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testUser);
 
     const testPost = {
       [PostPayloadKey.BODY]: faker.lorem.paragraph()
     };
 
+    token = registerResponse.json().token;
+
     const createPostResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${token}` })
       .body(testPost);
 
-    token = registerResponse.json().token;
     userId = registerResponse.json().user.id;
     postId = createPostResponse.json().id;
   });
 
+  const commentsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.COMMENTS,
+    CommentsApiPath.ROOT
+  ));
+
+  const commentEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.COMMENTS,
+    CommentsApiPath.$ID
+  ));
+
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${PostsApiPath.ROOT} (${HttpMethod.POST}) endpoint`,
+    `${commentsEndpoint} (${HttpMethod.POST}) endpoint`,
     () => {
       it(
-        `should return ${HttpCode.OK} with a new comment`,
+        `should return ${HttpCode.CREATED} with a new comment`,
         async () => {
           const testComment = {
             [CommentPayloadKey.BODY]: faker.lorem.paragraph(),
@@ -61,9 +86,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
           };
 
           const response = await app.inject()
-            .post(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.ROOT}`
-            )
+            .post(commentsEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body(testComment);
 
@@ -81,7 +104,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
   );
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${PostsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
+    `${commentEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with comment by id`,
@@ -91,17 +114,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
             postId
           };
           const createCommentResponse = await app.inject()
-            .post(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.ROOT}`
-            )
+            .post(commentsEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body(testComment);
 
           const { id: commentId } = createCommentResponse.json();
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(':id', commentId)}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` })
             .body(testComment);
 
