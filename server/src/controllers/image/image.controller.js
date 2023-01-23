@@ -1,7 +1,8 @@
 import {
   HttpMethod,
   ImagesApiPath,
-  ControllerHook
+  ControllerHook,
+  ImagePayloadKey
 } from '../../common/enums/enums.js';
 import { upload } from '../../middlewares/middlewares.js';
 import { Controller } from '../abstract/abstract.controller.js';
@@ -22,7 +23,7 @@ class Image extends Controller {
       {
         method: HttpMethod.POST,
         url: ImagesApiPath.ROOT,
-        [ControllerHook.PRE_HANDLER]: upload.single('image'),
+        [ControllerHook.PRE_HANDLER]: upload.single(ImagePayloadKey.IMAGE),
         [ControllerHook.HANDLER]: this.upload
       }
     ].forEach(this.route);

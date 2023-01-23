@@ -10,7 +10,7 @@ class Comment {
     });
   }
 
-  getCommentById(id) {
+  getById(id) {
     return this._commentRepository.getCommentById(id);
   }
 }

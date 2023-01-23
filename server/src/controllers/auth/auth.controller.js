@@ -1,4 +1,5 @@
 import {
+  HttpCode,
   HttpMethod,
   AuthApiPath,
   ControllerHook
@@ -61,7 +62,9 @@ class Auth extends Controller {
 
   register = async (req, res) => {
     try {
-      return await this.#authService.register(req.body);
+      const createdUser = await this.#authService.register(req.body);
+
+      return res.status(HttpCode.CREATED).send(createdUser);
     } catch (err) {
       return res.status(getErrorStatusCode(err)).send(err);
     }

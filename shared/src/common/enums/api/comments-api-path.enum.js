@@ -1,6 +1,7 @@
 const CommentsApiPath = {
   ROOT: '/',
-  $ID: '/:id'
+  $ID: '/:id',
+  REACT: '/react'
 };
 
 export { CommentsApiPath };

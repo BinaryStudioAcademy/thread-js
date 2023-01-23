@@ -8,7 +8,7 @@ class Post {
     return this._postRepository.getPosts(filter);
   }
 
-  getPostById(id) {
+  getById(id) {
     return this._postRepository.getPostById(id);
   }
 

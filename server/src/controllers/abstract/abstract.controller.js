@@ -1,5 +1,4 @@
-import { joinPath } from '../../helpers/helpers.js';
-import { normalizeTrailingSlash } from './helpers/helpers.js';
+import { joinPath, normalizeTrailingSlash } from '../../helpers/helpers.js';
 
 class Controller {
   #app;

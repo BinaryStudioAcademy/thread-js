@@ -3,7 +3,6 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import Knex from 'knex';
 import { Model } from 'objection';
-import qs from 'qs';
 
 import knexConfig from '../knexfile.js';
 import { ENV, ExitCode } from './common/enums/enums.js';
@@ -11,6 +10,7 @@ import {
   socketInjector as socketInjectorPlugin,
   authorization as authorizationPlugin
 } from './plugins/plugins.js';
+import { upload as uploadMiddleware } from './middlewares/middlewares.js';
 import { auth, comment, image, post, user, socket } from './services/services.js';
 import { initControllers } from './controllers/controllers.js';
 import { WHITE_ROUTES } from './common/constants/constants.js';
@@ -18,20 +18,16 @@ import { WHITE_ROUTES } from './common/constants/constants.js';
 class App {
   #app;
 
-  constructor() {
-    this.#app = this.#initApp();
+  constructor(opts) {
+    this.#app = this.#initApp(opts);
   }
 
-  #initApp() {
-    const app = fastify({
-      prefixAvoidTrailingSlash: true,
-      logger: {
-        transport: {
-          target: 'pino-pretty'
-        }
-      },
-      querystringParser: str => qs.parse(str, { comma: true })
-    });
+  get app() {
+    return this.#app;
+  }
+
+  #initApp(opts) {
+    const app = fastify(opts);
     socket.initializeIo(app.server);
 
     this.#registerPlugins(app);
@@ -44,7 +40,8 @@ class App {
     app.register(cors, {
       cors: {
         origin: 'http://localhost:3000',
-        methods: '*'
+        methods: '*',
+        credentials: true
       }
     });
 
@@ -61,6 +58,7 @@ class App {
       },
       routesWhiteList: WHITE_ROUTES
     });
+    app.register(uploadMiddleware.contentParser);
     app.register(socketInjectorPlugin, { io: socket.io });
     app.register(initControllers, {
       services: {
@@ -92,4 +90,5 @@ class App {
     }
   };
 }
-new App().start();
+
+export { App };

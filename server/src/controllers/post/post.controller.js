@@ -1,4 +1,5 @@
 import {
+  HttpCode,
   HttpMethod,
   PostsApiPath,
   ControllerHook,
@@ -47,13 +48,13 @@ class Post extends Controller {
 
   getById = req => this.#postService.getById(req.params.id);
 
-  create = async req => {
+  create = async (req, res) => {
     const post = await this.#postService.create(req.user.id, req.body);
 
     req.io
       .of(SocketNamespace.NOTIFICATION)
       .emit(NotificationSocketEvent.NEW_POST, post); // notify all users that a new post was created
-    return post;
+    return res.status(HttpCode.CREATED).send(post);
   };
 
   react = async req => {

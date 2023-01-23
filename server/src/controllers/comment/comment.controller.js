@@ -1,4 +1,5 @@
 import {
+  HttpCode,
   HttpMethod,
   ControllerHook,
   CommentsApiPath
@@ -33,7 +34,11 @@ class Comment extends Controller {
 
   getById = async req => this.#commentService.getById(req.params.id);
 
-  create = async req => this.#commentService.create(req.user.id, req.body);
+  create = async (req, res) => {
+    const comment = await this.#commentService.create(req.user.id, req.body);
+
+    return res.status(HttpCode.CREATED).send(comment);
+  };
 }
 
 export { Comment };

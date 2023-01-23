@@ -13,6 +13,7 @@ const registration = Joi.object({
     .required()
     .messages({
       'string.empty': UserValidationMessage.USERNAME_REQUIRE,
+      'any.required': UserValidationMessage.USERNAME_REQUIRE,
       'string.min': UserValidationMessage.USERNAME_MIN_LENGTH,
       'string.max': UserValidationMessage.USERNAME_MAX_LENGTH
     }),
@@ -22,6 +23,7 @@ const registration = Joi.object({
     .required()
     .messages({
       'string.email': UserValidationMessage.EMAIL_WRONG,
+      'any.required': UserValidationMessage.EMAIL_REQUIRE,
       'string.empty': UserValidationMessage.EMAIL_REQUIRE
     }),
   [UserPayloadKey.PASSWORD]: Joi.string()
@@ -31,6 +33,7 @@ const registration = Joi.object({
     .required()
     .messages({
       'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
+      'any.required': UserValidationMessage.PASSWORD_REQUIRE,
       'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH,
       'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH
     })
