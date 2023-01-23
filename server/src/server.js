@@ -13,8 +13,8 @@ import { auth, comment, image, post, user, socket } from './services/services.js
 
 const app = fastify({
   logger: {
-    prettyPrint: {
-      ignore: 'pid,hostname'
+    transport: {
+      target: 'pino-pretty'
     }
   },
   querystringParser: str => qs.parse(str, { comma: true })
