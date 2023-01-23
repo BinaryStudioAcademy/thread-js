@@ -10,15 +10,44 @@ import {
   UserPayloadKey,
   PostPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
+
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMainId;
   let userMinorId;
   let posts;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const postEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.$ID
+  ));
+
+  const postReactEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.REACT
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -34,15 +63,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
@@ -56,9 +81,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     }));
 
     const postsResponse = await Promise.all(testPosts.map(config => app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${config.token}` })
       .body({
         [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
@@ -66,30 +89,24 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     posts = postsResponse.map(response => response.json());
 
     await app.inject()
-      .put(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-      )
+      .put(postReactEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body({ postId: posts[1].id });
 
     await app.inject()
-      .put(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-      )
+      .put(postReactEndpoint)
       .headers({ authorization: `Bearer ${tokenMinorUser}` })
       .body({ postId: posts[0].id, isLike: false });
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT} (${HttpMethod.GET}) endpoint`,
+    `${postsEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with likes and dislikes of posts`,
         async () => {
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .get(postsEndpoint)
             .headers({ authorization: `Bearer ${tokenMainUser}` });
 
           expect(response.statusCode).toBe(HttpCode.OK);
@@ -121,18 +138,16 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   );
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID} (${HttpMethod.GET}) endpoint`,
+    `${postEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with likes and dislikes of post`,
         async () => {
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(
-                ':id',
-                posts[1].id
-              )}`
-            )
+            .get(postEndpoint.replace(
+              ':id',
+              posts[1].id
+            ))
             .headers({ authorization: `Bearer ${tokenMainUser}` });
 
           expect(response.statusCode).toBe(HttpCode.OK);

@@ -13,13 +13,35 @@ import {
   UserPayloadKey,
   ImagePayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.USERS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMain;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const userEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.USERS,
+    UsersApiPath.$ID
+  ));
+
+  const imagesEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.IMAGES,
+    ImagesApiPath.$ID
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -35,15 +57,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
@@ -52,7 +70,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID} (${HttpMethod.PUT}) endpoint`,
+    `${userEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with updated user`,
@@ -64,9 +82,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
           ));
 
           const uploadImageResponse = await app.inject()
-            .post(
-              `${ENV.APP.API_PATH}${ApiPath.IMAGES}${ImagesApiPath.ROOT}`
-            )
+            .post(imagesEndpoint)
             .headers({ authorization: `Bearer ${tokenMainUser}`, ...formData.getHeaders() })
             .body(formData);
 
@@ -77,12 +93,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
             imageId
           };
           const response = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .put(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .body(updatedMainUser);
 
@@ -104,22 +118,18 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} routes`, () => {
           };
 
           const updateUserResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .put(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMinorUser}` })
             .body(updatedMainUser);
 
           const getUserResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .get(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
           expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);

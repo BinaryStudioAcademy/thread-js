@@ -12,12 +12,46 @@ import {
   CommentsApiPath,
   CommentPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.COMMENTS
+))} routes`, () => {
   const app = buildApp();
   let token;
   let commentId;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const commentsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    CommentsApiPath.ROOT
+  ));
+
+  const commentEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    CommentsApiPath.$ID
+  ));
+
+  const commentReactEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.COMMENTS,
+    CommentsApiPath.REACT
+  ));
 
   beforeAll(async () => {
     const testUser = {
@@ -35,26 +69,20 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
     };
 
     const registerResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testUser);
 
     token = registerResponse.json().token;
 
     const createPostResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${token}` })
       .body(testPost);
 
     const { id: postId } = createPostResponse.json();
 
     const createCommentResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.ROOT}`
-      )
+      .post(commentsEndpoint)
       .headers({ authorization: `Bearer ${token}` })
       .body({ ...testComment, postId });
 
@@ -62,23 +90,16 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT} (${HttpMethod.PUT}) endpoint`,
+    `${commentReactEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with liked comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const likeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId });
 
@@ -94,17 +115,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
         `should return ${HttpCode.OK} with removed user's like comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const likeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId });
 
@@ -120,17 +134,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
         `should return ${HttpCode.OK} with disliked comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: false });
 
@@ -146,17 +153,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
         `should return ${HttpCode.OK} with removed user's dislike comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: false });
 
@@ -172,31 +172,21 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
         `should return ${HttpCode.OK} with switched like to dislike comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const likeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: true });
           const dislikeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: false });
           await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: false });
+
           expect(likeCommentResponse.statusCode).toBe(HttpCode.OK);
           expect(dislikeCommentResponse.statusCode).toBe(HttpCode.OK);
           expect(likeCommentResponse.json()).toEqual(expect.objectContaining({
@@ -214,23 +204,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
         `should return ${HttpCode.OK} with switched dislike to like comment`,
         async () => {
           const getCommentBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                commentId
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', commentId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: false });
           const likeCommentResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.REACT}`
-            )
+            .put(commentReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ commentId, isLike: true });
 

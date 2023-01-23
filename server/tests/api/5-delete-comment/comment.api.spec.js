@@ -12,13 +12,41 @@ import {
   CommentsApiPath,
   CommentPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.COMMENTS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let comment;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const commentsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    CommentsApiPath.ROOT
+  ));
+
+  const commentEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    CommentsApiPath.$ID
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -42,32 +70,24 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
     tokenMinorUser = registerMinorUserResponse.json().token;
 
     const createPostResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body(testPost);
 
     const { id: postId } = createPostResponse.json();
     const createCommentResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.ROOT}`
-      )
+      .post(commentsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body({ ...testComment, postId });
 
@@ -75,57 +95,37 @@ describe(`${ENV.APP.API_PATH}${ApiPath.COMMENTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID} (${HttpMethod.DELETE}) endpoint`,
+    `${commentEndpoint} (${HttpMethod.DELETE}) endpoint`,
     () => {
-      it(
-        `should return ${HttpCode.OK} with deleted comment`,
-        async () => {
-          const deleteCommentResponse = await app.inject()
-            .delete(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                comment.id
-              )}`
-            )
-            .headers({ authorization: `Bearer ${tokenMainUser}` });
-
-          const getCommentResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                comment.id
-              )}`
-            )
-            .headers({ authorization: `Bearer ${tokenMainUser}` });
-
-          expect(deleteCommentResponse.statusCode).toBe(HttpCode.OK);
-          expect(getCommentResponse.statusCode).toEqual(HttpCode.NOT_FOUND);
-        }
-      );
-
       it(
         `should return ${HttpCode.FORBIDDEN} with attempt to delete comment by not own user`,
         async () => {
           const deleteCommentResponse = await app.inject()
-            .delete(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                comment.id
-              )}`
-            )
+            .delete(commentEndpoint.replace(':id', comment.id))
             .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
           const getCommentResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.COMMENTS}${CommentsApiPath.$ID.replace(
-                ':id',
-                comment.id
-              )}`
-            )
+            .get(commentEndpoint.replace(':id', comment.id))
             .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
           expect(deleteCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
           expect(getCommentResponse.json()).toEqual(expect.objectContaining(comment));
+        }
+      );
+
+      it(
+        `should return ${HttpCode.OK} with deleted comment`,
+        async () => {
+          const deleteCommentResponse = await app.inject()
+            .delete(commentEndpoint.replace(':id', comment.id))
+            .headers({ authorization: `Bearer ${tokenMainUser}` });
+
+          const getCommentResponse = await app.inject()
+            .get(commentEndpoint.replace(':id', comment.id))
+            .headers({ authorization: `Bearer ${tokenMainUser}` });
+
+          expect(deleteCommentResponse.statusCode).toBe(HttpCode.OK);
+          expect(getCommentResponse.statusCode).toEqual(HttpCode.NOT_FOUND);
         }
       );
     }

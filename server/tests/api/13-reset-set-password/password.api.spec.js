@@ -10,11 +10,21 @@ import {
   UserValidationRule,
   UserValidationMessage
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.PASSWORD
+))} routes`, () => {
   const app = buildApp();
   let user;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
 
   beforeAll(async () => {
     const testUser = {
@@ -24,22 +34,36 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testUser);
 
     user = registerMainUserResponse.json().user;
   });
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET} endpoint`, () => {
+  const resetPasswordEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.PASSWORD,
+    PasswordApiPath.RESET
+  ));
+
+  const setPasswordEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.PASSWORD,
+    PasswordApiPath.SET
+  ));
+
+  const loginEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.LOGIN
+  ));
+
+  describe(`${resetPasswordEndpoint} endpoint`, () => {
     it(
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET}`
-          )
+          .post(resetPasswordEndpoint)
           .body({});
 
         expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -51,9 +75,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET}`
-          )
+          .post(resetPasswordEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.name.firstName()
           });
@@ -67,9 +89,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.NOT_FOUND} if email not exists`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET}`
-          )
+          .post(resetPasswordEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: faker.internet.email()
           });
@@ -83,9 +103,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.OK} with token`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET}`
-          )
+          .post(resetPasswordEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: user[UserPayloadKey.EMAIL]
           });
@@ -96,14 +114,12 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
     );
   });
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET} endpoint`, () => {
+  describe(`${setPasswordEndpoint} endpoint`, () => {
     it(
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.TOKEN} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({});
 
         expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -115,9 +131,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({
             [UserPayloadKey.TOKEN]: faker.datatype.string()
           });
@@ -131,9 +145,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({
             [UserPayloadKey.TOKEN]: faker.datatype.string(),
             [UserPayloadKey.PASSWORD]: faker.internet.password(
@@ -150,9 +162,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({
             [UserPayloadKey.TOKEN]: faker.datatype.string(),
             [UserPayloadKey.PASSWORD]: faker.internet.password(
@@ -169,9 +179,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.BAD_REQUEST} of invalid ${UserPayloadKey.TOKEN} validation error`,
       async () => {
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({
             [UserPayloadKey.TOKEN]: faker.datatype.string(),
             [UserPayloadKey.PASSWORD]: faker.internet.password()
@@ -186,9 +194,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
       `should return ${HttpCode.OK} with auth result`,
       async () => {
         const resetPasswordResponse = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.RESET}`
-          )
+          .post(resetPasswordEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: user[UserPayloadKey.EMAIL]
           });
@@ -196,18 +202,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.PASSWORD} routes`, () => {
         const newPassword = faker.internet.password();
 
         const setPasswordResponse = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.PASSWORD}${PasswordApiPath.SET}`
-          )
+          .post(setPasswordEndpoint)
           .body({
             [UserPayloadKey.TOKEN]: resetPasswordResponse.json().token,
             [UserPayloadKey.PASSWORD]: newPassword
           });
 
         const response = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`
-          )
+          .post(loginEndpoint)
           .body({
             [UserPayloadKey.EMAIL]: user[UserPayloadKey.EMAIL],
             [UserPayloadKey.PASSWORD]: newPassword

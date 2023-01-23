@@ -11,14 +11,30 @@ import {
   PostPayloadKey,
   FilterUserMode
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMainId;
   let userMinorId;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -34,15 +50,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
@@ -56,9 +68,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     }));
 
     await Promise.all(testPosts.map(config => app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${config.token}` })
       .body({
         [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
@@ -66,15 +76,13 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT} (${HttpMethod.GET}) endpoint`,
+    `${postsEndpoint} (${HttpMethod.GET}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with own posts`,
         async () => {
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .get(postsEndpoint)
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .query({
               from: 0,
@@ -96,9 +104,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with not own posts`,
         async () => {
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .get(postsEndpoint)
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .query({
               from: 0,
@@ -120,9 +126,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with all users' posts`,
         async () => {
           const response = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-            )
+            .get(postsEndpoint)
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .query({
               from: 0,

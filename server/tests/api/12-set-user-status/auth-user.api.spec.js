@@ -9,13 +9,32 @@ import {
   UsersApiPath,
   UserPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.AUTH} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.USERS
+))} and ${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.AUTH
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMain;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const userEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    UsersApiPath.$ID
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -31,15 +50,11 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.A
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
@@ -47,8 +62,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.A
     userMain = registerMainUserResponse.json().user;
   });
 
+  const authUserEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.USER
+  ));
+
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID} (${HttpMethod.PUT}) endpoint`,
+    `${userEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with user's status`,
@@ -58,12 +79,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.A
             [UserPayloadKey.STATUS]: faker.lorem.words()
           };
           const response = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .put(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .body(updatedMainUser);
 
@@ -84,22 +103,18 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.A
           };
 
           const updateUserResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .put(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMinorUser}` })
             .body(updatedMainUser);
 
           const getUserResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.USERS}${UsersApiPath.$ID.replace(
-                ':id',
-                userMain.id
-              )}`
-            )
+            .get(userEndpoint.replace(
+              ':id',
+              userMain.id
+            ))
             .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
           expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);
@@ -109,14 +124,12 @@ describe(`${ENV.APP.API_PATH}${ApiPath.USERS} and ${ENV.APP.API_PATH}${ApiPath.A
     }
   );
 
-  describe(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.USER} endpoints`, () => {
+  describe(`${authUserEndpoint} endpoints`, () => {
     it(
       `should return ${HttpCode.OK} with auth user`,
       async () => {
         const response = await app.inject()
-          .get(
-            `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.USER}`
-          )
+          .get(authUserEndpoint)
           .headers({ authorization: `Bearer ${tokenMainUser}` });
 
         expect(response.statusCode).toBe(HttpCode.OK);

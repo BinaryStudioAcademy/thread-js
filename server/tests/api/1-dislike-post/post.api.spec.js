@@ -10,11 +10,21 @@ import {
   UserPayloadKey,
   PostPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let token;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
 
   beforeAll(async () => {
     const testUser = {
@@ -24,16 +34,32 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testUser);
 
     token = registerResponse.json().token;
   });
 
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const postEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.$ID
+  ));
+
+  const postReactEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.REACT
+  ));
+
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT} (${HttpMethod.PUT}) endpoint`,
+    `${postReactEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       let postId;
 
@@ -43,9 +69,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         };
 
         const createResponse = await app.inject()
-          .post(
-            `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-          )
+          .post(postsEndpoint)
           .headers({ authorization: `Bearer ${token}` })
           .body(testPost);
         postId = createResponse.json().id;
@@ -55,14 +79,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with liked post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const likePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId });
 
@@ -78,9 +98,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with removed user's like post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const likePostResponse = await app.inject()
             .put(
@@ -101,14 +119,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with disliked post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: false });
 
@@ -124,14 +138,10 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with removed user's dislike post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: false });
 
@@ -147,26 +157,18 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with switched like to dislike post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const likePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: true });
           const dislikePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: false });
           await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: false });
           expect(likePostResponse.statusCode).toBe(HttpCode.OK);
@@ -186,20 +188,14 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
         `should return ${HttpCode.OK} with switched dislike to like post`,
         async () => {
           const getPostBeforeLikeResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', postId)}`
-            )
+            .get(postEndpoint.replace(':id', postId))
             .headers({ authorization: `Bearer ${token}` });
           const dislikePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: false });
           const likePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.REACT}`
-            )
+            .put(postReactEndpoint)
             .headers({ authorization: `Bearer ${token}` })
             .body({ postId, isLike: true });
 

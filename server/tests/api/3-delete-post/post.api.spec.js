@@ -10,13 +10,35 @@ import {
   UserPayloadKey,
   PostPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let post;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
+
+  const postEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.$ID
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -36,24 +58,18 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
     tokenMinorUser = registerMinorUserResponse.json().token;
 
     const createPostResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body(testPost);
 
@@ -61,21 +77,33 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID} (${HttpMethod.DELETE}) endpoint`,
+    `${postEndpoint} (${HttpMethod.DELETE}) endpoint`,
     () => {
+      it(
+        `should return ${HttpCode.FORBIDDEN} with attempt to delete post by not own user`,
+        async () => {
+          const deletePostResponse = await app.inject()
+            .delete(postEndpoint.replace(':id', post.id))
+            .headers({ authorization: `Bearer ${tokenMinorUser}` });
+
+          const getPostResponse = await app.inject()
+            .get(postEndpoint.replace(':id', post.id))
+            .headers({ authorization: `Bearer ${tokenMinorUser}` });
+
+          expect(deletePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
+          expect(getPostResponse.json()).not.toHaveProperty('deletedAt');
+        }
+      );
+
       it(
         `should return ${HttpCode.OK} with soft deleted post`,
         async () => {
           const deletePostResponse = await app.inject()
-            .delete(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
+            .delete(postEndpoint.replace(':id', post.id))
             .headers({ authorization: `Bearer ${tokenMainUser}` });
 
           const getPostResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
+            .get(postEndpoint.replace(':id', post.id))
             .headers({ authorization: `Bearer ${tokenMainUser}` });
 
           expect(deletePostResponse.statusCode).toBe(HttpCode.OK);
@@ -88,24 +116,24 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
           expect(getPostResponse.json()).toHaveProperty('deletedAt');
         }
       );
+    }
+  );
 
+  describe(
+    `${postsEndpoint} (${HttpMethod.GET}) endpoint`,
+    () => {
       it(
-        `should return ${HttpCode.FORBIDDEN} with attempt to delete post by not own user`,
+        `should return ${HttpCode.OK} with ignoring soft deleted post`,
         async () => {
-          const deletePostResponse = await app.inject()
-            .delete(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
-            .headers({ authorization: `Bearer ${tokenMinorUser}` });
+          const getPostsResponse = await app.inject()
+            .get(postsEndpoint)
+            .headers({ authorization: `Bearer ${tokenMinorUser}` })
+            .query({ from: 0, count: 1 });
 
-          const getPostResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
-            .headers({ authorization: `Bearer ${tokenMinorUser}` });
-
-          expect(deletePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-          expect(getPostResponse.json()).not.toHaveProperty('deletedAt');
+          expect(getPostsResponse.statusCode).toBe(HttpCode.OK);
+          expect(getPostsResponse.json()).not.toEqual(expect.arrayContaining([
+            expect.objectContaining({ id: post.id })
+          ]));
         }
       );
     }

@@ -10,13 +10,35 @@ import {
   UserPayloadKey,
   PostPayloadKey
 } from '../../../src/common/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
+describe(`${normalizeTrailingSlash(joinPath(
+  ENV.APP.API_PATH,
+  ApiPath.POSTS
+))} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let post;
+
+  const registerEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.AUTH,
+    AuthApiPath.REGISTER
+  ));
+
+  const postEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.$ID
+  ));
+
+  const postsEndpoint = normalizeTrailingSlash(joinPath(
+    ENV.APP.API_PATH,
+    ApiPath.POSTS,
+    PostsApiPath.ROOT
+  ));
 
   beforeAll(async () => {
     const testMainUser = {
@@ -36,24 +58,18 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
     };
 
     const registerMainUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMainUser);
 
     const registerMinorUserResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+      .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
     tokenMinorUser = registerMinorUserResponse.json().token;
 
     const createPostResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.ROOT}`
-      )
+      .post(postsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body(testPost);
 
@@ -61,7 +77,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
   });
 
   describe(
-    `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID} (${HttpMethod.PUT}) endpoint`,
+    `${postEndpoint} (${HttpMethod.PUT}) endpoint`,
     () => {
       it(
         `should return ${HttpCode.OK} with updated post`,
@@ -72,9 +88,7 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
           };
 
           const updatePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
+            .put(postEndpoint.replace(':id', post.id))
             .headers({ authorization: `Bearer ${tokenMainUser}` })
             .body(testUpdatedPost);
 
@@ -96,16 +110,12 @@ describe(`${ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
           };
 
           const updatePostResponse = await app.inject()
-            .put(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
+            .put(postEndpoint.replace(':id', post.id))
             .headers({ authorization: `Bearer ${tokenMinorUser}` })
             .body(testUpdatedPost);
 
           const getPostResponse = await app.inject()
-            .get(
-              `${ENV.APP.API_PATH}${ApiPath.POSTS}${PostsApiPath.$ID.replace(':id', post.id)}`
-            )
+            .get(postEndpoint.replace(':id', post.id))
             .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
           expect(updatePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
