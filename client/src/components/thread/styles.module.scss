@@ -1,6 +1,10 @@
 .threadContent {
   width: 500px;
   margin: 20px auto;
+
+  .posts > div > div {
+    overflow: unset !important;
+  }
 }
 
 .addPostForm {

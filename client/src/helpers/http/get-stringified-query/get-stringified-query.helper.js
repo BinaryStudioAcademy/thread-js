@@ -1,5 +1,5 @@
-import { stringify } from 'query-string';
+import queryString from 'query-string';
 
-const getStringifiedQuery = query => stringify(query);
+const getStringifiedQuery = query => queryString.stringify(query);
 
 export { getStringifiedQuery };
