@@ -39,6 +39,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 7. [nodemon](https://www.npmjs.com/package/nodemon)
 8. [dotenv](https://www.npmjs.com/package/dotenv)
 9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+10. [jest](https://www.npmjs.com/package/jest)
 
 ### Database
 1. [PostgreSQL](https://www.postgresql.org/download/ "PostgreSQL")
@@ -142,6 +143,15 @@ Shared package contains code that is used for both frontend and backend.
     ```
     npm start
     ```
+6. To test the correct completing the task in the command line (terminal) in the server folder, run:
+    ```
+    npm run test:${task key}
+    ```
+    For example: `dislike post` task
+    ```
+    npm run test:dislike-post
+    ```
+    Pay attention! During development, tests from previous tasks may be failled, this is an expected behavior, focus on those that correspond to the current task.
 
 ### Frontend
 
