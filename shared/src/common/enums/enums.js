@@ -14,4 +14,5 @@ export {
   UserValidationMessage,
   UserValidationRule
 } from './validation/validation.js';
-export { SocketEvent } from './notifications/notifications.js';
+export { NotificationSocketEvent } from './notifications/notifications.js';
+export { SocketEvent, SocketNamespace } from './socket/socket.js';

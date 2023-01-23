@@ -1,38 +1,25 @@
-import PropTypes from 'prop-types';
-import io from 'socket.io-client';
-import {
-  NotificationContainer,
-  NotificationManager
-} from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-import { useEffect } from 'hooks/hooks';
-import { ENV, NotificationMessage, SocketEvent } from 'common/enums/enums';
+import { useEffect, useDispatch } from 'hooks/hooks';
+import { notificationActionCreator } from 'store/actions';
 import { userType } from 'common/prop-types/prop-types';
 
-const socket = io(ENV.SOCKET_URL);
+const Notifications = ({ user }) => {
+  const dispatch = useDispatch();
 
-const Notifications = ({ user, onPostApply }) => {
   useEffect(() => {
     if (!user) {
       return undefined;
     }
     const { id } = user;
-    socket.emit(SocketEvent.CREATE_ROOM, id);
-    socket.on(SocketEvent.LIKE, () => {
-      NotificationManager.info(NotificationMessage.LIKED_POST);
-    });
-    socket.on(SocketEvent.NEW_POST, post => {
-      if (post.userId !== id) {
-        onPostApply(post.id);
-      }
-    });
+
+    dispatch(notificationActionCreator.joinRoom(id));
 
     return () => {
-      socket.emit(SocketEvent.LEAVE_ROOM, id);
-      socket.removeAllListeners();
+      dispatch(notificationActionCreator.leaveRoom(id));
     };
-  }, [user, onPostApply]);
+  }, [user, dispatch]);
 
   return <NotificationContainer />;
 };
@@ -42,8 +29,7 @@ Notifications.defaultProps = {
 };
 
 Notifications.propTypes = {
-  user: userType,
-  onPostApply: PropTypes.func.isRequired
+  user: userType
 };
 
 export { Notifications };

@@ -49,7 +49,9 @@ const reducer = createReducer(initialState, builder => {
     (state, action) => {
       const { post } = action.payload;
 
-      state.posts = [post, ...state.posts];
+      if (post) {
+        state.posts = [post, ...state.posts];
+      }
     }
   );
 });

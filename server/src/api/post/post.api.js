@@ -1,4 +1,10 @@
-import { PostsApiPath, ControllerHook, HttpMethod } from '../../common/enums/enums.js';
+import {
+  HttpMethod,
+  PostsApiPath,
+  ControllerHook,
+  SocketNamespace,
+  NotificationSocketEvent
+} from '../../common/enums/enums.js';
 
 const initPost = (fastify, opts, done) => {
   const { post: postService } = opts.services;
@@ -18,7 +24,10 @@ const initPost = (fastify, opts, done) => {
     url: PostsApiPath.ROOT,
     [ControllerHook.HANDLER]: async req => {
       const post = await postService.create(req.user.id, req.body);
-      req.io.emit('new_post', post); // notify all users that a new post was created
+
+      req.io
+        .of(SocketNamespace.NOTIFICATION)
+        .emit(NotificationSocketEvent.NEW_POST, post); // notify all users that a new post was created
       return post;
     }
   });
@@ -30,7 +39,10 @@ const initPost = (fastify, opts, done) => {
 
       if (reaction.post && reaction.post.userId !== req.user.id) {
         // notify a user if someone (not himself) liked his post
-        req.io.to(reaction.post.userId).emit('like', 'Your post was liked!');
+        req.io
+          .of(SocketNamespace.NOTIFICATION)
+          .to(`${reaction.post.userId}`)
+          .emit(NotificationSocketEvent.LIKE_POST);
       }
       return reaction;
     }

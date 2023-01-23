@@ -1,14 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { http, storage, auth, comment, post, image } from 'services/services.js';
+import { http, storage, auth, comment, post, image, notification } from 'services/services.js';
 import { profileReducer, threadReducer } from './root-reducer.js';
+import { notificationSocket } from './middlewares/middlewares.js';
 
 const store = configureStore({
   reducer: {
     profile: profileReducer,
     posts: threadReducer
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware({
+  middleware: getDefaultMiddleware => (getDefaultMiddleware({
     thunk: {
       extraArgument: {
         services: {
@@ -17,11 +18,12 @@ const store = configureStore({
           auth,
           comment,
           post,
-          image
+          image,
+          notification
         }
       }
     }
-  })
+  })).concat([notificationSocket])
 });
 
 export { store };

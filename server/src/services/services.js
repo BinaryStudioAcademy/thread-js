@@ -11,6 +11,7 @@ import { Http } from './http/http.service.js';
 import { Image } from './image/image.service.js';
 import { Post } from './post/post.service.js';
 import { User } from './user/user.service.js';
+import { Socket } from './socket/socket.service.js';
 
 const http = new Http();
 
@@ -36,4 +37,6 @@ const user = new User({
   userRepository
 });
 
-export { auth, comment, image, post, user };
+const socket = new Socket();
+
+export { auth, comment, image, post, user, socket };

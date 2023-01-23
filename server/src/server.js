@@ -1,18 +1,15 @@
 import fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
-import http from 'http';
 import Knex from 'knex';
 import { Model } from 'objection';
 import qs from 'qs';
-import { Server as SocketServer } from 'socket.io';
 
 import knexConfig from '../knexfile.js';
 import { initApi } from './api/api.js';
 import { ENV, ExitCode } from './common/enums/enums.js';
 import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
-import { auth, comment, image, post, user } from './services/services.js';
-import { handlers as socketHandlers } from './socket/handlers.js';
+import { auth, comment, image, post, user, socket } from './services/services.js';
 
 const app = fastify({
   logger: {
@@ -23,21 +20,18 @@ const app = fastify({
   querystringParser: str => qs.parse(str, { comma: true })
 });
 
-const socketServer = http.Server(app);
-const io = new SocketServer(socketServer, {
-  cors: {
-    origin: '*',
-    credentials: true
-  }
-});
+socket.initializeIo(app.server);
 
 const knex = Knex(knexConfig);
 Model.knex(knex);
 
-io.on('connection', socketHandlers);
-
-app.register(cors);
-app.register(socketInjectorPlugin, { io });
+app.register(cors, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: '*'
+  }
+});
+app.register(socketInjectorPlugin, { io: socket.io });
 app.register(initApi, {
   services: {
     auth,
@@ -68,5 +62,3 @@ const startServer = async () => {
   }
 };
 startServer();
-
-socketServer.listen(ENV.APP.SOCKET_PORT);
