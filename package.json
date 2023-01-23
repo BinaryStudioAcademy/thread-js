@@ -22,14 +22,14 @@
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:client && npm run lint:server"
   },
   "devDependencies": {
-    "@ls-lint/ls-lint": "1.11.0",
-    "editorconfig-checker": "4.0.2",
-    "eslint": "8.15.0",
-    "eslint-plugin-import": "2.26.0",
-    "lint-staged": "12.4.1",
-    "simple-git-hooks": "2.7.0",
-    "stylelint": "14.8.2",
-    "stylelint-config-standard": "25.0.0"
+    "@ls-lint/ls-lint": "1.11.2",
+    "editorconfig-checker": "5.0.1",
+    "eslint": "8.32.0",
+    "eslint-plugin-import": "2.27.5",
+    "lint-staged": "13.1.0",
+    "simple-git-hooks": "2.8.1",
+    "stylelint": "14.16.1",
+    "stylelint-config-standard": "29.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

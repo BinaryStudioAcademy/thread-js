@@ -26,8 +26,8 @@ class App {
     const app = fastify({
       prefixAvoidTrailingSlash: true,
       logger: {
-        prettyPrint: {
-          ignore: 'pid,hostname'
+        transport: {
+          target: 'pino-pretty'
         }
       },
       querystringParser: str => qs.parse(str, { comma: true })

@@ -109,23 +109,25 @@ const Thread = () => {
           />
         </div>
       </form>
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={handleGetMorePosts}
-        scrollThreshold={0.8}
-        hasMore={hasMorePosts}
-        loader={<Spinner key="0" />}
-      >
-        {posts.map(post => (
-          <Post
-            post={post}
-            onPostLike={handlePostLike}
-            onExpandedPostToggle={handleExpandedPostToggle}
-            onSharePost={handleSharePost}
-            key={post.id}
-          />
-        ))}
-      </InfiniteScroll>
+      <div className={styles.posts}>
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={handleGetMorePosts}
+          scrollThreshold={0.8}
+          hasMore={hasMorePosts}
+          loader={<Spinner key="0" />}
+        >
+          {posts.map(post => (
+            <Post
+              post={post}
+              onPostLike={handlePostLike}
+              onExpandedPostToggle={handleExpandedPostToggle}
+              onSharePost={handleSharePost}
+              key={post.id}
+            />
+          ))}
+        </InfiniteScroll>
+      </div>
       {expandedPost && <ExpandedPost onSharePost={handleSharePost} />}
       {sharedPostId && (
         <SharedPostLink
