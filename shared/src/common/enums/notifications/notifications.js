@@ -1,1 +1,1 @@
-export { SocketEvent } from './socket-event.enum.js';
+export { NotificationSocketEvent } from './notification-socket-event.enum.js';

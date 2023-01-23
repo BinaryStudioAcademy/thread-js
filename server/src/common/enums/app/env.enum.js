@@ -4,7 +4,6 @@ config();
 
 const {
   APP_PORT,
-  SOCKET_PORT,
   SECRET_KEY,
   DB_NAME,
   DB_USERNAME,
@@ -19,8 +18,7 @@ const {
 const ENV = {
   APP: {
     API_PATH: '/api',
-    PORT: APP_PORT,
-    SOCKET_PORT
+    PORT: APP_PORT
   },
   JWT: {
     SECRET: SECRET_KEY,
