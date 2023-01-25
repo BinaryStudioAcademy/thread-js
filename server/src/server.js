@@ -7,13 +7,10 @@ import { Model } from 'objection';
 import knexConfig from '../knexfile.js';
 import { ENV, ExitCode } from './common/enums/enums.js';
 import {
-  socketInjector as socketInjectorPlugin,
-  authorization as authorizationPlugin
+  socketInjector as socketInjectorPlugin
 } from './plugins/plugins.js';
-import { upload as uploadMiddleware } from './middlewares/middlewares.js';
 import { auth, comment, image, post, user, socket } from './services/services.js';
-import { initControllers } from './controllers/controllers.js';
-import { WHITE_ROUTES } from './common/constants/constants.js';
+import { initApi } from './api/api.js';
 
 class App {
   #app;
@@ -51,16 +48,8 @@ class App {
       prefix: '/'
     });
 
-    app.register(authorizationPlugin, {
-      services: {
-        auth,
-        user
-      },
-      routesWhiteList: WHITE_ROUTES
-    });
-    app.register(uploadMiddleware.contentParser);
     app.register(socketInjectorPlugin, { io: socket.io });
-    app.register(initControllers, {
+    app.register(initApi, {
       services: {
         auth,
         comment,
