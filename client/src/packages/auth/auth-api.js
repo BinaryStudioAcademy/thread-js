@@ -1,9 +1,5 @@
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpMethod,
-  ContentType
-} from 'libs/enums/enums';
+import { ApiPath, AuthApiPath, ContentType } from 'libs/enums/enums';
+import { HttpMethod } from 'packages/http/libs/enums/enums';
 
 class Auth {
   constructor({ apiPath, http }) {

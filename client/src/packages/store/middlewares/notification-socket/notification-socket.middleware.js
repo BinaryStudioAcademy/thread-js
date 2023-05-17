@@ -1,10 +1,12 @@
 import {
   SocketEvent,
-  SocketNamespace,
+  SocketNamespace
+} from 'packages/socket/libs/enums/enums.js';
+import {
   NotificationType,
   NotificationMessage,
   NotificationSocketEvent
-} from 'libs/enums/enums';
+} from 'packages/notification/libs/enums/enums.js';
 import { socket } from 'packages/socket/socket';
 import {
   appActionCreator,

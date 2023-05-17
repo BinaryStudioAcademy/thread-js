@@ -1,9 +1,5 @@
-import {
-  ApiPath,
-  PostsApiPath,
-  HttpMethod,
-  ContentType
-} from 'libs/enums/enums';
+import { ApiPath, PostsApiPath, ContentType } from 'libs/enums/enums';
+import { HttpMethod } from 'packages/http/libs/enums/enums.js';
 
 class Post {
   constructor({ apiPath, http }) {
