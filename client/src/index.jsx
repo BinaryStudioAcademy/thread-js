@@ -2,10 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { App } from 'libs/components/app';
-import { store } from 'store/store';
+import { App } from 'pages/app/app';
+import { store } from 'packages/store/store.js';
 
-import 'styles/styles.scss';
+import 'assets/css/styles.scss';
 
 const root = createRoot(document.getElementById('root'));
 
