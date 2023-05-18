@@ -1,4 +1,4 @@
-import { UserPayloadKey } from 'libs/enums/enums';
+import { UserPayloadKey } from 'libs/enums/enums.js';
 
 const DEFAULT_REGISTRATION_PAYLOAD = {
   [UserPayloadKey.USERNAME]: '',

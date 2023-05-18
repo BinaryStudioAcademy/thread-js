@@ -1,6 +1,6 @@
 import { useAppForm, useSelector } from 'libs/hooks/hooks';
 import { DEFAULT_USER_AVATAR } from 'libs/constants/constants';
-import { ImageSize, IconName } from 'libs/enums/enums';
+import { ImageSize, IconName } from 'libs/enums/enums.js';
 import { Image } from 'libs/components/image/image.jsx';
 import { Input } from 'libs/components/input/input.jsx';
 

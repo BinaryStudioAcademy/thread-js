@@ -1,4 +1,4 @@
-import { ENV } from 'libs/enums/enums';
+import { ENV } from 'libs/enums/enums.js';
 import { http } from 'packages/http/http';
 import { Comment } from './comment-api.js';
 

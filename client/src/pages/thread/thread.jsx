@@ -18,7 +18,7 @@ import {
   SharedPostLink,
   AddPost
 } from './components/components.js';
-import { DEFAULT_THREAD_TOOLBAR } from './common/constants.js';
+import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
 
 import styles from './styles.module.scss';
 

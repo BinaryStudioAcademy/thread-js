@@ -13,8 +13,8 @@ import { Button } from 'libs/components/button/button.jsx';
 import { Input } from 'libs/components/input/input.jsx';
 import { Message } from 'libs/components/message/message.jsx';
 import { Segment } from 'libs/components/segment/segment.jsx';
-import { registration as registrationValidationSchema } from 'libs/validation-schemas/validation-schemas.js';
-import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants.js';
+import { registration as registrationValidationSchema } from 'packages/validation-schemas/validation-schemas.js';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {

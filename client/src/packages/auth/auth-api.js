@@ -1,4 +1,4 @@
-import { ApiPath, AuthApiPath, ContentType } from 'libs/enums/enums';
+import { ApiPath, AuthApiPath, ContentType } from 'libs/enums/enums.js';
 import { HttpMethod } from 'packages/http/libs/enums/enums';
 
 class Auth {

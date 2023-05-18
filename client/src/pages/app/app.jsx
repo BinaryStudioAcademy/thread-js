@@ -5,7 +5,7 @@ import {
   useDispatch,
   useSelector
 } from 'libs/hooks/hooks';
-import { StorageKey, AppRoute } from 'libs/enums/enums';
+import { StorageKey, AppRoute } from 'libs/enums/enums.js';
 import { storage } from 'packages/storage/storage';
 import { actions as profileActionCreator } from 'slices/profile/profile.js';
 import { Spinner } from 'libs/components/spinner/spinner.jsx';

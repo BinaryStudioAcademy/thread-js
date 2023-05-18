@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { IconName, IconSize, ButtonType, AppRoute } from 'libs/enums/enums';
+import { IconName, IconSize, ButtonType, AppRoute } from 'libs/enums/enums.js';
 import { DEFAULT_USER_AVATAR } from 'libs/constants/constants';
 import { userType } from 'libs/prop-types/prop-types';
 import { Button } from '../button/button.jsx';
