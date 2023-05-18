@@ -1,4 +1,4 @@
-import { Socket } from './socket-api.js';
+import { Socket } from './socket-api';
 
 const socket = new Socket();
 export { socket };

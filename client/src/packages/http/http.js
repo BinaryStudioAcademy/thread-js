@@ -1,5 +1,5 @@
-import { storage } from 'packages/storage/storage.js';
-import { Http } from './http-api.js';
+import { storage } from 'packages/storage/storage';
+import { Http } from './http-api';
 
 const http = new Http({
   storage

@@ -1,5 +1,6 @@
-import { ApiPath, CommentsApiPath, ContentType } from 'libs/enums/enums.js';
-import { HttpMethod } from 'packages/http/libs/enums/enums.js';
+import { ApiPath, ContentType } from 'libs/enums/enums';
+import { HttpMethod } from 'packages/http/libs/enums/enums';
+import { CommentsApiPath } from './libs/enums/enums';
 
 class Comment {
   constructor({ apiPath, http }) {

@@ -27,9 +27,12 @@ rules:
     - error
     - always
     - markers:
-      - '/'
+        - '/'
   import/no-unresolved:
     - off
+  import/extensions:
+    - never
+    - error
   react/jsx-indent:
     - error
     - 2

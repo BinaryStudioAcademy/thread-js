@@ -1,4 +1,4 @@
-import { notify } from './actions.js';
+import { notify } from './actions';
 
 const actions = {
   notify

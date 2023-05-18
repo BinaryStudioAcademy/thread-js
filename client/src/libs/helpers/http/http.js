@@ -1,1 +1,1 @@
-export { getStringifiedQuery } from './get-stringified-query/get-stringified-query.helper.js';
+export { getStringifiedQuery } from './get-stringified-query/get-stringified-query.helper';

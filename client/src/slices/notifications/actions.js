@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ActionType } from './common.js';
+import { ActionType } from './common';
 
 const joinRoom = createAction(ActionType.JOIN_ROOM, userId => {
   return {

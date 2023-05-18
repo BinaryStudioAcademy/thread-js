@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useAppForm, useCallback } from 'libs/hooks/hooks.js';
-import { ButtonType, CommentPayloadKey } from 'libs/enums/enums.js';
-import { Button } from 'libs/components/button/button.jsx';
-import { Input } from 'libs/components/input/input.jsx';
-import { DEFAULT_ADD_COMMENT_PAYLOAD } from './common/constants.js';
+import { useAppForm, useCallback } from 'libs/hooks/hooks';
+import { ButtonType, CommentPayloadKey } from 'libs/enums/enums';
+import { Button } from 'libs/components/button/button';
+import { Input } from 'libs/components/input/input';
+import { DEFAULT_ADD_COMMENT_PAYLOAD } from './common/constants';
 
 const AddComment = ({ postId, onCommentAdd }) => {
   const { control, handleSubmit, reset } = useAppForm({

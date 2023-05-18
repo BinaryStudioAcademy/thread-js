@@ -1,4 +1,4 @@
-import { PostPayloadKey } from 'libs/enums/enums.js';
+import { PostPayloadKey } from 'libs/enums/enums';
 
 const DEFAULT_ADD_POST_PAYLOAD = {
   [PostPayloadKey.BODY]: ''

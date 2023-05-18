@@ -1,6 +1,6 @@
-import { ENV } from 'libs/enums/enums.js';
-import { http } from 'packages/http/http.js';
-import { Auth } from './auth-api.js';
+import { ENV } from 'libs/enums/enums';
+import { http } from 'packages/http/http';
+import { Auth } from './auth-api';
 
 const auth = new Auth({
   apiPath: ENV.API_PATH,

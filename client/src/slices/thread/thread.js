@@ -6,8 +6,8 @@ import {
   toggleExpandedPost,
   likePost,
   addComment
-} from './actions.js';
-import { actions } from './thread.slice.js';
+} from './actions';
+import { actions } from './thread.slice';
 
 const allActions = {
   ...actions,
@@ -21,4 +21,4 @@ const allActions = {
 };
 
 export { allActions as actions };
-export { reducer } from './thread.slice.js';
+export { reducer } from './thread.slice';

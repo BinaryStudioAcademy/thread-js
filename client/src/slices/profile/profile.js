@@ -1,5 +1,5 @@
-import { login, register, logout, loadCurrentUser } from './actions.js';
-import { actions } from './profile.slice.js';
+import { login, register, logout, loadCurrentUser } from './actions';
+import { actions } from './profile.slice';
 
 const allActions = {
   ...actions,
@@ -10,4 +10,4 @@ const allActions = {
 };
 
 export { allActions as actions };
-export { reducer } from './profile.slice.js';
+export { reducer } from './profile.slice';

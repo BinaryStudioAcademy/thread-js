@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { useAppForm, useState } from 'libs/hooks/hooks.js';
+import { useAppForm, useState } from 'libs/hooks/hooks';
 import {
   ButtonType,
   ButtonSize,
@@ -8,13 +8,13 @@ import {
   AppRoute,
   IconName,
   UserPayloadKey
-} from 'libs/enums/enums.js';
-import { Button } from 'libs/components/button/button.jsx';
-import { Input } from 'libs/components/input/input.jsx';
-import { Message } from 'libs/components/message/message.jsx';
-import { Segment } from 'libs/components/segment/segment.jsx';
-import { registration as registrationValidationSchema } from 'packages/validation-schemas/validation-schemas.js';
-import { DEFAULT_REGISTRATION_PAYLOAD } from './libs/common/constants.js';
+} from 'libs/enums/enums';
+import { Button } from 'libs/components/button/button';
+import { Input } from 'libs/components/input/input';
+import { Message } from 'libs/components/message/message';
+import { Segment } from 'libs/components/segment/segment';
+import { registration as registrationValidationSchema } from 'packages/validation-schemas/validation-schemas';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './libs/common/constants';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {

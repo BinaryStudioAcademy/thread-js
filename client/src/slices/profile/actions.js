@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { HttpError } from 'packages/http/libs/exceptions/exceptions.js';
-import { StorageKey, ExceptionMessage } from 'libs/enums/enums.js';
-import { HttpCode } from 'packages/http/libs/enums/enums.js';
+import { HttpError } from 'packages/http/libs/exceptions/exceptions';
+import { StorageKey, ExceptionMessage } from 'libs/enums/enums';
+import { HttpCode } from 'packages/http/libs/enums/enums';
 
-import { ActionType } from './common.js';
+import { ActionType } from './common';
 
 const login = createAsyncThunk(
   ActionType.LOG_IN,

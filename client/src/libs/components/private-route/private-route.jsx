@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'libs/hooks/hooks';
-import { AppRoute } from 'libs/enums/enums.js';
+import { AppRoute } from 'libs/enums/enums';
 import { locationType } from 'libs/prop-types/prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {

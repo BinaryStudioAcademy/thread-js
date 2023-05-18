@@ -1,4 +1,4 @@
-import { Notification } from './notification-api.js';
+import { Notification } from './notification-api';
 
 const notification = new Notification();
 export { notification };

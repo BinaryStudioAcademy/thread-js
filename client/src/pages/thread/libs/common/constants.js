@@ -1,4 +1,4 @@
-import { ThreadToolbarKey } from 'libs/enums/enums.js';
+import { ThreadToolbarKey } from 'libs/enums/enums';
 
 const DEFAULT_THREAD_TOOLBAR = {
   [ThreadToolbarKey.SHOW_OWN_POSTS]: false
