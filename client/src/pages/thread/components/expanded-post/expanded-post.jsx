@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useDispatch, useSelector } from 'libs/hooks/hooks.js';
-import { threadActionCreator } from 'packages/store/actions.js';
+import { actions as threadActionCreator } from 'slices/thread/thread.slice.js';
 import { Spinner } from 'libs/components/spinner/spinner.jsx';
 import { Post } from 'libs/components/post/post.jsx';
 import { Modal } from 'libs/components/modal/modal.jsx';

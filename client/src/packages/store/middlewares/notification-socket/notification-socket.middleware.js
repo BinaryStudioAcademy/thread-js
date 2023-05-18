@@ -8,11 +8,9 @@ import {
   NotificationSocketEvent
 } from 'packages/notification/libs/enums/enums.js';
 import { socket } from 'packages/socket/socket';
-import {
-  appActionCreator,
-  threadActionCreator,
-  notificationActionCreator
-} from 'packages/store/actions';
+import { actions as appActionCreator } from 'slices/app/app.js';
+import { actions as threadActionCreator } from 'slices/thread/thread.js';
+import { actions as notificationActionCreator } from 'slices/notifications/notifications.js';
 
 const notificationSocketInstance = socket.getInstance(
   SocketNamespace.NOTIFICATION

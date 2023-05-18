@@ -7,7 +7,7 @@ import {
 } from 'libs/hooks/hooks';
 import { StorageKey, AppRoute } from 'libs/enums/enums';
 import { storage } from 'packages/storage/storage';
-import { profileActionCreator } from 'packages/store/actions';
+import { actions as profileActionCreator } from 'slices/profile/profile.js';
 import { Spinner } from 'libs/components/spinner/spinner.jsx';
 import { Header } from 'libs/components/header/header.jsx';
 import { PrivateRoute } from 'libs/components/private-route/private-route.jsx';

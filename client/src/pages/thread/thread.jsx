@@ -7,7 +7,7 @@ import {
   useSelector
 } from 'libs/hooks/hooks.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { threadActionCreator } from 'packages/store/actions.js';
+import { actions as threadActionCreator } from 'slices/thread/thread.js';
 import { image as imageService } from 'packages/image/image.js';
 import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums.js';
 import { Post } from 'libs/components/post/post.jsx';
