@@ -5,7 +5,7 @@ import { Spinner } from 'libs/components/spinner/spinner';
 import { Post } from 'libs/components/post/post';
 import { Modal } from 'libs/components/modal/modal';
 import { Comment, AddComment } from 'pages/thread/components/components';
-import { getSortedComments } from './helpers/helpers';
+import { getSortedComments } from './libs/helpers/helpers';
 
 const ExpandedPost = ({ onSharePost }) => {
   const dispatch = useDispatch();
