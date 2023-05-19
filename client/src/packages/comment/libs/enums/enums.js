@@ -1,1 +1,4 @@
-export { CommentsApiPath } from 'shared/src/common/enums/enums';
+export {
+  CommentsApiPath,
+  CommentPayloadKey
+} from 'shared/src/common/enums/enums';

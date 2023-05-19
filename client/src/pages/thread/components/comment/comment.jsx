@@ -1,5 +1,5 @@
 import { getFromNowTime } from 'libs/helpers/helpers';
-import { DEFAULT_USER_AVATAR } from 'libs/constants/constants';
+import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
 import { commentType } from 'libs/prop-types/prop-types';
 
 import styles from './styles.module.scss';

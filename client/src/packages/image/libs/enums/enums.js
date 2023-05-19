@@ -1,1 +1,1 @@
-export { ImagesApiPath } from 'shared/src/common/enums/enums';
+export { ImagesApiPath, ImagePayloadKey } from 'shared/src/common/enums/enums';

@@ -7,15 +7,15 @@ import {
   ButtonSize,
   ButtonColor,
   AppRoute,
-  IconName,
-  UserPayloadKey
+  IconName
 } from 'libs/enums/enums';
+import { UserPayloadKey } from 'packages/user/enums/enums';
 import { Button } from 'libs/components/button/button';
 import { Input } from 'libs/components/input/input';
 import { Message } from 'libs/components/message/message';
 import { Segment } from 'libs/components/segment/segment';
 
-import { login as loginValidationSchema } from 'packages/validation-schemas/validation-schemas';
+import { login as loginValidationSchema } from 'packages/auth/libs/validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './libs/common/constants';
 import styles from './styles.module.scss';
 

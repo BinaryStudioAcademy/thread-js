@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useState, useAppForm } from 'libs/hooks/hooks';
-import {
-  ButtonColor,
-  ButtonType,
-  IconName,
-  PostPayloadKey
-} from 'libs/enums/enums';
+import { ButtonColor, ButtonType, IconName } from 'libs/enums/enums';
+import { PostPayloadKey } from 'packages/post/libs/enums/enums';
 import { Button } from 'libs/components/button/button';
 import { Image } from 'libs/components/image/image';
 import { Input } from 'libs/components/input/input';
