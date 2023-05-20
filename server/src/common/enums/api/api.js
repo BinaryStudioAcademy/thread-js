@@ -6,5 +6,5 @@ export {
   PostsApiPath,
   UsersApiPath,
   PasswordApiPath
-} from 'shared/src/common/enums/enums.js';
+} from 'shared/src/index.js';
 export { ControllerHook } from './controller-hook.enum.js';

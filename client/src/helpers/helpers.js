@@ -1,2 +1,2 @@
-export { getDiff, getFromNowTime } from 'shared/src/helpers/helpers.js';
+export { getDiff, getFromNowTime } from 'shared/src/index.js';
 export { getStringifiedQuery } from './http/http.js';

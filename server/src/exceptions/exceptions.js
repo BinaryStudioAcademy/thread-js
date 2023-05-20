@@ -1,1 +1,1 @@
-export { InvalidCredentialsError } from 'shared/src/exceptions/exceptions.js';
+export { InvalidCredentialsError } from 'shared/src/index.js';

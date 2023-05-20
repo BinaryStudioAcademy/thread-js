@@ -1,1 +1,1 @@
-export { HttpCode, HttpMethod } from 'shared/src/common/enums/enums.js';
+export { HttpCode, HttpMethod } from 'shared/src/index.js';

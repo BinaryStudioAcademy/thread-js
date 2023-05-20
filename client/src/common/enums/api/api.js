@@ -4,4 +4,4 @@ export {
   CommentsApiPath,
   ImagesApiPath,
   PostsApiPath
-} from 'shared/src/common/enums/enums.js';
+} from 'shared/src/index.js';

@@ -1,1 +1,1 @@
-export { PostPayloadKey, FilterUserMode } from 'shared/src/common/enums/enums.js';
+export { PostPayloadKey, FilterUserMode } from 'shared/src/index.js';
