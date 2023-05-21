@@ -51,3 +51,14 @@ rules:
     - off
   jsx-a11y/label-has-associated-control:
     - off
+
+overrides:
+  - files:
+      - vite.config.js
+    rules:
+      import/no-default-export:
+        - off
+      import/no-extraneous-dependencies:
+        - error
+        - devDependencies:
+            - false
