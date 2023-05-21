@@ -1,1 +1,1 @@
-export { ImagePayloadKey } from 'shared/src/index.js';
+export { ImagePayloadKey } from 'shared/src/packages/image/image.js';

@@ -1,1 +1,4 @@
-export { UserValidationRule, UserValidationMessage } from 'shared/src/index.js';
+export {
+  UserValidationRule,
+  UserValidationMessage
+} from 'shared/src/packages/user/user.js';

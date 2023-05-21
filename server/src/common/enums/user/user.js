@@ -1,1 +1,1 @@
-export { UserPayloadKey } from 'shared/src/index.js';
+export { UserPayloadKey } from 'shared/src/packages/user/user.js';

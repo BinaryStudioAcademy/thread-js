@@ -1,1 +1,1 @@
-export { NotificationSocketEvent } from 'shared/src/index.js';
+export { NotificationSocketEvent } from 'shared/src/libs/packages/notifications/notifications.js';

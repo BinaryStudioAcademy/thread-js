@@ -1,1 +1,4 @@
-export { SocketEvent, SocketNamespace } from 'shared/src/index.js';
+export {
+  SocketEvent,
+  SocketNamespace
+} from 'shared/src/libs/packages/socket/socket.js';

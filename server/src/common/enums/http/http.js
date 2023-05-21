@@ -1,1 +1,1 @@
-export { HttpCode, HttpMethod } from 'shared/src/index.js';
+export { HttpCode, HttpMethod } from 'shared/src/libs/packages/http/http.js';

@@ -1,0 +1,63 @@
+@import "src/assets/css/mixins";
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  display: inline-flex;
+  position: relative;
+}
+
+.icon {
+  min-width: 1.4rem;
+  opacity: 0.5;
+  padding-left: 0.6rem;
+  position: absolute;
+  text-align: center;
+  top: 0.55rem;
+}
+
+.input {
+  @include border;
+
+  background-color: var(--white);
+  box-shadow: none;
+  font-weight: 400;
+  outline: none;
+  padding: 0.6rem 1rem;
+  width: 100%;
+
+  &.withIcon {
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+  }
+}
+
+.textArea {
+  @include border;
+
+  color: rgba(0 0 0 / 87%);
+  font-family: sans-serif;
+  font-size: 100%;
+  background: var(--white);
+  width: 100%;
+  line-height: 1.29;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  outline: 0;
+  resize: vertical;
+}
+
+.errorWrapper {
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  margin-top: 3px;
+  min-height: calc(0.8rem + 3px);
+  color: #df1c3d;
+  align-self: flex-start;
+}

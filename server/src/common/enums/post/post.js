@@ -1,1 +1,4 @@
-export { PostPayloadKey, FilterUserMode } from 'shared/src/index.js';
+export {
+  PostPayloadKey,
+  FilterUserMode
+} from 'shared/src/packages/post/post.js';
