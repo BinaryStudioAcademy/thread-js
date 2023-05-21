@@ -71,11 +71,8 @@ const likePost = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post =>
-      post.id !== postId ? post : mapLikes(post)
-    );
-    const updatedExpandedPost =
-      expandedPost?.id === postId ? mapLikes(expandedPost) : undefined;
+    const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
+    const updatedExpandedPost = expandedPost?.id === postId ? mapLikes(expandedPost) : undefined;
 
     return { posts: updated, expandedPost: updatedExpandedPost };
   }
@@ -96,14 +93,11 @@ const addComment = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post =>
-      post.id !== comment.postId ? post : mapComments(post)
-    );
+    const updated = posts.map(post => (post.id !== comment.postId ? post : mapComments(post)));
 
-    const updatedExpandedPost =
-      expandedPost?.id === comment.postId
-        ? mapComments(expandedPost)
-        : undefined;
+    const updatedExpandedPost = expandedPost?.id === comment.postId
+      ? mapComments(expandedPost)
+      : undefined;
 
     return { posts: updated, expandedPost: updatedExpandedPost };
   }

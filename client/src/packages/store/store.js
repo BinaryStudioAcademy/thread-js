@@ -16,22 +16,21 @@ const store = configureStore({
     profile: profileReducer,
     posts: threadReducer
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: {
-          services: {
-            http,
-            storage,
-            auth,
-            comment,
-            post,
-            image,
-            notification
-          }
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
+    thunk: {
+      extraArgument: {
+        services: {
+          http,
+          storage,
+          auth,
+          comment,
+          post,
+          image,
+          notification
         }
       }
-    }).concat([notificationSocket])
+    }
+  }).concat([notificationSocket])
 });
 
 export { store };
