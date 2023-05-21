@@ -31,9 +31,7 @@ rules:
   import/no-unresolved:
     - off
   import/extensions:
-    - error
-    - jsx: always
-    - js: always
+    - off
   react/jsx-indent:
     - error
     - 2
@@ -53,3 +51,14 @@ rules:
     - off
   jsx-a11y/label-has-associated-control:
     - off
+
+overrides:
+  - files:
+      - vite.config.js
+    rules:
+      import/no-default-export:
+        - off
+      import/no-extraneous-dependencies:
+        - error
+        - devDependencies:
+            - false

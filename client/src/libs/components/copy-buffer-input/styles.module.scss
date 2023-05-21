@@ -1,0 +1,48 @@
+@import "src/assets/css/mixins";
+
+.copyContainer {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  width: 100%;
+
+  .copyInput {
+    @include border;
+
+    border-right: none;
+    font-weight: 400;
+    padding: 0.6rem 1rem;
+    outline: none;
+
+    &:focus {
+      border-color: #85b7d9;
+    }
+  }
+
+  .copyBtn {
+    background-color: #00b5ad;
+    border: none;
+    border-radius: 0 0.3rem 0.3rem 0;
+    border-left: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    align-items: center;
+    padding: 0;
+
+    .icon {
+      background-color: rgba(0 0 0 / 10%);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      position: relative;
+      width: 100%;
+    }
+
+    &:hover {
+      background-color: #009c95;
+    }
+  }
+}
