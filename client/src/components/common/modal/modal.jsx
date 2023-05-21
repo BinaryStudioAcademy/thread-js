@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { Portal } from 'components/common/common.js';
-import { useModal } from './hooks/hooks.js';
+import { Portal } from '../../../components/common/common';
+import { useModal } from './hooks/hooks';
 
 import styles from './styles.module.scss';
 
@@ -17,8 +17,14 @@ const Modal = ({ isOpen, isCentered, onClose, children }) => {
 
   return (
     <Portal>
-      <div className={clsx(styles.modal, isCentered && styles.centered)} onClick={handleOutsideClick}>
-        <div className={styles.content} onClick={handleDisableContentContainerClick}>
+      <div
+        className={clsx(styles.modal, isCentered && styles.centered)}
+        onClick={handleOutsideClick}
+      >
+        <div
+          className={styles.content}
+          onClick={handleDisableContentContainerClick}
+        >
           {children}
         </div>
       </div>

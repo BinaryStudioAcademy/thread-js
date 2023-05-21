@@ -1,5 +1,5 @@
-import { IconName, IconSize, AppRoute } from 'common/enums/enums';
-import { Icon, NavLink } from 'components/common/common';
+import { IconName, IconSize, AppRoute } from '../../common/enums/enums';
+import { Icon, NavLink } from '../../components/common/common';
 import styles from './styles.module.scss';
 
 const NotFound = () => (

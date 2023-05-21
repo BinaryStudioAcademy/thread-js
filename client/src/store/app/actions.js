@@ -1,14 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ActionType } from './common.js';
+import { ActionType } from './common';
 
-const notify = createAsyncThunk(
-  ActionType.NOTIFY,
-  (payload, { extra }) => {
-    const { notification } = extra.services;
-    const { type, message } = payload;
+const notify = createAsyncThunk(ActionType.NOTIFY, (payload, { extra }) => {
+  const { notification } = extra.services;
+  const { type, message } = payload;
 
-    return notification[type](message);
-  }
-);
+  return notification[type](message);
+});
 
 export { notify };

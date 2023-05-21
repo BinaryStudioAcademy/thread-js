@@ -1,4 +1,4 @@
-import { PostPayloadKey } from 'common/enums/enums';
+import { PostPayloadKey } from '../../../../../common/enums/enums';
 
 const DEFAULT_ADD_POST_PAYLOAD = {
   [PostPayloadKey.BODY]: ''

@@ -1,6 +1,6 @@
 import { NotificationManager } from 'react-notifications';
 
-import { NotificationType } from 'common/enums/enums';
+import { NotificationType } from '../../common/enums/enums';
 
 const DEFAULT_MESSAGE = 'Unexpected error';
 

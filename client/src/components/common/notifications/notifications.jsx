@@ -1,9 +1,9 @@
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-import { useEffect, useDispatch } from 'hooks/hooks';
-import { notificationActionCreator } from 'store/actions';
-import { userType } from 'common/prop-types/prop-types';
+import { useEffect, useDispatch } from '../../../hooks/hooks';
+import { notificationActionCreator } from '../../../store/actions';
+import { userType } from '../../../common/prop-types/prop-types';
 
 const Notifications = ({ user }) => {
   const dispatch = useDispatch();

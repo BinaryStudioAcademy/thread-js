@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { useEffect, useMemo } from 'hooks/hooks';
+import { useEffect, useMemo } from '../../../hooks/hooks';
 
 import styles from './styles.module.scss';
 
@@ -13,7 +13,9 @@ const Portal = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const wasOverflowHidden = document.body.classList.contains(styles.noOverflow);
+    const wasOverflowHidden = document.body.classList.contains(
+      styles.noOverflow
+    );
     document.body.appendChild(portalContainer);
     document.body.classList.add(styles.noOverflow);
 

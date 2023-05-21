@@ -4,17 +4,17 @@ export {
   CommentsApiPath,
   ImagesApiPath,
   PostsApiPath
-} from './api/api.js';
-export { AppRoute, ENV, StorageKey } from './app/app.js';
-export { ContentType } from './file/file.js';
-export { HttpCode, HttpHeader, HttpMethod } from './http/http.js';
-export { UserPayloadKey } from './user/user.js';
-export { PostPayloadKey } from './post/post.js';
-export { ImagePayloadKey } from './image/image.js';
-export { UseFormMode } from './form/form.js';
-export { ThreadToolbarKey } from './thread/thread.js';
-export { CommentPayloadKey } from './comment/comment.js';
-export { ExceptionMessage } from './exception/exception.js';
+} from './api/api';
+export { AppRoute, ENV, StorageKey } from './app/app';
+export { ContentType } from './file/file';
+export { HttpCode, HttpHeader, HttpMethod } from './http/http';
+export { UserPayloadKey } from './user/user';
+export { PostPayloadKey } from './post/post';
+export { ImagePayloadKey } from './image/image';
+export { UseFormMode } from './form/form';
+export { ThreadToolbarKey } from './thread/thread';
+export { CommentPayloadKey } from './comment/comment';
+export { ExceptionMessage } from './exception/exception';
 export {
   ButtonColor,
   ButtonSize,
@@ -23,10 +23,10 @@ export {
   IconName,
   IconSize,
   ImageSize
-} from './components/components.js';
+} from './components/components';
 export {
   NotificationType,
   NotificationMessage,
   NotificationSocketEvent
-} from './notifications/notifications.js';
-export { SocketEvent, SocketNamespace } from './socket/socket.js';
+} from './notifications/notifications';
+export { SocketEvent, SocketNamespace } from './socket/socket';

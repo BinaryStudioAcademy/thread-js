@@ -1,4 +1,4 @@
-export * as appActionCreator from './app/actions.js';
-export * as profileActionCreator from './profile/actions.js';
-export * as threadActionCreator from './thread/actions.js';
-export * as notificationActionCreator from './notifications/actions.js';
+export * as appActionCreator from './app/actions';
+export * as profileActionCreator from './profile/actions';
+export * as threadActionCreator from './thread/actions';
+export * as notificationActionCreator from './notifications/actions';

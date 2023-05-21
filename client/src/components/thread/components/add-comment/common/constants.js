@@ -1,4 +1,4 @@
-import { CommentPayloadKey } from 'common/enums/enums';
+import { CommentPayloadKey } from '../../../../../common/enums/enums';
 
 const DEFAULT_ADD_COMMENT_PAYLOAD = {
   [CommentPayloadKey.BODY]: ''

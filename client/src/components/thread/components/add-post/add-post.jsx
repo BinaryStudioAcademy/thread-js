@@ -1,8 +1,18 @@
 import PropTypes from 'prop-types';
-import { useCallback, useState, useAppForm } from 'hooks/hooks.js';
-import { ButtonColor, ButtonType, IconName, PostPayloadKey } from 'common/enums/enums.js';
-import { Button, Image, Input, Segment } from 'components/common/common.js';
-import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants.js';
+import { useCallback, useState, useAppForm } from '../../../../hooks/hooks';
+import {
+  ButtonColor,
+  ButtonType,
+  IconName,
+  PostPayloadKey
+} from '../../../../common/enums/enums';
+import {
+  Button,
+  Image,
+  Input,
+  Segment
+} from '../../../../components/common/common';
+import { DEFAULT_ADD_POST_PAYLOAD } from './common/constants';
 
 import styles from './styles.module.scss';
 
@@ -54,7 +64,11 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
         />
         {image?.imageLink && (
           <div className={styles.imageWrapper}>
-            <Image className={styles.image} src={image?.imageLink} alt="post image" />
+            <Image
+              className={styles.image}
+              src={image?.imageLink}
+              alt="post image"
+            />
           </div>
         )}
         <div className={styles.btnWrapper}>

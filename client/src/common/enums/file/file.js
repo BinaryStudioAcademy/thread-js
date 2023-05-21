@@ -1,1 +1,1 @@
-export { ContentType } from './content-type.enum.js';
+export { ContentType } from './content-type.enum';

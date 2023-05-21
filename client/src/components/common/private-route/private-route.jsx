@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector } from 'hooks/hooks';
-import { AppRoute } from 'common/enums/enums';
-import { locationType } from 'common/prop-types/prop-types';
+import { useSelector } from '../../../hooks/hooks';
+import { AppRoute } from '../../../common/enums/enums';
+import { locationType } from '../../../common/prop-types/prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user } = useSelector(state => ({
@@ -11,9 +11,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   const hasUser = Boolean(user);
 
-  return hasUser
-    ? <Component {...rest} />
-    : <Navigate to={{ pathname: AppRoute.LOGIN, state: { from: rest.location } }} />;
+  return hasUser ? (
+    <Component {...rest} />
+  ) : (
+    <Navigate
+      to={{ pathname: AppRoute.LOGIN, state: { from: rest.location } }}
+    />
+  );
 };
 
 PrivateRoute.propTypes = {

@@ -1,8 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { HttpError } from 'exceptions/exceptions.js';
-import { HttpCode, StorageKey, ExceptionMessage } from 'common/enums/enums.js';
+import { HttpError } from '../../exceptions/exceptions';
+import {
+  HttpCode,
+  StorageKey,
+  ExceptionMessage
+} from '../../common/enums/enums';
 
-import { ActionType } from './common.js';
+import { ActionType } from './common';
 
 const login = createAsyncThunk(
   ActionType.LOG_IN,

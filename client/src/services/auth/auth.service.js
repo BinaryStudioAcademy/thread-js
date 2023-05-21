@@ -3,7 +3,7 @@ import {
   AuthApiPath,
   HttpMethod,
   ContentType
-} from 'common/enums/enums';
+} from '../../common/enums/enums';
 
 class Auth {
   constructor({ apiPath, http }) {

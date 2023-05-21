@@ -1,20 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
-import { useCallback, useEffect, useDispatch, useSelector } from 'hooks/hooks';
-import { StorageKey, AppRoute } from 'common/enums/enums';
-import { storage } from 'services/services';
-import { profileActionCreator } from 'store/actions';
+import {
+  useCallback,
+  useEffect,
+  useDispatch,
+  useSelector
+} from '../hooks/hooks';
+import { StorageKey, AppRoute } from '../common/enums/enums';
+import { storage } from '../services/services';
+import { profileActionCreator } from '../store/actions';
 import {
   Spinner,
   Header,
   PrivateRoute,
   PublicRoute,
   Notifications
-} from 'components/common/common';
-import { Sign } from 'components/sign/sign';
-import { NotFound } from 'components/not-found/not-found';
-import { Profile } from 'components/profile/profile';
-import { SharedPost } from 'components/shared-post/shared-post';
-import { Thread } from 'components/thread/thread';
+} from '../components/common/common';
+import { Sign } from '../components/sign/sign';
+import { NotFound } from '../components/not-found/not-found';
+import { Profile } from '../components/profile/profile';
+import { SharedPost } from '../components/shared-post/shared-post';
+import { Thread } from '../components/thread/thread';
 
 const App = () => {
   const { user } = useSelector(state => ({
@@ -25,9 +30,10 @@ const App = () => {
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
   const hasUser = Boolean(user);
 
-  const handleUserLogout = useCallback(() => (
-    dispatch(profileActionCreator.logout())
-  ), [dispatch]);
+  const handleUserLogout = useCallback(
+    () => dispatch(profileActionCreator.logout()),
+    [dispatch]
+  );
 
   useEffect(() => {
     if (hasToken) {
@@ -48,11 +54,26 @@ const App = () => {
       )}
       <main className="fill">
         <Routes>
-          <Route path={AppRoute.LOGIN} element={<PublicRoute component={Sign} />} />
-          <Route path={AppRoute.REGISTRATION} element={<PublicRoute component={Sign} />} />
-          <Route path={AppRoute.ROOT} element={<PrivateRoute component={Thread} />} />
-          <Route path={AppRoute.PROFILE} element={<PrivateRoute component={Profile} />} />
-          <Route path={AppRoute.SHARE_$POSTHASH} element={<PrivateRoute component={SharedPost} />} />
+          <Route
+            path={AppRoute.LOGIN}
+            element={<PublicRoute component={Sign} />}
+          />
+          <Route
+            path={AppRoute.REGISTRATION}
+            element={<PublicRoute component={Sign} />}
+          />
+          <Route
+            path={AppRoute.ROOT}
+            element={<PrivateRoute component={Thread} />}
+          />
+          <Route
+            path={AppRoute.PROFILE}
+            element={<PrivateRoute component={Profile} />}
+          />
+          <Route
+            path={AppRoute.SHARE_$POSTHASH}
+            element={<PrivateRoute component={SharedPost} />}
+          />
           <Route path={AppRoute.ANY} element={<NotFound />} />
         </Routes>
       </main>

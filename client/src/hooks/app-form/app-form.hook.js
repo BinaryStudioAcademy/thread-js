@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { UseFormMode } from 'common/enums/enums';
+import { UseFormMode } from '../../common/enums/enums';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const useAppForm = ({ validationSchema, defaultValues, mode }) => {

@@ -3,7 +3,7 @@ import {
   PostsApiPath,
   HttpMethod,
   ContentType
-} from 'common/enums/enums';
+} from '../../common/enums/enums';
 
 class Post {
   constructor({ apiPath, http }) {

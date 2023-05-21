@@ -13,7 +13,7 @@ import {
   faUser,
   faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { IconName } from 'common/enums/enums';
+import { IconName } from '../../../common/enums/enums';
 
 const iconNameToSvgIcon = {
   [IconName.AT]: faAt,

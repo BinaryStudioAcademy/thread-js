@@ -1,8 +1,8 @@
-import { useCallback, useDispatch, useLocation } from 'hooks/hooks.js';
-import { AppRoute } from 'common/enums/enums.js';
-import { profileActionCreator } from 'store/actions.js';
-import { Image } from 'components/common/common.js';
-import { LoginForm, RegistrationForm } from './components/components.js';
+import { useCallback, useDispatch, useLocation } from '../../hooks/hooks';
+import { AppRoute } from '../../common/enums/enums';
+import { profileActionCreator } from '../../store/actions';
+import { Image } from '../../components/common/common';
+import { LoginForm, RegistrationForm } from './components/components';
 import styles from './styles.module.scss';
 
 const Sign = () => {

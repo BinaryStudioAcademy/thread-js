@@ -1,39 +1,40 @@
 import PropTypes from 'prop-types';
-import { useCallback, useDispatch, useSelector } from 'hooks/hooks.js';
-import { threadActionCreator } from 'store/actions.js';
-import { Spinner, Post, Modal } from 'components/common/common.js';
-import { Comment, AddComment } from 'components/thread/components/components.js';
-import { getSortedComments } from './helpers/helpers.js';
+import { useCallback, useDispatch, useSelector } from '../../../../hooks/hooks';
+import { threadActionCreator } from '../../../../store/actions';
+import { Spinner, Post, Modal } from '../../../../components/common/common';
+import {
+  Comment,
+  AddComment
+} from '../../../../components/thread/components/components';
+import { getSortedComments } from './helpers/helpers';
 
-const ExpandedPost = ({
-  onSharePost
-}) => {
+const ExpandedPost = ({ onSharePost }) => {
   const dispatch = useDispatch();
   const { post } = useSelector(state => ({
     post: state.posts.expandedPost
   }));
 
-  const handlePostLike = useCallback(id => (
-    dispatch(threadActionCreator.likePost(id))
-  ), [dispatch]);
+  const handlePostLike = useCallback(
+    id => dispatch(threadActionCreator.likePost(id)),
+    [dispatch]
+  );
 
-  const handleCommentAdd = useCallback(commentPayload => (
-    dispatch(threadActionCreator.addComment(commentPayload))
-  ), [dispatch]);
+  const handleCommentAdd = useCallback(
+    commentPayload => dispatch(threadActionCreator.addComment(commentPayload)),
+    [dispatch]
+  );
 
-  const handleExpandedPostToggle = useCallback(id => (
-    dispatch(threadActionCreator.toggleExpandedPost(id))
-  ), [dispatch]);
+  const handleExpandedPostToggle = useCallback(
+    id => dispatch(threadActionCreator.toggleExpandedPost(id)),
+    [dispatch]
+  );
 
   const handleExpandedPostClose = () => handleExpandedPostToggle();
 
   const sortedComments = getSortedComments(post.comments ?? []);
 
   return (
-    <Modal
-      isOpen
-      onClose={handleExpandedPostClose}
-    >
+    <Modal isOpen onClose={handleExpandedPostClose}>
       {post ? (
         <>
           <Post

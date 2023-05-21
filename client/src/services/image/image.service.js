@@ -1,4 +1,4 @@
-import { ApiPath, HttpMethod, ImagePayloadKey } from 'common/enums/enums';
+import { ApiPath, HttpMethod, ImagePayloadKey } from '../../common/enums/enums';
 
 class Image {
   constructor({ apiPath, http }) {

@@ -1,15 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { IconName } from 'common/enums/enums.js';
-import { Icon } from 'components/common/common.js';
+import { IconName } from '../../../common/enums/enums';
+import { Icon } from '../../../components/common/common';
 
 import styles from './styles.module.scss';
 
-const IconButton = ({
-  iconName,
-  label,
-  onClick
-}) => (
+const IconButton = ({ iconName, label, onClick }) => (
   <button className={styles.iconButton} type="button" onClick={onClick}>
     <Icon name={iconName} />
     {label}

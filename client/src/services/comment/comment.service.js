@@ -3,7 +3,7 @@ import {
   CommentsApiPath,
   HttpMethod,
   ContentType
-} from 'common/enums/enums';
+} from '../../common/enums/enums';
 
 class Comment {
   constructor({ apiPath, http }) {

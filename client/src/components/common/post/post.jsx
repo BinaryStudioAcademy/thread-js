@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import { getFromNowTime } from 'helpers/helpers';
-import { IconName } from 'common/enums/enums';
-import { postType } from 'common/prop-types/prop-types';
-import { IconButton, Image } from 'components/common/common';
+import { getFromNowTime } from '../../../helpers/helpers';
+import { IconName } from '../../../common/enums/enums';
+import { postType } from '../../../common/prop-types/prop-types';
+import { IconButton, Image } from '../../../components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -42,7 +42,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
         <IconButton
           iconName={IconName.THUMBS_DOWN}
           label={dislikeCount}
-          onClick={() => { }}
+          onClick={() => {}}
         />
         <IconButton
           iconName={IconName.COMMENT}

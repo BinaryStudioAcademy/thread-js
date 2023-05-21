@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useAppForm, useState } from 'hooks/hooks.js';
+import { useAppForm, useState } from '../../../../hooks/hooks';
 import {
   ButtonType,
   ButtonSize,
@@ -7,16 +7,16 @@ import {
   AppRoute,
   IconName,
   UserPayloadKey
-} from 'common/enums/enums.js';
+} from '../../../../common/enums/enums';
 import {
   Button,
   Input,
   Message,
   NavLink,
   Segment
-} from 'components/common/common.js';
-import { registration as registrationValidationSchema } from 'validation-schemas/validation-schemas.js';
-import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants.js';
+} from '../../../../components/common/common';
+import { registration as registrationValidationSchema } from '../../../../validation-schemas/validation-schemas';
+import { DEFAULT_REGISTRATION_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
 const RegistrationForm = ({ onRegister }) => {
@@ -40,10 +40,7 @@ const RegistrationForm = ({ onRegister }) => {
   return (
     <>
       <h2 className={styles.title}>Register for free account</h2>
-      <form
-        name="registrationForm"
-        onSubmit={handleSubmit(handleRegister)}
-      >
+      <form name="registrationForm" onSubmit={handleSubmit(handleRegister)}>
         <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
             <Input

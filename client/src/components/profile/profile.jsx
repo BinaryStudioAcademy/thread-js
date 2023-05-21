@@ -1,7 +1,7 @@
-import { useAppForm, useSelector } from 'hooks/hooks';
-import { Image, Input } from 'components/common/common';
-import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
-import { ImageSize, IconName } from 'common/enums/enums';
+import { useAppForm, useSelector } from '../../hooks/hooks';
+import { Image, Input } from '../../components/common/common';
+import { DEFAULT_USER_AVATAR } from '../../common/constants/constants';
+import { ImageSize, IconName } from '../../common/enums/enums';
 import styles from './styles.module.scss';
 
 const Profile = () => {

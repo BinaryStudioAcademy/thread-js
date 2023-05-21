@@ -3,8 +3,8 @@ import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 
-import { IconName } from 'common/enums/enums.js';
-import { Icon } from 'components/common/common.js';
+import { IconName } from '../../../common/enums/enums';
+import { Icon } from '../../../components/common/common';
 
 import styles from './styles.module.scss';
 
@@ -25,7 +25,11 @@ const Input = ({
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.inputContainer}>
-        {iconName && <span className={styles.icon}><Icon name={iconName} /></span>}
+        {iconName && (
+          <span className={styles.icon}>
+            <Icon name={iconName} />
+          </span>
+        )}
         {isTextarea ? (
           <textarea
             {...field}
@@ -40,7 +44,11 @@ const Input = ({
             type={type}
             disabled={disabled}
             placeholder={placeholder}
-            className={clsx(styles.input, iconName && styles.withIcon, className)}
+            className={clsx(
+              styles.input,
+              iconName && styles.withIcon,
+              className
+            )}
           />
         )}
       </div>
@@ -48,7 +56,6 @@ const Input = ({
         <ErrorMessage errors={errors} name={name} />
       </span>
     </div>
-
   );
 };
 

@@ -6,8 +6,8 @@ import {
   ButtonType,
   IconName,
   IconSize
-} from 'common/enums/enums.js';
-import { Icon } from 'components/common/common.js';
+} from '../../../common/enums/enums';
+import { Icon } from '../../../components/common/common';
 import styles from './styles.module.scss';
 
 const Button = ({

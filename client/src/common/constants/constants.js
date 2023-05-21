@@ -1,1 +1,1 @@
-export { DEFAULT_USER_AVATAR } from './user.constants.js';
+export { DEFAULT_USER_AVATAR } from './user.constants';

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { imageType } from 'common/prop-types/image';
-import { commentType } from 'common/prop-types/comment';
+import { imageType } from '../../common/prop-types/image';
+import { commentType } from '../../common/prop-types/comment';
 
 const postType = PropTypes.exact({
   id: PropTypes.number.isRequired,
@@ -9,9 +9,12 @@ const postType = PropTypes.exact({
   createdAt: PropTypes.string.isRequired,
   image: imageType,
   imageId: PropTypes.number,
-  likeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  dislikeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  commentCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  likeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  dislikeCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  commentCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   comments: PropTypes.arrayOf(commentType),
   userId: PropTypes.number.isRequired,
   user: PropTypes.exact({

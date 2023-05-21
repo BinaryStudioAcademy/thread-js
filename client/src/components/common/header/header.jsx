@@ -1,8 +1,18 @@
 import PropTypes from 'prop-types';
-import { IconName, IconSize, ButtonType, AppRoute } from 'common/enums/enums';
-import { DEFAULT_USER_AVATAR } from 'common/constants/constants';
-import { userType } from 'common/prop-types/prop-types';
-import { Button, Icon, Image, NavLink } from 'components/common/common';
+import {
+  IconName,
+  IconSize,
+  ButtonType,
+  AppRoute
+} from '../../../common/enums/enums';
+import { DEFAULT_USER_AVATAR } from '../../../common/constants/constants';
+import { userType } from '../../../common/prop-types/prop-types';
+import {
+  Button,
+  Icon,
+  Image,
+  NavLink
+} from '../../../components/common/common';
 
 import styles from './styles.module.scss';
 

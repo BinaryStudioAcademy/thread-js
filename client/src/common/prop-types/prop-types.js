@@ -1,5 +1,5 @@
-export { userType } from './user.js';
-export { postType } from './post.js';
-export { imageType } from './image.js';
-export { commentType } from './comment.js';
-export { locationType } from './location.js';
+export { userType } from './user';
+export { postType } from './post';
+export { imageType } from './image';
+export { commentType } from './comment';
+export { locationType } from './location';
