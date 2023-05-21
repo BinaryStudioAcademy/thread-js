@@ -1,2 +1,2 @@
-export { HttpCode, HttpMethod } from 'shared/src/common/enums/enums';
+export { HttpCode, HttpMethod } from 'shared/src/libs/packages/http/http';
 export { HttpHeader } from './http-header.enum';

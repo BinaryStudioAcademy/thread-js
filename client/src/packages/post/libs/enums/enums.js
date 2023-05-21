@@ -1,1 +1,1 @@
-export { PostsApiPath, PostPayloadKey } from 'shared/src/common/enums/enums';
+export { PostsApiPath, PostPayloadKey } from 'shared/src/packages/post/post';

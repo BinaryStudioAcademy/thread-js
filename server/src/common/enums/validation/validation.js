@@ -1,4 +1,4 @@
 export {
   UserValidationRule,
   UserValidationMessage
-} from 'shared/src/common/enums/enums.js';
+} from 'shared/src/packages/user/user.js';

@@ -1,2 +1,2 @@
-export { getDiff, getFromNowTime } from 'shared/src/helpers/helpers';
+export { getDiff, getFromNowTime } from 'shared/src/libs/helpers/helpers';
 export { getStringifiedQuery } from './http/http';

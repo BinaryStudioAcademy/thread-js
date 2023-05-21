@@ -1,4 +1,4 @@
 export {
   ExceptionName,
   ExceptionMessage
-} from 'shared/src/common/enums/enums.js';
+} from 'shared/src/libs/enums/enums.js';

@@ -1,1 +1,4 @@
-export { SocketEvent, SocketNamespace } from 'shared/src/common/enums/enums';
+export {
+  SocketEvent,
+  SocketNamespace
+} from 'shared/src/libs/packages/socket/socket';

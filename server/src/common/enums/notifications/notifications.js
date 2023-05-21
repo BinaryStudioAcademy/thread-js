@@ -1,1 +1,1 @@
-export { NotificationSocketEvent } from 'shared/src/common/enums/enums.js';
+export { NotificationSocketEvent } from 'shared/src/libs/packages/notifications/notifications.js';

@@ -1,4 +1,4 @@
-export { ApiPath } from 'shared/src/common/enums/enums';
+export { ApiPath } from 'shared/src/libs/enums/enums';
 export { AppRoute, ENV, StorageKey } from './app/app';
 export { ContentType } from './file/file';
 export { UseFormMode } from './form/form';

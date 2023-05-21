@@ -1,1 +1,1 @@
-export { UserPayloadKey } from 'shared/src/common/enums/enums';
+export { UserPayloadKey } from 'shared/src/packages/user/user';

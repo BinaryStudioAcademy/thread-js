@@ -1,4 +1,4 @@
 export {
   CommentsApiPath,
   CommentPayloadKey
-} from 'shared/src/common/enums/enums';
+} from 'shared/src/packages/comment/comment';

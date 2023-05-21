@@ -1,4 +1,1 @@
-export {
-  login,
-  registration
-} from 'shared/src/validation-schemas/validation-schemas.js';
+export { login, registration } from 'shared/src/packages/auth/auth.js';

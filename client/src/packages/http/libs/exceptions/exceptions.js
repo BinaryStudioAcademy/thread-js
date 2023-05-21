@@ -1,1 +1,1 @@
-export { HttpError } from 'shared/src/exceptions/exceptions';
+export { HttpError } from 'shared/src/libs/exceptions/exceptions';
