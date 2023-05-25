@@ -9,19 +9,41 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { actions as threadActionCreator } from 'slices/thread/thread';
 import { image as imageService } from 'packages/image/image';
-import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums';
+import { ThreadToolbarKey, UseFormMode, PostsFilterAction } from 'libs/enums/enums';
 import { Post } from 'libs/components/post/post';
 import { Spinner } from 'libs/components/spinner/spinner';
 import { Checkbox } from 'libs/components/checkbox/checkbox';
+import { useReducer } from 'react';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants';
 
 import styles from './styles.module.scss';
 
-const postsFilter = {
+const postsFilterInitialState = {
   userId: undefined,
   from: 0,
   count: 10
+};
+
+const postsFilterReducer = (state, action) => {
+  switch (action.type) {
+    case PostsFilterAction.TOGGLE_SHOW_OWN_POSTS: {
+      const { userId, from } = action.payload;
+      return {
+        ...state,
+        userId,
+        from
+      };
+    }
+    case PostsFilterAction.UPDATE_FROM: {
+      return {
+        ...state,
+        from: action.payload.from
+      };
+    }
+    default:
+      return state;
+  }
 };
 
 const Thread = () => {
@@ -32,6 +54,9 @@ const Thread = () => {
     expandedPost: state.posts.expandedPost,
     userId: state.profile.user.id
   }));
+
+  const [postsFilter, dispatchPostsFilter] = useReducer(postsFilterReducer, postsFilterInitialState);
+
   const [sharedPostId, setSharedPostId] = useState(undefined);
 
   const { control, watch } = useAppForm({
@@ -49,11 +74,18 @@ const Thread = () => {
   );
 
   const handleToggleShowOwnPosts = useCallback(() => {
-    postsFilter.userId = showOwnPosts ? userId : undefined;
-    postsFilter.from = 0;
-    handlePostsLoad(postsFilter);
-    postsFilter.from = postsFilter.count; // for the next scroll
-  }, [userId, showOwnPosts, handlePostsLoad]);
+    const currentUserId = showOwnPosts ? userId : undefined;
+
+    handlePostsLoad({ ...postsFilterInitialState, userId: currentUserId });
+
+    dispatchPostsFilter({
+      type: PostsFilterAction.TOGGLE_SHOW_OWN_POSTS,
+      payload: {
+        userId: currentUserId,
+        from: postsFilter.count
+      }
+    });
+  }, [showOwnPosts, userId, handlePostsLoad]);
 
   useEffect(() => {
     handleToggleShowOwnPosts();
@@ -83,19 +115,22 @@ const Thread = () => {
 
   const handleGetMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
+
     const { from, count } = postsFilter;
-    postsFilter.from = from + count;
-  }, [handleMorePostsLoad]);
+
+    dispatchPostsFilter({
+      type: PostsFilterAction.UPDATE_FROM,
+      payload: {
+        from: count + from
+      }
+    });
+  }, [handleMorePostsLoad, postsFilter]);
 
   const handleSharePost = id => setSharedPostId(id);
 
   const handleUploadImage = file => imageService.uploadImage(file);
 
   const handleCloseSharedPostLink = () => setSharedPostId(undefined);
-
-  useEffect(() => {
-    handleGetMorePosts();
-  }, [handleGetMorePosts]);
 
   return (
     <div className={styles.threadContent}>
