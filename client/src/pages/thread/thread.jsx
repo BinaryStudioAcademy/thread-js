@@ -9,7 +9,7 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { actions as threadActionCreator } from 'slices/thread/thread';
 import { image as imageService } from 'packages/image/image';
-import { ThreadToolbarKey, UseFormMode, PostsFilterAction } from 'libs/enums/enums';
+import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums';
 import { Post } from 'libs/components/post/post';
 import { Spinner } from 'libs/components/spinner/spinner';
 import { Checkbox } from 'libs/components/checkbox/checkbox';
@@ -21,16 +21,14 @@ import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter';
 
 const Thread = () => {
   const dispatch = useDispatch();
-  const { posts, hasMorePosts, expandedPost, userId, from, count } = useSelector(state => ({
+  const { posts, hasMorePosts, expandedPost, userId } = useSelector(state => ({
     posts: state.posts.posts,
     hasMorePosts: state.posts.hasMorePosts,
     expandedPost: state.posts.expandedPost,
-    userId: state.profile.user.id,
-    from: state.posts.from,
-    count: state.posts.count
+    userId: state.profile.user.id
   }));
 
-  const { postsFilter, dispatchPostsFilter } = usePostsFilter();
+  const { postsFilter, handleShownOwnPosts } = usePostsFilter();
 
   const [sharedPostId, setSharedPostId] = useState(undefined);
 
@@ -51,21 +49,16 @@ const Thread = () => {
   const handleToggleShowOwnPosts = useCallback(() => {
     const currentUserId = showOwnPosts ? userId : undefined;
 
-    dispatchPostsFilter({
-      type: PostsFilterAction.TOGGLE_SHOW_OWN_POSTS,
-      payload: {
-        userId: currentUserId
-      }
-    });
-  }, [showOwnPosts, userId, dispatchPostsFilter]);
+    handleShownOwnPosts(currentUserId);
+  }, [handleShownOwnPosts, showOwnPosts, userId]);
 
   useEffect(() => {
     handleToggleShowOwnPosts();
   }, [showOwnPosts, handleToggleShowOwnPosts]);
 
   useEffect(() => {
-    handlePostsLoad({ from: 0, count, userId: postsFilter.userId });
-  }, [count, handlePostsLoad, postsFilter.userId]);
+    handlePostsLoad(postsFilter);
+  }, [handlePostsLoad, postsFilter]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -90,8 +83,8 @@ const Thread = () => {
   );
 
   const handleGetMorePosts = useCallback(() => {
-    handleMorePostsLoad({ from, count, userId: postsFilter.userId });
-  }, [count, from, handleMorePostsLoad, postsFilter.userId]);
+    handleMorePostsLoad(postsFilter);
+  }, [handleMorePostsLoad, postsFilter]);
 
   const handleSharePost = id => setSharedPostId(id);
 

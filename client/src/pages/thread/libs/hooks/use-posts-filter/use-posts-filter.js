@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { useReducer } from 'react';
-import { PostsFilterAction } from '../../../../../libs/enums/thread/post-filter-action.enum';
+import { useCallback, useReducer } from 'react';
+import { PostsFilterAction } from 'libs/enums/enums';
 
 const postsFilterInitialState = {
   userId: undefined
@@ -16,7 +16,16 @@ const postsFilterReducer = createReducer(postsFilterInitialState, builder => {
 const usePostsFilter = () => {
   const [postsFilter, dispatchPostsFilter] = useReducer(postsFilterReducer, postsFilterInitialState);
 
-  return { postsFilter, dispatchPostsFilter };
+  const handleShownOwnPosts = useCallback(userId => {
+    dispatchPostsFilter({
+      type: PostsFilterAction.TOGGLE_SHOW_OWN_POSTS,
+      payload: {
+        userId
+      }
+    });
+  }, []);
+
+  return { postsFilter, handleShownOwnPosts };
 };
 
 export { usePostsFilter };
