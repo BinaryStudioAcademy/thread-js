@@ -35,6 +35,7 @@ const { reducer, actions, name } = createSlice({
     });
     builder.addCase(loadMorePosts.fulfilled, (state, action) => {
       const { posts } = action.payload;
+
       state.posts = state.posts.concat(posts);
       state.hasMorePosts = Boolean(posts.length);
       state.from += initialState.count;

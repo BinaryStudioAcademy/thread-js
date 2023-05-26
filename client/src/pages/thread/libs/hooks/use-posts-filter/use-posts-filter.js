@@ -9,8 +9,7 @@ const postsFilterInitialState = {
 const postsFilterReducer = createReducer(postsFilterInitialState, builder => {
   builder
     .addCase(PostsFilterAction.TOGGLE_SHOW_OWN_POSTS, (state, action) => {
-      const { userId } = action.payload;
-      state.userId = userId;
+      state.userId = action.payload.userId;
     });
 });
 
