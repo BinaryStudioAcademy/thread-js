@@ -13,49 +13,24 @@ import { ThreadToolbarKey, UseFormMode, PostsFilterAction } from 'libs/enums/enu
 import { Post } from 'libs/components/post/post';
 import { Spinner } from 'libs/components/spinner/spinner';
 import { Checkbox } from 'libs/components/checkbox/checkbox';
-import { useReducer } from 'react';
 import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
 import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants';
 
 import styles from './styles.module.scss';
-
-const postsFilterInitialState = {
-  userId: undefined,
-  from: 0,
-  count: 10
-};
-
-const postsFilterReducer = (state, action) => {
-  switch (action.type) {
-    case PostsFilterAction.TOGGLE_SHOW_OWN_POSTS: {
-      const { userId, from } = action.payload;
-      return {
-        ...state,
-        userId,
-        from
-      };
-    }
-    case PostsFilterAction.UPDATE_FROM: {
-      return {
-        ...state,
-        from: action.payload.from
-      };
-    }
-    default:
-      return state;
-  }
-};
+import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter';
 
 const Thread = () => {
   const dispatch = useDispatch();
-  const { posts, hasMorePosts, expandedPost, userId } = useSelector(state => ({
+  const { posts, hasMorePosts, expandedPost, userId, from, count } = useSelector(state => ({
     posts: state.posts.posts,
     hasMorePosts: state.posts.hasMorePosts,
     expandedPost: state.posts.expandedPost,
-    userId: state.profile.user.id
+    userId: state.profile.user.id,
+    from: state.posts.from,
+    count: state.posts.count
   }));
 
-  const [postsFilter, dispatchPostsFilter] = useReducer(postsFilterReducer, postsFilterInitialState);
+  const { postsFilter, dispatchPostsFilter } = usePostsFilter();
 
   const [sharedPostId, setSharedPostId] = useState(undefined);
 
@@ -76,20 +51,21 @@ const Thread = () => {
   const handleToggleShowOwnPosts = useCallback(() => {
     const currentUserId = showOwnPosts ? userId : undefined;
 
-    handlePostsLoad({ ...postsFilterInitialState, userId: currentUserId });
-
     dispatchPostsFilter({
       type: PostsFilterAction.TOGGLE_SHOW_OWN_POSTS,
       payload: {
-        userId: currentUserId,
-        from: postsFilter.count
+        userId: currentUserId
       }
     });
-  }, [showOwnPosts, userId, handlePostsLoad]);
+  }, [showOwnPosts, userId, dispatchPostsFilter]);
 
   useEffect(() => {
     handleToggleShowOwnPosts();
   }, [showOwnPosts, handleToggleShowOwnPosts]);
+
+  useEffect(() => {
+    handlePostsLoad({ from: 0, count, userId: postsFilter.userId });
+  }, [count, handlePostsLoad, postsFilter.userId]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -114,17 +90,8 @@ const Thread = () => {
   );
 
   const handleGetMorePosts = useCallback(() => {
-    handleMorePostsLoad(postsFilter);
-
-    const { from, count } = postsFilter;
-
-    dispatchPostsFilter({
-      type: PostsFilterAction.UPDATE_FROM,
-      payload: {
-        from: count + from
-      }
-    });
-  }, [handleMorePostsLoad, postsFilter]);
+    handleMorePostsLoad({ from, count, userId: postsFilter.userId });
+  }, [count, from, handleMorePostsLoad, postsFilter.userId]);
 
   const handleSharePost = id => setSharedPostId(id);
 

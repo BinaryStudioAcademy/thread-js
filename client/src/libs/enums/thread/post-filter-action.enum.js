@@ -1,6 +1,5 @@
 const PostsFilterAction = {
-  TOGGLE_SHOW_OWN_POSTS: 'toggleShowOwnPosts',
-  UPDATE_FROM: 'updateFrom'
+  TOGGLE_SHOW_OWN_POSTS: 'toggleShowOwnPosts'
 };
 
 export { PostsFilterAction };
