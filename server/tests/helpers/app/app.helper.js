@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { afterAll, beforeAll } from '@jest/globals';
 
-import { App } from '../../../src/server.js';
+import { ServerApp } from '../../../src/libs/packages/server-application/server-application.js';
 
 const buildApp = () => {
-  const { app } = new App({
+  const { app } = new ServerApp({
     logger: false
   });
 

@@ -10,31 +10,29 @@ import {
   UserPayloadKey,
   PostPayloadKey,
   FilterUserMode
-} from '../../../src/common/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
+} from '../../../src/libs/enums/enums.js';
+import {
+  joinPath,
+  normalizeTrailingSlash
+} from '../../../src/libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${normalizeTrailingSlash(joinPath(
-  ENV.APP.API_PATH,
-  ApiPath.POSTS
-))} routes`, () => {
+describe(`${normalizeTrailingSlash(
+  joinPath(ENV.APP.API_PATH, ApiPath.POSTS)
+)} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMainId;
   let userMinorId;
 
-  const registerEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.AUTH,
-    AuthApiPath.REGISTER
-  ));
+  const registerEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+  );
 
-  const postsEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.POSTS,
-    PostsApiPath.ROOT
-  ));
+  const postsEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
+  );
 
   beforeAll(async () => {
     const testMainUser = {
@@ -49,11 +47,13 @@ describe(`${normalizeTrailingSlash(joinPath(
       [UserPayloadKey.PASSWORD]: faker.internet.password()
     };
 
-    const registerMainUserResponse = await app.inject()
+    const registerMainUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMainUser);
 
-    const registerMinorUserResponse = await app.inject()
+    const registerMinorUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMinorUser);
 
@@ -67,83 +67,79 @@ describe(`${normalizeTrailingSlash(joinPath(
       token: !index ? tokenMainUser : tokenMinorUser
     }));
 
-    await Promise.all(testPosts.map(config => app.inject()
-      .post(postsEndpoint)
-      .headers({ authorization: `Bearer ${config.token}` })
-      .body({
-        [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
-      })));
+    await Promise.all(
+      testPosts.map(config => {
+        return app
+          .inject()
+          .post(postsEndpoint)
+          .headers({ authorization: `Bearer ${config.token}` })
+          .body({
+            [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
+          });
+      })
+    );
   });
 
-  describe(
-    `${postsEndpoint} (${HttpMethod.GET}) endpoint`,
-    () => {
-      it(
-        `should return ${HttpCode.OK} with own posts`,
-        async () => {
-          const response = await app.inject()
-            .get(postsEndpoint)
-            .headers({ authorization: `Bearer ${tokenMainUser}` })
-            .query({
-              from: 0,
-              count: 1,
-              userId: userMainId,
-              userMode: FilterUserMode.INCLUDE
-            });
+  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
+    it(`should return ${HttpCode.OK} with own posts`, async () => {
+      const response = await app
+        .inject()
+        .get(postsEndpoint)
+        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .query({
+          from: 0,
+          count: 1,
+          userId: userMainId,
+          userMode: FilterUserMode.INCLUDE
+        });
 
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toEqual([
-            expect.objectContaining({
-              userId: userMainId
-            })
-          ]);
-        }
-      );
+      expect(response.statusCode).toBe(HttpCode.OK);
+      expect(response.json()).toEqual([
+        expect.objectContaining({
+          userId: userMainId
+        })
+      ]);
+    });
 
-      it(
-        `should return ${HttpCode.OK} with not own posts`,
-        async () => {
-          const response = await app.inject()
-            .get(postsEndpoint)
-            .headers({ authorization: `Bearer ${tokenMainUser}` })
-            .query({
-              from: 0,
-              count: 1,
-              userId: userMainId,
-              userMode: FilterUserMode.EXCLUDE
-            });
+    it(`should return ${HttpCode.OK} with not own posts`, async () => {
+      const response = await app
+        .inject()
+        .get(postsEndpoint)
+        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .query({
+          from: 0,
+          count: 1,
+          userId: userMainId,
+          userMode: FilterUserMode.EXCLUDE
+        });
 
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toEqual([
-            expect.objectContaining({
-              userId: userMinorId
-            })
-          ]);
-        }
-      );
+      expect(response.statusCode).toBe(HttpCode.OK);
+      expect(response.json()).toEqual([
+        expect.objectContaining({
+          userId: userMinorId
+        })
+      ]);
+    });
 
-      it(
-        `should return ${HttpCode.OK} with all users' posts`,
-        async () => {
-          const response = await app.inject()
-            .get(postsEndpoint)
-            .headers({ authorization: `Bearer ${tokenMainUser}` })
-            .query({
-              from: 0,
-              count: 2
-            });
+    it(`should return ${HttpCode.OK} with all users' posts`, async () => {
+      const response = await app
+        .inject()
+        .get(postsEndpoint)
+        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .query({
+          from: 0,
+          count: 2
+        });
 
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toEqual([
-            expect.objectContaining({
-              userId: userMinorId
-            }),
-            expect.objectContaining({
-              userId: userMainId
-            })
-          ]);
-        }
-      );
-    }
-  );
+      expect(response.statusCode).toBe(HttpCode.OK);
+      expect(response.json()).toEqual([
+        expect.objectContaining({
+          userId: userMinorId
+        }),
+        expect.objectContaining({
+          userId: userMainId
+        })
+      ]);
+    });
+  });
 });

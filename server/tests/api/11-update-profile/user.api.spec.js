@@ -12,36 +12,32 @@ import {
   ImagesApiPath,
   UserPayloadKey,
   ImagePayloadKey
-} from '../../../src/common/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
+} from '../../../src/libs/enums/enums.js';
+import {
+  joinPath,
+  normalizeTrailingSlash
+} from '../../../src/libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${normalizeTrailingSlash(joinPath(
-  ENV.APP.API_PATH,
-  ApiPath.USERS
-))} routes`, () => {
+describe(`${normalizeTrailingSlash(
+  joinPath(ENV.APP.API_PATH, ApiPath.USERS)
+)} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let userMain;
 
-  const registerEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.AUTH,
-    AuthApiPath.REGISTER
-  ));
+  const registerEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+  );
 
-  const userEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.USERS,
-    UsersApiPath.$ID
-  ));
+  const userEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.USERS, UsersApiPath.$ID)
+  );
 
-  const imagesEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.IMAGES,
-    ImagesApiPath.$ID
-  ));
+  const imagesEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.$ID)
+  );
 
   beforeAll(async () => {
     const testMainUser = {
@@ -56,11 +52,13 @@ describe(`${normalizeTrailingSlash(joinPath(
       [UserPayloadKey.PASSWORD]: faker.internet.password()
     };
 
-    const registerMainUserResponse = await app.inject()
+    const registerMainUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMainUser);
 
-    const registerMinorUserResponse = await app.inject()
+    const registerMinorUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMinorUser);
 
@@ -69,73 +67,67 @@ describe(`${normalizeTrailingSlash(joinPath(
     userMain = registerMainUserResponse.json().user;
   });
 
-  describe(
-    `${userEndpoint} (${HttpMethod.PUT}) endpoint`,
-    () => {
-      it(
-        `should return ${HttpCode.OK} with updated user`,
-        async () => {
-          const formData = new FormData();
+  describe(`${userEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+    it(`should return ${HttpCode.OK} with updated user`, async () => {
+      const formData = new FormData();
 
-          formData.append(ImagePayloadKey.IMAGE, fs.createReadStream(
-            new URL('../../data/images/test-image.png', import.meta.url).pathname
-          ));
-
-          const uploadImageResponse = await app.inject()
-            .post(imagesEndpoint)
-            .headers({ authorization: `Bearer ${tokenMainUser}`, ...formData.getHeaders() })
-            .body(formData);
-
-          const { id: imageId } = uploadImageResponse.json();
-          const updatedMainUser = {
-            ...userMain,
-            [UserPayloadKey.USERNAME]: faker.name.firstName(),
-            imageId
-          };
-          const response = await app.inject()
-            .put(userEndpoint.replace(
-              ':id',
-              userMain.id
-            ))
-            .headers({ authorization: `Bearer ${tokenMainUser}` })
-            .body(updatedMainUser);
-
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toEqual(expect.objectContaining({
-            id: userMain.id,
-            imageId: updatedMainUser.imageId,
-            [UserPayloadKey.USERNAME]: updatedMainUser[UserPayloadKey.USERNAME]
-          }));
-        }
+      formData.append(
+        ImagePayloadKey.IMAGE,
+        fs.createReadStream(
+          new URL('../../data/images/test-image.png', import.meta.url).pathname
+        )
       );
 
-      it(
-        `should return ${HttpCode.FORBIDDEN} with attempt to update user by not own one`,
-        async () => {
-          const updatedMainUser = {
-            ...userMain,
-            [UserPayloadKey.USERNAME]: faker.name.firstName()
-          };
+      const uploadImageResponse = await app
+        .inject()
+        .post(imagesEndpoint)
+        .headers({
+          authorization: `Bearer ${tokenMainUser}`,
+          ...formData.getHeaders()
+        })
+        .body(formData);
 
-          const updateUserResponse = await app.inject()
-            .put(userEndpoint.replace(
-              ':id',
-              userMain.id
-            ))
-            .headers({ authorization: `Bearer ${tokenMinorUser}` })
-            .body(updatedMainUser);
+      const { id: imageId } = uploadImageResponse.json();
+      const updatedMainUser = {
+        ...userMain,
+        [UserPayloadKey.USERNAME]: faker.name.firstName(),
+        imageId
+      };
+      const response = await app
+        .inject()
+        .put(userEndpoint.replace(':id', userMain.id))
+        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .body(updatedMainUser);
 
-          const getUserResponse = await app.inject()
-            .get(userEndpoint.replace(
-              ':id',
-              userMain.id
-            ))
-            .headers({ authorization: `Bearer ${tokenMinorUser}` });
-
-          expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-          expect(getUserResponse.json()).toEqual(userMain);
-        }
+      expect(response.statusCode).toBe(HttpCode.OK);
+      expect(response.json()).toEqual(
+        expect.objectContaining({
+          id: userMain.id,
+          imageId: updatedMainUser.imageId,
+          [UserPayloadKey.USERNAME]: updatedMainUser[UserPayloadKey.USERNAME]
+        })
       );
-    }
-  );
+    });
+
+    it(`should return ${HttpCode.FORBIDDEN} with attempt to update user by not own one`, async () => {
+      const updatedMainUser = {
+        ...userMain,
+        [UserPayloadKey.USERNAME]: faker.name.firstName()
+      };
+
+      const updateUserResponse = await app
+        .inject()
+        .put(userEndpoint.replace(':id', userMain.id))
+        .headers({ authorization: `Bearer ${tokenMinorUser}` })
+        .body(updatedMainUser);
+
+      const getUserResponse = await app
+        .inject()
+        .get(userEndpoint.replace(':id', userMain.id))
+        .headers({ authorization: `Bearer ${tokenMinorUser}` });
+
+      expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);
+      expect(getUserResponse.json()).toEqual(userMain);
+    });
+  });
 });

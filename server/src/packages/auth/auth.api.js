@@ -1,0 +1,57 @@
+import {
+  AuthApiPath,
+  ControllerHook,
+  HttpMethod,
+  HttpCode
+} from '../../libs/enums/enums.js';
+import { getErrorStatusCode } from '../../libs/helpers/helpers.js';
+import {
+  loginValidationSchema,
+  registrationValidationSchema
+} from './libs/validation-schemas/validation-schemas.js';
+
+const initAuthApi = (fastify, opts, done) => {
+  const { authService, userService } = opts.services;
+
+  // user added to the request (req.user) in auth plugin, authorization.plugin.js
+  fastify.route({
+    method: HttpMethod.POST,
+    url: AuthApiPath.LOGIN,
+    schema: {
+      body: loginValidationSchema
+    },
+    async [ControllerHook.HANDLER](req, res) {
+      try {
+        const user = await authService.verifyLoginCredentials(req.body);
+        return await authService.login(user);
+      } catch (err) {
+        return res.status(getErrorStatusCode(err)).send(err);
+      }
+    }
+  });
+  fastify.route({
+    method: HttpMethod.POST,
+    url: AuthApiPath.REGISTER,
+    schema: {
+      body: registrationValidationSchema
+    },
+    async [ControllerHook.HANDLER](req, res) {
+      try {
+        const createdUser = await authService.register(req.body);
+
+        return res.status(HttpCode.CREATED).send(createdUser);
+      } catch (err) {
+        return res.status(getErrorStatusCode(err)).send(err);
+      }
+    }
+  });
+  fastify.route({
+    method: HttpMethod.GET,
+    url: AuthApiPath.USER,
+    [ControllerHook.HANDLER]: async req => userService.getUserById(req.user.id)
+  });
+
+  done();
+};
+
+export { initAuthApi };

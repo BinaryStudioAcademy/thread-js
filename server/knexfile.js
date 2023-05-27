@@ -1,5 +1,5 @@
 import { knexSnakeCaseMappers } from 'objection';
-import { ENV } from './src/common/enums/enums.js';
+import { ENV } from './src/libs/enums/enums.js';
 
 const {
   DATABASE: database,
@@ -21,11 +21,11 @@ const knexConfig = {
     password
   },
   migrations: {
-    directory: './src/data/migrations',
+    directory: './src/db/migrations',
     tableName: 'knex_migrations'
   },
   seeds: {
-    directory: './src/data/seeds'
+    directory: './src/db/seeds'
   },
   debug,
   ...knexSnakeCaseMappers({ underscoreBetweenUppercaseLetters: true })

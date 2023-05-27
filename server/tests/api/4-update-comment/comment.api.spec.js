@@ -11,42 +11,36 @@ import {
   PostPayloadKey,
   CommentsApiPath,
   CommentPayloadKey
-} from '../../../src/common/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
+} from '../../../src/libs/enums/enums.js';
+import {
+  joinPath,
+  normalizeTrailingSlash
+} from '../../../src/libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${normalizeTrailingSlash(joinPath(
-  ENV.APP.API_PATH,
-  ApiPath.COMMENTS
-))} routes`, () => {
+describe(`${normalizeTrailingSlash(
+  joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS)
+)} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
   let tokenMinorUser;
   let comment;
 
-  const registerEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.AUTH,
-    AuthApiPath.REGISTER
-  ));
+  const registerEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+  );
 
-  const postsEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.POSTS,
-    PostsApiPath.ROOT
-  ));
+  const postsEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
+  );
 
-  const commentsEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.COMMENTS,
-    CommentsApiPath.ROOT
-  ));
+  const commentsEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.ROOT)
+  );
 
-  const commentEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.COMMENTS,
-    CommentsApiPath.$ID
-  ));
+  const commentEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.$ID)
+  );
 
   beforeAll(async () => {
     const testMainUser = {
@@ -69,24 +63,28 @@ describe(`${normalizeTrailingSlash(joinPath(
       [CommentPayloadKey.BODY]: faker.lorem.paragraph()
     };
 
-    const registerMainUserResponse = await app.inject()
+    const registerMainUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMainUser);
 
-    const registerMinorUserResponse = await app.inject()
+    const registerMinorUserResponse = await app
+      .inject()
       .post(registerEndpoint)
       .body(testMinorUser);
 
     tokenMainUser = registerMainUserResponse.json().token;
     tokenMinorUser = registerMinorUserResponse.json().token;
 
-    const createPostResponse = await app.inject()
+    const createPostResponse = await app
+      .inject()
       .post(postsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body(testPost);
 
     const { id: postId } = createPostResponse.json();
-    const createCommentResponse = await app.inject()
+    const createCommentResponse = await app
+      .inject()
       .post(commentsEndpoint)
       .headers({ authorization: `Bearer ${tokenMainUser}` })
       .body({ ...testComment, postId });
@@ -94,53 +92,48 @@ describe(`${normalizeTrailingSlash(joinPath(
     comment = createCommentResponse.json();
   });
 
-  describe(
-    `${commentEndpoint} (${HttpMethod.PUT}) endpoint`,
-    () => {
-      it(
-        `should return ${HttpCode.FORBIDDEN} with attempt to update comment by not own user`,
-        async () => {
-          const testUpdatedComment = {
-            ...comment,
-            [CommentPayloadKey.BODY]: faker.lorem.paragraph()
-          };
+  describe(`${commentEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+    it(`should return ${HttpCode.FORBIDDEN} with attempt to update comment by not own user`, async () => {
+      const testUpdatedComment = {
+        ...comment,
+        [CommentPayloadKey.BODY]: faker.lorem.paragraph()
+      };
 
-          const updateCommentResponse = await app.inject()
-            .put(commentEndpoint.replace(':id', comment.id))
-            .headers({ authorization: `Bearer ${tokenMinorUser}` })
-            .body(testUpdatedComment);
+      const updateCommentResponse = await app
+        .inject()
+        .put(commentEndpoint.replace(':id', comment.id))
+        .headers({ authorization: `Bearer ${tokenMinorUser}` })
+        .body(testUpdatedComment);
 
-          const getCommentResponse = await app.inject()
-            .get(commentEndpoint.replace(':id', comment.id))
-            .headers({ authorization: `Bearer ${tokenMinorUser}` });
+      const getCommentResponse = await app
+        .inject()
+        .get(commentEndpoint.replace(':id', comment.id))
+        .headers({ authorization: `Bearer ${tokenMinorUser}` });
 
-          expect(updateCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-          expect(getCommentResponse.json()).toEqual(comment);
-        }
+      expect(updateCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
+      expect(getCommentResponse.json()).toEqual(comment);
+    });
+
+    it(`should return ${HttpCode.OK} with updated comment`, async () => {
+      const testUpdatedComment = {
+        ...comment,
+        [CommentPayloadKey.BODY]: faker.lorem.paragraph()
+      };
+
+      const updateCommentResponse = await app
+        .inject()
+        .put(commentEndpoint.replace(':id', comment.id))
+        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .body(testUpdatedComment);
+
+      expect(updateCommentResponse.statusCode).toBe(HttpCode.OK);
+      expect(updateCommentResponse.json()).toEqual(
+        expect.objectContaining({
+          id: testUpdatedComment.id,
+          createdAt: testUpdatedComment.createdAt,
+          [CommentPayloadKey.BODY]: testUpdatedComment[PostPayloadKey.BODY]
+        })
       );
-
-      it(
-        `should return ${HttpCode.OK} with updated comment`,
-        async () => {
-          const testUpdatedComment = {
-            ...comment,
-            [CommentPayloadKey.BODY]: faker.lorem.paragraph()
-          };
-
-          const updateCommentResponse = await app.inject()
-            .put(commentEndpoint.replace(':id', comment.id))
-            .headers({ authorization: `Bearer ${tokenMainUser}` })
-            .body(testUpdatedComment);
-
-          expect(updateCommentResponse.statusCode).toBe(HttpCode.OK);
-          expect(updateCommentResponse.json()).toEqual(expect.objectContaining({
-            id: testUpdatedComment.id,
-            createdAt: testUpdatedComment.createdAt,
-            [CommentPayloadKey.BODY]: testUpdatedComment[PostPayloadKey.BODY]
-          }));
-        }
-      );
-    }
-  );
+    });
+  });
 });
-

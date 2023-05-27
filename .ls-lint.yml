@@ -1,9 +1,9 @@
 ls:
   .github/workflows:
     .yml: kebab-case
-  server/src/data/migrations:
+  server/src/db/migrations:
     .js: snake_case
-  server/src/data/seeds:
+  server/src/db/seeds:
     .js: snake_case
   .dir: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .scss: regex:([.a-z0-9]*)([-.][a-z0-9]+)*

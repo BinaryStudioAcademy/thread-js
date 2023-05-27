@@ -25,20 +25,20 @@ rules:
 
 overrides:
   - files:
-      - ./src/data/seeds/**/*
-      - ./src/data/seed-data/**/*
+      - ./src/db/seeds/**/*
+      - ./src/db/seed-data/**/*
     rules:
       no-console:
         - off
       max-len:
         - off
   - files:
-      - ./src/data/models/**/*
+      - ./src/packages/**/*
     rules:
       import/no-cycle:
         - off
   - files:
-    - knexfile.js
+      - knexfile.js
     rules:
       'import/no-default-export':
         - off

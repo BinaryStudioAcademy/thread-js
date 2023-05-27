@@ -11,7 +11,7 @@
     "migrate:rollback": "npx knex migrate:rollback",
     "migrate:run": "npx knex migrate:latest",
     "seed:run": "npx knex seed:run",
-    "start": "nodemon src/app.js",
+    "start": "nodemon src",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --detectOpenHandles --forceExit",

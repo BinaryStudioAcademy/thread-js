@@ -11,14 +11,16 @@ import {
   ImagesApiPath,
   UserPayloadKey,
   ImagePayloadKey
-} from '../../../src/common/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '../../../src/helpers/helpers.js';
+} from '../../../src/libs/enums/enums.js';
+import {
+  joinPath,
+  normalizeTrailingSlash
+} from '../../../src/libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
-describe(`${normalizeTrailingSlash(joinPath(
-  ENV.APP.API_PATH,
-  ApiPath.IMAGES
-))} routes`, () => {
+describe(`${normalizeTrailingSlash(
+  joinPath(ENV.APP.API_PATH, ApiPath.IMAGES)
+)} routes`, () => {
   const app = buildApp();
   let token;
 
@@ -29,45 +31,40 @@ describe(`${normalizeTrailingSlash(joinPath(
       [UserPayloadKey.PASSWORD]: faker.internet.password()
     };
 
-    const registerResponse = await app.inject()
-      .post(
-        `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
-      )
+    const registerResponse = await app
+      .inject()
+      .post(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`)
       .body(testUser);
 
     token = registerResponse.json().token;
   });
 
-  const imagesEndpoint = normalizeTrailingSlash(joinPath(
-    ENV.APP.API_PATH,
-    ApiPath.IMAGES,
-    ImagesApiPath.ROOT
-  ));
-
-  describe(
-    `${imagesEndpoint} (${HttpMethod.POST}) endpoint`,
-    () => {
-      it(
-        `should return ${HttpCode.OK} with uploaded image`,
-        async () => {
-          const formData = new FormData();
-
-          formData.append(ImagePayloadKey.IMAGE, fs.createReadStream(
-            new URL('../../data/images/test-image.png', import.meta.url).pathname
-          ));
-
-          const response = await app.inject()
-            .post(imagesEndpoint)
-            .headers({ authorization: `Bearer ${token}`, ...formData.getHeaders() })
-            .body(formData);
-
-          expect(response.statusCode).toBe(HttpCode.OK);
-          expect(response.json()).toHaveProperty('id');
-          expect(response.json()).toHaveProperty('link');
-          expect(response.json()).toHaveProperty('createdAt');
-          expect(response.json()).toHaveProperty('updatedAt');
-        }
-      );
-    }
+  const imagesEndpoint = normalizeTrailingSlash(
+    joinPath(ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.ROOT)
   );
+
+  describe(`${imagesEndpoint} (${HttpMethod.POST}) endpoint`, () => {
+    it(`should return ${HttpCode.OK} with uploaded image`, async () => {
+      const formData = new FormData();
+
+      formData.append(
+        ImagePayloadKey.IMAGE,
+        fs.createReadStream(
+          new URL('../../data/images/test-image.png', import.meta.url).pathname
+        )
+      );
+
+      const response = await app
+        .inject()
+        .post(imagesEndpoint)
+        .headers({ authorization: `Bearer ${token}`, ...formData.getHeaders() })
+        .body(formData);
+
+      expect(response.statusCode).toBe(HttpCode.OK);
+      expect(response.json()).toHaveProperty('id');
+      expect(response.json()).toHaveProperty('link');
+      expect(response.json()).toHaveProperty('createdAt');
+      expect(response.json()).toHaveProperty('updatedAt');
+    });
+  });
 });
