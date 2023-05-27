@@ -1,3 +1,5 @@
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
 import FormData from 'form-data';
@@ -50,7 +52,10 @@ describe(`${normalizeTrailingSlash(
       formData.append(
         ImagePayloadKey.IMAGE,
         fs.createReadStream(
-          new URL('../../data/images/test-image.png', import.meta.url).pathname
+          join(
+            fileURLToPath(import.meta.url),
+            '../../../data/images/test-image.png'
+          )
         )
       );
 
