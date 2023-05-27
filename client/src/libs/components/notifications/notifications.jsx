@@ -1,5 +1,5 @@
-import { NotificationContainer } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useEffect, useDispatch } from 'libs/hooks/hooks';
 import { actions as notificationActionCreator } from 'slices/notifications/notifications';
@@ -21,7 +21,7 @@ const Notifications = ({ user }) => {
     };
   }, [user, dispatch]);
 
-  return <NotificationContainer />;
+  return <ToastContainer />;
 };
 
 Notifications.defaultProps = {
