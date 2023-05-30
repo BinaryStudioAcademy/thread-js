@@ -1,6 +1,5 @@
 export {
   UserPayloadKey,
+  UsersApiPath,
   UserValidationMessage,
-  UserValidationRule,
-  UsersApiPath
-} from './libs/enums/enums.js';
+  UserValidationRule } from './libs/enums/enums.js';

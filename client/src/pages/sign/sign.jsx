@@ -1,7 +1,8 @@
-import { useCallback, useDispatch, useLocation } from 'libs/hooks/hooks';
-import { AppRoute } from 'libs/enums/enums';
-import { actions as profileActionCreator } from 'slices/profile/profile';
 import { Image } from 'libs/components/image/image';
+import { AppRoute } from 'libs/enums/enums';
+import { useCallback, useDispatch, useLocation } from 'libs/hooks/hooks';
+import { actions as profileActionCreator } from 'slices/profile/profile';
+
 import { LoginForm, RegistrationForm } from './components/components';
 import styles from './styles.module.scss';
 

@@ -1,7 +1,8 @@
-import { getStringifiedQuery } from 'libs/helpers/helpers';
 import { StorageKey } from 'libs/enums/enums';
-import { HttpError } from './libs/exceptions/exceptions';
+import { getStringifiedQuery } from 'libs/helpers/helpers';
+
 import { HttpHeader, HttpMethod } from './libs/enums/enums';
+import { HttpError } from './libs/exceptions/exceptions';
 
 class Http {
   constructor({ storage }) {
@@ -63,15 +64,18 @@ class Http {
   }
 
   _getUrl(url, query) {
-    return `${url}${query ? `?${getStringifiedQuery(query)}` : ''}`;
+    if (query) {
+      return `${url}?${getStringifiedQuery(query)}`;
+    }
+    return url;
   }
 
   _parseJSON(response) {
     return response.json();
   }
 
-  _throwError(err) {
-    throw err;
+  _throwError(error) {
+    throw error;
   }
 }
 

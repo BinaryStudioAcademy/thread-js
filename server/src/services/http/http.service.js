@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { HttpMethod } from '../../common/enums/enums.js';
 
 class Http {
@@ -26,8 +27,8 @@ class Http {
     return response.data;
   }
 
-  _catchError(err) {
-    const { response } = err;
+  _catchError(error) {
+    const { response } = error;
     const { data } = response;
 
     throw new Error(data.toString());

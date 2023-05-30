@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import { ImageSize } from 'libs/enums/enums';
+import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 

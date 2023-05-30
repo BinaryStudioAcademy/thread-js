@@ -1,23 +1,23 @@
-import { Route, Routes } from 'react-router-dom';
-import {
-  useCallback,
-  useEffect,
-  useDispatch,
-  useSelector
-} from 'libs/hooks/hooks';
-import { StorageKey, AppRoute } from 'libs/enums/enums';
-import { storage } from 'packages/storage/storage';
-import { actions as profileActionCreator } from 'slices/profile/profile';
-import { Spinner } from 'libs/components/spinner/spinner';
 import { Header } from 'libs/components/header/header';
+import { Notifications } from 'libs/components/notifications/notifications';
 import { PrivateRoute } from 'libs/components/private-route/private-route';
 import { PublicRoute } from 'libs/components/public-route/public-route';
-import { Notifications } from 'libs/components/notifications/notifications';
-import { Sign } from 'pages/sign/sign';
+import { Spinner } from 'libs/components/spinner/spinner';
+import { AppRoute,StorageKey } from 'libs/enums/enums';
+import {
+  useCallback,
+  useDispatch,
+  useEffect,
+  useSelector
+} from 'libs/hooks/hooks';
+import { storage } from 'packages/storage/storage';
 import { NotFound } from 'pages/not-found/not-found';
 import { Profile } from 'pages/profile/profile';
 import { SharedPost } from 'pages/shared-post/shared-post';
+import { Sign } from 'pages/sign/sign';
 import { Thread } from 'pages/thread/thread';
+import { Route, Routes } from 'react-router-dom';
+import { actions as profileActionCreator } from 'slices/profile/profile';
 
 const App = () => {
   const { user } = useSelector(state => ({

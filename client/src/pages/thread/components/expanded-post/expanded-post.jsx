@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
-import { useCallback, useDispatch, useSelector } from 'libs/hooks/hooks';
-import { actions as threadActionCreator } from 'slices/thread/thread.slice';
-import { Spinner } from 'libs/components/spinner/spinner';
-import { Post } from 'libs/components/post/post';
 import { Modal } from 'libs/components/modal/modal';
-import { Comment, AddComment } from 'pages/thread/components/components';
+import { Post } from 'libs/components/post/post';
+import { Spinner } from 'libs/components/spinner/spinner';
+import { useCallback, useDispatch, useSelector } from 'libs/hooks/hooks';
+import { AddComment, Comment } from 'pages/thread/components/components';
+import PropTypes from 'prop-types';
+import { actions as threadActionCreator } from 'slices/thread/thread.slice';
+
 import { getSortedComments } from './libs/helpers/helpers';
 
 const ExpandedPost = ({ onSharePost }) => {
@@ -28,7 +29,10 @@ const ExpandedPost = ({ onSharePost }) => {
     [dispatch]
   );
 
-  const handleExpandedPostClose = () => handleExpandedPostToggle();
+  const handleExpandedPostClose = useCallback(
+    () => handleExpandedPostToggle(),
+    [handleExpandedPostToggle]
+  );
 
   const sortedComments = getSortedComments(post.comments ?? []);
 

@@ -1,12 +1,13 @@
-import { isAnyOf, createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+
 import {
-  loadPosts,
-  loadMorePosts,
-  toggleExpandedPost,
-  likePost,
   addComment,
   applyPost,
-  createPost
+  createPost,
+  likePost,
+  loadMorePosts,
+  loadPosts,
+  toggleExpandedPost
 } from './actions';
 
 const initialState = {
@@ -24,7 +25,7 @@ const { reducer, actions, name } = createSlice({
       const { posts } = action.payload;
 
       state.posts = posts;
-      state.hasMorePosts = Boolean(posts.length);
+      state.hasMorePosts = posts.length > 0;
     });
     builder.addCase(loadMorePosts.pending, state => {
       state.hasMorePosts = null;
@@ -32,8 +33,8 @@ const { reducer, actions, name } = createSlice({
     builder.addCase(loadMorePosts.fulfilled, (state, action) => {
       const { posts } = action.payload;
 
-      state.posts = state.posts.concat(posts);
-      state.hasMorePosts = Boolean(posts.length);
+      state.posts = [...state.posts, ...posts];
+      state.hasMorePosts = posts.length > 0;
     });
     builder.addCase(toggleExpandedPost.fulfilled, (state, action) => {
       const { post } = action.payload;
@@ -61,4 +62,4 @@ const { reducer, actions, name } = createSlice({
   }
 });
 
-export { reducer, actions, name };
+export { actions, name, reducer };

@@ -5,8 +5,8 @@ const useModal = ({ onClose }) => {
     onClose();
   }, [onClose]);
 
-  const handleDisableContentContainerClick = useCallback(ev => {
-    ev.stopPropagation();
+  const handleDisableContentContainerClick = useCallback(event_ => {
+    event_.stopPropagation();
   }, []);
 
   return {

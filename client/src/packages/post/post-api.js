@@ -1,5 +1,6 @@
 import { ApiPath, ContentType } from 'libs/enums/enums';
 import { HttpMethod } from 'packages/http/libs/enums/enums';
+
 import { PostsApiPath } from './libs/enums/enums';
 
 class Post {

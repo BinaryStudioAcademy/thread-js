@@ -1,4 +1,3 @@
 export {
-  ImagesApiPath,
-  ImagePayloadKey
-} from 'shared/src/packages/image/image';
+  ImagePayloadKey,
+  ImagesApiPath } from 'shared/src/packages/image/image';

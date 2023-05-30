@@ -1,39 +1,83 @@
-env:
-  es6: true
+root: true
 
 parserOptions:
   ecmaVersion: 2022
+  sourceType: module
+  project:
+    - ./client/jsconfig.json
+
+settings:
+  node: true
+
+extends:
+  - eslint:recommended
+  - plugin:import/recommended
+  - plugin:unicorn/recommended
+  - plugin:sonarjs/recommended
+
+plugins:
+  - simple-import-sort
 
 rules:
-  comma-dangle:
+  no-restricted-syntax:
     - error
-    - never
-  arrow-parens:
+    - selector: SwitchCase > *.consequent[type!="BlockStatement"]
+      message: Switch cases without blocks are forbidden.
+  no-console:
     - error
-    - as-needed
+  max-params:
+    - error
+    - 3
   no-multiple-empty-lines:
     - error
     - max: 1
-  no-underscore-dangle:
+  curly:
     - error
-    - allowAfterThis: true
-  max-len:
+    - all
+  unicorn/no-null:
+    - off
+  simple-import-sort/imports:
     - error
-    - code: 120
-  class-methods-use-this:
-    - off
-  object-curly-newline:
-    - off
-  no-param-reassign:
-    - off
-  import/prefer-default-export:
-    - off
-  arrow-body-style:
-    - off
-  import/no-default-export:
+  simple-import-sort/exports:
     - error
+  import/no-unresolved:
+    - off
   import/extensions:
     - error
-    - ignorePackages
-    - js: always
-      jsx: always
+    - always
+    - ignorePackages: true
+  import/newline-after-import:
+    - error
+    - count: 1
+  import/no-default-export:
+    - error
+  import/first:
+    - error
+  import/no-duplicates:
+    - error
+  '@typescript-eslint/non-nullable-type-assertion-style':
+    - off
+  quotes:
+    - error
+    - single
+  object-curly-spacing:
+    - error
+    - always
+  semi:
+    - error
+    - always
+
+overrides:
+  - files:
+      - commitlint.config.js
+    parserOptions:
+      sourceType: commonjs
+    rules:
+      'import/no-default-export':
+        - off
+  - files:
+      - commitlint.config.js
+      - dangerfile.js
+    rules:
+      import/extensions:
+        - off

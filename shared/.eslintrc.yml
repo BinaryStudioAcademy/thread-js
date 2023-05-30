@@ -1,7 +1,10 @@
-extends:
-  - eslint:recommended
-  - plugin:import/recommended
-  - ../.eslintrc.yml
-
 env:
   node: true
+
+extends:
+  - ../.eslintrc.yml
+
+overrides:
+  - files: '*.validation-schema.js'
+    rules:
+      unicorn/no-thenable: off
