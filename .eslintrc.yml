@@ -69,7 +69,12 @@ rules:
 
 overrides:
   - files:
-      - commitlint.config.js
+      - project.config.cjs
+    parserOptions:
+      sourceType: commonjs
+
+  - files:
+      - commitlint.config.cjs
     parserOptions:
       sourceType: commonjs
     rules:

@@ -1,5 +1,5 @@
 const ProjectPrefix = {
-  APP: 'thr',
+  APP: 'thjs',
   ENVIRONMENTS: ['development', 'production']
 };
 

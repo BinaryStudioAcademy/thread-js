@@ -211,7 +211,7 @@ Shared package contains code that is used for both frontend and backend.
 
 ##### Example
 
-- `thr-5: Add Clinician Dashboard`
+- `thjs-5: Add Clinician Dashboard`
 
 #### 🌳 Branch flow
 
@@ -244,9 +244,9 @@ Shared package contains code that is used for both frontend and backend.
 
 ##### Examples
 
-- `thr-5: + title for dashboard`
-- `thr-12: * dashboard title`
-- `thr-16: - dashboard title`
+- `thjs-5: + title for dashboard`
+- `thjs-12: * dashboard title`
+- `thjs-16: - dashboard title`
 
 ## PS
 
