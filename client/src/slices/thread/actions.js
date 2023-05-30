@@ -4,8 +4,12 @@ import { ActionType } from './common';
 
 const loadPosts = createAsyncThunk(
   ActionType.SET_ALL_POSTS,
-  async (filters, { extra: { services } }) => {
-    const posts = await services.post.getAllPosts(filters);
+  async (filters, { getState, extra: { services } }) => {
+    const {
+      posts: { count }
+    } = getState();
+
+    const posts = await services.post.getAllPosts({ from: 0, count, ...filters });
     return { posts };
   }
 );
@@ -14,9 +18,9 @@ const loadMorePosts = createAsyncThunk(
   ActionType.LOAD_MORE_POSTS,
   async (filters, { getState, extra: { services } }) => {
     const {
-      posts: { posts }
+      posts: { posts, from, count }
     } = getState();
-    const loadedPosts = await services.post.getAllPosts(filters);
+    const loadedPosts = await services.post.getAllPosts({ from, count, ...filters });
     const filteredPosts = loadedPosts.filter(
       post => !(posts && posts.some(loadedPost => post.id === loadedPost.id))
     );

@@ -16,13 +16,8 @@ import { actions as threadActionCreator } from 'slices/thread/thread';
 
 import { AddPost, ExpandedPost, SharedPostLink } from './components/components';
 import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants';
+import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter';
 import styles from './styles.module.scss';
-
-const postsFilter = {
-  userId: undefined,
-  from: 0,
-  count: 10
-};
 
 const handleUploadImage = file => imageService.uploadImage(file);
 
@@ -34,6 +29,9 @@ const Thread = () => {
     expandedPost: state.posts.expandedPost,
     userId: state.profile.user.id
   }));
+
+  const { postsFilter, handleShownOwnPosts } = usePostsFilter();
+
   const [sharedPostId, setSharedPostId] = useState();
 
   const { control, watch } = useAppForm({
@@ -51,15 +49,18 @@ const Thread = () => {
   );
 
   const handleToggleShowOwnPosts = useCallback(() => {
-    postsFilter.userId = showOwnPosts ? userId : undefined;
-    postsFilter.from = 0;
-    handlePostsLoad(postsFilter);
-    postsFilter.from = postsFilter.count; // for the next scroll
-  }, [userId, showOwnPosts, handlePostsLoad]);
+    const currentUserId = showOwnPosts ? userId : undefined;
+
+    handleShownOwnPosts(currentUserId);
+  }, [handleShownOwnPosts, showOwnPosts, userId]);
 
   useEffect(() => {
     handleToggleShowOwnPosts();
   }, [showOwnPosts, handleToggleShowOwnPosts]);
+
+  useEffect(() => {
+    handlePostsLoad(postsFilter);
+  }, [handlePostsLoad, postsFilter]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -85,9 +86,7 @@ const Thread = () => {
 
   const handleGetMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
-    const { from, count } = postsFilter;
-    postsFilter.from = from + count;
-  }, [handleMorePostsLoad]);
+  }, [handleMorePostsLoad, postsFilter]);
 
   const handleSharePost = useCallback(id => setSharedPostId(id), []);
 

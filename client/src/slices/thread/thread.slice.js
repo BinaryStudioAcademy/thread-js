@@ -1,5 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
+import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants';
 import {
   addComment,
   applyPost,
@@ -13,7 +14,9 @@ import {
 const initialState = {
   posts: [],
   expandedPost: null,
-  hasMorePosts: true
+  hasMorePosts: true,
+  count: POSTS_PER_PAGE,
+  from: 0
 };
 
 const { reducer, actions, name } = createSlice({
@@ -26,6 +29,7 @@ const { reducer, actions, name } = createSlice({
 
       state.posts = posts;
       state.hasMorePosts = posts.length > 0;
+      state.from = initialState.count;
     });
     builder.addCase(loadMorePosts.pending, state => {
       state.hasMorePosts = null;
@@ -35,6 +39,7 @@ const { reducer, actions, name } = createSlice({
 
       state.posts = [...state.posts, ...posts];
       state.hasMorePosts = posts.length > 0;
+      state.from += posts.length;
     });
     builder.addCase(toggleExpandedPost.fulfilled, (state, action) => {
       const { post } = action.payload;

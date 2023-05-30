@@ -1,4 +1,4 @@
-import { NotificationManager } from 'react-notifications';
+import { toast } from 'react-toastify';
 
 import { NotificationType } from './libs/enums/enums';
 
@@ -6,19 +6,19 @@ const DEFAULT_MESSAGE = 'Unexpected error';
 
 class Notification {
   [NotificationType.ERROR] = (message = DEFAULT_MESSAGE) => {
-    NotificationManager.error(message);
+    toast.error(message);
   };
 
   [NotificationType.SUCCESS] = (message = DEFAULT_MESSAGE) => {
-    NotificationManager.success(message);
+    toast.success(message);
   };
 
   [NotificationType.WARNING] = (message = DEFAULT_MESSAGE) => {
-    NotificationManager.warn(message);
+    toast.warn(message);
   };
 
   [NotificationType.INFO] = (message = DEFAULT_MESSAGE) => {
-    NotificationManager.info(message);
+    toast.info(message);
   };
 }
 
