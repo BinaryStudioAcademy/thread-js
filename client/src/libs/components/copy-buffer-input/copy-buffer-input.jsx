@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { IconName } from 'libs/enums/enums';
-import { Icon } from '../icon/icon';
+import { Icon } from '../icon/icon.jsx';
 
 import styles from './styles.module.scss';
 

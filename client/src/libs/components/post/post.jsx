@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { getFromNowTime } from 'libs/helpers/helpers';
 import { IconName } from 'libs/enums/enums';
 import { postType } from 'libs/prop-types/prop-types';
-import { IconButton } from '../icon-button/icon-button';
-import { Image } from '../image/image';
+import { IconButton } from '../icon-button/icon-button.jsx';
+import { Image } from '../image/image.jsx';
 
 import styles from './styles.module.scss';
 

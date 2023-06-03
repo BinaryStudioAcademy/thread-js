@@ -9,7 +9,7 @@ import { image } from 'packages/image/image';
 import { notification } from 'packages/notification/notification';
 import { reducer as threadReducer } from 'slices/thread/thread';
 import { reducer as profileReducer } from 'slices/profile/profile';
-import { notificationSocket } from './middlewares/middlewares';
+import { notificationSocket } from './middlewares/middlewares.js';
 
 const store = configureStore({
   reducer: {

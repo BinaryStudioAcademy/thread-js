@@ -1,5 +1,5 @@
 import { isAnyOf, createSlice } from '@reduxjs/toolkit';
-import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants';
+import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants.js';
 import {
   loadPosts,
   loadMorePosts,
@@ -8,7 +8,7 @@ import {
   addComment,
   applyPost,
   createPost
-} from './actions';
+} from './actions.js';
 
 const initialState = {
   posts: [],

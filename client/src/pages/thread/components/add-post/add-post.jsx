@@ -6,7 +6,7 @@ import { Button } from 'libs/components/button/button';
 import { Image } from 'libs/components/image/image';
 import { Input } from 'libs/components/input/input';
 import { Segment } from 'libs/components/segment/segment';
-import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants';
+import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants.js';
 
 import styles from './styles.module.scss';
 

@@ -16,7 +16,7 @@ import { Message } from 'libs/components/message/message';
 import { Segment } from 'libs/components/segment/segment';
 
 import { login as loginValidationSchema } from 'packages/auth/libs/validation-schemas/validation-schemas';
-import { DEFAULT_LOGIN_PAYLOAD } from './libs/common/constants';
+import { DEFAULT_LOGIN_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
 
 const LoginForm = ({ onLogin }) => {

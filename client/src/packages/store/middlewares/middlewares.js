@@ -1,1 +1,1 @@
-export { notificationSocket } from './notification-socket/notification-socket.middleware';
+export { notificationSocket } from './notification-socket/notification-socket.middleware.js';

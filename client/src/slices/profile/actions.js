@@ -3,7 +3,7 @@ import { HttpError } from 'packages/http/libs/exceptions/exceptions';
 import { StorageKey, ExceptionMessage } from 'libs/enums/enums';
 import { HttpCode } from 'packages/http/libs/enums/enums';
 
-import { ActionType } from './common';
+import { ActionType } from './common.js';
 
 const login = createAsyncThunk(
   ActionType.LOG_IN,

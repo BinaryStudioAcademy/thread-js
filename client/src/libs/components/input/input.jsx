@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 
 import { IconName } from 'libs/enums/enums';
-import { Icon } from '../icon/icon';
+import { Icon } from '../icon/icon.jsx';
 
 import styles from './styles.module.scss';
 

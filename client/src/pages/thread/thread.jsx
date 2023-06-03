@@ -13,11 +13,15 @@ import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums';
 import { Post } from 'libs/components/post/post';
 import { Spinner } from 'libs/components/spinner/spinner';
 import { Checkbox } from 'libs/components/checkbox/checkbox';
-import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
-import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants';
+import {
+  ExpandedPost,
+  SharedPostLink,
+  AddPost
+} from './components/components.js';
+import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
 
 import styles from './styles.module.scss';
-import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter';
+import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter.js';
 
 const Thread = () => {
   const dispatch = useDispatch();

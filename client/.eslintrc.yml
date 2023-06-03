@@ -30,8 +30,6 @@ rules:
         - '/'
   import/no-unresolved:
     - off
-  import/extensions:
-    - off
   react/jsx-indent:
     - error
     - 2

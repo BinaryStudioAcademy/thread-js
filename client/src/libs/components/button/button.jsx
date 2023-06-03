@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { ButtonColor, ButtonType, IconName, IconSize } from 'libs/enums/enums';
-import { Icon } from '../icon/icon';
+import { Icon } from '../icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const Button = ({
