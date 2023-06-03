@@ -16,6 +16,5 @@ root.render(
         <App />
       </Router>
     </Provider>
-  </StrictMode>,
-  document.querySelector('#root')
+  </StrictMode>
 );

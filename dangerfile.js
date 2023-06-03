@@ -21,12 +21,6 @@ const DangerConfig = {
   ASSIGNEES: {
     IS_REQUIRED: true
   },
-  PROJECTS: {
-    IS_REQUIRED: true
-  },
-  MILESTONE: {
-    IS_REQUIRED: true
-  },
   LABELS: {
     IS_REQUIRED: true
   },
@@ -62,22 +56,6 @@ const checkTitle = titlePattern => {
   }
 };
 
-const checkProjects = () => {
-  const { has_projects: hasProjects } = pr.head.repo;
-
-  if (!hasProjects) {
-    fail('This pull request should be linked to a project.');
-  }
-};
-
-const checkMilestone = () => {
-  const hasMilestone = Boolean(pr.milestone);
-
-  if (!hasMilestone) {
-    fail('This pull request should have a milestone.');
-  }
-};
-
 const checkLabels = () => {
   const hasLabels = pr.labels.length > 0;
 
@@ -105,14 +83,6 @@ const applyDanger = () => {
 
   if (DangerConfig.ASSIGNEES.IS_REQUIRED) {
     checkAssignees();
-  }
-
-  if (DangerConfig.PROJECTS.IS_REQUIRED) {
-    checkProjects();
-  }
-
-  if (DangerConfig.MILESTONE.IS_REQUIRED) {
-    checkMilestone();
   }
 
   if (DangerConfig.LABELS.IS_REQUIRED) {

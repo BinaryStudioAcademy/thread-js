@@ -15,8 +15,8 @@ Where:
   - <modifier>: ${COMMIT_MODIFIERS.join(', ')}
   - <environment>: ${ProjectPrefix.ENVIRONMENTS.join(', ')}
 Examples:
-  - BSA-5: + ui/ux lecture
-  - BSA-12: * docker homework
+  - ${ProjectPrefix.APP}-5: + ui/ux lecture
+  - ${ProjectPrefix.APP}-12: * docker homework
   - production: - comments in ui/ux homework`;
 
 const configuration = {

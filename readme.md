@@ -226,9 +226,9 @@ Shared package contains code that is used for both frontend and backend.
 
 ##### Examples
 
-- `task/sl-5-add-clinician-dashboard`
-- `task/sl-12-add-clinician-flow`
-- `fix/sl-16-fix-clinician-flow`
+- `task/thjs-5-add-clinician-dashboard`
+- `task/thjs-12-add-clinician-flow`
+- `fix/thjs-16-fix-clinician-flow`
 
 #### 🗂 Commit flow
 

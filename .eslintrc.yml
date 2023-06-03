@@ -70,16 +70,15 @@ rules:
 overrides:
   - files:
       - project.config.cjs
-    parserOptions:
-      sourceType: commonjs
-
-  - files:
       - commitlint.config.cjs
     parserOptions:
       sourceType: commonjs
+    env:
+      node: true
     rules:
       'import/no-default-export':
         - off
+
   - files:
       - commitlint.config.js
       - dangerfile.js
