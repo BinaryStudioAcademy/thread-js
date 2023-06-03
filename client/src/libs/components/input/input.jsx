@@ -3,7 +3,7 @@ import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 
-import { IconName } from 'libs/enums/enums';
+import { IconName } from '~/libs/enums/enums.js';
 import { Icon } from '../icon/icon.jsx';
 
 import styles from './styles.module.scss';

@@ -1,3 +1,4 @@
+import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   useState,
   useCallback,
@@ -5,14 +6,13 @@ import {
   useAppForm,
   useDispatch,
   useSelector
-} from 'libs/hooks/hooks';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { actions as threadActionCreator } from 'slices/thread/thread';
-import { image as imageService } from 'packages/image/image';
-import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums';
-import { Post } from 'libs/components/post/post';
-import { Spinner } from 'libs/components/spinner/spinner';
-import { Checkbox } from 'libs/components/checkbox/checkbox';
+} from '~/libs/hooks/hooks.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
+import { image as imageService } from '~/packages/image/image.js';
+import { ThreadToolbarKey, UseFormMode } from '~/libs/enums/enums.js';
+import { Post } from '~/libs/components/post/post.jsx';
+import { Spinner } from '~/libs/components/spinner/spinner.jsx';
+import { Checkbox } from '~/libs/components/checkbox/checkbox.jsx';
 import {
   ExpandedPost,
   SharedPostLink,

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import { useCallback, useState, useAppForm } from 'libs/hooks/hooks';
-import { ButtonColor, ButtonType, IconName } from 'libs/enums/enums';
-import { PostPayloadKey } from 'packages/post/libs/enums/enums';
-import { Button } from 'libs/components/button/button';
-import { Image } from 'libs/components/image/image';
-import { Input } from 'libs/components/input/input';
-import { Segment } from 'libs/components/segment/segment';
+import { useCallback, useState, useAppForm } from '~/libs/hooks/hooks.js';
+import { ButtonColor, ButtonType, IconName } from '~/libs/enums/enums.js';
+import { PostPayloadKey } from '~/packages/post/libs/enums/enums.js';
+import { Button } from '~/libs/components/button/button.jsx';
+import { Image } from '~/libs/components/image/image.jsx';
+import { Input } from '~/libs/components/input/input.jsx';
+import { Segment } from '~/libs/components/segment/segment.jsx';
 import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants.js';
 
 import styles from './styles.module.scss';

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'libs/hooks/hooks';
-import { IconName, IconColor } from 'libs/enums/enums';
-import { CopyBufferInput } from 'libs/components/copy-buffer-input/copy-buffer-input';
-import { Icon } from 'libs/components/icon/icon';
-import { Modal } from 'libs/components/modal/modal';
+import { useState, useRef } from '~/libs/hooks/hooks.js';
+import { IconName, IconColor } from '~/libs/enums/enums.js';
+import { CopyBufferInput } from '~/libs/components/copy-buffer-input/copy-buffer-input.jsx';
+import { Icon } from '~/libs/components/icon/icon.jsx';
+import { Modal } from '~/libs/components/modal/modal.jsx';
 
 import styles from './styles.module.scss';
 

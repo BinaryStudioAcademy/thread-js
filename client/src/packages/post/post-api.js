@@ -1,5 +1,5 @@
-import { ApiPath, ContentType } from 'libs/enums/enums';
-import { HttpMethod } from 'packages/http/libs/enums/enums';
+import { ApiPath, ContentType } from '~/libs/enums/enums.js';
+import { HttpMethod } from '~/packages/http/libs/enums/enums.js';
 import { PostsApiPath } from './libs/enums/enums.js';
 
 class Post {

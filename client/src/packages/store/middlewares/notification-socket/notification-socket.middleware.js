@@ -1,13 +1,16 @@
-import { SocketEvent, SocketNamespace } from 'packages/socket/libs/enums/enums';
+import {
+  SocketEvent,
+  SocketNamespace
+} from '~/packages/socket/libs/enums/enums.js';
 import {
   NotificationType,
   NotificationMessage,
   NotificationSocketEvent
-} from 'packages/notification/libs/enums/enums';
-import { socket } from 'packages/socket/socket';
-import { actions as appActionCreator } from 'slices/app/app';
-import { actions as threadActionCreator } from 'slices/thread/thread';
-import { actions as notificationActionCreator } from 'slices/notifications/notifications';
+} from '~/packages/notification/libs/enums/enums.js';
+import { socket } from '~/packages/socket/socket.js';
+import { actions as appActionCreator } from '~/slices/app/app.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
+import { actions as notificationActionCreator } from '~/slices/notifications/notifications.js';
 
 const notificationSocketInstance = socket.getInstance(
   SocketNamespace.NOTIFICATION

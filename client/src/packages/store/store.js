@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { http } from 'packages/http/http';
-import { storage } from 'packages/storage/storage';
-import { auth } from 'packages/auth/auth';
-import { comment } from 'packages/comment/comment';
-import { post } from 'packages/post/post';
-import { image } from 'packages/image/image';
-import { notification } from 'packages/notification/notification';
-import { reducer as threadReducer } from 'slices/thread/thread';
-import { reducer as profileReducer } from 'slices/profile/profile';
+import { http } from '~/packages/http/http.js';
+import { storage } from '~/packages/storage/storage.js';
+import { auth } from '~/packages/auth/auth.js';
+import { comment } from '~/packages/comment/comment.js';
+import { post } from '~/packages/post/post.js';
+import { image } from '~/packages/image/image.js';
+import { notification } from '~/packages/notification/notification.js';
+import { reducer as threadReducer } from '~/slices/thread/thread.js';
+import { reducer as profileReducer } from '~/slices/profile/profile.js';
 import { notificationSocket } from './middlewares/middlewares.js';
 
 const store = configureStore({

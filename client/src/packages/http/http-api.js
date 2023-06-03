@@ -1,5 +1,5 @@
-import { getStringifiedQuery } from 'libs/helpers/helpers';
-import { StorageKey } from 'libs/enums/enums';
+import { getStringifiedQuery } from '~/libs/helpers/helpers.js';
+import { StorageKey } from '~/libs/enums/enums.js';
 import { HttpError } from './libs/exceptions/exceptions.js';
 import { HttpHeader, HttpMethod } from './libs/enums/enums.js';
 

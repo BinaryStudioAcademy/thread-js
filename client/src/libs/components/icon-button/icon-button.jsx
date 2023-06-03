@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { IconName } from 'libs/enums/enums';
+import { IconName } from '~/libs/enums/enums.js';
 import { Icon } from '../icon/icon.jsx';
 
 import styles from './styles.module.scss';

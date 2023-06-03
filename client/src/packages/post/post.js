@@ -1,5 +1,5 @@
-import { ENV } from 'libs/enums/enums';
-import { http } from 'packages/http/http';
+import { ENV } from '~/libs/enums/enums.js';
+import { http } from '~/packages/http/http.js';
 import { Post } from './post-api.js';
 
 const post = new Post({

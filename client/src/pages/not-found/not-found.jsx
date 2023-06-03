@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { IconName, IconSize, AppRoute } from 'libs/enums/enums';
-import { Icon } from 'libs/components/icon/icon';
+import { IconName, IconSize, AppRoute } from '~/libs/enums/enums.js';
+import { Icon } from '~/libs/components/icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const NotFound = () => (
