@@ -1,7 +1,9 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../libs/enums/enums.js';
-import { AbstractModel } from '../../libs/packages/database/database.js';
+import {
+  AbstractModel,
+  DbTableName
+} from '../../libs/packages/database/database.js';
 import { ImageModel } from '../image/image.js';
 
 class UserModel extends AbstractModel {

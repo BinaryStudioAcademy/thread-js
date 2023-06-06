@@ -1,7 +1,9 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../libs/enums/enums.js';
-import { AbstractModel } from '../../libs/packages/database/database.js';
+import {
+  AbstractModel,
+  DbTableName
+} from '../../libs/packages/database/database.js';
 import { CommentModel } from '../comment/comment.js';
 import { ImageModel } from '../image/image.js';
 import { PostReactionModel } from './post.js';
