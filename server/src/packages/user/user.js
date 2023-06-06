@@ -10,3 +10,7 @@ const userService = new UserService({
 });
 
 export { UserModel, userRepository, userService };
+export {
+  UserValidationRule,
+  UserValidationMessage
+} from './libs/validation/validation.js';

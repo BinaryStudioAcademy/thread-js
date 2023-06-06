@@ -10,10 +10,6 @@ export {
 } from './api/api.js';
 export { ExceptionName, ExceptionMessage } from './exception/exception.js';
 export { HttpCode, HttpMethod } from './http/http.js';
-export {
-  UserValidationRule,
-  UserValidationMessage
-} from './validation/validation.js';
 export { UserPayloadKey } from './user/user.js';
 export { PostPayloadKey, FilterUserMode } from './post/post.js';
 export { CommentPayloadKey } from './comment/comment.js';

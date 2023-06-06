@@ -6,15 +6,17 @@ import {
   HttpCode,
   AuthApiPath,
   UserPayloadKey,
-  PasswordApiPath,
-  UserValidationRule,
-  UserValidationMessage
+  PasswordApiPath
 } from '../../../src/libs/enums/enums.js';
 import {
   joinPath,
   normalizeTrailingSlash
 } from '../../../src/libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
+import {
+  UserValidationRule,
+  UserValidationMessage
+} from '../../../src/packages/user/user.js';
 
 describe(`${normalizeTrailingSlash(
   joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD)
