@@ -16,3 +16,4 @@ const serverApp = new ServerApp({
 });
 
 export { ServerApp, serverApp };
+export { ExitCode } from './libs/enums/enums.js';

@@ -1,5 +1,7 @@
-import { ExitCode } from './libs/enums/enums.js';
-import { serverApp } from './libs/packages/server-application/server-application.js';
+import {
+  serverApp,
+  ExitCode
+} from './libs/packages/server-application/server-application.js';
 
 (async () => {
   try {
