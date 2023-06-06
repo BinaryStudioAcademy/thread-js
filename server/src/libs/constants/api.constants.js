@@ -1,8 +1,9 @@
-import { ApiPath, AuthApiPath, ENV } from '../enums/enums.js';
+import { config } from '../packages/config/config.js';
+import { ApiPath, AuthApiPath } from '../enums/enums.js';
 
 const WHITE_ROUTES = [
-  `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
-  `${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
+  `${config.ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
+  `${config.ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`
 ];
 
 export { WHITE_ROUTES };

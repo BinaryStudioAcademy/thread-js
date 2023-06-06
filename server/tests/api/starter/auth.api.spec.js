@@ -1,7 +1,7 @@
 import { it, describe, expect } from '@jest/globals';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   HttpMethod,
@@ -17,20 +17,20 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.AUTH)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH)
 )} routes`, () => {
   const app = buildApp();
 
   const registerEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
   );
 
   const loginEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
   );
 
   const userEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.USER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.USER)
   );
 
   describe(`${registerEndpoint} (${HttpMethod.POST}) endpoint`, () => {

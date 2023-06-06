@@ -1,7 +1,7 @@
 import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   HttpMethod,
@@ -18,7 +18,7 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.POSTS)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS)
 )} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
@@ -28,19 +28,19 @@ describe(`${normalizeTrailingSlash(
   let posts;
 
   const registerEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
   );
 
   const postsEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
   );
 
   const postEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.$ID)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.$ID)
   );
 
   const postReactEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.REACT)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.REACT)
   );
 
   beforeAll(async () => {
@@ -77,13 +77,13 @@ describe(`${normalizeTrailingSlash(
     }));
 
     const postsResponse = await Promise.all(
-      testPosts.map(config => {
+      testPosts.map(testPost => {
         return app
           .inject()
           .post(postsEndpoint)
-          .headers({ authorization: `Bearer ${config.token}` })
+          .headers({ authorization: `Bearer ${testPost.token}` })
           .body({
-            [PostPayloadKey.BODY]: config[PostPayloadKey.BODY]
+            [PostPayloadKey.BODY]: testPost[PostPayloadKey.BODY]
           });
       })
     );

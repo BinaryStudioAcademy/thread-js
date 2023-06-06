@@ -5,7 +5,7 @@ import Knex from 'knex';
 import { Model } from 'objection';
 
 import knexConfig from '../../../../knexfile.js';
-import { ENV, ExitCode } from '../../enums/enums.js';
+import { ExitCode } from '../../enums/enums.js';
 import { socketInjector as socketInjectorPlugin } from '../../plugins/plugins.js';
 import { authService } from '../../../packages/auth/auth.js';
 import { commentService } from '../../../packages/comment/comment.js';
@@ -18,16 +18,19 @@ import { initApi } from './server-app-api.js';
 class ServerApp {
   #app;
 
-  constructor(opts) {
-    this.#app = this.#initApp(opts);
+  #config;
+
+  constructor({ config, options }) {
+    this.#config = config;
+    this.#app = this.#initApp(options);
   }
 
   get app() {
     return this.#app;
   }
 
-  #initApp(opts) {
-    const app = fastify(opts);
+  #initApp(options) {
+    const app = fastify(options);
     socketService.initializeIo(app.server);
 
     this.#registerPlugins(app);
@@ -60,7 +63,7 @@ class ServerApp {
         postService,
         userService
       },
-      prefix: ENV.APP.API_PATH
+      prefix: this.#config.ENV.APP.API_PATH
     });
 
     app.setNotFoundHandler((req, res) => {
@@ -75,7 +78,7 @@ class ServerApp {
 
   start = async () => {
     try {
-      await this.#app.listen(ENV.APP.PORT);
+      await this.#app.listen(this.#config.ENV.APP.PORT);
     } catch (err) {
       this.#app.log.error(err);
       process.exit(ExitCode.ERROR);

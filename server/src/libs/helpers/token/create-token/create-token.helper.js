@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { ENV } from '../../../enums/enums.js';
+import { config } from '../../../packages/config/config.js';
 
 const createToken = data => {
-  return jwt.sign(data, ENV.JWT.SECRET, { expiresIn: ENV.JWT.EXPIRES_IN });
+  return jwt.sign(data, config.ENV.JWT.SECRET, {
+    expiresIn: config.ENV.JWT.EXPIRES_IN
+  });
 };
 
 export { createToken };

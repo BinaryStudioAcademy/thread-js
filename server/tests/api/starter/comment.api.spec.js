@@ -1,7 +1,7 @@
 import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   HttpMethod,
@@ -19,7 +19,7 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS)
 )} routes`, () => {
   const app = buildApp();
   let token;
@@ -27,11 +27,11 @@ describe(`${normalizeTrailingSlash(
   let postId;
 
   const registerEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
   );
 
   const postsEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
   );
 
   beforeAll(async () => {
@@ -63,11 +63,11 @@ describe(`${normalizeTrailingSlash(
   });
 
   const commentsEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.ROOT)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.ROOT)
   );
 
   const commentEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.$ID)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.$ID)
   );
 
   describe(`${commentsEndpoint} (${HttpMethod.POST}) endpoint`, () => {

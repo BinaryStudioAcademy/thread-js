@@ -1,7 +1,7 @@
 import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   AuthApiPath,
@@ -17,13 +17,13 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.PASSWORD)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD)
 )} routes`, () => {
   const app = buildApp();
   let user;
 
   const registerEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
   );
 
   beforeAll(async () => {
@@ -42,15 +42,15 @@ describe(`${normalizeTrailingSlash(
   });
 
   const resetPasswordEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.RESET)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.RESET)
   );
 
   const setPasswordEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.SET)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.SET)
   );
 
   const loginEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
   );
 
   describe(`${resetPasswordEndpoint} endpoint`, () => {

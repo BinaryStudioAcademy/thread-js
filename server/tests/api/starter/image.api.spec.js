@@ -4,8 +4,8 @@ import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
 import FormData from 'form-data';
 import fs from 'fs';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   HttpMethod,
@@ -21,7 +21,7 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.IMAGES)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.IMAGES)
 )} routes`, () => {
   const app = buildApp();
   let token;
@@ -35,14 +35,14 @@ describe(`${normalizeTrailingSlash(
 
     const registerResponse = await app
       .inject()
-      .post(`${ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`)
+      .post(`${config.ENV.APP.API_PATH}${ApiPath.AUTH}${AuthApiPath.REGISTER}`)
       .body(testUser);
 
     token = registerResponse.json().token;
   });
 
   const imagesEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.ROOT)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.ROOT)
   );
 
   describe(`${imagesEndpoint} (${HttpMethod.POST}) endpoint`, () => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { ENV } from '../../../enums/enums.js';
+import { config } from '../../../packages/config/config.js';
 
-const verifyToken = token => jwt.verify(token, ENV.JWT.SECRET);
+const verifyToken = token => jwt.verify(token, config.ENV.JWT.SECRET);
 
 export { verifyToken };

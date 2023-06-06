@@ -1,11 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { afterAll, beforeAll } from '@jest/globals';
 
+import { config } from '../../../src/libs/packages/config/config.js';
 import { ServerApp } from '../../../src/libs/packages/server-application/server-application.js';
 
 const buildApp = () => {
   const { app } = new ServerApp({
-    logger: false
+    config,
+    options: {
+      logger: false
+    }
   });
 
   beforeAll(async () => {

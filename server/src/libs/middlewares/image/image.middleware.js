@@ -1,12 +1,12 @@
 import multer from 'fastify-multer';
-import { ENV } from '../../enums/enums.js';
+import { config } from '../../packages/config/config.js';
 
 const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
   limits: {
-    fileSize: ENV.GYAZO.FILE_SIZE
+    fileSize: config.ENV.GYAZO.FILE_SIZE
   }
 });
 

@@ -2,8 +2,8 @@ import { it, describe, expect, beforeAll } from '@jest/globals';
 import fs from 'fs';
 import FormData from 'form-data';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/libs/packages/config/config.js';
 import {
-  ENV,
   ApiPath,
   HttpCode,
   HttpMethod,
@@ -20,7 +20,7 @@ import {
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
-  joinPath(ENV.APP.API_PATH, ApiPath.USERS)
+  joinPath(config.ENV.APP.API_PATH, ApiPath.USERS)
 )} routes`, () => {
   const app = buildApp();
   let tokenMainUser;
@@ -28,15 +28,15 @@ describe(`${normalizeTrailingSlash(
   let userMain;
 
   const registerEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
   );
 
   const userEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.USERS, UsersApiPath.$ID)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.USERS, UsersApiPath.$ID)
   );
 
   const imagesEndpoint = normalizeTrailingSlash(
-    joinPath(ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.$ID)
+    joinPath(config.ENV.APP.API_PATH, ApiPath.IMAGES, ImagesApiPath.$ID)
   );
 
   beforeAll(async () => {
