@@ -1,9 +1,9 @@
-import { DbTableName } from '../../../common/enums/enums.js';
+import { DbTableName as DatabaseTableName } from '../../../common/enums/enums.js';
 import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
 
 class Image extends AbstractModel {
   static get tableName() {
-    return DbTableName.IMAGES;
+    return DatabaseTableName.IMAGES;
   }
 
   static get jsonSchema() {

@@ -1,4 +1,4 @@
-const DbTableName = {
+const DatabaseTableName = {
   COMMENTS: 'comments',
   IMAGES: 'images',
   POST_REACTIONS: 'postReactions',
@@ -6,4 +6,4 @@ const DbTableName = {
   USERS: 'users'
 };
 
-export { DbTableName };
+export { DatabaseTableName as DbTableName };

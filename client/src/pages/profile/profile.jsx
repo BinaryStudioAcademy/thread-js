@@ -1,8 +1,8 @@
-import { useAppForm, useSelector } from 'libs/hooks/hooks';
-import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
-import { ImageSize, IconName } from 'libs/enums/enums';
 import { Image } from 'libs/components/image/image';
 import { Input } from 'libs/components/input/input';
+import { IconName,ImageSize } from 'libs/enums/enums';
+import { useAppForm, useSelector } from 'libs/hooks/hooks';
+import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
 
 import styles from './styles.module.scss';
 

@@ -1,12 +1,12 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums.js';
+import { DbTableName as DatabaseTableName } from '../../../common/enums/enums.js';
 import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
 import { Image as ImageModel } from '../image/image.model.js';
 
 class User extends AbstractModel {
   static get tableName() {
-    return DbTableName.USERS;
+    return DatabaseTableName.USERS;
   }
 
   static get jsonSchema() {
@@ -32,8 +32,8 @@ class User extends AbstractModel {
         modelClass: ImageModel,
         filter: query => query.select('id', 'link'),
         join: {
-          from: `${DbTableName.USERS}.imageId`,
-          to: `${DbTableName.IMAGES}.id`
+          from: `${DatabaseTableName.USERS}.imageId`,
+          to: `${DatabaseTableName.IMAGES}.id`
         }
       }
     };

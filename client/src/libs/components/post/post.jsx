@@ -1,11 +1,11 @@
+import { IconName } from 'libs/enums/enums';
+import { getFromNowTime } from 'libs/helpers/helpers';
+import { useCallback } from 'libs/hooks/hooks';
+import { postType } from 'libs/prop-types/property-types';
 import PropTypes from 'prop-types';
 
-import { getFromNowTime } from 'libs/helpers/helpers';
-import { IconName } from 'libs/enums/enums';
-import { postType } from 'libs/prop-types/prop-types';
 import { IconButton } from '../icon-button/icon-button';
 import { Image } from '../image/image';
-
 import styles from './styles.module.scss';
 
 const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
@@ -21,9 +21,12 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
   } = post;
   const date = getFromNowTime(createdAt);
 
-  const handlePostLike = () => onPostLike(id);
-  const handleExpandedPostToggle = () => onExpandedPostToggle(id);
-  const handleSharePost = () => onSharePost(id);
+  const handlePostLike = useCallback(() => onPostLike(id), [id, onPostLike]);
+  const handleExpandedPostToggle = useCallback(
+    () => onExpandedPostToggle(id),
+    [id, onExpandedPostToggle]
+  );
+  const handleSharePost = useCallback(() => onSharePost(id), [id, onSharePost]);
 
   return (
     <div className={styles.card}>
@@ -40,11 +43,7 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
           label={likeCount}
           onClick={handlePostLike}
         />
-        <IconButton
-          iconName={IconName.THUMBS_DOWN}
-          label={dislikeCount}
-          onClick={() => {}}
-        />
+        <IconButton iconName={IconName.THUMBS_DOWN} label={dislikeCount} />
         <IconButton
           iconName={IconName.COMMENT}
           label={commentCount}

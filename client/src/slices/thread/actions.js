@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { ActionType } from './common';
 
 const loadPosts = createAsyncThunk(
@@ -75,7 +76,7 @@ const likePost = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post => (post.id !== postId ? post : mapLikes(post)));
+    const updated = posts.map(post => (post.id === postId ? mapLikes(post) : post));
     const updatedExpandedPost = expandedPost?.id === postId ? mapLikes(expandedPost) : undefined;
 
     return { posts: updated, expandedPost: updatedExpandedPost };
@@ -97,7 +98,7 @@ const addComment = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post => (post.id !== comment.postId ? post : mapComments(post)));
+    const updated = posts.map(post => (post.id === comment.postId ? mapComments(post) : post));
 
     const updatedExpandedPost = expandedPost?.id === comment.postId
       ? mapComments(expandedPost)
@@ -108,11 +109,10 @@ const addComment = createAsyncThunk(
 );
 
 export {
-  loadPosts,
-  loadMorePosts,
+  addComment,
   applyPost,
   createPost,
-  toggleExpandedPost,
   likePost,
-  addComment
-};
+  loadMorePosts,
+  loadPosts,
+  toggleExpandedPost };

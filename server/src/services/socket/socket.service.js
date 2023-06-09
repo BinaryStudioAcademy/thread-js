@@ -1,4 +1,5 @@
 import { Server as SocketServer } from 'socket.io';
+
 import { SocketEvent, SocketNamespace } from '../../common/enums/enums.js';
 
 class Socket {

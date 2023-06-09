@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-import { http } from 'packages/http/http';
-import { storage } from 'packages/storage/storage';
 import { auth } from 'packages/auth/auth';
 import { comment } from 'packages/comment/comment';
-import { post } from 'packages/post/post';
+import { http } from 'packages/http/http';
 import { image } from 'packages/image/image';
 import { notification } from 'packages/notification/notification';
-import { reducer as threadReducer } from 'slices/thread/thread';
+import { post } from 'packages/post/post';
+import { storage } from 'packages/storage/storage';
 import { reducer as profileReducer } from 'slices/profile/profile';
+import { reducer as threadReducer } from 'slices/thread/thread';
+
 import { notificationSocket } from './middlewares/middlewares';
 
 const store = configureStore({
@@ -16,7 +16,7 @@ const store = configureStore({
     profile: profileReducer,
     posts: threadReducer
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware({
+  middleware: getDefaultMiddleware => [...getDefaultMiddleware({
     thunk: {
       extraArgument: {
         services: {
@@ -30,7 +30,7 @@ const store = configureStore({
         }
       }
     }
-  }).concat([notificationSocket])
+  }), notificationSocket]
 });
 
 export { store };

@@ -1,13 +1,12 @@
+import { AppRoute, ButtonType, IconName, IconSize } from 'libs/enums/enums';
+import { userType } from 'libs/prop-types/property-types';
+import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { IconName, IconSize, ButtonType, AppRoute } from 'libs/enums/enums';
-import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
-import { userType } from 'libs/prop-types/prop-types';
 import { Button } from '../button/button';
 import { Icon } from '../icon/icon';
 import { Image } from '../image/image';
-
 import styles from './styles.module.scss';
 
 const Header = ({ user, onUserLogout }) => (
@@ -21,8 +20,7 @@ const Header = ({ user, onUserLogout }) => (
             height="45"
             src={user.image?.link ?? DEFAULT_USER_AVATAR}
             alt="user avatar"
-          />
-          {' '}
+          />{' '}
           {user.username}
         </div>
       </NavLink>

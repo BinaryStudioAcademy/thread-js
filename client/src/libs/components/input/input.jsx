@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import { useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
-
 import { IconName } from 'libs/enums/enums';
-import { Icon } from '../icon/icon';
+import PropTypes from 'prop-types';
+import { useController } from 'react-hook-form';
 
+import { Icon } from '../icon/icon';
 import styles from './styles.module.scss';
 
 const Input = ({

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { ActionType } from './common';
 
 const notify = createAsyncThunk(ActionType.NOTIFY, (payload, { extra }) => {

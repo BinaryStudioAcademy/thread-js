@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+
 import { NotificationType } from './libs/enums/enums';
 
 const DEFAULT_MESSAGE = 'Unexpected error';

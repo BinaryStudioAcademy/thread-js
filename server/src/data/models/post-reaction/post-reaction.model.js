@@ -1,13 +1,13 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums.js';
+import { DbTableName as DatabaseTableName } from '../../../common/enums/enums.js';
 import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
 import { Post as PostModel } from '../post/post.model.js';
 import { User as UserModel } from '../user/user.model.js';
 
 class PostReaction extends AbstractModel {
   static get tableName() {
-    return DbTableName.POST_REACTIONS;
+    return DatabaseTableName.POST_REACTIONS;
   }
 
   static get jsonSchema() {
@@ -31,8 +31,8 @@ class PostReaction extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.POST_REACTIONS}.postId`,
-          to: `${DbTableName.POSTS}.id`
+          from: `${DatabaseTableName.POST_REACTIONS}.postId`,
+          to: `${DatabaseTableName.POSTS}.id`
         }
       },
       user: {
@@ -40,8 +40,8 @@ class PostReaction extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'userId'),
         join: {
-          from: `${DbTableName.POST_REACTIONS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.POST_REACTIONS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };
