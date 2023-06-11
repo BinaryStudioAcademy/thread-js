@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 import {
-  IconName,
-  IconSize,
+  AppRoute,
   ButtonType,
-  AppRoute
+  IconName,
+  IconSize
 } from '~/libs/enums/enums.js';
+import { userType } from '~/libs/prop-types/property-types.js';
 import { DEFAULT_USER_AVATAR } from '~/packages/user/constants/constants.js';
-import { userType } from '~/libs/prop-types/prop-types.js';
+
 import { Button } from '../button/button.jsx';
 import { Icon } from '../icon/icon.jsx';
 import { Image } from '../image/image.jsx';
-
 import styles from './styles.module.scss';
 
 const Header = ({ user, onUserLogout }) => (
@@ -26,8 +26,7 @@ const Header = ({ user, onUserLogout }) => (
             height="45"
             src={user.image?.link ?? DEFAULT_USER_AVATAR}
             alt="user avatar"
-          />
-          {' '}
+          />{' '}
           {user.username}
         </div>
       </NavLink>

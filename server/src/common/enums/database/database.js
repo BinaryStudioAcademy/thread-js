@@ -1,1 +1,1 @@
-export { DbTableName } from './db-table-name.enum.js';
+export { DbTableName } from './database-table-name.enum.js';

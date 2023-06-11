@@ -1,11 +1,11 @@
 import {
-  loadPosts,
-  loadMorePosts,
+  addComment,
   applyPost,
   createPost,
-  toggleExpandedPost,
   likePost,
-  addComment
+  loadMorePosts,
+  loadPosts,
+  toggleExpandedPost
 } from './actions.js';
 import { actions } from './thread.slice.js';
 

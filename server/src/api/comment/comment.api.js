@@ -1,20 +1,29 @@
-import { HttpCode, CommentsApiPath, ControllerHook, HttpMethod } from '../../common/enums/enums.js';
+import {
+  CommentsApiPath,
+  ControllerHook,
+  HttpCode,
+  HttpMethod
+} from '../../common/enums/enums.js';
 
-const initComment = (fastify, opts, done) => {
-  const { comment: commentService } = opts.services;
+const initComment = (fastify, options, done) => {
+  const { comment: commentService } = options.services;
 
   fastify.route({
     method: HttpMethod.GET,
     url: CommentsApiPath.$ID,
-    [ControllerHook.HANDLER]: async req => commentService.getById(req.params.id)
+    [ControllerHook.HANDLER]: async request =>
+      commentService.getById(request.params.id)
   });
   fastify.route({
     method: HttpMethod.POST,
     url: CommentsApiPath.ROOT,
-    [ControllerHook.HANDLER]: async (req, res) => {
-      const comment = await commentService.create(req.user.id, req.body);
+    [ControllerHook.HANDLER]: async (request, response) => {
+      const comment = await commentService.create(
+        request.user.id,
+        request.body
+      );
 
-      return res.status(HttpCode.CREATED).send(comment);
+      return response.status(HttpCode.CREATED).send(comment);
     }
   });
 
@@ -22,4 +31,3 @@ const initComment = (fastify, opts, done) => {
 };
 
 export { initComment };
-

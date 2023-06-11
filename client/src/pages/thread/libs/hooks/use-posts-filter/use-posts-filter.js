@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { useCallback, useReducer } from 'react';
+
 import { PostsFilterAction } from '~/libs/enums/enums.js';
 
 const postsFilterInitialState = {

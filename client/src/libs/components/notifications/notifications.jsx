@@ -1,16 +1,17 @@
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useEffect, useDispatch } from '~/libs/hooks/hooks.js';
+import { ToastContainer } from 'react-toastify';
+
+import { useDispatch,useEffect } from '~/libs/hooks/hooks.js';
+import { userType } from '~/libs/prop-types/property-types.js';
 import { actions as notificationActionCreator } from '~/slices/notifications/notifications.js';
-import { userType } from '~/libs/prop-types/prop-types.js';
 
 const Notifications = ({ user }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user) {
-      return undefined;
+      return;
     }
     const { id } = user;
 

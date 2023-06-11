@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from '~/libs/hooks/hooks.js';
-import { IconName, IconColor } from '~/libs/enums/enums.js';
+
 import { CopyBufferInput } from '~/libs/components/copy-buffer-input/copy-buffer-input.jsx';
 import { Icon } from '~/libs/components/icon/icon.jsx';
 import { Modal } from '~/libs/components/modal/modal.jsx';
+import { IconColor, IconName } from '~/libs/enums/enums.js';
+import { useCallback, useRef, useState } from '~/libs/hooks/hooks.js';
 
 import styles from './styles.module.scss';
 
@@ -11,11 +12,11 @@ const SharedPostLink = ({ postId, onClose }) => {
   const [isCopied, setIsCopied] = useState(false);
   const input = useRef();
 
-  const handleCopy = ({ target }) => {
+  const handleCopy = useCallback(({ target }) => {
     navigator.clipboard.writeText(input.current?.value ?? '');
     target.focus();
     setIsCopied(true);
-  };
+  }, []);
 
   return (
     <Modal isOpen isCentered onClose={onClose}>

@@ -1,6 +1,6 @@
-import { usersSeed, userImagesSeed } from '../seed-data/users-seed.js';
-import { postsSeed, postImagesSeed } from '../seed-data/posts-seed.js';
 import { commentsSeed } from '../seed-data/comments-seed.js';
+import { postImagesSeed, postsSeed } from '../seed-data/posts-seed.js';
+import { userImagesSeed, usersSeed } from '../seed-data/users-seed.js';
 
 const TableName = {
   USERS: 'users',
@@ -30,7 +30,10 @@ export async function seed(knex) {
       await trx(TableName.IMAGES).del();
 
       // Add images.
-      await trx(TableName.IMAGES).insert(userImagesSeed.concat(postImagesSeed));
+      await trx(TableName.IMAGES).insert([
+        ...userImagesSeed,
+        ...postImagesSeed
+      ]);
 
       const userImages = await trx(TableName.IMAGES)
         .select('id')
@@ -40,19 +43,19 @@ export async function seed(knex) {
         .whereIn('link', mapLinks(postImagesSeed));
 
       // Add users.
-      const usersMappedSeed = usersSeed.map((user, idx) => ({
+      const usersMappedSeed = usersSeed.map((user, index) => ({
         ...user,
-        [ColumnName.IMAGE_ID]: userImages[idx] ? userImages[idx].id : null
+        [ColumnName.IMAGE_ID]: userImages[index] ? userImages[index].id : null
       }));
       const users = await trx(TableName.USERS)
         .insert(usersMappedSeed)
         .returning('*');
 
       // Add posts.
-      const postsMappedSeed = postsSeed.map((post, idx) => ({
+      const postsMappedSeed = postsSeed.map((post, index) => ({
         ...post,
         [ColumnName.USER_ID]: users[getRandomIndex(users.length)].id,
-        [ColumnName.IMAGE_ID]: postImages[idx] ? postImages[idx].id : null
+        [ColumnName.IMAGE_ID]: postImages[index] ? postImages[index].id : null
       }));
       const posts = await trx(TableName.POSTS)
         .insert(postsMappedSeed)
@@ -75,6 +78,7 @@ export async function seed(knex) {
       await trx(TableName.POST_REACTIONS).insert(postReactionsMappedSeed);
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(`Seeding error: ${error}`);
   }
 }

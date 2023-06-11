@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums.js';
+import { DbTableName as DatabaseTableName } from '../../../common/enums/enums.js';
 import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
 import { Comment as CommentModel } from '../comment/comment.model.js';
 import { Image as ImageModel } from '../image/image.model.js';
@@ -9,7 +9,7 @@ import { User as UserModel } from '../user/user.model.js';
 
 class Post extends AbstractModel {
   static get tableName() {
-    return DbTableName.POSTS;
+    return DatabaseTableName.POSTS;
   }
 
   static get jsonSchema() {
@@ -33,25 +33,25 @@ class Post extends AbstractModel {
         relation: Model.HasManyRelation,
         modelClass: CommentModel,
         join: {
-          from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.COMMENTS}.postId`
+          from: `${DatabaseTableName.POSTS}.id`,
+          to: `${DatabaseTableName.COMMENTS}.postId`
         }
       },
       image: {
         relation: Model.HasOneRelation,
         modelClass: ImageModel,
         join: {
-          from: `${DbTableName.POSTS}.imageId`,
+          from: `${DatabaseTableName.POSTS}.imageId`,
           filter: query => query.select('id', 'link'),
-          to: `${DbTableName.IMAGES}.id`
+          to: `${DatabaseTableName.IMAGES}.id`
         }
       },
       postReactions: {
         relation: Model.HasManyRelation,
         modelClass: PostReactionModel,
         join: {
-          from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.POST_REACTIONS}.postId`
+          from: `${DatabaseTableName.POSTS}.id`,
+          to: `${DatabaseTableName.POST_REACTIONS}.postId`
         }
       },
       user: {
@@ -59,8 +59,8 @@ class Post extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.POSTS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.POSTS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };

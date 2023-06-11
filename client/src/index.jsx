@@ -1,13 +1,14 @@
+import '~/assets/css/styles.scss';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { App } from '~/pages/app/app.jsx';
+
 import { store } from '~/packages/store/store.js';
+import { App } from '~/pages/app/app.jsx';
 
-import '~/assets/css/styles.scss';
-
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.querySelector('#root'));
 
 root.render(
   <StrictMode>
@@ -16,6 +17,5 @@ root.render(
         <App />
       </Router>
     </Provider>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );

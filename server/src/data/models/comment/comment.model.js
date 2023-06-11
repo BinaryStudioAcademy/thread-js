@@ -1,13 +1,13 @@
 import { Model } from 'objection';
 
-import { DbTableName } from '../../../common/enums/enums.js';
+import { DbTableName as DatabaseTableName } from '../../../common/enums/enums.js';
 import { Abstract as AbstractModel } from '../abstract/abstract.model.js';
 import { Post as PostModel } from '../post/post.model.js';
 import { User as UserModel } from '../user/user.model.js';
 
 class Comment extends AbstractModel {
   static get tableName() {
-    return DbTableName.COMMENTS;
+    return DatabaseTableName.COMMENTS;
   }
 
   static get jsonSchema() {
@@ -31,8 +31,8 @@ class Comment extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.COMMENTS}.postId`,
-          to: `${DbTableName.POSTS}.id`
+          from: `${DatabaseTableName.COMMENTS}.postId`,
+          to: `${DatabaseTableName.POSTS}.id`
         }
       },
       user: {
@@ -40,8 +40,8 @@ class Comment extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.COMMENTS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.COMMENTS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };

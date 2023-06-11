@@ -1,30 +1,35 @@
-import fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
+import fastify from 'fastify';
 import Knex from 'knex';
 import { Model } from 'objection';
 
 import knexConfig from '../knexfile.js';
-import { ENV, ExitCode } from './common/enums/enums.js';
-import {
-  socketInjector as socketInjectorPlugin
-} from './plugins/plugins.js';
-import { auth, comment, image, post, user, socket } from './services/services.js';
 import { initApi } from './api/api.js';
+import { ENV } from './common/enums/enums.js';
+import { socketInjector as socketInjectorPlugin } from './plugins/plugins.js';
+import {
+  auth,
+  comment,
+  image,
+  post,
+  socket,
+  user
+} from './services/services.js';
 
 class App {
   #app;
 
-  constructor(opts) {
-    this.#app = this.#initApp(opts);
+  constructor(options) {
+    this.#app = this.#initApp(options);
   }
 
   get app() {
     return this.#app;
   }
 
-  #initApp(opts) {
-    const app = fastify(opts);
+  #initApp(options) {
+    const app = fastify(options);
     socket.initializeIo(app.server);
 
     this.#registerPlugins(app);
@@ -60,8 +65,8 @@ class App {
       prefix: ENV.APP.API_PATH
     });
 
-    app.setNotFoundHandler((req, res) => {
-      res.sendFile('index.html');
+    app.setNotFoundHandler((_, response) => {
+      response.sendFile('index.html');
     });
   }
 
@@ -73,9 +78,8 @@ class App {
   start = async () => {
     try {
       await this.#app.listen(ENV.APP.PORT);
-    } catch (err) {
-      this.#app.log.error(err);
-      process.exit(ExitCode.ERROR);
+    } catch (error) {
+      this.#app.log.error(error);
     }
   };
 }

@@ -1,4 +1,5 @@
 import multer from 'fastify-multer';
+
 import { ENV } from '../../common/enums/enums.js';
 
 const storage = multer.memoryStorage();

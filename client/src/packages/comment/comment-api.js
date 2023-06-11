@@ -1,5 +1,6 @@
 import { ApiPath, ContentType } from '~/libs/enums/enums.js';
 import { HttpMethod } from '~/packages/http/libs/enums/enums.js';
+
 import { CommentsApiPath } from './libs/enums/enums.js';
 
 class Comment {

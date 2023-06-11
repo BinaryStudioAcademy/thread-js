@@ -1,17 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import { useEffect, useDispatch, useParams } from '~/libs/hooks/hooks.js';
-import { actions as threadActionCreator } from '~/slices/thread/thread.js';
+
 import { AppRoute } from '~/libs/enums/enums.js';
+import { useDispatch, useEffect, useParams } from '~/libs/hooks/hooks.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 const SharedPost = () => {
   const dispatch = useDispatch();
   const handleToggleExpandedPost = id => {
     dispatch(threadActionCreator.toggleExpandedPost(id));
   };
-  const params = useParams();
+  const parameters = useParams();
 
   useEffect(() => {
-    const { postHash = '' } = params;
+    const { postHash = '' } = parameters;
     if (postHash) {
       handleToggleExpandedPost(postHash);
     }

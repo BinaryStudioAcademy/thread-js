@@ -1,5 +1,5 @@
-import { HttpCode } from '../../packages/http/http.js';
 import { ExceptionName } from '../../enums/enums.js';
+import { HttpCode } from '../../packages/http/http.js';
 
 const DEFAULT_MESSAGE = 'Network Error';
 

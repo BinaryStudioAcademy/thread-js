@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import { imageType } from '~/libs/prop-types/image.js';
 
 const userType = PropTypes.exact({

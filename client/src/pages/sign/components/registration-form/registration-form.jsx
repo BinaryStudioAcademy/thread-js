@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { useAppForm, useState } from '~/libs/hooks/hooks.js';
-import {
-  ButtonType,
-  ButtonSize,
-  ButtonColor,
-  AppRoute,
-  IconName
-} from '~/libs/enums/enums.js';
-import { UserPayloadKey } from '~/packages/user/enums/enums.js';
+
 import { Button } from '~/libs/components/button/button.jsx';
 import { Input } from '~/libs/components/input/input.jsx';
 import { Message } from '~/libs/components/message/message.jsx';
 import { Segment } from '~/libs/components/segment/segment.jsx';
+import {
+  AppRoute,
+  ButtonColor,
+  ButtonSize,
+  ButtonType,
+  IconName
+} from '~/libs/enums/enums.js';
+import { useAppForm, useState } from '~/libs/hooks/hooks.js';
 import { registration as registrationValidation } from '~/packages/auth/libs/validation-schemas/validation-schemas.js';
+import { UserPayloadKey } from '~/packages/user/enums/enums.js';
+
 import { DEFAULT_REGISTRATION_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
 

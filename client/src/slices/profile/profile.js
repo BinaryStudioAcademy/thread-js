@@ -1,4 +1,4 @@
-import { login, register, logout, loadCurrentUser } from './actions.js';
+import { loadCurrentUser,login, logout, register } from './actions.js';
 import { actions } from './profile.slice.js';
 
 const allActions = {

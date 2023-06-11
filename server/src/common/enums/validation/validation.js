@@ -1,4 +1,3 @@
 export {
-  UserValidationRule,
-  UserValidationMessage
-} from 'shared/src/packages/user/user.js';
+  UserValidationMessage,
+  UserValidationRule } from 'shared/src/packages/user/user.js';

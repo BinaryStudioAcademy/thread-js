@@ -1,27 +1,28 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useAppForm,
-  useDispatch,
-  useSelector
-} from '~/libs/hooks/hooks.js';
-import { actions as threadActionCreator } from '~/slices/thread/thread.js';
-import { image as imageService } from '~/packages/image/image.js';
-import { ThreadToolbarKey, UseFormMode } from '~/libs/enums/enums.js';
+
+import { Checkbox } from '~/libs/components/checkbox/checkbox.jsx';
 import { Post } from '~/libs/components/post/post.jsx';
 import { Spinner } from '~/libs/components/spinner/spinner.jsx';
-import { Checkbox } from '~/libs/components/checkbox/checkbox.jsx';
+import { ThreadToolbarKey, UseFormMode } from '~/libs/enums/enums.js';
 import {
-  ExpandedPost,
-  SharedPostLink,
-  AddPost
-} from './components/components.js';
-import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
+  useAppForm,
+  useCallback,
+  useDispatch,
+  useEffect,
+  useSelector,
+  useState } from '~/libs/hooks/hooks.js';
+import { image as imageService } from '~/packages/image/image.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
-import styles from './styles.module.scss';
+import {
+  AddPost,
+  ExpandedPost,
+  SharedPostLink } from './components/components.js';
+import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
 import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter.js';
+import styles from './styles.module.scss';
+
+const handleUploadImage = file => imageService.uploadImage(file);
 
 const Thread = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Thread = () => {
 
   const { postsFilter, handleShownOwnPosts } = usePostsFilter();
 
-  const [sharedPostId, setSharedPostId] = useState(undefined);
+  const [sharedPostId, setSharedPostId] = useState();
 
   const { control, watch } = useAppForm({
     defaultValues: DEFAULT_THREAD_TOOLBAR,
@@ -90,11 +91,13 @@ const Thread = () => {
     handleMorePostsLoad(postsFilter);
   }, [handleMorePostsLoad, postsFilter]);
 
-  const handleSharePost = id => setSharedPostId(id);
+  const handleSharePost = useCallback(id => setSharedPostId(id), []);
 
-  const handleUploadImage = file => imageService.uploadImage(file);
+  const handleCloseSharedPostLink = useCallback(() => setSharedPostId(), []);
 
-  const handleCloseSharedPostLink = () => setSharedPostId(undefined);
+  useEffect(() => {
+    handleGetMorePosts();
+  }, [handleGetMorePosts]);
 
   return (
     <div className={styles.threadContent}>

@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types';
-import { useCallback, useState, useAppForm } from '~/libs/hooks/hooks.js';
-import { ButtonColor, ButtonType, IconName } from '~/libs/enums/enums.js';
-import { PostPayloadKey } from '~/packages/post/libs/enums/enums.js';
+
 import { Button } from '~/libs/components/button/button.jsx';
 import { Image } from '~/libs/components/image/image.jsx';
 import { Input } from '~/libs/components/input/input.jsx';
 import { Segment } from '~/libs/components/segment/segment.jsx';
-import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants.js';
+import { ButtonColor, ButtonType, IconName } from '~/libs/enums/enums.js';
+import { useAppForm,useCallback, useState } from '~/libs/hooks/hooks.js';
+import { PostPayloadKey } from '~/packages/post/libs/enums/enums.js';
 
+import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants.js';
 import styles from './styles.module.scss';
 
 const AddPost = ({ onPostAdd, onUploadImage }) => {
-  const [image, setImage] = useState(undefined);
+  const [image, setImage] = useState();
   const [isUploading, setIsUploading] = useState(false);
 
   const { control, handleSubmit, reset } = useAppForm({
@@ -25,27 +26,30 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
       }
       onPostAdd({ imageId: image?.imageId, body: values.body }).then(() => {
         reset();
-        setImage(undefined);
+        setImage();
       });
     },
     [image, reset, onPostAdd]
   );
 
-  const handleUploadFile = ({ target }) => {
-    setIsUploading(true);
-    const [file] = target.files;
+  const handleUploadFile = useCallback(
+    ({ target }) => {
+      setIsUploading(true);
+      const [file] = target.files;
 
-    onUploadImage(file)
-      .then(({ id: imageId, link: imageLink }) => {
-        setImage({ imageId, imageLink });
-      })
-      .catch(() => {
-        // TODO: show error
-      })
-      .finally(() => {
-        setIsUploading(false);
-      });
-  };
+      onUploadImage(file)
+        .then(({ id: imageId, link: imageLink }) => {
+          setImage({ imageId, imageLink });
+        })
+        .catch(() => {
+          // TODO: show error
+        })
+        .finally(() => {
+          setIsUploading(false);
+        });
+    },
+    [onUploadImage]
+  );
 
   return (
     <Segment>
