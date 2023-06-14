@@ -1,4 +1,4 @@
-import { WHITE_ROUTES } from '../../constants/constants.js';
+import { WHITE_ROUTES } from './libs/constants/constants.js';
 import { ApiPath } from '../../enums/enums.js';
 import { authorization as authorizationPlugin } from '../../plugins/plugins.js';
 import { initAuthApi } from '../../../packages/auth/auth.js';
