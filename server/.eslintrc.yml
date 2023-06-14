@@ -22,6 +22,8 @@ rules:
     - off
   import/no-relative-packages:
     - off
+  import/no-unresolved:
+    - off
 
 overrides:
   - files:

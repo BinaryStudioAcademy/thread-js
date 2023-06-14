@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service.js';
 
-import { userRepository } from '../user/user.js';
+import { userRepository } from '#packages/user/user.js';
 
 const authService = new AuthService({
   userRepository

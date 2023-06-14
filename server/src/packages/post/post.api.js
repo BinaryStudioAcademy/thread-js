@@ -5,7 +5,7 @@ import {
   ControllerHook,
   SocketNamespace,
   NotificationSocketEvent
-} from '../../libs/enums/enums.js';
+} from '#libs/enums/enums.js';
 
 const initPostApi = (fastify, opts, done) => {
   const { postService } = opts.services;

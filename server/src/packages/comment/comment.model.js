@@ -3,9 +3,9 @@ import { Model } from 'objection';
 import {
   AbstractModel,
   DbTableName
-} from '../../libs/packages/database/database.js';
-import { PostModel } from '../post/post.js';
-import { UserModel } from '../user/user.js';
+} from '#libs/packages/database/database.js';
+import { PostModel } from '#packages/post/post.js';
+import { UserModel } from '#packages/user/user.js';
 
 class CommentModel extends AbstractModel {
   static get tableName() {

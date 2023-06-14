@@ -6,6 +6,10 @@
     "node": ">=16 <17",
     "npm": ">=8 <9"
   },
+  "imports": {
+    "#libs/*": "./src/libs/*",
+    "#packages/*": "./src/packages/*"
+  },
   "scripts": {
     "migrate:make": "npx knex migrate:make",
     "migrate:rollback": "npx knex migrate:rollback",

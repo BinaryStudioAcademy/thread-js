@@ -1,7 +1,7 @@
 import {
   AbstractModel,
   DbTableName
-} from '../../libs/packages/database/database.js';
+} from '#libs/packages/database/database.js';
 
 class ImageModel extends AbstractModel {
   static get tableName() {

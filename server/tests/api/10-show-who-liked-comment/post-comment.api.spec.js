@@ -1,6 +1,6 @@
 import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
-import { config } from '../../../src/libs/packages/config/config.js';
+import { config } from '#libs/packages/config/config.js';
 import {
   ApiPath,
   HttpCode,
@@ -10,11 +10,8 @@ import {
   UserPayloadKey,
   PostPayloadKey,
   CommentsApiPath
-} from '../../../src/libs/enums/enums.js';
-import {
-  joinPath,
-  normalizeTrailingSlash
-} from '../../../src/libs/helpers/helpers.js';
+} from '#libs/enums/enums.js';
+import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(

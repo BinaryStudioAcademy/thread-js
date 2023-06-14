@@ -1,10 +1,10 @@
 import { WHITE_ROUTES } from './libs/constants/constants.js';
-import { ApiPath } from '../../enums/enums.js';
-import { authorization as authorizationPlugin } from '../../plugins/plugins.js';
-import { initAuthApi } from '../../../packages/auth/auth.js';
-import { initCommentApi } from '../../../packages/comment/comment.js';
-import { initImageApi } from '../../../packages/image/image.js';
-import { initPostApi } from '../../../packages/post/post.js';
+import { ApiPath } from '#libs/enums/enums.js';
+import { authorization as authorizationPlugin } from '#libs/plugins/plugins.js';
+import { initAuthApi } from '#packages/auth/auth.js';
+import { initCommentApi } from '#packages/comment/comment.js';
+import { initImageApi } from '#packages/image/image.js';
+import { initPostApi } from '#packages/post/post.js';
 
 // register all routes
 const initApi = (

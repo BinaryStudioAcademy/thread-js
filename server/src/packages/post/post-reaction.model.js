@@ -3,9 +3,9 @@ import { Model } from 'objection';
 import {
   AbstractModel,
   DbTableName
-} from '../../libs/packages/database/database.js';
+} from '#libs/packages/database/database.js';
 import { PostModel } from './post.js';
-import { UserModel } from '../user/user.js';
+import { UserModel } from '#packages/user/user.js';
 
 class PostReactionModel extends AbstractModel {
   static get tableName() {

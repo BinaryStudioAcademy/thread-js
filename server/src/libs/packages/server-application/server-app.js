@@ -5,13 +5,13 @@ import Knex from 'knex';
 import { Model } from 'objection';
 
 import knexConfig from '../../../../knexfile.js';
-import { socketInjector as socketInjectorPlugin } from '../../plugins/plugins.js';
-import { authService } from '../../../packages/auth/auth.js';
-import { commentService } from '../../../packages/comment/comment.js';
-import { imageService } from '../../../packages/image/image.js';
-import { postService } from '../../../packages/post/post.js';
-import { userService } from '../../../packages/user/user.js';
-import { socketService } from '../socket/socket.js';
+import { socketInjector as socketInjectorPlugin } from '#libs/plugins/plugins.js';
+import { authService } from '#packages/auth/auth.js';
+import { commentService } from '#packages/comment/comment.js';
+import { imageService } from '#packages/image/image.js';
+import { postService } from '#packages/post/post.js';
+import { userService } from '#packages/user/user.js';
+import { socketService } from '#libs/packages/socket/socket.js';
 import { initApi } from './server-app-api.js';
 import { ExitCode } from './libs/enums/enums.js';
 

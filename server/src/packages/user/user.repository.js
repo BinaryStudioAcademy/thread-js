@@ -1,4 +1,4 @@
-import { AbstractRepository } from '../../libs/packages/database/database.js';
+import { AbstractRepository } from '#libs/packages/database/database.js';
 
 class UserRepository extends AbstractRepository {
   constructor({ userModel }) {

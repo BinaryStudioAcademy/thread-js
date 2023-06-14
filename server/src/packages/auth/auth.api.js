@@ -3,8 +3,8 @@ import {
   ControllerHook,
   HttpMethod,
   HttpCode
-} from '../../libs/enums/enums.js';
-import { getErrorStatusCode } from '../../libs/helpers/helpers.js';
+} from '#libs/enums/enums.js';
+import { getErrorStatusCode } from '#libs/helpers/helpers.js';
 import {
   loginValidationSchema,
   registrationValidationSchema

@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { ServerApp } from './server-app.js';
-import { config } from '../config/config.js';
+import { config } from '#libs/packages/config/config.js';
 
 const serverApp = new ServerApp({
   config,

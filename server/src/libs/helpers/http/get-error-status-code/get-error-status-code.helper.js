@@ -1,4 +1,4 @@
-import { HttpCode, ExceptionName } from '../../../enums/enums.js';
+import { HttpCode, ExceptionName } from '#libs/enums/enums.js';
 
 const getErrorStatusCode = err => {
   const hasNameProp = Object.prototype.hasOwnProperty.call(err, 'name');

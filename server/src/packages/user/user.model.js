@@ -3,8 +3,8 @@ import { Model } from 'objection';
 import {
   AbstractModel,
   DbTableName
-} from '../../libs/packages/database/database.js';
-import { ImageModel } from '../image/image.js';
+} from '#libs/packages/database/database.js';
+import { ImageModel } from '#packages/image/image.js';
 
 class UserModel extends AbstractModel {
   static get tableName() {
