@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Header } from '~/libs/components/header/header.jsx';
-import { Notifications } from '~/libs/components/notifications/notifications.jsx';
-import { PrivateRoute } from '~/libs/components/private-route/private-route.jsx';
-import { PublicRoute } from '~/libs/components/public-route/public-route.jsx';
-import { Spinner } from '~/libs/components/spinner/spinner.jsx';
-import { AppRoute,StorageKey } from '~/libs/enums/enums.js';
+import { Header } from '~/libs/components/header/header';
+import { Notifications } from '~/libs/components/notifications/notifications';
+import { PrivateRoute } from '~/libs/components/private-route/private-route';
+import { PublicRoute } from '~/libs/components/public-route/public-route';
+import { Spinner } from '~/libs/components/spinner/spinner';
+import { AppRoute, StorageKey } from '~/libs/enums/enums.js';
 import {
   useCallback,
   useDispatch,
@@ -13,11 +13,11 @@ import {
   useSelector
 } from '~/libs/hooks/hooks.js';
 import { storage } from '~/packages/storage/storage.js';
-import { NotFound } from '~/pages/not-found/not-found.jsx';
-import { Profile } from '~/pages/profile/profile.jsx';
-import { SharedPost } from '~/pages/shared-post/shared-post.jsx';
-import { Sign } from '~/pages/sign/sign.jsx';
-import { Thread } from '~/pages/thread/thread.jsx';
+import { NotFound } from '~/pages/not-found/not-found';
+import { Profile } from '~/pages/profile/profile';
+import { SharedPost } from '~/pages/shared-post/shared-post';
+import { Sign } from '~/pages/sign/sign';
+import { Thread } from '~/pages/thread/thread';
 import { actions as profileActionCreator } from '~/slices/profile/profile.js';
 
 const App = () => {

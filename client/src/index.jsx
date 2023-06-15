@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { store } from '~/packages/store/store.js';
-import { App } from '~/pages/app/app.jsx';
+import { App } from '~/pages/app/app';
 
 const root = createRoot(document.querySelector('#root'));
 

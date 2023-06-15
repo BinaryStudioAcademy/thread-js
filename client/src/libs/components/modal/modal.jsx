@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Portal } from '../portal/portal.jsx';
+import { Portal } from '../portal/portal';
 import { useModal } from './hooks/hooks.js';
 import styles from './styles.module.scss';
 
