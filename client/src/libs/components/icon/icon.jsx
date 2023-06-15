@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconColor, IconName, IconSize } from 'libs/enums/enums';
 import PropTypes from 'prop-types';
 
-import { iconNameToSvgIcon } from './common';
+import { IconColor, IconName, IconSize } from '~/libs/enums/enums.js';
+
+import { iconNameToSvgIcon } from './common.js';
 
 const Icon = ({ className, name, size, color, isLoading }) => (
   <FontAwesomeIcon

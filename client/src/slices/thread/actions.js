@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ActionType } from './common';
+import { ActionType } from './common.js';
 
 const loadPosts = createAsyncThunk(
   ActionType.SET_ALL_POSTS,
@@ -9,7 +9,11 @@ const loadPosts = createAsyncThunk(
       posts: { count }
     } = getState();
 
-    const posts = await services.post.getAllPosts({ from: 0, count, ...filters });
+    const posts = await services.post.getAllPosts({
+      from: 0,
+      count,
+      ...filters
+    });
     return { posts };
   }
 );
@@ -20,7 +24,11 @@ const loadMorePosts = createAsyncThunk(
     const {
       posts: { posts, from, count }
     } = getState();
-    const loadedPosts = await services.post.getAllPosts({ from, count, ...filters });
+    const loadedPosts = await services.post.getAllPosts({
+      from,
+      count,
+      ...filters
+    });
     const filteredPosts = loadedPosts.filter(
       post => !(posts && posts.some(loadedPost => post.id === loadedPost.id))
     );
@@ -76,8 +84,11 @@ const likePost = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post => (post.id === postId ? mapLikes(post) : post));
-    const updatedExpandedPost = expandedPost?.id === postId ? mapLikes(expandedPost) : undefined;
+    const updated = posts.map(post =>
+      post.id === postId ? mapLikes(post) : post
+    );
+    const updatedExpandedPost =
+      expandedPost?.id === postId ? mapLikes(expandedPost) : undefined;
 
     return { posts: updated, expandedPost: updatedExpandedPost };
   }
@@ -98,11 +109,14 @@ const addComment = createAsyncThunk(
     const {
       posts: { posts, expandedPost }
     } = getState();
-    const updated = posts.map(post => (post.id === comment.postId ? mapComments(post) : post));
+    const updated = posts.map(post =>
+      post.id === comment.postId ? mapComments(post) : post
+    );
 
-    const updatedExpandedPost = expandedPost?.id === comment.postId
-      ? mapComments(expandedPost)
-      : undefined;
+    const updatedExpandedPost =
+      expandedPost?.id === comment.postId
+        ? mapComments(expandedPost)
+        : undefined;
 
     return { posts: updated, expandedPost: updatedExpandedPost };
   }
@@ -115,4 +129,5 @@ export {
   likePost,
   loadMorePosts,
   loadPosts,
-  toggleExpandedPost };
+  toggleExpandedPost
+};

@@ -1,6 +1,7 @@
-import { useEffect, useMemo } from 'libs/hooks/hooks';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+
+import { useEffect, useMemo } from '~/libs/hooks/hooks.js';
 
 import styles from './styles.module.scss';
 

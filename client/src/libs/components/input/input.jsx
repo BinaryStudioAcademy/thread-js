@@ -1,10 +1,11 @@
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
-import { IconName } from 'libs/enums/enums';
 import PropTypes from 'prop-types';
 import { useController } from 'react-hook-form';
 
-import { Icon } from '../icon/icon';
+import { IconName } from '~/libs/enums/enums.js';
+
+import { Icon } from '../icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const Input = ({

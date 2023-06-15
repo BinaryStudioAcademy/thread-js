@@ -1,8 +1,8 @@
-import { Image } from 'libs/components/image/image';
-import { Input } from 'libs/components/input/input';
-import { IconName,ImageSize } from 'libs/enums/enums';
-import { useAppForm, useSelector } from 'libs/hooks/hooks';
-import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
+import { Image } from '~/libs/components/image/image.jsx';
+import { Input } from '~/libs/components/input/input.jsx';
+import { IconName,ImageSize } from '~/libs/enums/enums.js';
+import { useAppForm, useSelector } from '~/libs/hooks/hooks.js';
+import { DEFAULT_USER_AVATAR } from '~/packages/user/constants/constants.js';
 
 import styles from './styles.module.scss';
 

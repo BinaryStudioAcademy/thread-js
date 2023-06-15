@@ -1,6 +1,6 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice,isAnyOf } from '@reduxjs/toolkit';
 
-import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants';
+import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants.js';
 import {
   addComment,
   applyPost,
@@ -9,7 +9,7 @@ import {
   loadMorePosts,
   loadPosts,
   toggleExpandedPost
-} from './actions';
+} from './actions.js';
 
 const initialState = {
   posts: [],

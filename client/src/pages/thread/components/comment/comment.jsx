@@ -1,6 +1,6 @@
-import { getFromNowTime } from 'libs/helpers/helpers';
-import { commentType } from 'libs/prop-types/property-types';
-import { DEFAULT_USER_AVATAR } from 'packages/user/constants/constants';
+import { getFromNowTime } from '~/libs/helpers/helpers.js';
+import { commentType } from '~/libs/prop-types/property-types.js';
+import { DEFAULT_USER_AVATAR } from '~/packages/user/constants/constants.js';
 
 import styles from './styles.module.scss';
 

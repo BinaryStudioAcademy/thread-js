@@ -1,8 +1,9 @@
-import { AppRoute } from 'libs/enums/enums';
-import { useSelector } from 'libs/hooks/hooks';
-import { locationType } from 'libs/prop-types/property-types';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
+
+import { AppRoute } from '~/libs/enums/enums.js';
+import { useSelector } from '~/libs/hooks/hooks.js';
+import { locationType } from '~/libs/prop-types/property-types.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user } = useSelector(state => ({

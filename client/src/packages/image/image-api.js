@@ -1,7 +1,7 @@
-import { ApiPath } from 'libs/enums/enums';
-import { HttpMethod } from 'packages/http/libs/enums/enums';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { HttpMethod } from '~/packages/http/libs/enums/enums.js';
 
-import { ImagePayloadKey } from './libs/enums/enums';
+import { ImagePayloadKey } from './libs/enums/enums.js';
 
 class Image {
   constructor({ apiPath, http }) {

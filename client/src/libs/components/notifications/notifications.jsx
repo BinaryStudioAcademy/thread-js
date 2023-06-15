@@ -1,9 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useDispatch, useEffect } from 'libs/hooks/hooks';
-import { userType } from 'libs/prop-types/property-types';
 import { ToastContainer } from 'react-toastify';
-import { actions as notificationActionCreator } from 'slices/notifications/notifications';
+
+import { useDispatch,useEffect } from '~/libs/hooks/hooks.js';
+import { userType } from '~/libs/prop-types/property-types.js';
+import { actions as notificationActionCreator } from '~/slices/notifications/notifications.js';
 
 const Notifications = ({ user }) => {
   const dispatch = useDispatch();

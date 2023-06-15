@@ -1,6 +1,6 @@
 import { createSlice,isAnyOf } from '@reduxjs/toolkit';
 
-import { loadCurrentUser,login, logout, register } from './actions';
+import { loadCurrentUser,login, logout, register } from './actions.js';
 
 const initialState = {
   user: null
@@ -37,4 +37,4 @@ const { reducer, actions, name } = createSlice({
   }
 });
 
-export { actions, name,reducer };
+export { actions, name, reducer };

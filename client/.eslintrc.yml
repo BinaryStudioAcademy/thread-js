@@ -27,7 +27,7 @@ rules:
     - error
   react/jsx-boolean-value:
     - error
-  import/extensions:
+  import/no-unresolved:
     - off
 
 overrides:

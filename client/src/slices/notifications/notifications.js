@@ -1,4 +1,4 @@
-import { joinRoom, leaveRoom } from './actions';
+import { joinRoom, leaveRoom } from './actions.js';
 
 const actions = {
   joinRoom,

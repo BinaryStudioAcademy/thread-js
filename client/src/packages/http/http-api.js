@@ -1,8 +1,8 @@
-import { StorageKey } from 'libs/enums/enums';
-import { getStringifiedQuery } from 'libs/helpers/helpers';
+import { StorageKey } from '~/libs/enums/enums.js';
+import { getStringifiedQuery } from '~/libs/helpers/helpers.js';
 
-import { HttpHeader, HttpMethod } from './libs/enums/enums';
-import { HttpError } from './libs/exceptions/exceptions';
+import { HttpHeader, HttpMethod } from './libs/enums/enums.js';
+import { HttpError } from './libs/exceptions/exceptions.js';
 
 class Http {
   constructor({ storage }) {

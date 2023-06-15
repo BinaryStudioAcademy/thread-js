@@ -1,4 +1,4 @@
-import { useCallback } from 'libs/hooks/hooks';
+import { useCallback } from '~/libs/hooks/hooks.js';
 
 const useModal = ({ onClose }) => {
   const handleOutsideClick = useCallback(() => {

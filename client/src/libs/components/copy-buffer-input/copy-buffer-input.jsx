@@ -1,8 +1,9 @@
-import { IconName } from 'libs/enums/enums';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
-import { Icon } from '../icon/icon';
+import { IconName } from '~/libs/enums/enums.js';
+
+import { Icon } from '../icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const CopyBufferInput = forwardRef(({ onCopy, value }, reference) => (

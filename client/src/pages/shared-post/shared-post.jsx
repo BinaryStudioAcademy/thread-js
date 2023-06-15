@@ -1,7 +1,8 @@
-import { AppRoute } from 'libs/enums/enums';
-import { useDispatch, useEffect, useParams } from 'libs/hooks/hooks';
 import { Navigate } from 'react-router-dom';
-import { actions as threadActionCreator } from 'slices/thread/thread';
+
+import { AppRoute } from '~/libs/enums/enums.js';
+import { useDispatch, useEffect, useParams } from '~/libs/hooks/hooks.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 const SharedPost = () => {
   const dispatch = useDispatch();
