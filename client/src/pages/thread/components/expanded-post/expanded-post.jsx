@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
-import { Modal } from '~/libs/components/modal/modal';
-import { Post } from '~/libs/components/post/post';
-import { Spinner } from '~/libs/components/spinner/spinner';
+import { Modal } from '~/libs/components/modal/modal.jsx';
+import { Post } from '~/libs/components/post/post.jsx';
+import { Spinner } from '~/libs/components/spinner/spinner.jsx';
 import { useCallback, useDispatch, useSelector } from '~/libs/hooks/hooks.js';
-import { AddComment, Comment } from '~/pages/thread/components/components.js';
+import { AddComment,Comment } from '~/pages/thread/components/components.js';
 import { actions as threadActionCreator } from '~/slices/thread/thread.slice.js';
 
 import { getSortedComments } from './libs/helpers/helpers.js';

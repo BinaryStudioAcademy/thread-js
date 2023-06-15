@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { Button } from '~/libs/components/button/button';
-import { Input } from '~/libs/components/input/input';
-import { Message } from '~/libs/components/message/message';
-import { Segment } from '~/libs/components/segment/segment';
+import { Button } from '~/libs/components/button/button.jsx';
+import { Input } from '~/libs/components/input/input.jsx';
+import { Message } from '~/libs/components/message/message.jsx';
+import { Segment } from '~/libs/components/segment/segment.jsx';
 import {
   AppRoute,
   ButtonColor,

@@ -5,8 +5,8 @@ import { getFromNowTime } from '~/libs/helpers/helpers.js';
 import { useCallback } from '~/libs/hooks/hooks.js';
 import { postType } from '~/libs/prop-types/property-types.js';
 
-import { IconButton } from '../icon-button/icon-button';
-import { Image } from '../image/image';
+import { IconButton } from '../icon-button/icon-button.jsx';
+import { Image } from '../image/image.jsx';
 import styles from './styles.module.scss';
 
 const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {

@@ -1,4 +1,4 @@
-import { Image } from '~/libs/components/image/image';
+import { Image } from '~/libs/components/image/image.jsx';
 import { AppRoute } from '~/libs/enums/enums.js';
 import { useCallback, useDispatch, useLocation } from '~/libs/hooks/hooks.js';
 import { actions as profileActionCreator } from '~/slices/profile/profile.js';

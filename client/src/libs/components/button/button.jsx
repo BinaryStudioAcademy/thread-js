@@ -9,7 +9,7 @@ import {
   IconSize
 } from '~/libs/enums/enums.js';
 
-import { Icon } from '../icon/icon';
+import { Icon } from '../icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const Button = ({

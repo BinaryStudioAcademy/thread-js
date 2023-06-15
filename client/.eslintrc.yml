@@ -29,11 +29,6 @@ rules:
     - error
   import/no-unresolved:
     - off
-  import/extensions:
-    - error
-    - jsx: never
-      js: ignorePackages
-      scss: always
 
 overrides:
   - files:

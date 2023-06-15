@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
-import { Icon } from '~/libs/components/icon/icon';
-import { AppRoute, IconName, IconSize } from '~/libs/enums/enums.js';
+import { Icon } from '~/libs/components/icon/icon.jsx';
+import { AppRoute,IconName, IconSize } from '~/libs/enums/enums.js';
 
 import styles from './styles.module.scss';
 
