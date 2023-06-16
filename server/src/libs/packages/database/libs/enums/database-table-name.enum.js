@@ -6,4 +6,4 @@ const DatabaseTableName = {
   USERS: 'users'
 };
 
-export { DatabaseTableName as DbTableName };
+export { DatabaseTableName };

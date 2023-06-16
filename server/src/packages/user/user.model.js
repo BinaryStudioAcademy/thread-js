@@ -2,7 +2,7 @@ import { Model } from 'objection';
 
 import {
   AbstractModel,
-  DbTableName as DatabaseTableName
+  DatabaseTableName
 } from '#libs/packages/database/database.js';
 import { ImageModel } from '#packages/image/image.js';
 
