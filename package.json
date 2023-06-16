@@ -2,25 +2,26 @@
   "name": "threadjs",
   "private": true,
   "engines": {
-    "node": ">=16 <17",
-    "npm": ">=8 <9"
+    "node": "18.x.x",
+    "npm": "9.x.x"
   },
   "type": "module",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
   "scripts": {
-    "install:shared": "cd shared && npm install",
-    "install:client": "cd client && npm install",
-    "install:server": "cd server && npm install",
-    "install:all": "npm install && npm run install:shared && npm run install:client && npm run install:server",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
-    "lint:shared:js": "cd shared && npm run lint:js",
-    "lint:shared": "cd shared && npm run lint",
-    "lint:client:css": "cd client && npm run lint:css",
-    "lint:client:js": "cd client && npm run lint:js",
-    "lint:client": "cd client && npm run lint",
-    "lint:server:js": "cd server && npm run lint:js",
-    "lint:server": "cd server && npm run lint",
-    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:client && npm run lint:server"
+    "lint:shared:js": "npm run lint:js -w shared",
+    "lint:shared": "npm run lint -w shared",
+    "lint:client:css": "npm run lint:css -w client",
+    "lint:client:js": "npm run lint:js -w client",
+    "lint:client": "npm run lint -w client",
+    "lint:server:js": "npm run lint:js -w server",
+    "lint:server": "npm run lint -w server",
+    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint -ws"
   },
   "devDependencies": {
     "@commitlint/cli": "17.6.3",
