@@ -40,6 +40,6 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "commit-msg": "npx commitlint --edit $1 -c ./commitlint.config.cjs"
+    "commit-msg": "npx commitlint --edit $1 -c -g ./commitlint.config.cjs"
   }
 }

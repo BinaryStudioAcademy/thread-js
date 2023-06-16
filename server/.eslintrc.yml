@@ -11,7 +11,7 @@ overrides:
       'import/no-default-export':
         - off
   - files:
-      - src/data/migrations/**/*.js
+      - src/db/migrations/**/*.js
     rules:
       'unicorn/filename-case':
         - error

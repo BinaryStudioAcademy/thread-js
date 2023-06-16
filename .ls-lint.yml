@@ -12,7 +12,7 @@ ls:
   .ttf: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .woff: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .woff2: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  server/src/data/migrations:
+  server/src/db/migrations:
     .js: snake_case
   .github/ISSUE_TEMPLATE:
     .dir: SCREAMING_SNAKE_CASE

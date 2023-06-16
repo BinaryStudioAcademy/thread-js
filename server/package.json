@@ -6,15 +6,19 @@
     "node": ">=16 <17",
     "npm": ">=8 <9"
   },
+  "imports": {
+    "#libs/*": "./src/libs/*",
+    "#packages/*": "./src/packages/*"
+  },
   "scripts": {
     "migrate:make": "npx knex migrate:make",
     "migrate:rollback": "npx knex migrate:rollback",
     "migrate:run": "npx knex migrate:latest",
     "seed:run": "npx knex seed:run",
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/main.js",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --detectOpenHandles --forceExit",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/starter/",
     "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",
     "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/",
