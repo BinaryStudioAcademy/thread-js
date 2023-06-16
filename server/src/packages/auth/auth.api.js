@@ -1,17 +1,18 @@
 import {
   AuthApiPath,
   ControllerHook,
-  HttpMethod,
-  HttpCode
+  HttpCode,
+  HttpMethod
 } from '#libs/enums/enums.js';
 import { getErrorStatusCode } from '#libs/helpers/helpers.js';
+
 import {
   loginValidationSchema,
   registrationValidationSchema
 } from './libs/validation-schemas/validation-schemas.js';
 
-const initAuthApi = (fastify, opts, done) => {
-  const { authService, userService } = opts.services;
+const initAuthApi = (fastify, options, done) => {
+  const { authService, userService } = options.services;
 
   // user added to the request (req.user) in auth plugin, authorization.plugin.js
   fastify.route({
@@ -20,12 +21,12 @@ const initAuthApi = (fastify, opts, done) => {
     schema: {
       body: loginValidationSchema
     },
-    async [ControllerHook.HANDLER](req, res) {
+    async [ControllerHook.HANDLER](request, response) {
       try {
-        const user = await authService.verifyLoginCredentials(req.body);
+        const user = await authService.verifyLoginCredentials(request.body);
         return await authService.login(user);
-      } catch (err) {
-        return res.status(getErrorStatusCode(err)).send(err);
+      } catch (error) {
+        return response.status(getErrorStatusCode(error)).send(error);
       }
     }
   });
@@ -35,20 +36,21 @@ const initAuthApi = (fastify, opts, done) => {
     schema: {
       body: registrationValidationSchema
     },
-    async [ControllerHook.HANDLER](req, res) {
+    async [ControllerHook.HANDLER](request, response) {
       try {
-        const createdUser = await authService.register(req.body);
+        const createdUser = await authService.register(request.body);
 
-        return res.status(HttpCode.CREATED).send(createdUser);
-      } catch (err) {
-        return res.status(getErrorStatusCode(err)).send(err);
+        return response.status(HttpCode.CREATED).send(createdUser);
+      } catch (error) {
+        return response.status(getErrorStatusCode(error)).send(error);
       }
     }
   });
   fastify.route({
     method: HttpMethod.GET,
     url: AuthApiPath.USER,
-    [ControllerHook.HANDLER]: async req => userService.getUserById(req.user.id)
+    [ControllerHook.HANDLER]: async request =>
+      userService.getUserById(request.user.id)
   });
 
   done();

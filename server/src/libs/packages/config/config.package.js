@@ -42,7 +42,7 @@ class Config {
       GYAZO: {
         ACCESS_KEY: GYAZO_ACCESS_TOKEN,
         UPLOAD_API_URL: GYAZO_UPLOAD_API_URL,
-        FILE_SIZE: 10000000
+        FILE_SIZE: 10_000_000
       }
     };
   }

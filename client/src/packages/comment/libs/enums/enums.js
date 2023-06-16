@@ -1,4 +1,3 @@
 export {
-  CommentsApiPath,
-  CommentPayloadKey
-} from 'shared/src/packages/comment/comment';
+  CommentPayloadKey,
+  CommentsApiPath } from 'shared/src/packages/comment/comment';

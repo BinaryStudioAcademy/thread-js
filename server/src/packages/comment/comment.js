@@ -9,5 +9,6 @@ const commentService = new CommentService({
   commentRepository
 });
 
-export { CommentModel, commentRepository, commentService };
+export { commentRepository, commentService };
 export { initCommentApi } from './comment.api.js';
+export { CommentModel } from './comment.model.js';

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
-import { Portal } from '../portal/portal';
-import { useModal } from './hooks/hooks';
-
+import { Portal } from '../portal/portal.jsx';
+import { useModal } from './hooks/hooks.js';
 import styles from './styles.module.scss';
 
 const Modal = ({ isOpen, isCentered, onClose, children }) => {
@@ -20,10 +20,14 @@ const Modal = ({ isOpen, isCentered, onClose, children }) => {
       <div
         className={clsx(styles.modal, isCentered && styles.centered)}
         onClick={handleOutsideClick}
+        role="button"
+        tabIndex="0"
       >
         <div
           className={styles.content}
           onClick={handleDisableContentContainerClick}
+          role="button"
+          tabIndex="0"
         >
           {children}
         </div>

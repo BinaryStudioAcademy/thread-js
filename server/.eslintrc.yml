@@ -1,46 +1,18 @@
-extends:
-  - airbnb-base
-  - eslint:recommended
-  - ../.eslintrc.yml
-
 env:
   node: true
 
-rules:
-  no-plusplus:
-    - error
-    - allowForLoopAfterthoughts: true
-  no-console:
-    - warn
-    - allow:
-        - warn
-        - error
-        - info
-  prefer-promise-reject-errors:
-    - off
-  import/no-import-module-exports:
-    - off
-  import/no-relative-packages:
-    - off
-  import/no-unresolved:
-    - off
+extends:
+  - ../.eslintrc.yml
 
 overrides:
-  - files:
-      - ./src/db/seeds/**/*
-      - ./src/db/seed-data/**/*
-    rules:
-      no-console:
-        - off
-      max-len:
-        - off
-  - files:
-      - ./src/packages/**/*
-    rules:
-      import/no-cycle:
-        - off
   - files:
       - knexfile.js
     rules:
       'import/no-default-export':
         - off
+  - files:
+      - src/db/migrations/**/*.js
+    rules:
+      'unicorn/filename-case':
+        - error
+        - case: snakeCase

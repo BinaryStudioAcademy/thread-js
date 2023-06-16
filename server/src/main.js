@@ -1,22 +1,7 @@
-import {
-  serverApp,
-  ExitCode
-} from './libs/packages/server-application/server-application.js';
+import { serverApp } from './libs/packages/server-application/server-application.js';
 
-(async () => {
-  try {
-    await serverApp.start();
-  } catch (err) {
-    serverApp.log.error(err);
-    process.exit(ExitCode.ERROR);
-  }
-})();
-
-process.on('unhandledRejection', error => {
-  console.error(error);
-});
-
-process.on('uncaughtException', error => {
-  console.error(error);
-  process.exit(1);
-});
+try {
+  await serverApp.start();
+} catch (error) {
+  serverApp.log.error(error);
+}

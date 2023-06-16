@@ -1,8 +1,15 @@
 /* eslint-disable react/button-has-type */
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { ButtonColor, ButtonType, IconName, IconSize } from 'libs/enums/enums';
-import { Icon } from '../icon/icon';
+import PropTypes from 'prop-types';
+
+import {
+  ButtonColor,
+  ButtonType,
+  IconName,
+  IconSize
+} from '~/libs/enums/enums.js';
+
+import { Icon } from '../icon/icon.jsx';
 import styles from './styles.module.scss';
 
 const Button = ({

@@ -1,4 +1,5 @@
 import multer from 'fastify-multer';
+
 import { config } from '#libs/packages/config/config.js';
 
 const storage = multer.memoryStorage();

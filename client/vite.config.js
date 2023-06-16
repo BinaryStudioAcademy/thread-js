@@ -1,8 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import reactPlugin from '@vitejs/plugin-react';
-// could be removed once vite aliases are done
-import jsconfigPaths from 'vite-jsconfig-paths';
 import dns from 'dns';
+import path from 'node:path';
 
 // could be removed once node version is 17+
 dns.setDefaultResultOrder('verbatim');
@@ -15,6 +14,11 @@ const config = ({ mode }) => {
   );
 
   return defineConfig({
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src')
+      }
+    },
     server: {
       // imgur forbids accessing its files from 127.0.0.1 (vite default host)
       host: VITE_HOST,
@@ -23,7 +27,7 @@ const config = ({ mode }) => {
         [VITE_API_PATH]: VITE_API_SERVER
       }
     },
-    plugins: [jsconfigPaths(), reactPlugin()]
+    plugins: [reactPlugin()]
   });
 };
 

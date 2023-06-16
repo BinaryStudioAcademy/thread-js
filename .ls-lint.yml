@@ -1,26 +1,30 @@
 ls:
-  .github/workflows:
-    .yml: kebab-case
-  server/src/db/migrations:
-    .js: snake_case
-  server/src/db/seeds:
-    .js: snake_case
   .dir: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .scss: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .js: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .jsx: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .ts: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .tsx: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .json: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .md: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .woff2: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
-  .svg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .png: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
   .jpg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .jpeg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .svg: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .webp: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .gif: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .ttf: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .woff: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .woff2: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  server/src/db/migrations:
+    .js: snake_case
+  .github/ISSUE_TEMPLATE:
+    .dir: SCREAMING_SNAKE_CASE
 
 ignore:
+  - .git
   - node_modules
+  - build
+  - shared/build
+  - shared/node_modules
   - client/build
   - client/node_modules
+  - server/build
   - server/node_modules
-  - shared/node_modules
+  - .idea

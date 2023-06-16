@@ -1,4 +1,4 @@
-import { Storage } from './storage-api';
+import { Storage } from './storage-api.js';
 
 const storage = new Storage({
   storage: localStorage

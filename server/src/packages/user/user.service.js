@@ -4,9 +4,7 @@ class UserService {
   }
 
   async getUserById(id) {
-    const user = await this._userRepository.getUserById(id);
-
-    return user;
+    return await this._userRepository.getUserById(id);
   }
 }
 

@@ -2,16 +2,17 @@ import { Model } from 'objection';
 
 import {
   AbstractModel,
-  DbTableName
+  DbTableName as DatabaseTableName
 } from '#libs/packages/database/database.js';
 import { CommentModel } from '#packages/comment/comment.js';
 import { ImageModel } from '#packages/image/image.js';
-import { PostReactionModel } from './post.js';
 import { UserModel } from '#packages/user/user.js';
+
+import { PostReactionModel } from './post.js';
 
 class PostModel extends AbstractModel {
   static get tableName() {
-    return DbTableName.POSTS;
+    return DatabaseTableName.POSTS;
   }
 
   static get jsonSchema() {
@@ -35,25 +36,25 @@ class PostModel extends AbstractModel {
         relation: Model.HasManyRelation,
         modelClass: CommentModel,
         join: {
-          from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.COMMENTS}.postId`
+          from: `${DatabaseTableName.POSTS}.id`,
+          to: `${DatabaseTableName.COMMENTS}.postId`
         }
       },
       image: {
         relation: Model.HasOneRelation,
         modelClass: ImageModel,
         join: {
-          from: `${DbTableName.POSTS}.imageId`,
+          from: `${DatabaseTableName.POSTS}.imageId`,
           filter: query => query.select('id', 'link'),
-          to: `${DbTableName.IMAGES}.id`
+          to: `${DatabaseTableName.IMAGES}.id`
         }
       },
       postReactions: {
         relation: Model.HasManyRelation,
         modelClass: PostReactionModel,
         join: {
-          from: `${DbTableName.POSTS}.id`,
-          to: `${DbTableName.POST_REACTIONS}.postId`
+          from: `${DatabaseTableName.POSTS}.id`,
+          to: `${DatabaseTableName.POST_REACTIONS}.postId`
         }
       },
       user: {
@@ -61,8 +62,8 @@ class PostModel extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.POSTS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.POSTS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };

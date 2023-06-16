@@ -1,19 +1,19 @@
 import {
   ControllerHook,
-  ImagesApiPath,
-  HttpMethod
+  HttpMethod,
+  ImagesApiPath
 } from '#libs/enums/enums.js';
 import { upload } from '#libs/middlewares/middlewares.js';
 
-const initImageApi = (fastify, opts, done) => {
-  const { imageService } = opts.services;
+const initImageApi = (fastify, options, done) => {
+  const { imageService } = options.services;
   fastify.register(upload.contentParser);
 
   fastify.route({
     method: HttpMethod.POST,
     url: ImagesApiPath.ROOT,
     [ControllerHook.PRE_HANDLER]: upload.single('image'),
-    [ControllerHook.HANDLER]: req => imageService.upload(req.file)
+    [ControllerHook.HANDLER]: request => imageService.upload(request.file)
   });
 
   done();

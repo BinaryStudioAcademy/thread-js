@@ -2,14 +2,15 @@ import { Model } from 'objection';
 
 import {
   AbstractModel,
-  DbTableName
+  DbTableName as DatabaseTableName
 } from '#libs/packages/database/database.js';
-import { PostModel } from './post.js';
 import { UserModel } from '#packages/user/user.js';
+
+import { PostModel } from './post.js';
 
 class PostReactionModel extends AbstractModel {
   static get tableName() {
-    return DbTableName.POST_REACTIONS;
+    return DatabaseTableName.POST_REACTIONS;
   }
 
   static get jsonSchema() {
@@ -33,8 +34,8 @@ class PostReactionModel extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.POST_REACTIONS}.postId`,
-          to: `${DbTableName.POSTS}.id`
+          from: `${DatabaseTableName.POST_REACTIONS}.postId`,
+          to: `${DatabaseTableName.POSTS}.id`
         }
       },
       user: {
@@ -42,8 +43,8 @@ class PostReactionModel extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'userId'),
         join: {
-          from: `${DbTableName.POST_REACTIONS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.POST_REACTIONS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };

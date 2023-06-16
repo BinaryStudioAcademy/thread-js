@@ -1,13 +1,16 @@
-import { SocketEvent, SocketNamespace } from 'packages/socket/libs/enums/enums';
 import {
-  NotificationType,
   NotificationMessage,
-  NotificationSocketEvent
-} from 'packages/notification/libs/enums/enums';
-import { socket } from 'packages/socket/socket';
-import { actions as appActionCreator } from 'slices/app/app';
-import { actions as threadActionCreator } from 'slices/thread/thread';
-import { actions as notificationActionCreator } from 'slices/notifications/notifications';
+  NotificationSocketEvent,
+  NotificationType
+} from '~/packages/notification/libs/enums/enums.js';
+import {
+  SocketEvent,
+  SocketNamespace
+} from '~/packages/socket/libs/enums/enums.js';
+import { socket } from '~/packages/socket/socket.js';
+import { actions as appActionCreator } from '~/slices/app/app.js';
+import { actions as notificationActionCreator } from '~/slices/notifications/notifications.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 const notificationSocketInstance = socket.getInstance(
   SocketNamespace.NOTIFICATION
@@ -27,14 +30,14 @@ const notificationSocket = ({ dispatch }) => {
   });
 
   return next => action => {
-    if (notificationActionCreator.joinRoom.match(action)) {
+    if (new RegExp(action).test(notificationActionCreator.joinRoom)) {
       notificationSocketInstance.emit(
         SocketEvent.NOTIFICATION_JOIN_ROOM,
         `${action.payload}`
       );
     }
 
-    if (notificationActionCreator.leaveRoom.match(action)) {
+    if (new RegExp(action).test(notificationActionCreator.leaveRoom)) {
       notificationSocketInstance.emit(
         SocketEvent.NOTIFICATION_LEAVE_ROOM,
         `${action.payload}`

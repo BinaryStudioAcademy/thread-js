@@ -2,13 +2,13 @@ import { Model } from 'objection';
 
 import {
   AbstractModel,
-  DbTableName
+  DbTableName as DatabaseTableName
 } from '#libs/packages/database/database.js';
 import { ImageModel } from '#packages/image/image.js';
 
 class UserModel extends AbstractModel {
   static get tableName() {
-    return DbTableName.USERS;
+    return DatabaseTableName.USERS;
   }
 
   static get jsonSchema() {
@@ -34,8 +34,8 @@ class UserModel extends AbstractModel {
         modelClass: ImageModel,
         filter: query => query.select('id', 'link'),
         join: {
-          from: `${DbTableName.USERS}.imageId`,
-          to: `${DbTableName.IMAGES}.id`
+          from: `${DatabaseTableName.USERS}.imageId`,
+          to: `${DatabaseTableName.IMAGES}.id`
         }
       }
     };

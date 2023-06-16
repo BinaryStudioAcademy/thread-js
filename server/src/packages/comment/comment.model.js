@@ -2,14 +2,14 @@ import { Model } from 'objection';
 
 import {
   AbstractModel,
-  DbTableName
+  DbTableName as DatabaseTableName
 } from '#libs/packages/database/database.js';
 import { PostModel } from '#packages/post/post.js';
 import { UserModel } from '#packages/user/user.js';
 
 class CommentModel extends AbstractModel {
   static get tableName() {
-    return DbTableName.COMMENTS;
+    return DatabaseTableName.COMMENTS;
   }
 
   static get jsonSchema() {
@@ -33,8 +33,8 @@ class CommentModel extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: PostModel,
         join: {
-          from: `${DbTableName.COMMENTS}.postId`,
-          to: `${DbTableName.POSTS}.id`
+          from: `${DatabaseTableName.COMMENTS}.postId`,
+          to: `${DatabaseTableName.POSTS}.id`
         }
       },
       user: {
@@ -42,8 +42,8 @@ class CommentModel extends AbstractModel {
         modelClass: UserModel,
         filter: query => query.select('id', 'username', 'imageId'),
         join: {
-          from: `${DbTableName.COMMENTS}.userId`,
-          to: `${DbTableName.USERS}.id`
+          from: `${DatabaseTableName.COMMENTS}.userId`,
+          to: `${DatabaseTableName.USERS}.id`
         }
       }
     };

@@ -1,6 +1,8 @@
 import qs from 'qs';
-import { ServerApp } from './server-app.js';
+
 import { config } from '#libs/packages/config/config.js';
+
+import { ServerApp } from './server-app.js';
 
 const serverApp = new ServerApp({
   config,
@@ -12,8 +14,9 @@ const serverApp = new ServerApp({
       }
     }
   },
-  querystringParser: str => qs.parse(str, { comma: true })
+  querystringParser: string => qs.parse(string, { comma: true })
 });
 
-export { ServerApp, serverApp };
+export { serverApp };
 export { ExitCode } from './libs/enums/enums.js';
+export { ServerApp } from './server-app.js';

@@ -1,18 +1,22 @@
-import { isAnyOf, createSlice } from '@reduxjs/toolkit';
+import { createSlice,isAnyOf } from '@reduxjs/toolkit';
+
+import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants.js';
 import {
-  loadPosts,
-  loadMorePosts,
-  toggleExpandedPost,
-  likePost,
   addComment,
   applyPost,
-  createPost
-} from './actions';
+  createPost,
+  likePost,
+  loadMorePosts,
+  loadPosts,
+  toggleExpandedPost
+} from './actions.js';
 
 const initialState = {
   posts: [],
   expandedPost: null,
-  hasMorePosts: true
+  hasMorePosts: true,
+  count: POSTS_PER_PAGE,
+  from: 0
 };
 
 const { reducer, actions, name } = createSlice({
@@ -24,7 +28,8 @@ const { reducer, actions, name } = createSlice({
       const { posts } = action.payload;
 
       state.posts = posts;
-      state.hasMorePosts = Boolean(posts.length);
+      state.hasMorePosts = posts.length > 0;
+      state.from = initialState.count;
     });
     builder.addCase(loadMorePosts.pending, state => {
       state.hasMorePosts = null;
@@ -32,8 +37,9 @@ const { reducer, actions, name } = createSlice({
     builder.addCase(loadMorePosts.fulfilled, (state, action) => {
       const { posts } = action.payload;
 
-      state.posts = state.posts.concat(posts);
-      state.hasMorePosts = Boolean(posts.length);
+      state.posts = [...state.posts, ...posts];
+      state.hasMorePosts = posts.length > 0;
+      state.from += posts.length;
     });
     builder.addCase(toggleExpandedPost.fulfilled, (state, action) => {
       const { post } = action.payload;
@@ -61,4 +67,4 @@ const { reducer, actions, name } = createSlice({
   }
 });
 
-export { reducer, actions, name };
+export { actions, name, reducer };

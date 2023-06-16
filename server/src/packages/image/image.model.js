@@ -1,11 +1,11 @@
 import {
   AbstractModel,
-  DbTableName
+  DbTableName as DatabaseTableName
 } from '#libs/packages/database/database.js';
 
 class ImageModel extends AbstractModel {
   static get tableName() {
-    return DbTableName.IMAGES;
+    return DatabaseTableName.IMAGES;
   }
 
   static get jsonSchema() {

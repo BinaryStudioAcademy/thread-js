@@ -1,4 +1,5 @@
 import FormData from 'form-data';
+
 import { HttpMethod } from '#libs/enums/enums.js';
 
 class ImageService {
@@ -17,7 +18,7 @@ class ImageService {
     });
     formData.append('access_token', this._config.ENV.GYAZO.ACCESS_KEY);
 
-    const res = await this._httpService.load(
+    const response = await this._httpService.load(
       this._config.ENV.GYAZO.UPLOAD_API_URL,
       {
         method: HttpMethod.POST,
@@ -26,7 +27,7 @@ class ImageService {
       }
     );
 
-    return this._imageRepository.create({ link: res.url });
+    return this._imageRepository.create({ link: response.url });
   }
 }
 

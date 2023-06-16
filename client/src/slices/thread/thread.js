@@ -1,13 +1,13 @@
 import {
-  loadPosts,
-  loadMorePosts,
+  addComment,
   applyPost,
   createPost,
-  toggleExpandedPost,
   likePost,
-  addComment
-} from './actions';
-import { actions } from './thread.slice';
+  loadMorePosts,
+  loadPosts,
+  toggleExpandedPost
+} from './actions.js';
+import { actions } from './thread.slice.js';
 
 const allActions = {
   ...actions,
@@ -21,4 +21,4 @@ const allActions = {
 };
 
 export { allActions as actions };
-export { reducer } from './thread.slice';
+export { reducer } from './thread.slice.js';

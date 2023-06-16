@@ -1,28 +1,28 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useAppForm,
-  useDispatch,
-  useSelector
-} from 'libs/hooks/hooks';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { actions as threadActionCreator } from 'slices/thread/thread';
-import { image as imageService } from 'packages/image/image';
-import { ThreadToolbarKey, UseFormMode } from 'libs/enums/enums';
-import { Post } from 'libs/components/post/post';
-import { Spinner } from 'libs/components/spinner/spinner';
-import { Checkbox } from 'libs/components/checkbox/checkbox';
-import { ExpandedPost, SharedPostLink, AddPost } from './components/components';
-import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants';
 
+import { Checkbox } from '~/libs/components/checkbox/checkbox.jsx';
+import { Post } from '~/libs/components/post/post.jsx';
+import { Spinner } from '~/libs/components/spinner/spinner.jsx';
+import { ThreadToolbarKey, UseFormMode } from '~/libs/enums/enums.js';
+import {
+  useAppForm,
+  useCallback,
+  useDispatch,
+  useEffect,
+  useSelector,
+  useState } from '~/libs/hooks/hooks.js';
+import { image as imageService } from '~/packages/image/image.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
+
+import {
+  AddPost,
+  ExpandedPost,
+  SharedPostLink } from './components/components.js';
+import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
+import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter.js';
 import styles from './styles.module.scss';
 
-const postsFilter = {
-  userId: undefined,
-  from: 0,
-  count: 10
-};
+const handleUploadImage = file => imageService.uploadImage(file);
 
 const Thread = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,10 @@ const Thread = () => {
     expandedPost: state.posts.expandedPost,
     userId: state.profile.user.id
   }));
-  const [sharedPostId, setSharedPostId] = useState(undefined);
+
+  const { postsFilter, handleShownOwnPosts } = usePostsFilter();
+
+  const [sharedPostId, setSharedPostId] = useState();
 
   const { control, watch } = useAppForm({
     defaultValues: DEFAULT_THREAD_TOOLBAR,
@@ -49,15 +52,18 @@ const Thread = () => {
   );
 
   const handleToggleShowOwnPosts = useCallback(() => {
-    postsFilter.userId = showOwnPosts ? userId : undefined;
-    postsFilter.from = 0;
-    handlePostsLoad(postsFilter);
-    postsFilter.from = postsFilter.count; // for the next scroll
-  }, [userId, showOwnPosts, handlePostsLoad]);
+    const currentUserId = showOwnPosts ? userId : undefined;
+
+    handleShownOwnPosts(currentUserId);
+  }, [handleShownOwnPosts, showOwnPosts, userId]);
 
   useEffect(() => {
     handleToggleShowOwnPosts();
   }, [showOwnPosts, handleToggleShowOwnPosts]);
+
+  useEffect(() => {
+    handlePostsLoad(postsFilter);
+  }, [handlePostsLoad, postsFilter]);
 
   const handlePostLike = useCallback(
     id => dispatch(threadActionCreator.likePost(id)),
@@ -83,15 +89,11 @@ const Thread = () => {
 
   const handleGetMorePosts = useCallback(() => {
     handleMorePostsLoad(postsFilter);
-    const { from, count } = postsFilter;
-    postsFilter.from = from + count;
-  }, [handleMorePostsLoad]);
+  }, [handleMorePostsLoad, postsFilter]);
 
-  const handleSharePost = id => setSharedPostId(id);
+  const handleSharePost = useCallback(id => setSharedPostId(id), []);
 
-  const handleUploadImage = file => imageService.uploadImage(file);
-
-  const handleCloseSharedPostLink = () => setSharedPostId(undefined);
+  const handleCloseSharedPostLink = useCallback(() => setSharedPostId(), []);
 
   useEffect(() => {
     handleGetMorePosts();

@@ -15,11 +15,7 @@ const postService = new PostService({
   postReactionRepository
 });
 
-export {
-  PostModel,
-  PostReactionModel,
-  postRepository,
-  postReactionRepository,
-  postService
-};
+export { postReactionRepository, postRepository, postService };
 export { initPostApi } from './post.api.js';
+export { PostModel } from './post.model.js';
+export { PostReactionModel } from './post-reaction.model.js';
