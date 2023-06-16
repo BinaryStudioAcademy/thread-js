@@ -1,17 +1,19 @@
-import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
-import { config } from '#libs/packages/config/config.js';
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import {
   ApiPath,
+  AuthApiPath,
+  FilterUserMode,
   HttpCode,
   HttpMethod,
-  AuthApiPath,
-  PostsApiPath,
-  UserPayloadKey,
   PostPayloadKey,
-  FilterUserMode
+  PostsApiPath,
+  UserPayloadKey
 } from '#libs/enums/enums.js';
 import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { config } from '#libs/packages/config/config.js';
+
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
@@ -61,7 +63,7 @@ describe(`${normalizeTrailingSlash(
 
     const testPosts = Array.from({ length: 2 }, (_, index) => ({
       [PostPayloadKey.BODY]: faker.lorem.paragraph(),
-      token: !index ? tokenMainUser : tokenMinorUser
+      token: index ? tokenMinorUser : tokenMainUser
     }));
 
     await Promise.all(

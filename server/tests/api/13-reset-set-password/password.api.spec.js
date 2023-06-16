@@ -1,19 +1,21 @@
-import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
-import { config } from '#libs/packages/config/config.js';
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import {
   ApiPath,
-  HttpCode,
   AuthApiPath,
-  UserPayloadKey,
-  PasswordApiPath
+  HttpCode,
+  PasswordApiPath,
+  UserPayloadKey
 } from '#libs/enums/enums.js';
 import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
-import { buildApp } from '../../helpers/helpers.js';
+import { config } from '#libs/packages/config/config.js';
 import {
-  UserValidationRule,
-  UserValidationMessage
+  UserValidationMessage,
+  UserValidationRule
 } from '#packages/user/user.js';
+
+import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
   joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD)

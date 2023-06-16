@@ -1,18 +1,20 @@
-import { it, describe, expect, beforeAll } from '@jest/globals';
 import { faker } from '@faker-js/faker';
-import { config } from '#libs/packages/config/config.js';
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import {
   ApiPath,
+  AuthApiPath,
+  CommentPayloadKey,
+  CommentsApiPath,
   HttpCode,
   HttpMethod,
-  AuthApiPath,
-  PostsApiPath,
-  UserPayloadKey,
   PostPayloadKey,
-  CommentsApiPath,
-  CommentPayloadKey
+  PostsApiPath,
+  UserPayloadKey
 } from '#libs/enums/enums.js';
 import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { config } from '#libs/packages/config/config.js';
+
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(

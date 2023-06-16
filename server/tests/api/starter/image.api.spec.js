@@ -1,20 +1,23 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { it, describe, expect, beforeAll } from '@jest/globals';
+
 import { faker } from '@faker-js/faker';
+import { beforeAll, describe, expect, it } from '@jest/globals';
 import FormData from 'form-data';
-import fs from 'fs';
-import { config } from '#libs/packages/config/config.js';
+
 import {
   ApiPath,
+  AuthApiPath,
   HttpCode,
   HttpMethod,
-  AuthApiPath,
+  ImagePayloadKey,
   ImagesApiPath,
-  UserPayloadKey,
-  ImagePayloadKey
+  UserPayloadKey
 } from '#libs/enums/enums.js';
 import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { config } from '#libs/packages/config/config.js';
+
 import { buildApp } from '../../helpers/helpers.js';
 
 describe(`${normalizeTrailingSlash(
