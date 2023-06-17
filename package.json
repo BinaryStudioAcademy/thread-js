@@ -36,8 +36,8 @@
     "eslint-plugin-unicorn": "45.0.2",
     "lint-staged": "13.1.0",
     "simple-git-hooks": "2.8.1",
-    "stylelint": "14.16.1",
-    "stylelint-config-standard": "29.0.0"
+    "stylelint": "15.7.0",
+    "stylelint-config-standard": "33.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
