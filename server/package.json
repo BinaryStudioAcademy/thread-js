@@ -18,7 +18,7 @@
     "start": "nodemon src/main.js",
     "lint:js": "npx eslint --ext .js src",
     "lint": "npm run lint:js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/starter/",
     "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",
     "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/",
