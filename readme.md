@@ -67,9 +67,9 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 - Change `eol` setting in your code editor to `lf`.
 - Change the `autocrlf` setting to `input` in the Git settings:
-  ```
-  git config --global core.autocrlf input
-  ```
+    ```
+    git config --global core.autocrlf input
+    ```
 
 5. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
 
@@ -81,18 +81,16 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 ### Root of project
 
-1. In the root of the project, you can install all the dependencies with one command:
+1. In the root of the project, install all the dependencies with command:
 
     ```
-        npm run install:all
+    npm install
     ```
-
-    This will install the dependencies for the root directory, frontend and backend. Can be installed for each folder separately (see below).
 
 2. After installing the packages, in the root of the project, you need to run the command to [git-hooks](https://www.npmjs.com/package/simple-git-hooks):
 
     ```
-        npx simple-git-hooks
+    npx simple-git-hooks
     ```
 
     **Now, for each of your commits, the linter will be launched and check your code.**
@@ -107,12 +105,6 @@ Shared package contains code that is used for both frontend and backend.
     cd /* path to shared folder */
     ```
 
-2. Install all required packages from package.json with the command:
-
-    ```
-    npm install
-    ```
-
 ### Backend
 
 1. In the command line (terminal) go to the folder server:
@@ -121,20 +113,14 @@ Shared package contains code that is used for both frontend and backend.
     cd /* path to server folder */
     ```
 
-2. Install all required packages from `package.json` with the command:
-
-    ```
-    npm install
-    ```
-
-3. In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
+2. In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
 
     **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
     Replace in file **.env** key values to real.
     In order to specify the keys for Gyazo Storage, you need to register on the site [Gyazo](https://gyazo.com/captures) and [register the app](https://gyazo.com/oauth/applications). Then, in **.env** use `access token` from the recently created application to Gyazo.
 
-4. Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
+3. Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
 
     ```
     npm run migrate:run
@@ -143,13 +129,13 @@ Shared package contains code that is used for both frontend and backend.
 
     Check the database for demo data.
 
-5. To start the server in the command line (terminal) in the server folder, run:
+4. To start the server in the command line (terminal) in the server folder, run:
 
     ```
     npm start
     ```
 
-6. To test the correct completing the task in the command line (terminal) in the server folder, run:
+5. To test the correct completing the task in the command line (terminal) in the server folder, run:
     ```
     npm run test:${task key}
     ```
@@ -167,19 +153,13 @@ Shared package contains code that is used for both frontend and backend.
     cd /* path to client folder */
     ```
 
-2. Install all required packages from package.json with the command:
-
-    ```
-    npm install
-    ```
-
-3. In the `client` folder create a file **.env** and copy the contents of the file into it **.env.example**.
+2. In the `client` folder create a file **.env** and copy the contents of the file into it **.env.example**.
 
     **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
     Replace in file **.env** key values to real.
 
-4. To run the client from the command line (terminal) in the client folder, run:
+3. To run the client from the command line (terminal) in the client folder, run:
 
     ```
     npm start

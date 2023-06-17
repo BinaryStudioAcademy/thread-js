@@ -2,9 +2,10 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": ">=16 <17",
-    "npm": ">=8 <9"
+    "node": "18.x.x",
+    "npm": "9.x.x"
   },
+  "type": "module",
   "scripts": {
     "start": "vite",
     "build": "vite build",
