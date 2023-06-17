@@ -21,31 +21,31 @@
   align-items: center;
 }
 
-@media only screen and (width >= 767px) {
+@media only screen and (max-width: 767px) {
   .content {
     width: 95%;
   }
 }
 
-@media only screen and (width >= 768px) {
+@media only screen and (min-width: 768px) {
   .content {
     width: 88%;
   }
 }
 
-@media only screen and (width >= 992px) {
+@media only screen and (min-width: 992px) {
   .content {
     width: 850px;
   }
 }
 
-@media only screen and (width >= 1200px) {
+@media only screen and (min-width: 1200px) {
   .content {
     width: 900px;
   }
 }
 
-@media only screen and (width >= 1920px) {
+@media only screen and (min-width: 1920px) {
   .content {
     width: 950px;
   }
