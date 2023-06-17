@@ -71,17 +71,11 @@ overrides:
   - files:
       - project.config.cjs
       - commitlint.config.cjs
+      - dangerfile.cjs
     parserOptions:
       sourceType: commonjs
     env:
       node: true
     rules:
       'import/no-default-export':
-        - off
-
-  - files:
-      - commitlint.config.js
-      - dangerfile.js
-    rules:
-      import/extensions:
         - off

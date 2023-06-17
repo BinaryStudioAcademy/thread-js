@@ -1,6 +1,6 @@
-import { danger, fail } from 'danger';
+const { danger, fail } = require('danger');
 
-import { ProjectPrefix } from './project.config';
+const { ProjectPrefix } = require('./project.config.cjs');
 
 const BranchPrefix = {
   TASK: 'task',

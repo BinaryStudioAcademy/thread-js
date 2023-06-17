@@ -1,0 +1,19 @@
+root: '*'
+
+workflows: '.github/**/*'
+
+shared: 'shared/**/*'
+
+client:
+  - any:
+      - 'client/**/*'
+      - '!client/.env.example'
+
+server:
+  - any:
+      - 'server/**/*'
+      - '!server/.env.example'
+
+ENV:
+  - 'client/.env.example'
+  - 'server/.env.example'
