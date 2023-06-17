@@ -94,7 +94,11 @@ const Thread = () => {
   const handleSharePost = useCallback(id => setSharedPostId(id), []);
 
   const handleCloseSharedPostLink = useCallback(() => setSharedPostId(), []);
-  
+
+  useEffect(() => {
+    handleGetMorePosts();
+  }, [handleGetMorePosts]);
+
   return (
     <div className={styles.threadContent}>
       <div className={styles.addPostForm}>
