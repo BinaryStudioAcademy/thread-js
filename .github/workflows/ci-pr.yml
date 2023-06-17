@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         run: |
-          npx danger ci --failOnErrors --text-only
+          npx danger ci --failOnErrors --text-only -d ./dangerfile.cjs
 
       - name: Add Folder Labels
         uses: actions/labeler@v4
