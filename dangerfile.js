@@ -1,6 +1,6 @@
 import { danger, fail } from 'danger';
 
-import { ProjectPrefix } from './project.config';
+import { ProjectPrefix } from './project.config.cjs';
 
 const BranchPrefix = {
   TASK: 'task',
