@@ -4,7 +4,7 @@ import { config } from '#libs/packages/config/config.js';
 
 import { ServerApp } from './server-app.js';
 
-const { app: serverApp, knex } = new ServerApp({
+const serverApp = new ServerApp({
   config,
   options: {
     prefixAvoidTrailingSlash: true,
@@ -17,6 +17,6 @@ const { app: serverApp, knex } = new ServerApp({
   querystringParser: string => qs.parse(string, { comma: true })
 });
 
-export { knex, serverApp };
+export { serverApp };
 export { ExitCode } from './libs/enums/enums.js';
 export { ServerApp } from './server-app.js';

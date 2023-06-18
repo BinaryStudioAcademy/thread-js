@@ -10,7 +10,7 @@ const setupTestPosts = async ({ handlers: { select, insert } }) => {
   });
   const postsToInsert = TEST_POSTS.map(post => ({
     ...post,
-    userId: testUsers[getRandomIndex(testUsers.length)]
+    userId: testUsers[getRandomIndex(testUsers.length)].id
   }));
 
   await insert({

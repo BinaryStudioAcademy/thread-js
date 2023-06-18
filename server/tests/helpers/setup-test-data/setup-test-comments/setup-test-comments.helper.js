@@ -13,8 +13,8 @@ const setupTestComments = async ({ handlers: { select, insert } }) => {
   });
   const commentsToInsert = TEST_COMMENTS.map(comment => ({
     ...comment,
-    userId: testUsers[getRandomIndex(testUsers.length)],
-    postId: testPosts[getRandomIndex(testPosts.length)]
+    userId: testUsers[getRandomIndex(testUsers.length)].id,
+    postId: testPosts[getRandomIndex(testPosts.length)].id
   }));
 
   await insert({
@@ -25,4 +25,3 @@ const setupTestComments = async ({ handlers: { select, insert } }) => {
 
 export { setupTestComments };
 export { TEST_COMMENTS } from './libs/constants/constants.js';
-

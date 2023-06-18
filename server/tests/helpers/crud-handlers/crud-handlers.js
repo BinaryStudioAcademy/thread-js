@@ -23,6 +23,7 @@ const getCrudHandlers = knex => {
     conditionNot = {},
     columns = [],
     limit,
+    offset,
     joins = []
   }) => {
     const query = knex(table)
@@ -46,6 +47,12 @@ const getCrudHandlers = knex => {
           return scope;
         }
         return scope.limit(limit);
+      })
+      .modify(scope => {
+        if (!offset) {
+          return scope;
+        }
+        return scope.offset(offset);
       })
       .modify(scope => {
         if (!columns || columns.length === 0) {

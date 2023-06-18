@@ -1,8 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { afterAll, beforeAll } from '@jest/globals';
+import pg from 'pg';
 
 import { config } from '#libs/packages/config/config.js';
 import { ServerApp } from '#libs/packages/server-application/server-application.js';
+
+import { clearDatabase } from '../clear-database/clear-database.helper.js';
 
 const buildApp = () => {
   const { app, knex } = new ServerApp({
@@ -13,14 +15,19 @@ const buildApp = () => {
   });
 
   beforeAll(async () => {
-    await knex.migrate.latest();
+    const PG_TIMESTAMPTZ_OID = 1184;
+    pg.types.setTypeParser(PG_TIMESTAMPTZ_OID, value => {
+      return new Date(value).toISOString();
+    });
 
     await app.ready();
   });
 
   afterAll(async () => {
     await app.close();
-    await knex.migrate.rollback(undefined, true);
+
+    await clearDatabase(knex);
+    await knex.destroy();
   });
 
   return { app, knex };

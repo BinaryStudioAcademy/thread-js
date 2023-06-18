@@ -81,7 +81,8 @@ class ServerApp {
   }
 
   #initDB() {
-    const knex = Knex(knexConfig);
+    const config = knexConfig[this.#config.ENV.APP.ENVIRONMENT];
+    const knex = Knex(config);
     Model.knex(knex);
 
     return knex;

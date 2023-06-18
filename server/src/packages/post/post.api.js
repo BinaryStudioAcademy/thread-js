@@ -1,11 +1,10 @@
 import {
   ControllerHook,
-  HttpCode,
-  HttpMethod,
   NotificationSocketEvent,
   PostsApiPath,
   SocketNamespace
 } from '#libs/enums/enums.js';
+import { HttpCode, HttpMethod } from '#libs/packages/http/http.js';
 
 const initPostApi = (fastify, options, done) => {
   const { postService } = options.services;
