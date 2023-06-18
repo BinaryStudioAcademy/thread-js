@@ -5,7 +5,7 @@ import { config } from '#libs/packages/config/config.js';
 import { ServerApp } from '#libs/packages/server-application/server-application.js';
 
 const buildApp = () => {
-  const { app } = new ServerApp({
+  const { app, knex } = new ServerApp({
     config,
     options: {
       logger: false
@@ -13,14 +13,17 @@ const buildApp = () => {
   });
 
   beforeAll(async () => {
+    await knex.migrate.latest();
+
     await app.ready();
   });
 
   afterAll(async () => {
     await app.close();
+    await knex.migrate.rollback(undefined, true);
   });
 
-  return app;
+  return { app, knex };
 };
 
 export { buildApp };

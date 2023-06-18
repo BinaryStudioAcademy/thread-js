@@ -18,15 +18,24 @@ import { initApi } from './server-app-api.js';
 class ServerApp {
   #app;
 
+  #knex;
+
   #config;
 
   constructor({ config, options }) {
     this.#config = config;
-    this.#app = this.#initApp(options);
+
+    const { app, knex } = this.#initApp(options);
+    this.#app = app;
+    this.#knex = knex;
   }
 
   get app() {
     return this.#app;
+  }
+
+  get knex() {
+    return this.#knex;
   }
 
   #initApp(options) {
@@ -34,9 +43,9 @@ class ServerApp {
     socketService.initializeIo(app.server);
 
     this.#registerPlugins(app);
-    this.#initDB();
+    const knex = this.#initDB();
 
-    return app;
+    return { app, knex };
   }
 
   #registerPlugins(app) {
@@ -66,7 +75,7 @@ class ServerApp {
       prefix: this.#config.ENV.APP.API_PATH
     });
 
-    app.setNotFoundHandler((request, response) => {
+    app.setNotFoundHandler((_request, response) => {
       response.sendFile('index.html');
     });
   }
@@ -74,6 +83,8 @@ class ServerApp {
   #initDB() {
     const knex = Knex(knexConfig);
     Model.knex(knex);
+
+    return knex;
   }
 
   start = async () => {
