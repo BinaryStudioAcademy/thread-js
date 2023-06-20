@@ -95,6 +95,18 @@ describe(`${postApiPath} routes`, () => {
       expect(response.json()).toHaveProperty('id');
       expect(response.json()).toHaveProperty('createdAt');
       expect(response.json()).toHaveProperty('updatedAt');
+
+      const savedDatabasePost = await select({
+        table: DatabaseTableName.POSTS,
+        condition: { id: response.json().id },
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
+      expect(savedDatabasePost).toEqual(
+        expect.objectContaining({
+          [PostPayloadKey.BODY]: validTestPost[PostPayloadKey.BODY]
+        })
+      );
     });
   });
 
@@ -205,16 +217,16 @@ describe(`${postApiPath} routes`, () => {
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
-        .headers({ authorization: `Bearer ${token}` });
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
         .put(postReactEndpoint)
-        .headers({ authorization: `Bearer ${token}` })
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) })
         .body({ postId });
       const getPostAfterLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
-        .headers({ authorization: `Bearer ${token}` });
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(likePostResponse.statusCode).toBe(HttpCode.OK);
       expect(likePostResponse.json()).toEqual({});

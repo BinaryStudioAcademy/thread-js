@@ -322,6 +322,20 @@ describe(`${authApiPath} routes`, () => {
           email
         })
       );
+
+      const databaseUser = await select({
+        table: DatabaseTableName.USERS,
+        condition: { id: response.json().id },
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
+      expect(databaseUser).toEqual(
+        expect.objectContaining({
+          id: response.json().id,
+          username,
+          email
+        })
+      );
     });
   });
 });
