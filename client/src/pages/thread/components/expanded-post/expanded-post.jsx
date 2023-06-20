@@ -5,7 +5,7 @@ import { Post } from '~/libs/components/post/post.jsx';
 import { Spinner } from '~/libs/components/spinner/spinner.jsx';
 import { useCallback, useDispatch, useSelector } from '~/libs/hooks/hooks.js';
 import { AddComment,Comment } from '~/pages/thread/components/components.js';
-import { actions as threadActionCreator } from '~/slices/thread/thread.slice.js';
+import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 import { getSortedComments } from './libs/helpers/helpers.js';
 
