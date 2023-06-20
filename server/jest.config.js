@@ -2,12 +2,14 @@
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const srcPath = join(fileURLToPath(import.meta.url), '../src');
+const sourcePath = join(fileURLToPath(import.meta.url), '../src');
 
 export default {
   testEnvironment: 'jest-environment-node',
   moduleNameMapper: {
-    '#libs/(.*)': `${srcPath}/libs/$1`,
-    '#packages/(.*)': `${srcPath}/packages/$1`
-  }
+    '#libs/(.*)': `${sourcePath}/libs/$1`,
+    '#packages/(.*)': `${sourcePath}/packages/$1`
+  },
+  testTimeout: 10_000,
+  workerIdleMemoryLimit: '1GB'
 };

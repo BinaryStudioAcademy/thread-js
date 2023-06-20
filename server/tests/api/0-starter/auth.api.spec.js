@@ -1,38 +1,50 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpCode,
-  HttpMethod,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath, AuthApiPath, UserPayloadKey } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { DatabaseTableName } from '#libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
 import {
   UserValidationMessage,
   UserValidationRule
 } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import {
+  buildApp,
+  getBearerAuthHeader,
+  getCrudHandlers,
+  getJoinedNormalizedPath
+} from '../../helpers/helpers.js';
+import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
+import { KNEX_SELECT_ONE_RECORD } from '../../libs/constants/constants.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH)
-)} routes`, () => {
-  const app = buildApp();
+const authApiPath = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH
+]);
 
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
+const registerEndpoint = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.REGISTER
+]);
 
-  const loginEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
-  );
+const loginEndpoint = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
 
-  const userEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.USER)
-  );
+const userEndpoint = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.USER
+]);
+
+describe(`${authApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { select } = getCrudHandlers(knex);
 
   describe(`${registerEndpoint} (${HttpMethod.POST}) endpoint`, () => {
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.USERNAME} validation error`, async () => {
@@ -45,15 +57,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.USERNAME} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(registerEndpoint)
         .body({
-          [UserPayloadKey.USERNAME]: faker.random.alpha(
+          ...validTestUser,
+          [UserPayloadKey.USERNAME]: faker.string.alpha(
             UserValidationRule.USERNAME_MIN_LENGTH - 1
-          ),
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password()
+          )
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -63,15 +76,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.USERNAME} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(registerEndpoint)
         .body({
-          [UserPayloadKey.USERNAME]: faker.random.alpha(
+          ...validTestUser,
+          [UserPayloadKey.USERNAME]: faker.string.alpha(
             UserValidationRule.USERNAME_MAX_LENGTH + 2
-          ),
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password()
+          )
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -81,26 +95,24 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
-      const response = await app
-        .inject()
-        .post(registerEndpoint)
-        .body({
-          [UserPayloadKey.USERNAME]: faker.name.firstName(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password()
-        });
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const { [UserPayloadKey.EMAIL]: _email, ...user } = validTestUser;
+
+      const response = await app.inject().post(registerEndpoint).body(user);
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
       expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(registerEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.name.firstName(),
-          [UserPayloadKey.USERNAME]: faker.name.firstName(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password()
+          ...validTestUser,
+          [UserPayloadKey.EMAIL]: faker.person.firstName()
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -108,13 +120,10 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
-      const response = await app
-        .inject()
-        .post(registerEndpoint)
-        .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.USERNAME]: faker.name.firstName()
-        });
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const { [UserPayloadKey.PASSWORD]: _password, ...user } = validTestUser;
+
+      const response = await app.inject().post(registerEndpoint).body(user);
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
       expect(response.json().message).toBe(
@@ -123,15 +132,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(registerEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.USERNAME]: faker.name.firstName(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MIN_LENGTH - 2
-          )
+          ...validTestUser,
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MIN_LENGTH - 2
+          })
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -141,15 +151,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(registerEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.USERNAME]: faker.name.firstName(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MAX_LENGTH + 2
-          )
+          ...validTestUser,
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MAX_LENGTH + 2
+          })
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -159,21 +170,33 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.CREATED} and create a new user`, async () => {
-      const testUser = {
-        [UserPayloadKey.USERNAME]: faker.name.firstName(),
-        [UserPayloadKey.EMAIL]: faker.internet.email(),
-        [UserPayloadKey.PASSWORD]: faker.internet.password()
-      };
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-      const response = await app.inject().post(registerEndpoint).body(testUser);
+      const response = await app
+        .inject()
+        .post(registerEndpoint)
+        .body(validTestUser);
 
       expect(response.statusCode).toBe(HttpCode.CREATED);
       expect(response.json()).toEqual(
         expect.objectContaining({
           user: expect.objectContaining({
-            [UserPayloadKey.USERNAME]: testUser[UserPayloadKey.USERNAME],
-            [UserPayloadKey.EMAIL]: testUser[UserPayloadKey.EMAIL]
+            [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME],
+            [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
           })
+        })
+      );
+
+      const savedDatabaseUser = await select({
+        table: DatabaseTableName.USERS,
+        condition: { id: response.json().user.id },
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
+      expect(savedDatabaseUser).toEqual(
+        expect.objectContaining({
+          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME],
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
         })
       );
     });
@@ -191,18 +214,20 @@ describe(`${normalizeTrailingSlash(
       const response = await app
         .inject()
         .post(loginEndpoint)
-        .body({ [UserPayloadKey.EMAIL]: faker.name.fullName() });
+        .body({ [UserPayloadKey.EMAIL]: faker.person.fullName() });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
       expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(loginEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email()
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -212,14 +237,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(loginEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MIN_LENGTH - 2
-          )
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MIN_LENGTH - 2
+          })
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -229,14 +256,16 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`, async () => {
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
+
       const response = await app
         .inject()
         .post(loginEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.internet.email(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MAX_LENGTH + 2
-          )
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MAX_LENGTH + 2
+          })
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -246,28 +275,22 @@ describe(`${normalizeTrailingSlash(
     });
 
     it(`should return ${HttpCode.OK} with auth result`, async () => {
-      const testUser = {
-        [UserPayloadKey.USERNAME]: faker.name.firstName(),
-        [UserPayloadKey.EMAIL]: faker.internet.email(),
-        [UserPayloadKey.PASSWORD]: faker.internet.password()
-      };
-
-      await app.inject().post(registerEndpoint).body(testUser);
+      const [validTestUser] = TEST_USERS_CREDENTIALS;
 
       const response = await app
         .inject()
         .post(loginEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: testUser[UserPayloadKey.EMAIL],
-          [UserPayloadKey.PASSWORD]: testUser[UserPayloadKey.PASSWORD]
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+          [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual(
         expect.objectContaining({
           user: expect.objectContaining({
-            [UserPayloadKey.USERNAME]: testUser[UserPayloadKey.USERNAME],
-            [UserPayloadKey.EMAIL]: testUser[UserPayloadKey.EMAIL]
+            [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME],
+            [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
           })
         })
       );
@@ -276,27 +299,41 @@ describe(`${normalizeTrailingSlash(
 
   describe(`${userEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with auth user`, async () => {
-      const testUser = {
-        [UserPayloadKey.USERNAME]: faker.name.firstName(),
-        [UserPayloadKey.EMAIL]: faker.internet.email(),
-        [UserPayloadKey.PASSWORD]: faker.internet.password()
-      };
+      const [{ email, username, password }] = TEST_USERS_CREDENTIALS;
 
-      const registerResponse = await app
+      const loginResponse = await app
         .inject()
-        .post(registerEndpoint)
-        .body(testUser);
+        .post(loginEndpoint)
+        .body({ email, password });
 
       const response = await app
         .inject()
         .get(userEndpoint)
-        .headers({ authorization: `Bearer ${registerResponse.json().token}` });
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(
+            loginResponse.json().token
+          )
+        });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual(
         expect.objectContaining({
-          [UserPayloadKey.USERNAME]: testUser[UserPayloadKey.USERNAME],
-          [UserPayloadKey.EMAIL]: testUser[UserPayloadKey.EMAIL]
+          username,
+          email
+        })
+      );
+
+      const databaseUser = await select({
+        table: DatabaseTableName.USERS,
+        condition: { id: response.json().id },
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
+      expect(databaseUser).toEqual(
+        expect.objectContaining({
+          id: response.json().id,
+          username,
+          email
         })
       );
     });

@@ -17,6 +17,8 @@ class Config {
       DB_HOST,
       DB_PORT,
       DB_CLIENT,
+      NODE_ENV,
+      TEST_DB_NAME,
       GYAZO_UPLOAD_API_URL,
       GYAZO_ACCESS_TOKEN
     } = process.env;
@@ -24,7 +26,8 @@ class Config {
     return {
       APP: {
         API_PATH: '/api',
-        PORT: APP_PORT
+        PORT: APP_PORT,
+        ENVIRONMENT: NODE_ENV
       },
       JWT: {
         SECRET: SECRET_KEY,
@@ -32,6 +35,7 @@ class Config {
       },
       DB: {
         DATABASE: DB_NAME,
+        TEST_DATABASE: TEST_DB_NAME,
         USERNAME: DB_USERNAME,
         PASSWORD: DB_PASSWORD,
         HOST: DB_HOST,

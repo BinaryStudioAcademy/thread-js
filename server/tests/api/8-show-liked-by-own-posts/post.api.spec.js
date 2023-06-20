@@ -1,113 +1,106 @@
-import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import {
   ApiPath,
   AuthApiPath,
   FilterUserMode,
-  HttpCode,
-  HttpMethod,
-  PostPayloadKey,
   PostsApiPath,
   UserPayloadKey
 } from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
 import { config } from '#libs/packages/config/config.js';
+import { DatabaseTableName } from '#libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import {
+  buildApp,
+  getBearerAuthHeader,
+  getCrudHandlers,
+  getJoinedNormalizedPath,
+  setupTestPosts,
+  setupTestUsers
+} from '../../helpers/helpers.js';
+import { TEST_POSTS } from '../../helpers/setup-test-data/setup-test-posts/setup-test-posts.helper.js';
+import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
+import { KNEX_SELECT_ONE_RECORD } from '../../libs/constants/constants.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS)
-)} routes`, () => {
-  const app = buildApp();
-  let tokenMainUser;
-  let tokenMinorUser;
-  let userMainId;
-  let userMinorId;
-  let posts;
+const loginEndpoint = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
 
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
+const postApiPath = getJoinedNormalizedPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS
+]);
 
-  const postsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
-  );
+const postsEndpoint = getJoinedNormalizedPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS,
+  PostsApiPath.ROOT
+);
+
+const postReactEndpoint = getJoinedNormalizedPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS,
+  PostsApiPath.REACT
+);
+
+describe(`${postApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { select, insert } = getCrudHandlers(knex);
+
+  let token;
+  let userId;
 
   beforeAll(async () => {
-    const testMainUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
+    await setupTestPosts({ handlers: { select, insert } });
 
-    const testMinorUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    const [validUser] = TEST_USERS_CREDENTIALS;
 
-    const registerMainUserResponse = await app
+    const loginResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMainUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validUser[UserPayloadKey.PASSWORD]
+      });
 
-    const registerMinorUserResponse = await app
-      .inject()
-      .post(registerEndpoint)
-      .body(testMinorUser);
-
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
-    userMainId = registerMainUserResponse.json().user.id;
-    userMinorId = registerMinorUserResponse.json().user.id;
-
-    const testPosts = Array.from({ length: 2 }, (_, index) => ({
-      [PostPayloadKey.BODY]: faker.lorem.paragraph(),
-      token: index ? tokenMinorUser : tokenMainUser
-    }));
-
-    const postsResponse = await Promise.all(
-      testPosts.map(testPost => {
-        return app
-          .inject()
-          .post(postsEndpoint)
-          .headers({ authorization: `Bearer ${testPost.token}` })
-          .body({
-            [PostPayloadKey.BODY]: testPost[PostPayloadKey.BODY]
-          });
-      })
-    );
-    posts = postsResponse.map(response => response.json());
+    token = loginResponse.json().token;
+    userId = loginResponse.json().user.id;
   });
-
-  const postReactEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.REACT)
-  );
 
   describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked by own posts`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       await app
         .inject()
         .put(postReactEndpoint)
-        .headers({ authorization: `Bearer ${tokenMainUser}` })
-        .body({ postId: posts[1].id });
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token)
+        })
+        .body({ postId });
 
       const response = await app
         .inject()
         .get(postsEndpoint)
-        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) })
         .query({
           from: 0,
           count: 1,
-          userId: userMainId,
+          userId,
           userMode: FilterUserMode.LIKED_BY_OWN
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual([
         expect.objectContaining({
-          postId: posts[1].id
+          postId
         })
       ]);
     });
@@ -116,19 +109,19 @@ describe(`${normalizeTrailingSlash(
       const response = await app
         .inject()
         .get(postsEndpoint)
-        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) })
         .query({
           from: 0,
-          count: 2
+          count: TEST_POSTS.length
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual([
         expect.objectContaining({
-          userId: userMinorId
+          userId: expect.not.stringContaining(userId)
         }),
         expect.objectContaining({
-          userId: userMainId
+          userId
         })
       ]);
     });
