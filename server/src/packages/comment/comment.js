@@ -12,3 +12,4 @@ const commentService = new CommentService({
 export { commentRepository, commentService };
 export { initCommentApi } from './comment.api.js';
 export { CommentModel } from './comment.model.js';
+export { CommentPayloadKey, CommentsApiPath } from './libs/enums/enums.js';

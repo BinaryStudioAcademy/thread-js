@@ -1,27 +1,28 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpCode,
-  PasswordApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
 import {
+  joinPath,
+  normalizeTrailingSlash
+} from '#packages/auth/helpers/helpers.js';
+import { HttpCode } from '#packages/http/http.js';
+import { PasswordApiPath } from '#packages/password/password.js';
+import {
+  UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
 } from '#packages/user/user.js';
 
+import { buildApp } from '../../libs/packages/app/app.js';
+import { getCrudHandlers } from '../../libs/packages/database/database.js';
+import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import {
-  buildApp,
-  getCrudHandlers,
-  getJoinedNormalizedPath,
-  setupTestUsers
-} from '../../helpers/helpers.js';
-import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,

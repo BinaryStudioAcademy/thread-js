@@ -1,5 +1,7 @@
-import { CommentsApiPath, ControllerHook } from '#libs/enums/enums.js';
+import { ControllerHook } from '#libs/packages/controller/controller.js';
 import { HttpCode, HttpMethod } from '#libs/packages/http/http.js';
+
+import { CommentsApiPath } from './libs/enums/enums.js';
 
 const initCommentApi = (fastify, options, done) => {
   const { commentService } = options.services;
