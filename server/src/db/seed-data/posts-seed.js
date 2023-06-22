@@ -12,11 +12,10 @@ const postsSeed = [
 ].map(body => ({ body }));
 
 // Do not add more images than the number of posts.
-const postImagesSeed = [{
-  link: 'https://i.imgur.com/HwBQh72.jpg'
-}];
+const postImagesSeed = [
+  {
+    link: 'https://i.imgur.com/HwBQh72.jpg'
+  }
+];
 
-export {
-  postImagesSeed,
-  postsSeed
-};
+export { postImagesSeed, postsSeed };

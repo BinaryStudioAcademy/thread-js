@@ -20,7 +20,10 @@ import {
 } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
 import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
-import { setupTestUsers, TEST_USERS_CREDENTIALS } from '../../packages/user/user.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,

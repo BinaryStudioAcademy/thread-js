@@ -21,7 +21,8 @@ import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import { setupTestPosts, TEST_POSTS } from '../../packages/post/post.js';
 import {
   setupTestUsers,
-  TEST_USERS_CREDENTIALS } from '../../packages/user/user.js';
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,
