@@ -8,4 +8,3 @@ const ActionType = {
 };
 
 export { ActionType };
-
