@@ -1,4 +1,5 @@
 '*': npm run lint:editorconfig && npm run lint:fs
+'*.{js,jsx,scss,json,md,html}': npm run prettify
 shared/**/*.js: npm run lint:shared:js
 client/src/**/*.{js,jsx}: npm run lint:client:js
 client/src/**/*.scss: npm run lint:client:css
