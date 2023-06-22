@@ -1,7 +1,8 @@
-import { AuthApiPath, ControllerHook } from '#libs/enums/enums.js';
-import { getErrorStatusCode } from '#libs/helpers/helpers.js';
+import { ControllerHook } from '#libs/packages/controller/controller.js';
 import { HttpCode, HttpMethod } from '#libs/packages/http/http.js';
+import { getErrorStatusCode } from '#packages/auth/helpers/helpers.js';
 
+import { AuthApiPath } from './libs/enums/enums.js';
 import {
   loginValidationSchema,
   registrationValidationSchema

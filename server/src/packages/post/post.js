@@ -16,6 +16,11 @@ const postService = new PostService({
 });
 
 export { postReactionRepository, postRepository, postService };
+export {
+  FilterUserMode,
+  PostPayloadKey,
+  PostsApiPath
+} from './libs/enums/enums.js';
 export { initPostApi } from './post.api.js';
 export { PostModel } from './post.model.js';
 export { PostReactionModel } from './post-reaction.model.js';

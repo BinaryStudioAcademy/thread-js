@@ -1,4 +1,4 @@
-import { encryptSync } from '#libs/helpers/helpers.js';
+import { encryptSync } from '#packages/auth/helpers/helpers.js';
 
 const hash = password => encryptSync(password);
 

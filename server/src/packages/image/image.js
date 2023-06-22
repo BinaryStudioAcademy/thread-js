@@ -17,3 +17,4 @@ const imageService = new ImageService({
 export { imageRepository, imageService };
 export { initImageApi } from './image.api.js';
 export { ImageModel } from './image.model.js';
+export { ImagePayloadKey, ImagesApiPath } from './libs/enums/enums.js';

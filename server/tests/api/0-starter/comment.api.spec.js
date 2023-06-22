@@ -1,29 +1,28 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  CommentPayloadKey,
-  CommentsApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import {
+  CommentPayloadKey,
+  CommentsApiPath
+} from '#packages/comment/comment.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
+import { buildApp } from '../../libs/packages/app/app.js';
 import {
-  buildApp,
-  getBearerAuthHeader,
   getCrudHandlers,
-  getJoinedNormalizedPath,
-  setupTestUsers
-} from '../../helpers/helpers.js';
+  KNEX_SELECT_ONE_RECORD
+} from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
+import { setupTestPosts, TEST_POSTS } from '../../packages/post/post.js';
 import {
-  setupTestPosts,
-  TEST_POSTS
-} from '../../helpers/setup-test-data/setup-test-posts/setup-test-posts.helper.js';
-import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
-import { KNEX_SELECT_ONE_RECORD } from '../../libs/constants/constants.js';
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,
