@@ -1,7 +1,8 @@
 import fp from 'fastify-plugin';
 
-import { ControllerHook, ExceptionMessage } from '#libs/enums/enums.js';
+import { ExceptionMessage } from '#libs/enums/enums.js';
 import { InvalidCredentialsError } from '#libs/exceptions/exceptions.js';
+import { ControllerHook } from '#libs/packages/controller/controller.js';
 import { HttpCode } from '#libs/packages/http/http.js';
 
 const authorization = fp(async (fastify, { routesWhiteList, services }) => {

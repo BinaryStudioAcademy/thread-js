@@ -5,26 +5,22 @@ import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 import FormData from 'form-data';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  ImagePayloadKey,
-  ImagesApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { ImagePayloadKey, ImagesApiPath } from '#packages/image/image.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
+import { buildApp } from '../../libs/packages/app/app.js';
 import {
-  buildApp,
-  getBearerAuthHeader,
   getCrudHandlers,
-  getJoinedNormalizedPath,
-  setupTestUsers
-} from '../../helpers/helpers.js';
-import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
-import { KNEX_SELECT_ONE_RECORD } from '../../libs/constants/constants.js';
+  KNEX_SELECT_ONE_RECORD
+} from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
+import { setupTestUsers, TEST_USERS_CREDENTIALS } from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,

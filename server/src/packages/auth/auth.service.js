@@ -5,7 +5,7 @@ import {
   cryptCompare,
   encrypt,
   verifyToken
-} from '#libs/helpers/helpers.js';
+} from '#packages/auth/helpers/helpers.js';
 
 class AuthService {
   constructor({ userRepository }) {

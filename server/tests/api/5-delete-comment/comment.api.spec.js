@@ -1,26 +1,26 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  CommentsApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { CommentsApiPath } from '#packages/comment/comment.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
+import { buildApp } from '../../libs/packages/app/app.js';
 import {
-  buildApp,
-  getBearerAuthHeader,
   getCrudHandlers,
-  getJoinedNormalizedPath,
-  setupTestComments,
-  setupTestPosts,
-  setupTestUsers
-} from '../../helpers/helpers.js';
-import { TEST_USERS_CREDENTIALS } from '../../helpers/setup-test-data/setup-test-users/setup-test-users.helper.js';
-import { KNEX_SELECT_ONE_RECORD } from '../../libs/constants/constants.js';
+  KNEX_SELECT_ONE_RECORD
+} from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
+import { setupTestComments } from '../../packages/comment/comment.js';
+import { setupTestPosts } from '../../packages/post/post.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
 const loginEndpoint = getJoinedNormalizedPath([
   config.ENV.APP.API_PATH,

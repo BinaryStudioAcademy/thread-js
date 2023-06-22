@@ -1,6 +1,8 @@
-import { ControllerHook, ImagesApiPath } from '#libs/enums/enums.js';
 import { upload } from '#libs/middlewares/middlewares.js';
+import { ControllerHook } from '#libs/packages/controller/controller.js';
 import { HttpMethod } from '#libs/packages/http/http.js';
+
+import { ImagesApiPath } from './libs/enums/enums.js';
 
 const initImageApi = (fastify, options, done) => {
   const { imageService } = options.services;
