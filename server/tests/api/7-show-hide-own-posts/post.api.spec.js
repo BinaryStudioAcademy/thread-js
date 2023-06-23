@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { PostsApiPath } from '#packages/post/post.js';
 import { FilterUserMode, UserPayloadKey } from '#packages/user/user.js';
@@ -10,7 +11,6 @@ import { FilterUserMode, UserPayloadKey } from '#packages/user/user.js';
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import { setupTestPosts, TEST_POSTS } from '../../packages/post/post.js';
 import {
   setupTestUsers,

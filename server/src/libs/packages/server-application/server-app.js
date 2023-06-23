@@ -1,19 +1,24 @@
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import fastify from 'fastify';
+import multer from 'fastify-multer';
 import Knex from 'knex';
 import { Model } from 'objection';
 
+import { joinPath } from '#libs/packages/path/path.js';
 import { socketService } from '#libs/packages/socket/socket.js';
-import { socketInjector as socketInjectorPlugin } from '#libs/plugins/plugins.js';
+import {
+  authorization as authorizationPlugin,
+  socketInjector as socketInjectorPlugin
+} from '#libs/plugins/plugins.js';
 import { authService } from '#packages/auth/auth.js';
-import { commentService } from '#packages/comment/comment.js';
-import { imageService } from '#packages/image/image.js';
-import { postService } from '#packages/post/post.js';
 import { userService } from '#packages/user/user.js';
 
 import knexConfig from '../../../../knexfile.js';
-import { initApi } from './server-app-api.js';
+import { WHITE_ROUTES } from './libs/constants/constants.js';
 
 class ServerApp {
   #app;
@@ -22,12 +27,15 @@ class ServerApp {
 
   #config;
 
-  constructor({ config, options }) {
+  #api;
+
+  constructor({ config, options, api }) {
     this.#config = config;
 
-    const { app, knex } = this.#initApp(options);
-    this.#app = app;
-    this.#knex = knex;
+    this.#app = this.#initApp(options);
+    this.#knex = this.#initDB();
+
+    this.#api = api;
   }
 
   get app() {
@@ -38,59 +46,91 @@ class ServerApp {
     return this.#knex;
   }
 
-  #initApp(options) {
+  #initApp = options => {
     const app = fastify(options);
     socketService.initializeIo(app.server);
 
-    this.#registerPlugins(app);
-    const knex = this.#initDB();
+    return app;
+  };
 
-    return { app, knex };
-  }
+  initialize = async () => {
+    await this.#initValidationCompiler();
+    await this.#registerServe();
+    await this.#registerPlugins();
+    await this.#registerRoutes();
 
-  #registerPlugins(app) {
-    app.register(cors, {
+    return this;
+  };
+
+  #registerServe = async () => {
+    const staticPath = join(
+      dirname(fileURLToPath(import.meta.url)),
+      '../../../../client/build'
+    );
+
+    await this.#app.register(fastifyStatic, {
+      root: staticPath,
+      prefix: '/'
+    });
+
+    this.#app.setNotFoundHandler(async (_request, response) => {
+      await response.sendFile('index.html', staticPath);
+    });
+  };
+
+  #registerPlugins = async () => {
+    await this.#app.register(multer.contentParser);
+    await this.#app.register(cors, {
       cors: {
         origin: 'http://localhost:3000',
         methods: '*',
         credentials: true
       }
     });
-
-    const staticPath = new URL('../../client/build', import.meta.url);
-    app.register(fastifyStatic, {
-      root: staticPath.pathname,
-      prefix: '/'
-    });
-
-    app.register(socketInjectorPlugin, { io: socketService.io });
-    app.register(initApi, {
+    await this.#app.register(authorizationPlugin, {
       services: {
-        authService,
-        commentService,
-        imageService,
-        postService,
-        userService
+        userService,
+        authService
       },
-      prefix: this.#config.ENV.APP.API_PATH
+      routesWhiteList: WHITE_ROUTES
     });
+    await this.#app.register(socketInjectorPlugin, { io: socketService.io });
+  };
 
-    app.setNotFoundHandler((_request, response) => {
-      response.sendFile('index.html');
+  #registerRoutes = () => {
+    const routers = this.#api.controllers.flatMap(it => it.routes);
+
+    for (const it of routers) {
+      const { url: path, ...parameters } = it;
+
+      this.app.route({
+        url: joinPath([this.#config.ENV.APP.API_PATH, path]),
+        ...parameters
+      });
+    }
+  };
+
+  #initValidationCompiler = () => {
+    this.#app.setValidatorCompiler(({ schema }) => {
+      return data => {
+        return schema.validate(data, {
+          abortEarly: true
+        });
+      };
     });
-  }
+  };
 
-  #initDB() {
+  #initDB = () => {
     const config = knexConfig[this.#config.ENV.APP.ENVIRONMENT];
     const knex = Knex(config);
     Model.knex(knex);
 
     return knex;
-  }
+  };
 
   start = async () => {
     try {
-      await this.#app.listen(this.#config.ENV.APP.PORT);
+      await this.#app.listen({ port: this.#config.ENV.APP.PORT });
     } catch (error) {
       this.#app.log.error(error);
     }

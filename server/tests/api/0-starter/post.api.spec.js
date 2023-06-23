@@ -4,6 +4,7 @@ import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { PostPayloadKey, PostsApiPath } from '#packages/post/post.js';
 import { UserPayloadKey } from '#packages/user/user.js';
@@ -14,7 +15,6 @@ import {
   KNEX_SELECT_ONE_RECORD
 } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import { TEST_POSTS } from '../../packages/post/post.js';
 import {
   setupTestUsers,
@@ -51,8 +51,8 @@ const postReactEndpoint = getJoinedNormalizedPath([
 ]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
 
   let token;
   let userId;
@@ -62,7 +62,7 @@ describe(`${postApiPath} routes`, () => {
 
     const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-    const loginResponse = await app
+    const loginResponse = await getApp()
       .inject()
       .post(loginEndpoint)
       .body({
@@ -75,6 +75,8 @@ describe(`${postApiPath} routes`, () => {
   });
 
   describe(`${postsEndpoint} (${HttpMethod.POST}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.CREATED} with a new post`, async () => {
       const [validTestPost] = TEST_POSTS;
 
@@ -110,6 +112,8 @@ describe(`${postApiPath} routes`, () => {
   });
 
   describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.OK} with post by id`, async () => {
       const { id: postId, body } = await select({
         table: DatabaseTableName.POSTS,
@@ -137,6 +141,8 @@ describe(`${postApiPath} routes`, () => {
   });
 
   describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.OK} with all posts`, async () => {
       const posts = await select({
         table: DatabaseTableName.POSTS,
@@ -168,6 +174,8 @@ describe(`${postApiPath} routes`, () => {
   });
 
   describe(`${postReactEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.OK} with liked post`, async () => {
       const { id: postId } = await select({
         table: DatabaseTableName.POSTS,

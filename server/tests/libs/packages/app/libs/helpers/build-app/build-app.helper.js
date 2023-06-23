@@ -2,16 +2,20 @@ import { afterAll, beforeAll } from '@jest/globals';
 import pg from 'pg';
 
 import { config } from '#libs/packages/config/config.js';
-import { ServerApp } from '#libs/packages/server-application/server-application.js';
+import {
+  ServerApp,
+  serverAppApi
+} from '#libs/packages/server-application/server-application.js';
 
 import { clearDatabase } from '../../../../database/database.js';
 
 const buildApp = () => {
-  const { app, knex } = new ServerApp({
+  const serverApp = new ServerApp({
     config,
     options: {
       logger: false
-    }
+    },
+    api: serverAppApi
   });
 
   beforeAll(async () => {
@@ -20,17 +24,21 @@ const buildApp = () => {
       return new Date(value).toISOString();
     });
 
-    await app.ready();
+    await serverApp.initialize();
+    await getApp().ready();
   });
 
   afterAll(async () => {
-    await app.close();
+    await getApp().close();
 
-    await clearDatabase(knex);
-    await knex.destroy();
+    await clearDatabase(getKnex);
+    await getKnex().destroy();
   });
 
-  return { app, knex };
+  const getApp = () => serverApp.app;
+  const getKnex = () => serverApp.knex;
+
+  return { getApp, getKnex };
 };
 
 export { buildApp };
