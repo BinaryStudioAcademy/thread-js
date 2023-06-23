@@ -22,7 +22,7 @@ const serverAppApi = new ServerAppApi({
 const serverApp = new ServerApp({
   config,
   options: {
-    prefixAvoidTrailingSlash: true,
+    ignoreTrailingSlash: true,
     logger: {
       transport: {
         target: 'pino-pretty'
