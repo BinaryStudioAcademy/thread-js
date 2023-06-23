@@ -3,14 +3,18 @@ import {
   KNEX_SELECT_ONE_RECORD
 } from '../../constants/constants.js';
 
-const getCrudHandlers = knex => {
+const getCrudHandlers = getKnex => {
   const remove = ({ table, condition }) => {
+    const knex = getKnex();
+
     return knex(table)
       .where({ ...condition })
       .del();
   };
 
   const update = async ({ table, condition, data, returning = ['*'] }) => {
+    const knex = getKnex();
+
     return knex(table)
       .where({ ...condition })
       .update(data, returning);
@@ -26,6 +30,8 @@ const getCrudHandlers = knex => {
     offset,
     joins = []
   }) => {
+    const knex = getKnex();
+
     const query = knex(table)
       .where(condition)
       .modify(scope => {
@@ -85,6 +91,8 @@ const getCrudHandlers = knex => {
   };
 
   const insert = async ({ table, data, returning = [] }) => {
+    const knex = getKnex();
+
     const toInsert = Array.isArray(data) ? data : [data];
 
     return knex(table)
@@ -98,6 +106,8 @@ const getCrudHandlers = knex => {
   };
 
   const count = async ({ table, condition = {}, conditionNot = [], joins }) => {
+    const knex = getKnex();
+
     const result = await knex(table)
       .where({ ...condition })
       .modify(scope => {
@@ -131,6 +141,8 @@ const getCrudHandlers = knex => {
   };
 
   const rawQuery = async query => {
+    const knex = getKnex();
+
     const result = await knex.raw(query);
 
     return result?.rows;

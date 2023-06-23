@@ -4,6 +4,7 @@ import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import {
   CommentPayloadKey,
@@ -17,7 +18,6 @@ import {
   KNEX_SELECT_ONE_RECORD
 } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import { setupTestPosts, TEST_POSTS } from '../../packages/post/post.js';
 import {
   setupTestUsers,
@@ -48,8 +48,8 @@ const commentIdEndpoint = getJoinedNormalizedPath([
 ]);
 
 describe(`${commentApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
 
   let token;
   let userId;
@@ -60,7 +60,7 @@ describe(`${commentApiPath} routes`, () => {
 
     const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-    const loginResponse = await app
+    const loginResponse = await getApp()
       .inject()
       .post(loginEndpoint)
       .body({
@@ -73,6 +73,8 @@ describe(`${commentApiPath} routes`, () => {
   });
 
   describe(`${commentsEndpoint} (${HttpMethod.POST}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.CREATED} with a new comment`, async () => {
       const [validTestPost] = TEST_POSTS;
 
@@ -119,6 +121,8 @@ describe(`${commentApiPath} routes`, () => {
   });
 
   describe(`${commentIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.OK} with comment by id`, async () => {
       const { id: commentId, body } = await select({
         table: DatabaseTableName.COMMENTS,

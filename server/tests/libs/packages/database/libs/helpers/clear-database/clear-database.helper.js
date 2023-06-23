@@ -2,8 +2,8 @@ import { DatabaseTableName } from '#libs/packages/database/database.js';
 
 import { getCrudHandlers } from '../get-crud-handlers/get-crud-handlers.js';
 
-const clearDatabase = async knex => {
-  const { remove } = getCrudHandlers(knex);
+const clearDatabase = async getKnex => {
+  const { remove } = getCrudHandlers(getKnex);
 
   const tables = [
     DatabaseTableName.COMMENTS,
@@ -12,9 +12,7 @@ const clearDatabase = async knex => {
   ];
 
   for (const table of tables) {
-    await remove({
-      table
-    });
+    await remove({ table });
   }
 };
 

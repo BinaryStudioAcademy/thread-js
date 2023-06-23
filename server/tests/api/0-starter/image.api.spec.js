@@ -9,6 +9,7 @@ import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { ImagePayloadKey, ImagesApiPath } from '#packages/image/image.js';
 import { UserPayloadKey } from '#packages/user/user.js';
@@ -19,7 +20,6 @@ import {
   KNEX_SELECT_ONE_RECORD
 } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import {
   setupTestUsers,
   TEST_USERS_CREDENTIALS
@@ -43,8 +43,8 @@ const imagesEndpoint = getJoinedNormalizedPath([
 ]);
 
 describe(`${imageEndpoint} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
 
   let token;
 
@@ -53,7 +53,7 @@ describe(`${imageEndpoint} routes`, () => {
 
     const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-    const loginResponse = await app
+    const loginResponse = await getApp()
       .inject()
       .post(loginEndpoint)
       .body({
@@ -65,6 +65,8 @@ describe(`${imageEndpoint} routes`, () => {
   });
 
   describe(`${imagesEndpoint} (${HttpMethod.POST}) endpoint`, () => {
+    const app = getApp();
+
     it(`should return ${HttpCode.OK} with uploaded image`, async () => {
       const formData = new FormData();
 

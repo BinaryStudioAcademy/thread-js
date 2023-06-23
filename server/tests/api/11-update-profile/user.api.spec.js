@@ -9,6 +9,7 @@ import FormData from 'form-data';
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { ImagePayloadKey, ImagesApiPath } from '#packages/image/image.js';
 import { UserPayloadKey, UsersApiPath } from '#packages/user/user.js';
@@ -16,7 +17,6 @@ import { UserPayloadKey, UsersApiPath } from '#packages/user/user.js';
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '../../libs/packages/path/path.js';
 import {
   setupTestUsers,
   TEST_USERS_CREDENTIALS
