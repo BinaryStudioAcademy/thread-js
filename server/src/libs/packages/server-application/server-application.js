@@ -1,6 +1,7 @@
 import qs from 'qs';
 
 import { config } from '#libs/packages/config/config.js';
+import { database } from '#libs/packages/database/database.js';
 import { authController } from '#packages/auth/auth.js';
 import { commentController } from '#packages/comment/comment.js';
 import { imageController } from '#packages/image/image.js';
@@ -29,6 +30,7 @@ const serverApp = new ServerApp({
     },
     querystringParser: string => qs.parse(string, { comma: true })
   },
+  database,
   api: serverAppApi
 });
 

@@ -2,6 +2,7 @@ import { afterAll, beforeAll } from '@jest/globals';
 import pg from 'pg';
 
 import { config } from '#libs/packages/config/config.js';
+import { database } from '#libs/packages/database/database.js';
 import {
   ServerApp,
   serverAppApi
@@ -15,7 +16,8 @@ const buildApp = () => {
     options: {
       logger: false
     },
-    api: serverAppApi
+    api: serverAppApi,
+    database
   });
 
   beforeAll(async () => {
@@ -36,7 +38,7 @@ const buildApp = () => {
   });
 
   const getApp = () => serverApp.app;
-  const getKnex = () => serverApp.knex;
+  const getKnex = () => serverApp.database.knex;
 
   return { getApp, getKnex };
 };

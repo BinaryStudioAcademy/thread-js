@@ -5,8 +5,6 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import fastify from 'fastify';
 import multer from 'fastify-multer';
-import Knex from 'knex';
-import { Model } from 'objection';
 
 import { joinPath } from '#libs/packages/path/path.js';
 import { socketService } from '#libs/packages/socket/socket.js';
@@ -17,7 +15,6 @@ import {
 import { authService } from '#packages/auth/auth.js';
 import { userService } from '#packages/user/user.js';
 
-import knexConfig from '../../../../knexfile.js';
 import { WHITE_ROUTES } from './libs/constants/constants.js';
 
 class ServerApp {
@@ -29,21 +26,23 @@ class ServerApp {
 
   #api;
 
-  constructor({ config, options, api }) {
+  #database;
+
+  constructor({ config, options, api, database }) {
     this.#config = config;
 
     this.#app = this.#initApp(options);
-    this.#knex = this.#initDB();
 
     this.#api = api;
+    this.#database = database;
   }
 
   get app() {
     return this.#app;
   }
 
-  get knex() {
-    return this.#knex;
+  get database() {
+    return this.#database;
   }
 
   #initApp = options => {
@@ -58,6 +57,8 @@ class ServerApp {
     await this.#registerServe();
     await this.#registerPlugins();
     await this.#registerRoutes();
+
+    this.#database.connect();
 
     return this;
   };
@@ -118,14 +119,6 @@ class ServerApp {
         });
       };
     });
-  };
-
-  #initDB = () => {
-    const config = knexConfig[this.#config.ENV.APP.ENVIRONMENT];
-    const knex = Knex(config);
-    Model.knex(knex);
-
-    return knex;
   };
 
   start = async () => {
