@@ -5,7 +5,7 @@ import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import {
   UserPayloadKey,
@@ -21,24 +21,21 @@ import {
 import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
 import { TEST_USERS_CREDENTIALS } from '../../packages/user/user.js';
 
-const authApiPath = getJoinedNormalizedPath([
-  config.ENV.APP.API_PATH,
-  ApiPath.AUTH
-]);
+const authApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.AUTH]);
 
-const registerEndpoint = getJoinedNormalizedPath([
+const registerEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.REGISTER
 ]);
 
-const loginEndpoint = getJoinedNormalizedPath([
+const loginEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.LOGIN
 ]);
 
-const userEndpoint = getJoinedNormalizedPath([
+const userEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.USER

@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { UserPayloadKey, UsersApiPath } from '#packages/user/user.js';
 
@@ -16,29 +16,23 @@ import {
   TEST_USERS_CREDENTIALS
 } from '../../packages/user/user.js';
 
-const loginEndpoint = getJoinedNormalizedPath([
+const loginEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.LOGIN
 ]);
 
-const authApiPath = getJoinedNormalizedPath([
-  config.ENV.APP.API_PATH,
-  ApiPath.AUTH
-]);
+const authApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.AUTH]);
 
-const userApiPath = getJoinedNormalizedPath([
-  config.ENV.APP.API_PATH,
-  ApiPath.USERS
-]);
+const userApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.USERS]);
 
-const userIdEndpoint = getJoinedNormalizedPath([
+const userIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.USERS,
   UsersApiPath.$ID
 ]);
 
-const authUserEndpoint = getJoinedNormalizedPath([
+const authUserEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.USER
