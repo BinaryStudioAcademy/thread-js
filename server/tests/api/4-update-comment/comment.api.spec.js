@@ -5,7 +5,7 @@ import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import {
   CommentPayloadKey,
@@ -27,18 +27,15 @@ import {
   TEST_USERS_CREDENTIALS
 } from '../../packages/user/user.js';
 
-const loginEndpoint = getJoinedNormalizedPath([
+const loginEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.LOGIN
 ]);
 
-const commentApiPath = getJoinedNormalizedPath([
-  config.ENV.APP.API_PATH,
-  ApiPath.COMMENTS
-]);
+const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
 
-const commentIdEndpoint = getJoinedNormalizedPath(
+const commentIdEndpoint = joinPath(
   config.ENV.APP.API_PATH,
   ApiPath.COMMENTS,
   CommentsApiPath.$ID

@@ -3,12 +3,8 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
-import {
-  joinPath,
-  normalizeTrailingSlash
-} from '#packages/auth/helpers/helpers.js';
 import { HttpCode } from '#packages/http/http.js';
 import { PasswordApiPath } from '#packages/password/password.js';
 import {
@@ -24,27 +20,27 @@ import {
   TEST_USERS_CREDENTIALS
 } from '../../packages/user/user.js';
 
-const loginEndpoint = getJoinedNormalizedPath([
+const passwordEndpoint = joinPath([config.ENV.APP.API_PATH, ApiPath.PASSWORD]);
+
+const loginEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.LOGIN
 ]);
 
-const resetPasswordEndpoint = getJoinedNormalizedPath([
+const resetPasswordEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.PASSWORD,
   PasswordApiPath.RESET
 ]);
 
-const setPasswordEndpoint = getJoinedNormalizedPath([
+const setPasswordEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.PASSWORD,
   PasswordApiPath.SET
 ]);
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD)
-)} routes`, () => {
+describe(`${passwordEndpoint} routes`, () => {
   const { app, knex } = buildApp();
   const { insert } = getCrudHandlers(knex);
 

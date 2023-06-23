@@ -30,7 +30,7 @@ class Config {
         }
       },
       JWT: {
-        SECRET_KEY: {
+        SECRET: {
           doc: 'Secret key for token generation',
           format: String,
           env: 'SECRET_KEY',

@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
 import { PostsApiPath } from '#packages/post/post.js';
 import { FilterUserMode, UserPayloadKey } from '#packages/user/user.js';
@@ -17,18 +17,15 @@ import {
   TEST_USERS_CREDENTIALS
 } from '../../packages/user/user.js';
 
-const loginEndpoint = getJoinedNormalizedPath([
+const loginEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.AUTH,
   AuthApiPath.LOGIN
 ]);
 
-const postApiPath = getJoinedNormalizedPath([
-  config.ENV.APP.API_PATH,
-  ApiPath.POSTS
-]);
+const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postsEndpoint = getJoinedNormalizedPath(
+const postsEndpoint = joinPath(
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.ROOT

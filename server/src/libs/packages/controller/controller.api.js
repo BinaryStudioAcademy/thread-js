@@ -1,4 +1,4 @@
-import { getJoinedNormalizedPath } from '#libs/packages/path/path.js';
+import { joinPath } from '#libs/packages/path/path.js';
 
 class Controller {
   #apiPath;
@@ -15,7 +15,7 @@ class Controller {
 
   addRoute = ({ url, ...options }) => {
     this.#routes.push({
-      url: getJoinedNormalizedPath([this.#apiPath, url]),
+      url: joinPath([this.#apiPath, url]),
       ...options
     });
   };
