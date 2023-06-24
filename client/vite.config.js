@@ -8,7 +8,7 @@ dns.setDefaultResultOrder('verbatim');
 
 const config = ({ mode }) => {
   // import.meta.env doesn't exist at this moment
-  const { VITE_PORT, VITE_HOST, VITE_API_PATH, VITE_API_SERVER } = loadEnv(
+  const { VITE_PORT, VITE_HOST, VITE_API_PATH, VITE_API_SERVER, VITE_SOCKET_SERVER } = loadEnv(
     mode,
     process.cwd()
   );
@@ -24,7 +24,11 @@ const config = ({ mode }) => {
       host: VITE_HOST,
       port: Number(VITE_PORT),
       proxy: {
-        [VITE_API_PATH]: VITE_API_SERVER
+        [VITE_API_PATH]: VITE_API_SERVER,
+        '/socket.io': {
+          target: VITE_SOCKET_SERVER,
+          ws: true,
+        },
       }
     },
     plugins: [reactPlugin()]
