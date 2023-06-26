@@ -8,10 +8,14 @@ dns.setDefaultResultOrder('verbatim');
 
 const config = ({ mode }) => {
   // import.meta.env doesn't exist at this moment
-  const { VITE_PORT, VITE_HOST, VITE_API_PATH, VITE_API_SERVER, VITE_SOCKET_SERVER, VITE_SOCKET_PATH } = loadEnv(
-    mode,
-    process.cwd()
-  );
+  const {
+    VITE_PORT,
+    VITE_HOST,
+    VITE_API_PATH,
+    VITE_API_SERVER,
+    VITE_SOCKET_SERVER,
+    VITE_SOCKET_PATH
+  } = loadEnv(mode, process.cwd());
 
   return defineConfig({
     resolve: {
@@ -27,8 +31,8 @@ const config = ({ mode }) => {
         [VITE_API_PATH]: VITE_API_SERVER,
         [VITE_SOCKET_PATH]: {
           target: VITE_SOCKET_SERVER,
-          ws: true,
-        },
+          ws: true
+        }
       }
     },
     plugins: [reactPlugin()]
