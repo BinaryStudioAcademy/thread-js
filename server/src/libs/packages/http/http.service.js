@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { HttpMethod } from '#libs/enums/enums.js';
+import { HttpMethod } from '#libs/packages/http/http.js';
 
 class HttpService {
   constructor() {

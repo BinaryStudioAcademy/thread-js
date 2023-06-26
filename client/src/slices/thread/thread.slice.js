@@ -1,4 +1,4 @@
-import { createSlice,isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants.js';
 import {

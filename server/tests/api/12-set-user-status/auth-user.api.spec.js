@@ -1,70 +1,103 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpCode,
-  HttpMethod,
-  UserPayloadKey,
-  UsersApiPath
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { joinPath } from '#libs/packages/path/path.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { UserPayloadKey, UsersApiPath } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import { buildApp } from '../../libs/packages/app/app.js';
+import { getCrudHandlers } from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.USERS)
-)} and ${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH)
-)} routes`, () => {
-  const app = buildApp();
+const loginEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
+
+const authApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.AUTH]);
+
+const userApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.USERS]);
+
+const userIdEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.USERS,
+  UsersApiPath.$ID
+]);
+
+const authUserEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.USER
+]);
+
+describe(`${userApiPath} and ${authApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { insert } = getCrudHandlers(knex);
+
   let tokenMainUser;
   let tokenMinorUser;
   let userMain;
 
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
-
-  const userEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, UsersApiPath.$ID)
-  );
-
   beforeAll(async () => {
-    const testMainUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
 
-    const testMinorUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    const [validTestMainUser, validTestMinorUser] = TEST_USERS_CREDENTIALS;
 
-    const registerMainUserResponse = await app
+    const loginMainUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMainUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMainUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMainUser[UserPayloadKey.PASSWORD]
+      });
 
-    const registerMinorUserResponse = await app
+    const loginMinorUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMinorUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMinorUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
+      });
 
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
-    userMain = registerMainUserResponse.json().user;
+    tokenMainUser = loginMainUserResponse.json().token;
+    tokenMinorUser = loginMinorUserResponse.json().token;
+    userMain = loginMainUserResponse.json().user;
   });
 
-  const authUserEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.USER)
-  );
+  describe(`${userIdEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+    it(`should return ${HttpCode.FORBIDDEN} with attempt to update user by not own one`, async () => {
+      const updatedMainUser = {
+        ...userMain,
+        [UserPayloadKey.STATUS]: faker.lorem.words()
+      };
 
-  describe(`${userEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+      const updateUserResponse = await app
+        .inject()
+        .put(userIdEndpoint.replace(':id', userMain.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        })
+        .body(updatedMainUser);
+
+      const getUserResponse = await app
+        .inject()
+        .get(userIdEndpoint.replace(':id', userMain.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        });
+
+      expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);
+      expect(getUserResponse.json()).toEqual(userMain);
+    });
+
     it(`should return ${HttpCode.OK} with user's status`, async () => {
       const updatedMainUser = {
         ...userMain,
@@ -72,8 +105,10 @@ describe(`${normalizeTrailingSlash(
       };
       const response = await app
         .inject()
-        .put(userEndpoint.replace(':id', userMain.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .put(userIdEndpoint.replace(':id', userMain.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        })
         .body(updatedMainUser);
 
       expect(response.statusCode).toBe(HttpCode.OK);
@@ -84,27 +119,6 @@ describe(`${normalizeTrailingSlash(
         })
       );
     });
-
-    it(`should return ${HttpCode.FORBIDDEN} with attempt to update user by not own one`, async () => {
-      const updatedMainUser = {
-        ...userMain,
-        [UserPayloadKey.STATUS]: faker.lorem.words()
-      };
-
-      const updateUserResponse = await app
-        .inject()
-        .put(userEndpoint.replace(':id', userMain.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` })
-        .body(updatedMainUser);
-
-      const getUserResponse = await app
-        .inject()
-        .get(userEndpoint.replace(':id', userMain.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` });
-
-      expect(updateUserResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-      expect(getUserResponse.json()).toEqual(userMain);
-    });
   });
 
   describe(`${authUserEndpoint} endpoints`, () => {
@@ -112,7 +126,9 @@ describe(`${normalizeTrailingSlash(
       const response = await app
         .inject()
         .get(authUserEndpoint)
-        .headers({ authorization: `Bearer ${tokenMainUser}` });
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual(expect.objectContaining(userMain));

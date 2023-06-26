@@ -5,7 +5,7 @@ import { Notifications } from '~/libs/components/notifications/notifications.jsx
 import { PrivateRoute } from '~/libs/components/private-route/private-route.jsx';
 import { PublicRoute } from '~/libs/components/public-route/public-route.jsx';
 import { Spinner } from '~/libs/components/spinner/spinner.jsx';
-import { AppRoute,StorageKey } from '~/libs/enums/enums.js';
+import { AppRoute, StorageKey } from '~/libs/enums/enums.js';
 import {
   useCallback,
   useDispatch,

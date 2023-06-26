@@ -1,20 +1,16 @@
 import fp from 'fastify-plugin';
 
-import {
-  ControllerHook,
-  ExceptionMessage,
-  HttpCode
-} from '#libs/enums/enums.js';
+import { ExceptionMessage } from '#libs/enums/enums.js';
 import { InvalidCredentialsError } from '#libs/exceptions/exceptions.js';
+import { ControllerHook } from '#libs/packages/controller/controller.js';
+import { HttpCode } from '#libs/packages/http/http.js';
 
 const authorization = fp(async (fastify, { routesWhiteList, services }) => {
   fastify.decorateRequest('user', null);
 
   fastify.addHook(ControllerHook.ON_REQUEST, async (request, reply) => {
     try {
-      const isWhiteRoute = routesWhiteList.includes(
-        request.routerPath
-      );
+      const isWhiteRoute = routesWhiteList.includes(request.routerPath);
 
       if (isWhiteRoute) {
         return;

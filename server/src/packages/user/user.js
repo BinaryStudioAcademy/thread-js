@@ -11,7 +11,9 @@ const userService = new UserService({
 
 export { userRepository, userService };
 export {
+  UserPayloadKey,
+  UsersApiPath,
   UserValidationMessage,
   UserValidationRule
-} from './libs/validation/validation.js';
+} from './libs/enums/enums.js';
 export { UserModel } from './user.model.js';

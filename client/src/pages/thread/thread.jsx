@@ -10,14 +10,16 @@ import {
   useDispatch,
   useEffect,
   useSelector,
-  useState } from '~/libs/hooks/hooks.js';
+  useState
+} from '~/libs/hooks/hooks.js';
 import { image as imageService } from '~/packages/image/image.js';
 import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 import {
   AddPost,
   ExpandedPost,
-  SharedPostLink } from './components/components.js';
+  SharedPostLink
+} from './components/components.js';
 import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
 import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter.js';
 import styles from './styles.module.scss';

@@ -1,97 +1,86 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  CommentPayloadKey,
-  CommentsApiPath,
-  HttpCode,
-  HttpMethod,
-  PostPayloadKey,
-  PostsApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { DatabaseTableName } from '#libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { joinPath } from '#libs/packages/path/path.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import {
+  CommentPayloadKey,
+  CommentsApiPath
+} from '#packages/comment/comment.js';
+import { PostPayloadKey } from '#packages/post/post.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import { buildApp } from '../../libs/packages/app/app.js';
+import {
+  getCrudHandlers,
+  KNEX_SELECT_ONE_RECORD
+} from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { setupTestComments } from '../../packages/comment/comment.js';
+import { setupTestPosts } from '../../packages/post/post.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS)
-)} routes`, () => {
-  const app = buildApp();
+const loginEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
+
+const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
+
+const commentIdEndpoint = joinPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.COMMENTS,
+  CommentsApiPath.$ID
+);
+
+describe(`${commentApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { select, insert } = getCrudHandlers(knex);
+
   let tokenMainUser;
   let tokenMinorUser;
-  let comment;
-
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
-
-  const postsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
-  );
-
-  const commentsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.ROOT)
-  );
-
-  const commentEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.$ID)
-  );
 
   beforeAll(async () => {
-    const testMainUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
+    await setupTestPosts({ handlers: { select, insert } });
+    await setupTestComments({ handlers: { select, insert } });
 
-    const testMinorUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    const [validTestMainUser, validTestMinorUser] = TEST_USERS_CREDENTIALS;
 
-    const testPost = {
-      [PostPayloadKey.BODY]: faker.lorem.paragraph()
-    };
-
-    const testComment = {
-      [CommentPayloadKey.BODY]: faker.lorem.paragraph()
-    };
-
-    const registerMainUserResponse = await app
+    const loginMainUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMainUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMainUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMainUser[UserPayloadKey.PASSWORD]
+      });
 
-    const registerMinorUserResponse = await app
+    const loginMinorUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMinorUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMinorUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
+      });
 
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
-
-    const createPostResponse = await app
-      .inject()
-      .post(postsEndpoint)
-      .headers({ authorization: `Bearer ${tokenMainUser}` })
-      .body(testPost);
-
-    const { id: postId } = createPostResponse.json();
-    const createCommentResponse = await app
-      .inject()
-      .post(commentsEndpoint)
-      .headers({ authorization: `Bearer ${tokenMainUser}` })
-      .body({ ...testComment, postId });
-
-    comment = createCommentResponse.json();
+    tokenMainUser = loginMainUserResponse.json().token;
+    tokenMinorUser = loginMinorUserResponse.json().token;
   });
 
-  describe(`${commentEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
+  describe(`${commentIdEndpoint} (${HttpMethod.PUT}) endpoint`, async () => {
+    const comment = await select({
+      table: DatabaseTableName.COMMENTS,
+      limit: KNEX_SELECT_ONE_RECORD
+    });
+
     it(`should return ${HttpCode.FORBIDDEN} with attempt to update comment by not own user`, async () => {
       const testUpdatedComment = {
         ...comment,
@@ -100,14 +89,18 @@ describe(`${normalizeTrailingSlash(
 
       const updateCommentResponse = await app
         .inject()
-        .put(commentEndpoint.replace(':id', comment.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` })
+        .put(commentIdEndpoint.replace(':id', comment.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        })
         .body(testUpdatedComment);
 
       const getCommentResponse = await app
         .inject()
-        .get(commentEndpoint.replace(':id', comment.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` });
+        .get(commentIdEndpoint.replace(':id', comment.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        });
 
       expect(updateCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
       expect(getCommentResponse.json()).toEqual(comment);
@@ -121,8 +114,10 @@ describe(`${normalizeTrailingSlash(
 
       const updateCommentResponse = await app
         .inject()
-        .put(commentEndpoint.replace(':id', comment.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` })
+        .put(commentIdEndpoint.replace(':id', comment.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        })
         .body(testUpdatedComment);
 
       expect(updateCommentResponse.statusCode).toBe(HttpCode.OK);

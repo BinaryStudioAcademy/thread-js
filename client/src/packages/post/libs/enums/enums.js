@@ -1,1 +1,1 @@
-export { PostPayloadKey,PostsApiPath } from 'shared/src/packages/post/post';
+export { PostPayloadKey, PostsApiPath } from 'shared/src/packages/post/post';

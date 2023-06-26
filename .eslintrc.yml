@@ -55,8 +55,13 @@ rules:
     - error
   import/no-duplicates:
     - error
-  '@typescript-eslint/non-nullable-type-assertion-style':
-    - off
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: ^_
+      ignoreRestSiblings: true
+  sonarjs/cognitive-complexity:
+    - error
+    - 18
   quotes:
     - error
     - single

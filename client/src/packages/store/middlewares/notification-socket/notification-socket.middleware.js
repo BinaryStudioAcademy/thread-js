@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-regexp-test */
 import {
   NotificationMessage,
   NotificationSocketEvent,
@@ -30,14 +31,14 @@ const notificationSocket = ({ dispatch }) => {
   });
 
   return next => action => {
-    if (new RegExp(action).test(notificationActionCreator.joinRoom)) {
+    if (notificationActionCreator.joinRoom.match(action)) {
       notificationSocketInstance.emit(
         SocketEvent.NOTIFICATION_JOIN_ROOM,
         `${action.payload}`
       );
     }
 
-    if (new RegExp(action).test(notificationActionCreator.leaveRoom)) {
+    if (notificationActionCreator.leaveRoom.match(action)) {
       notificationSocketInstance.emit(
         SocketEvent.NOTIFICATION_LEAVE_ROOM,
         `${action.payload}`

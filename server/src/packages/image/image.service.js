@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 
-import { HttpMethod } from '#libs/enums/enums.js';
+import { HttpMethod } from '#libs/packages/http/http.js';
 
 class ImageService {
   constructor({ config, httpService, imageRepository }) {

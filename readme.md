@@ -20,16 +20,18 @@ The main frameworks and libraries used in the project are listed here. A complet
 4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
 5. [Socket.IO](https://socket.io/docs/)
 6. [npm](<https://en.wikipedia.org/wiki/Npm_(software)>)
-7. [ESLint](https://eslint.org/docs/user-guide/getting-started)
-8. [joi](https://www.npmjs.com/package/joi)
-9. [dayjs](https://day.js.org/)
+7. [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+8. [ESLint](https://eslint.org/docs/user-guide/getting-started)
+9. [joi](https://www.npmjs.com/package/joi)
+10. [dayjs](https://day.js.org/)
 
 ### Frontend
 
 1. [React](https://reactjs.org/docs/getting-started.html)
-2. [React Redux](https://redux.js.org/introduction/getting-started)
-3. [React Hook Form](https://react-hook-form.com/get-started)
-4. [history](https://www.npmjs.com/package/history)
+2. [Vite](https://vitejs.dev/)
+3. [React Redux](https://redux.js.org/introduction/getting-started)
+4. [React Hook Form](https://react-hook-form.com/get-started)
+5. [history](https://www.npmjs.com/package/history)
 
 ### Backend
 
@@ -59,7 +61,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 2.  Get the latest stable version [PostgreSQL](https://www.postgresql.org/download/ 'PostgreSQL') for your OS. Check the correctness of the work - try to create a database, a table - for this you can use [pgAdmin](https://www.pgadmin.org/ 'pgAdmin') or any other convenient way you find.
 
-3.  Create in PostgreSQL **empty** database for the project. For example, _thread_.
+3.  Create in PostgreSQL 2 **empty** databases for the project. For example, _thread_ and _thread-test_. The main idea is that you can check if code works properly in 2 ways: automated via backend tests and manually via interaction between frontend and backend. And these are independent processes.
 
 4.  Install Git.
 
@@ -67,60 +69,51 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 - Change `eol` setting in your code editor to `lf`.
 - Change the `autocrlf` setting to `input` in the Git settings:
-    ```
-    git config --global core.autocrlf input
-    ```
 
-5. Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
+  ```
+  git config --global core.autocrlf input
+  ```
+
+5.  Clone project`s [repo](https://github.com/BinaryStudioAcademy/thread-js):
 
     ```
     git clone git@github.com:BinaryStudioAcademy/thread-js.git
     ```
 
-6. **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
+6.  **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
 
 ### Root of project
 
-1. In the root of the project, install all the dependencies with command:
+1.  In the root of the project, install all the dependencies with command:
 
     ```
     npm install
     ```
 
-2. After installing the packages, in the root of the project, you need to run the command to [git-hooks](https://www.npmjs.com/package/simple-git-hooks):
+2.  After installing the packages, in the root of the project, you need to run the command to [git-hooks](https://www.npmjs.com/package/simple-git-hooks):
 
     ```
     npx simple-git-hooks
     ```
 
-    **Now, for each of your commits, the linter will be launched and check your code.**
-
-### Shared
-
-Shared package contains code that is used for both frontend and backend.
-
-1. In the command line (terminal) go to the `shared` folder:
-
-    ```
-    cd /* path to shared folder */
-    ```
+    **Now, for each of your commits, the linter will be launched and check your code. It's very important and must have thing, developer should follow linter instructions, without it the PR cannot be merged in real life(IN YOUR CASE, THE WORK MAY NOT BE PROPERLY EVALUATED)**
 
 ### Backend
 
-1. In the command line (terminal) go to the folder server:
+1.  In the command line (terminal) go to the folder server:
 
     ```
     cd /* path to server folder */
     ```
 
-2. In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
+2.  In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
 
     **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
     Replace in file **.env** key values to real.
     In order to specify the keys for Gyazo Storage, you need to register on the site [Gyazo](https://gyazo.com/captures) and [register the app](https://gyazo.com/oauth/applications). Then, in **.env** use `access token` from the recently created application to Gyazo.
 
-3. Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
+3.  Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
 
     ```
     npm run migrate:run
@@ -129,13 +122,13 @@ Shared package contains code that is used for both frontend and backend.
 
     Check the database for demo data.
 
-4. To start the server in the command line (terminal) in the server folder, run:
+4.  To start the server in the command line (terminal) in the server folder, run:
 
     ```
     npm start
     ```
 
-5. To test the correct completing the task in the command line (terminal) in the server folder, run:
+5.  To test the correct completing the task in the command line (terminal) in the server folder, run:
     ```
     npm run test:${task key}
     ```
@@ -147,19 +140,19 @@ Shared package contains code that is used for both frontend and backend.
 
 ### Frontend
 
-1. In the command line (terminal) go to the `client` folder:
+1.  In the command line (terminal) go to the `client` folder:
 
     ```
     cd /* path to client folder */
     ```
 
-2. In the `client` folder create a file **.env** and copy the contents of the file into it **.env.example**.
+2.  In the `client` folder create a file **.env** and copy the contents of the file into it **.env.example**.
 
     **Note**: file **.env** contains real project keys and should not be saved to the repository.
 
     Replace in file **.env** key values to real.
 
-3. To run the client from the command line (terminal) in the client folder, run:
+3.  To run the client from the command line (terminal) in the client folder, run:
 
     ```
     npm start

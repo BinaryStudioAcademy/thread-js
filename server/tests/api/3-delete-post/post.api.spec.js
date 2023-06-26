@@ -1,90 +1,99 @@
-import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpCode,
-  HttpMethod,
-  PostPayloadKey,
-  PostsApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { DatabaseTableName } from '#libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { joinPath } from '#libs/packages/path/path.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { PostPayloadKey, PostsApiPath } from '#packages/post/post.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import { buildApp } from '../../libs/packages/app/app.js';
+import {
+  getCrudHandlers,
+  KNEX_SELECT_ONE_RECORD
+} from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { setupTestPosts } from '../../packages/post/post.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS)
-)} routes`, () => {
-  const app = buildApp();
+const loginEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
+
+const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
+
+const postIdEndpoint = joinPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS,
+  PostsApiPath.$ID
+);
+
+const postsEndpoint = joinPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS,
+  PostsApiPath.ROOT
+);
+
+describe(`${postApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { select, insert } = getCrudHandlers(knex);
+
   let tokenMainUser;
   let tokenMinorUser;
-  let post;
-
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
-
-  const postsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
-  );
-
-  const postEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.$ID)
-  );
 
   beforeAll(async () => {
-    const testMainUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
+    await setupTestPosts({ handlers: { select, insert } });
 
-    const testMinorUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    const [validTestMainUser, validTestMinorUser] = TEST_USERS_CREDENTIALS;
 
-    const testPost = {
-      [PostPayloadKey.BODY]: faker.lorem.paragraph()
-    };
-
-    const registerMainUserResponse = await app
+    const loginMainUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMainUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMainUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMainUser[UserPayloadKey.PASSWORD]
+      });
 
-    const registerMinorUserResponse = await app
+    const loginMinorUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMinorUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestMinorUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
+      });
 
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
-
-    const createPostResponse = await app
-      .inject()
-      .post(postsEndpoint)
-      .headers({ authorization: `Bearer ${tokenMainUser}` })
-      .body(testPost);
-
-    post = createPostResponse.json();
+    tokenMainUser = loginMainUserResponse.json().token;
+    tokenMinorUser = loginMinorUserResponse.json().token;
   });
 
-  describe(`${postEndpoint} (${HttpMethod.DELETE}) endpoint`, () => {
+  describe(`${postIdEndpoint} (${HttpMethod.DELETE}) endpoint`, async () => {
+    const postToDelete = await select({
+      table: DatabaseTableName.COMMENTS,
+      limit: KNEX_SELECT_ONE_RECORD
+    });
+
     it(`should return ${HttpCode.FORBIDDEN} with attempt to delete post by not own user`, async () => {
       const deletePostResponse = await app
         .inject()
-        .delete(postEndpoint.replace(':id', post.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` });
+        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        });
 
       const getPostResponse = await app
         .inject()
-        .get(postEndpoint.replace(':id', post.id))
-        .headers({ authorization: `Bearer ${tokenMinorUser}` });
+        .get(postIdEndpoint.replace(':id', postToDelete.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        });
 
       expect(deletePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
       expect(getPostResponse.json()).not.toHaveProperty('deletedAt');
@@ -93,38 +102,58 @@ describe(`${normalizeTrailingSlash(
     it(`should return ${HttpCode.OK} with soft deleted post`, async () => {
       const deletePostResponse = await app
         .inject()
-        .delete(postEndpoint.replace(':id', post.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` });
+        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        });
 
       const getPostResponse = await app
         .inject()
-        .get(postEndpoint.replace(':id', post.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` });
+        .get(postIdEndpoint.replace(':id', postToDelete.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        });
 
       expect(deletePostResponse.statusCode).toBe(HttpCode.OK);
       expect(getPostResponse.json()).toEqual(
         expect.objectContaining({
-          id: post.id,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-          [PostPayloadKey.BODY]: post[PostPayloadKey.BODY]
+          id: postToDelete.id,
+          createdAt: postToDelete.createdAt,
+          updatedAt: postToDelete.updatedAt,
+          [PostPayloadKey.BODY]: postToDelete[PostPayloadKey.BODY]
         })
       );
       expect(getPostResponse.json()).toHaveProperty('deletedAt');
     });
   });
 
-  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
+  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
+    const postToDelete = await select({
+      table: DatabaseTableName.COMMENTS,
+      limit: KNEX_SELECT_ONE_RECORD
+    });
+
     it(`should return ${HttpCode.OK} with ignoring soft deleted post`, async () => {
+      await app
+        .inject()
+        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        });
+
       const getPostsResponse = await app
         .inject()
         .get(postsEndpoint)
-        .headers({ authorization: `Bearer ${tokenMinorUser}` })
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        })
         .query({ from: 0, count: 1 });
 
       expect(getPostsResponse.statusCode).toBe(HttpCode.OK);
       expect(getPostsResponse.json()).not.toEqual(
-        expect.arrayContaining([expect.objectContaining({ id: post.id })])
+        expect.arrayContaining([
+          expect.objectContaining({ id: postToDelete.id })
+        ])
       );
     });
   });

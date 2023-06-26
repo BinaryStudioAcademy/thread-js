@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import PropTypes from 'prop-types';
 
 import { IconName } from '~/libs/enums/enums.js';
@@ -44,7 +45,11 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
           label={likeCount}
           onClick={handlePostLike}
         />
-        <IconButton iconName={IconName.THUMBS_DOWN} label={dislikeCount} />
+        <IconButton
+          iconName={IconName.THUMBS_DOWN}
+          label={dislikeCount}
+          onClick={() => {}}
+        />
         <IconButton
           iconName={IconName.COMMENT}
           label={commentCount}

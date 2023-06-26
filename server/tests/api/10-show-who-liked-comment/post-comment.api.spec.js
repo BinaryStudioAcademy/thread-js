@@ -1,164 +1,180 @@
-import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  CommentsApiPath,
-  HttpCode,
-  HttpMethod,
-  PostPayloadKey,
-  PostsApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { DatabaseTableName } from '#libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
+import { joinPath } from '#libs/packages/path/path.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { CommentsApiPath } from '#packages/comment/comment.js';
+import { PostsApiPath } from '#packages/post/post.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import { buildApp } from '../../libs/packages/app/app.js';
+import { getCrudHandlers } from '../../libs/packages/database/database.js';
+import { getBearerAuthHeader } from '../../libs/packages/http/http.js';
+import { setupTestComments } from '../../packages/comment/comment.js';
+import { setupTestPosts } from '../../packages/post/post.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS)
-)} and ${config.ENV.APP.API_PATH}${ApiPath.POSTS} routes`, () => {
-  const app = buildApp();
-  let tokenMainUser;
-  let tokenMinorUser;
-  let userMainId;
-  let userMinorId;
-  let post;
-  let comment;
+const loginEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
 
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
+const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
 
-  const postsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.ROOT)
-  );
+const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-  const commentsEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.ROOT)
-  );
+const postIdEndpoint = joinPath(
+  config.ENV.APP.API_PATH,
+  ApiPath.POSTS,
+  PostsApiPath.$ID
+);
 
-  const postEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.POSTS, PostsApiPath.$ID)
-  );
+const commentReactEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.COMMENTS,
+  CommentsApiPath.REACT
+]);
 
-  const commentReactEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.REACT)
-  );
+const commentIdEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.COMMENTS,
+  CommentsApiPath.$ID
+]);
 
-  const commentEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.COMMENTS, CommentsApiPath.$ID)
-  );
+describe(`${commentApiPath} and ${postApiPath} routes`, () => {
+  const { app, knex } = buildApp();
+  const { select, insert } = getCrudHandlers(knex);
+
+  let token;
+  let userId;
 
   beforeAll(async () => {
-    const testMainUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
+    await setupTestPosts({ handlers: { select, insert } });
+    await setupTestComments({ handlers: { select, insert } });
 
-    const testMinorUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-    const registerMainUserResponse = await app
+    const loginUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testMainUser);
-
-    const registerMinorUserResponse = await app
-      .inject()
-      .post(registerEndpoint)
-      .body(testMinorUser);
-
-    tokenMainUser = registerMainUserResponse.json().token;
-    tokenMinorUser = registerMinorUserResponse.json().token;
-    userMainId = registerMainUserResponse.json().user.id;
-    userMinorId = registerMinorUserResponse.json().user.id;
-
-    const testPost = {
-      [PostPayloadKey.BODY]: faker.lorem.paragraph()
-    };
-
-    const createPostResponse = app
-      .inject()
-      .post(postsEndpoint)
-      .headers({ authorization: `Bearer ${tokenMainUser}` })
+      .post(loginEndpoint)
       .body({
-        [PostPayloadKey.BODY]: testPost[PostPayloadKey.BODY]
+        [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    post = createPostResponse.json();
+    token = loginUserResponse.json().token;
+    userId = loginUserResponse.json().user.id;
 
-    const testComment = {
-      [PostPayloadKey.BODY]: faker.lorem.paragraph()
-    };
-
-    const commentResponse = await app
-      .inject()
-      .post(commentsEndpoint)
-      .headers({ authorization: `Bearer ${tokenMainUser}` })
-      .body({
-        postId: post.id,
-        [PostPayloadKey.BODY]: testComment[PostPayloadKey.BODY]
-      });
-    comment = commentResponse.json();
+    const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
+      table: DatabaseTableName.POSTS
+    });
 
     await app
       .inject()
       .put(commentReactEndpoint)
-      .headers({ authorization: `Bearer ${tokenMinorUser}` })
-      .body({ commentId: comment.id, isLike: false });
+      .headers({
+        [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token)
+      })
+      .body({ commentId: firstCommentId });
+    await app
+      .inject()
+      .put(commentReactEndpoint)
+      .headers({
+        [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token)
+      })
+      .body({ postId: secondCommentId, isLike: false });
   });
 
-  describe(`${commentEndpoint} (${HttpMethod.GET}) endpoint`, () => {
-    it(`should return ${HttpCode.OK} with likes and dislikes of comment`, async () => {
-      const response = await app
-        .inject()
-        .get(commentEndpoint.replace(':id', comment.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` });
+  describe(`${commentIdEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
+    const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
+      table: DatabaseTableName.COMMENTS
+    });
 
-      expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toEqual(
+    it(`should return ${HttpCode.OK} with likes and dislikes of comment`, async () => {
+      const firstResponse = await app
+        .inject()
+        .get(commentIdEndpoint.replace(':id', firstCommentId))
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
+
+      const secondResponse = await app
+        .inject()
+        .get(commentIdEndpoint.replace(':id', secondCommentId))
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
+
+      expect(firstResponse.statusCode).toBe(HttpCode.OK);
+      expect(firstResponse.json()).toEqual(
         expect.objectContaining({
-          id: comment.id,
-          userId: userMainId,
-          likes: expect.arrayContaining([
-            expect.objectContaining({
-              userId: userMinorId
-            })
-          ]),
-          dislikes: expect.arrayContaining([])
+          id: firstCommentId,
+          likes: expect.arrayContaining([expect.objectContaining({ userId })]),
+          dislikes: []
+        })
+      );
+
+      expect(secondResponse.statusCode).toBe(HttpCode.OK);
+      expect(secondResponse.json()).toEqual(
+        expect.objectContaining({
+          id: secondCommentId,
+          likes: [],
+          dislikes: expect.arrayContaining([
+            expect.objectContaining({ userId })
+          ])
         })
       );
     });
   });
 
-  describe(`${postEndpoint} (${HttpMethod.GET}) endpoint`, () => {
-    it(`should return ${HttpCode.OK} with likes and dislikes of post's comment`, async () => {
-      const response = await app
-        .inject()
-        .get(postEndpoint.replace(':id', post.id))
-        .headers({ authorization: `Bearer ${tokenMainUser}` });
+  describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
+    const [
+      { id: firstCommentId, firstPostId },
+      { id: secondCommentId, secondPostId }
+    ] = await select({ table: DatabaseTableName.COMMENTS });
 
-      expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toEqual(
+    it(`should return ${HttpCode.OK} with likes and dislikes of post's comment`, async () => {
+      const firstPostResponse = await app
+        .inject()
+        .get(postIdEndpoint.replace(':id', firstPostId))
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
+
+      const secondPostResponse = await app
+        .inject()
+        .get(postIdEndpoint.replace(':id', secondPostId))
+        .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
+
+      expect(firstPostResponse.statusCode).toBe(HttpCode.OK);
+      expect(firstPostResponse.json()).toEqual(
         expect.objectContaining({
-          id: comment.id,
-          userId: userMainId,
+          id: firstPostId,
           comments: expect.arrayContaining([
             expect.objectContaining({
-              id: comment.id,
-              userId: userMainId,
+              id: firstCommentId,
               likes: expect.arrayContaining([
-                expect.objectContaining({
-                  userId: userMinorId
-                })
+                expect.objectContaining({ userId })
               ]),
-              dislikes: expect.arrayContaining([])
+              dislikes: []
+            })
+          ])
+        })
+      );
+
+      expect(secondPostResponse.statusCode).toBe(HttpCode.OK);
+      expect(secondPostResponse.json()).toEqual(
+        expect.objectContaining({
+          id: secondPostId,
+          comments: expect.arrayContaining([
+            expect.objectContaining({
+              id: secondCommentId,
+              likes: [],
+              dilikes: expect.arrayContaining([
+                expect.objectContaining({ userId })
+              ])
             })
           ])
         })

@@ -1,58 +1,65 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import {
-  ApiPath,
-  AuthApiPath,
-  HttpCode,
-  PasswordApiPath,
-  UserPayloadKey
-} from '#libs/enums/enums.js';
-import { joinPath, normalizeTrailingSlash } from '#libs/helpers/helpers.js';
+import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { joinPath } from '#libs/packages/path/path.js';
+import { AuthApiPath } from '#packages/auth/auth.js';
+import { HttpCode } from '#packages/http/http.js';
+import { PasswordApiPath } from '#packages/password/password.js';
 import {
+  UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
 } from '#packages/user/user.js';
 
-import { buildApp } from '../../helpers/helpers.js';
+import { buildApp } from '../../libs/packages/app/app.js';
+import { getCrudHandlers } from '../../libs/packages/database/database.js';
+import {
+  setupTestUsers,
+  TEST_USERS_CREDENTIALS
+} from '../../packages/user/user.js';
 
-describe(`${normalizeTrailingSlash(
-  joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD)
-)} routes`, () => {
-  const app = buildApp();
+const passwordEndpoint = joinPath([config.ENV.APP.API_PATH, ApiPath.PASSWORD]);
+
+const loginEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.AUTH,
+  AuthApiPath.LOGIN
+]);
+
+const resetPasswordEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.PASSWORD,
+  PasswordApiPath.RESET
+]);
+
+const setPasswordEndpoint = joinPath([
+  config.ENV.APP.API_PATH,
+  ApiPath.PASSWORD,
+  PasswordApiPath.SET
+]);
+
+describe(`${passwordEndpoint} routes`, () => {
+  const { app, knex } = buildApp();
+  const { insert } = getCrudHandlers(knex);
+
   let user;
 
-  const registerEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.REGISTER)
-  );
-
   beforeAll(async () => {
-    const testUser = {
-      [UserPayloadKey.USERNAME]: faker.name.firstName(),
-      [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password()
-    };
+    await setupTestUsers({ handlers: { insert } });
+    const [validTestUser] = TEST_USERS_CREDENTIALS;
 
-    const registerMainUserResponse = await app
+    const loginUserResponse = await app
       .inject()
-      .post(registerEndpoint)
-      .body(testUser);
+      .post(loginEndpoint)
+      .body({
+        [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+        [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
+      });
 
-    user = registerMainUserResponse.json().user;
+    user = loginUserResponse.json().user;
   });
-
-  const resetPasswordEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.RESET)
-  );
-
-  const setPasswordEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.PASSWORD, PasswordApiPath.SET)
-  );
-
-  const loginEndpoint = normalizeTrailingSlash(
-    joinPath(config.ENV.APP.API_PATH, ApiPath.AUTH, AuthApiPath.LOGIN)
-  );
 
   describe(`${resetPasswordEndpoint} endpoint`, () => {
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
@@ -67,7 +74,7 @@ describe(`${normalizeTrailingSlash(
         .inject()
         .post(resetPasswordEndpoint)
         .body({
-          [UserPayloadKey.EMAIL]: faker.name.firstName()
+          [UserPayloadKey.EMAIL]: faker.person.firstName()
         });
 
       expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -114,7 +121,7 @@ describe(`${normalizeTrailingSlash(
         .inject()
         .post(setPasswordEndpoint)
         .body({
-          [UserPayloadKey.TOKEN]: faker.datatype.string()
+          [UserPayloadKey.TOKEN]: faker.string.sample()
         });
 
       expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -128,10 +135,10 @@ describe(`${normalizeTrailingSlash(
         .inject()
         .post(setPasswordEndpoint)
         .body({
-          [UserPayloadKey.TOKEN]: faker.datatype.string(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MIN_LENGTH - 2
-          )
+          [UserPayloadKey.TOKEN]: faker.string.sample(),
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MIN_LENGTH - 2
+          })
         });
 
       expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -145,10 +152,10 @@ describe(`${normalizeTrailingSlash(
         .inject()
         .post(setPasswordEndpoint)
         .body({
-          [UserPayloadKey.TOKEN]: faker.datatype.string(),
-          [UserPayloadKey.PASSWORD]: faker.internet.password(
-            UserValidationRule.PASSWORD_MAX_LENGTH + 2
-          )
+          [UserPayloadKey.TOKEN]: faker.string.sample(),
+          [UserPayloadKey.PASSWORD]: faker.internet.password({
+            length: UserValidationRule.PASSWORD_MAX_LENGTH + 2
+          })
         });
 
       expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
@@ -162,7 +169,7 @@ describe(`${normalizeTrailingSlash(
         .inject()
         .post(setPasswordEndpoint)
         .body({
-          [UserPayloadKey.TOKEN]: faker.datatype.string(),
+          [UserPayloadKey.TOKEN]: faker.string.sample(),
           [UserPayloadKey.PASSWORD]: faker.internet.password()
         });
 

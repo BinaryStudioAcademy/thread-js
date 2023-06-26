@@ -15,7 +15,9 @@ const Checkbox = ({ name, label, control }) => {
         id="toggle-checkbox"
         className={`${styles.switch} ${styles.pointer}`}
       />
-      <label className={styles.pointer} htmlFor="toggle-checkbox">{label}</label>
+      <label className={styles.pointer} htmlFor="toggle-checkbox">
+        {label}
+      </label>
     </div>
   );
 };

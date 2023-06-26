@@ -1,3 +1,6 @@
+import { ApiPath } from '#libs/enums/enums.js';
+
+import { PostController } from './post.controller.js';
 import { PostModel } from './post.model.js';
 import { PostRepository } from './post.repository.js';
 import { PostService } from './post.service.js';
@@ -14,8 +17,16 @@ const postService = new PostService({
   postRepository,
   postReactionRepository
 });
+const postController = new PostController({
+  apiPath: ApiPath.POSTS,
+  postService
+});
 
-export { postReactionRepository, postRepository, postService };
-export { initPostApi } from './post.api.js';
+export { postController, postReactionRepository, postRepository, postService };
+export {
+  FilterUserMode,
+  PostPayloadKey,
+  PostsApiPath
+} from './libs/enums/enums.js';
 export { PostModel } from './post.model.js';
 export { PostReactionModel } from './post-reaction.model.js';

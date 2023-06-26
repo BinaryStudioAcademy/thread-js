@@ -1,50 +1,104 @@
+import convict from 'convict';
 import { config } from 'dotenv';
+
+import { AppEnvironment } from '#libs/enums/enums.js';
 
 class Config {
   constructor() {
     config();
 
-    this.ENV = this.#envSchema;
+    this.#envSchema.load({});
+    this.#envSchema.validate({ allowed: 'strict' });
+    this.ENV = this.#envSchema.getProperties();
   }
 
   get #envSchema() {
-    const {
-      APP_PORT,
-      SECRET_KEY,
-      DB_NAME,
-      DB_USERNAME,
-      DB_PASSWORD,
-      DB_HOST,
-      DB_PORT,
-      DB_CLIENT,
-      GYAZO_UPLOAD_API_URL,
-      GYAZO_ACCESS_TOKEN
-    } = process.env;
-
-    return {
+    return convict({
       APP: {
         API_PATH: '/api',
-        PORT: APP_PORT
+        PORT: {
+          doc: 'Port for incoming connections',
+          format: Number,
+          env: 'APP_PORT',
+          default: null
+        },
+        ENVIRONMENT: {
+          doc: 'Application environment',
+          format: Object.values(AppEnvironment),
+          env: 'NODE_ENV',
+          default: null
+        }
       },
       JWT: {
-        SECRET: SECRET_KEY,
+        SECRET: {
+          doc: 'Secret key for token generation',
+          format: String,
+          env: 'SECRET_KEY',
+          default: null
+        },
         EXPIRES_IN: '24h'
       },
       DB: {
-        DATABASE: DB_NAME,
-        USERNAME: DB_USERNAME,
-        PASSWORD: DB_PASSWORD,
-        HOST: DB_HOST,
-        PORT: DB_PORT,
-        CLIENT: DB_CLIENT,
+        DATABASE: {
+          doc: 'Database name',
+          format: String,
+          env: 'DB_NAME',
+          default: null
+        },
+        TEST_DATABASE: {
+          doc: 'Test database name',
+          format: String,
+          env: 'TEST_DB_NAME',
+          default: null
+        },
+        USERNAME: {
+          doc: 'Database connection username',
+          format: String,
+          env: 'DB_USERNAME',
+          default: null
+        },
+        PASSWORD: {
+          doc: 'Database connection password',
+          format: String,
+          env: 'DB_PASSWORD',
+          default: null
+        },
+        HOST: {
+          doc: 'Database connection host',
+          format: String,
+          env: 'DB_HOST',
+          default: null
+        },
+        PORT: {
+          doc: 'Database connection port',
+          format: Number,
+          env: 'DB_PORT',
+          default: null
+        },
+        CLIENT: {
+          doc: 'Database connection client',
+          format: String,
+          env: 'DB_CLIENT',
+          default: null
+        },
         DEBUG: false
       },
       GYAZO: {
-        ACCESS_KEY: GYAZO_ACCESS_TOKEN,
-        UPLOAD_API_URL: GYAZO_UPLOAD_API_URL,
+        ACCESS_KEY: {
+          doc: 'Gyazo access key',
+          format: String,
+          env: 'GYAZO_ACCESS_TOKEN',
+          default: null
+        },
+        UPLOAD_API_URL: {
+          doc: 'Gyazo upload api url',
+          format: String,
+          env: 'GYAZO_UPLOAD_API_URL',
+          default: null
+        },
         FILE_SIZE: 10_000_000
       }
-    };
+    });
   }
 }
 
