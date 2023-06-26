@@ -9,3 +9,4 @@ const comment = new Comment({
 });
 
 export { comment };
+export { CommentPayloadKey } from './libs/enums/enums.js';
