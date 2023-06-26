@@ -20,16 +20,18 @@ The main frameworks and libraries used in the project are listed here. A complet
 4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
 5. [Socket.IO](https://socket.io/docs/)
 6. [npm](<https://en.wikipedia.org/wiki/Npm_(software)>)
-7. [ESLint](https://eslint.org/docs/user-guide/getting-started)
-8. [joi](https://www.npmjs.com/package/joi)
-9. [dayjs](https://day.js.org/)
+7. [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+8. [ESLint](https://eslint.org/docs/user-guide/getting-started)
+9. [joi](https://www.npmjs.com/package/joi)
+10. [dayjs](https://day.js.org/)
 
 ### Frontend
 
 1. [React](https://reactjs.org/docs/getting-started.html)
-2. [React Redux](https://redux.js.org/introduction/getting-started)
-3. [React Hook Form](https://react-hook-form.com/get-started)
-4. [history](https://www.npmjs.com/package/history)
+2. [Vite](https://vitejs.dev/)
+3. [React Redux](https://redux.js.org/introduction/getting-started)
+4. [React Hook Form](https://react-hook-form.com/get-started)
+5. [history](https://www.npmjs.com/package/history)
 
 ### Backend
 
@@ -59,7 +61,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 2.  Get the latest stable version [PostgreSQL](https://www.postgresql.org/download/ 'PostgreSQL') for your OS. Check the correctness of the work - try to create a database, a table - for this you can use [pgAdmin](https://www.pgadmin.org/ 'pgAdmin') or any other convenient way you find.
 
-3.  Create in PostgreSQL **empty** database for the project. For example, _thread_.
+3.  Create in PostgreSQL 2 **empty** databases for the project. For example, _thread_ and _thread-test_. The main idea is that you can check if code works properly in 2 ways: automated via backend tests and manually via interaction between frontend and backend. And these are independent processes.
 
 4.  Install Git.
 
@@ -94,7 +96,7 @@ The main frameworks and libraries used in the project are listed here. A complet
     npx simple-git-hooks
     ```
 
-    **Now, for each of your commits, the linter will be launched and check your code.**
+    **Now, for each of your commits, the linter will be launched and check your code. It's very important and must have thing, developer should follow linter instructions, without it the PR cannot be merged in real life(IN YOUR CASE, THE WORK MAY NOT BE PROPERLY EVALUATED)**
 
 ### Backend
 
