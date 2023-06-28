@@ -43,8 +43,10 @@ const imagesEndpoint = joinPath([
 ]);
 
 describe(`${userApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let tokenMainUser;
   let tokenMinorUser;
@@ -80,7 +82,7 @@ describe(`${userApiPath} routes`, () => {
     it(`should return ${HttpCode.FORBIDDEN} with attempt to update user by not own one`, async () => {
       const updatedMainUser = {
         ...userMain,
-        [UserPayloadKey.USERNAME]: faker.name.firstName()
+        [UserPayloadKey.USERNAME]: faker.person.firstName()
       };
 
       const updateUserResponse = await app
@@ -127,7 +129,7 @@ describe(`${userApiPath} routes`, () => {
       const { id: imageId } = uploadImageResponse.json();
       const updatedMainUser = {
         ...userMain,
-        [UserPayloadKey.USERNAME]: faker.name.firstName(),
+        [UserPayloadKey.USERNAME]: faker.person.firstName(),
         imageId
       };
       const response = await app

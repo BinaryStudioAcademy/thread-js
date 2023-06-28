@@ -29,21 +29,23 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postIdEndpoint = joinPath(
+const postIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.$ID
-);
+]);
 
-const postsEndpoint = joinPath(
+const postsEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.ROOT
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let tokenMainUser;
   let tokenMinorUser;
@@ -74,13 +76,13 @@ describe(`${postApiPath} routes`, () => {
     tokenMinorUser = loginMinorUserResponse.json().token;
   });
 
-  describe(`${postIdEndpoint} (${HttpMethod.DELETE}) endpoint`, async () => {
-    const postToDelete = await select({
-      table: DatabaseTableName.COMMENTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${postIdEndpoint} (${HttpMethod.DELETE}) endpoint`, () => {
     it(`should return ${HttpCode.FORBIDDEN} with attempt to delete post by not own user`, async () => {
+      const postToDelete = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const deletePostResponse = await app
         .inject()
         .delete(postIdEndpoint.replace(':id', postToDelete.id))
@@ -100,6 +102,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with soft deleted post`, async () => {
+      const postToDelete = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const deletePostResponse = await app
         .inject()
         .delete(postIdEndpoint.replace(':id', postToDelete.id))
@@ -127,13 +134,13 @@ describe(`${postApiPath} routes`, () => {
     });
   });
 
-  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
-    const postToDelete = await select({
-      table: DatabaseTableName.COMMENTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with ignoring soft deleted post`, async () => {
+      const postToDelete = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       await app
         .inject()
         .delete(postIdEndpoint.replace(':id', postToDelete.id))

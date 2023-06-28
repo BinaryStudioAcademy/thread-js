@@ -29,21 +29,23 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postIdEndpoint = joinPath(
+const postIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.$ID
-);
+]);
 
-const postReactEndpoint = joinPath(
+const postReactEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.REACT
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
 
@@ -64,13 +66,13 @@ describe(`${postApiPath} routes`, () => {
     token = loginResponse.json().token;
   });
 
-  describe(`${postReactEndpoint} (${HttpMethod.PUT}) endpoint`, async () => {
-    const { id: postId } = await select({
-      table: DatabaseTableName.COMMENTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${postReactEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
@@ -93,6 +95,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with removed user's like post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
@@ -115,6 +122,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with disliked post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
@@ -137,6 +149,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with removed user's dislike post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
@@ -159,6 +176,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with switched like to dislike post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))
@@ -198,6 +220,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with switched dislike to like post`, async () => {
+      const { id: postId } = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getPostBeforeLikeResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', postId))

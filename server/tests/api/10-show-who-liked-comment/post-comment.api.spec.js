@@ -30,11 +30,11 @@ const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postIdEndpoint = joinPath(
+const postIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.$ID
-);
+]);
 
 const commentReactEndpoint = joinPath([
   config.ENV.APP.API_PATH,
@@ -49,8 +49,10 @@ const commentIdEndpoint = joinPath([
 ]);
 
 describe(`${commentApiPath} and ${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
   let userId;
@@ -93,12 +95,12 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
       .body({ postId: secondCommentId, isLike: false });
   });
 
-  describe(`${commentIdEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
-    const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
-      table: DatabaseTableName.COMMENTS
-    });
-
+  describe(`${commentIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of comment`, async () => {
+      const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
+        table: DatabaseTableName.COMMENTS
+      });
+
       const firstResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', firstCommentId))
@@ -131,13 +133,13 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
     });
   });
 
-  describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
-    const [
-      { id: firstCommentId, firstPostId },
-      { id: secondCommentId, secondPostId }
-    ] = await select({ table: DatabaseTableName.COMMENTS });
-
+  describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of post's comment`, async () => {
+      const [
+        { id: firstCommentId, firstPostId },
+        { id: secondCommentId, secondPostId }
+      ] = await select({ table: DatabaseTableName.COMMENTS });
+
       const firstPostResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', firstPostId))

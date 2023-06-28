@@ -26,27 +26,29 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postIdEndpoint = joinPath(
+const postIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.$ID
-);
+]);
 
-const postReactEndpoint = joinPath(
+const postReactEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.REACT
-);
+]);
 
-const postsEndpoint = joinPath(
+const postsEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.ROOT
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
   let userId;
@@ -84,12 +86,12 @@ describe(`${postApiPath} routes`, () => {
       .body({ postId: secondPostId, isLike: false });
   });
 
-  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
-    const [{ id: firstPostId }, { id: secondPostId }] = await select({
-      table: DatabaseTableName.POSTS
-    });
-
+  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of posts`, async () => {
+      const [{ id: firstPostId }, { id: secondPostId }] = await select({
+        table: DatabaseTableName.POSTS
+      });
+
       const response = await app
         .inject()
         .get(postsEndpoint)
@@ -113,12 +115,12 @@ describe(`${postApiPath} routes`, () => {
     });
   });
 
-  describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
-    const [{ id: firstPostId }, { id: secondPostId }] = await select({
-      table: DatabaseTableName.POSTS
-    });
-
+  describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of post`, async () => {
+      const [{ id: firstPostId }, { id: secondPostId }] = await select({
+        table: DatabaseTableName.POSTS
+      });
+
       const firstPostResponse = await app
         .inject()
         .get(postIdEndpoint.replace(':id', firstPostId))

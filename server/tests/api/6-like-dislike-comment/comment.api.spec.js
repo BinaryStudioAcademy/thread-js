@@ -30,21 +30,23 @@ const loginEndpoint = joinPath([
 
 const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
 
-const commentIdEndpoint = joinPath(
+const commentIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.COMMENTS,
   PostsApiPath.$ID
-);
+]);
 
-const commentReactEndpoint = joinPath(
+const commentReactEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.COMMENTS,
   PostsApiPath.REACT
-);
+]);
 
 describe(`${commentApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
 
@@ -66,13 +68,13 @@ describe(`${commentApiPath} routes`, () => {
     token = loginResponse.json().token;
   });
 
-  describe(`${commentReactEndpoint} (${HttpMethod.PUT}) endpoint`, async () => {
-    const { id: commentId } = await select({
-      table: DatabaseTableName.COMMENTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${commentReactEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))
@@ -95,6 +97,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with removed user's like comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))
@@ -117,6 +124,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with disliked comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))
@@ -139,6 +151,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with removed user's dislike comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))
@@ -161,6 +178,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with switched like to dislike comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))
@@ -202,6 +224,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with switched dislike to like comment`, async () => {
+      const { id: commentId } = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const getCommentBeforeLikeResponse = await app
         .inject()
         .get(commentIdEndpoint.replace(':id', commentId))

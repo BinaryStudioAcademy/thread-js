@@ -30,15 +30,17 @@ const loginEndpoint = joinPath([
 
 const commentApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.COMMENTS]);
 
-const commentIdEndpoint = joinPath(
+const commentIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.COMMENTS,
   CommentsApiPath.$ID
-);
+]);
 
 describe(`${commentApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let tokenMainUser;
   let tokenMinorUser;
@@ -70,13 +72,13 @@ describe(`${commentApiPath} routes`, () => {
     tokenMinorUser = loginMinorUserResponse.json().token;
   });
 
-  describe(`${commentIdEndpoint} (${HttpMethod.DELETE}) endpoint`, async () => {
-    const commentToDelete = await select({
-      table: DatabaseTableName.COMMENTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${commentIdEndpoint} (${HttpMethod.DELETE}) endpoint`, () => {
     it(`should return ${HttpCode.FORBIDDEN} with attempt to delete comment by not own user`, async () => {
+      const commentToDelete = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const deleteCommentResponse = await app
         .inject()
         .delete(commentIdEndpoint.replace(':id', commentToDelete.id))
@@ -98,6 +100,11 @@ describe(`${commentApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with deleted comment`, async () => {
+      const commentToDelete = await select({
+        table: DatabaseTableName.COMMENTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const deleteCommentResponse = await app
         .inject()
         .delete(commentIdEndpoint.replace(':id', commentToDelete.id))

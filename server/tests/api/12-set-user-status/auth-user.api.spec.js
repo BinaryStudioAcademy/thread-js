@@ -39,8 +39,10 @@ const authUserEndpoint = joinPath([
 ]);
 
 describe(`${userApiPath} and ${authApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let tokenMainUser;
   let tokenMinorUser;

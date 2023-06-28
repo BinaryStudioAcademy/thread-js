@@ -30,15 +30,17 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postIdEndpoint = joinPath(
+const postIdEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.$ID
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let tokenMainUser;
   let tokenMinorUser;
@@ -69,13 +71,13 @@ describe(`${postApiPath} routes`, () => {
     tokenMinorUser = loginMinorUserResponse.json().token;
   });
 
-  describe(`${postIdEndpoint} (${HttpMethod.PUT}) endpoint`, async () => {
-    const post = await select({
-      table: DatabaseTableName.POSTS,
-      limit: KNEX_SELECT_ONE_RECORD
-    });
-
+  describe(`${postIdEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
     it(`should return ${HttpCode.FORBIDDEN} with attempt to update post by not own user`, async () => {
+      const post = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const testUpdatedPost = {
         ...post,
         [PostPayloadKey.BODY]: faker.lorem.paragraph()
@@ -101,6 +103,11 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with updated post`, async () => {
+      const post = await select({
+        table: DatabaseTableName.POSTS,
+        limit: KNEX_SELECT_ONE_RECORD
+      });
+
       const testUpdatedPost = {
         ...post,
         [PostPayloadKey.BODY]: faker.lorem.paragraph()

@@ -6,8 +6,8 @@ import { DatabaseTableName } from '#libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
 import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { FilterUserMode, UserPayloadKey } from '#packages/user/user.js';
+import { FilterUserMode, PostsApiPath } from '#packages/post/post.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -29,21 +29,23 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postsEndpoint = joinPath(
+const postsEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.ROOT
-);
+]);
 
-const postReactEndpoint = joinPath(
+const postReactEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.REACT
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
   let userId;
@@ -69,7 +71,7 @@ describe(`${postApiPath} routes`, () => {
   describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked by own posts`, async () => {
       const { id: postId } = await select({
-        table: DatabaseTableName.COMMENTS,
+        table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
 

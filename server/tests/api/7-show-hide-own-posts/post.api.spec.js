@@ -5,8 +5,8 @@ import { config } from '#libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
 import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { FilterUserMode, UserPayloadKey } from '#packages/user/user.js';
+import { FilterUserMode, PostsApiPath } from '#packages/post/post.js';
+import { UserPayloadKey } from '#packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
@@ -25,15 +25,17 @@ const loginEndpoint = joinPath([
 
 const postApiPath = joinPath([config.ENV.APP.API_PATH, ApiPath.POSTS]);
 
-const postsEndpoint = joinPath(
+const postsEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   ApiPath.POSTS,
   PostsApiPath.ROOT
-);
+]);
 
 describe(`${postApiPath} routes`, () => {
-  const { app, knex } = buildApp();
-  const { select, insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { select, insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let token;
   let userId;
@@ -56,7 +58,7 @@ describe(`${postApiPath} routes`, () => {
     userId = loginResponse.json().user.id;
   });
 
-  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, async () => {
+  describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with own posts`, async () => {
       const response = await app
         .inject()

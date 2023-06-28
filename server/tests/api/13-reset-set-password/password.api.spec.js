@@ -3,9 +3,9 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { ApiPath } from '#libs/enums/enums.js';
 import { config } from '#libs/packages/config/config.js';
+import { HttpCode } from '#libs/packages/http/http.js';
 import { joinPath } from '#libs/packages/path/path.js';
 import { AuthApiPath } from '#packages/auth/auth.js';
-import { HttpCode } from '#packages/http/http.js';
 import { PasswordApiPath } from '#packages/password/password.js';
 import {
   UserPayloadKey,
@@ -41,8 +41,10 @@ const setPasswordEndpoint = joinPath([
 ]);
 
 describe(`${passwordEndpoint} routes`, () => {
-  const { app, knex } = buildApp();
-  const { insert } = getCrudHandlers(knex);
+  const { getApp, getKnex } = buildApp();
+  const { insert } = getCrudHandlers(getKnex);
+
+  const app = getApp();
 
   let user;
 
