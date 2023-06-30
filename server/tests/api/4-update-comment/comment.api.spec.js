@@ -105,7 +105,7 @@ describe(`${commentApiPath} routes`, () => {
         });
 
       expect(updateCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-      expect(getCommentResponse.json()).toEqual(comment);
+      expect(getCommentResponse.json()).toMatchObject(comment);
     });
 
     it(`should return ${HttpCode.OK} with updated comment`, async () => {

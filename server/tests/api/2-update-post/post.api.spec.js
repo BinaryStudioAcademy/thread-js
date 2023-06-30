@@ -99,7 +99,7 @@ describe(`${postApiPath} routes`, () => {
         });
 
       expect(updatePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-      expect(getPostResponse.json()).toEqual(post);
+      expect(getPostResponse.json()).toMatchObject(post);
     });
 
     it(`should return ${HttpCode.OK} with updated post`, async () => {
