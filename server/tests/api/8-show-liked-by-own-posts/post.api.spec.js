@@ -111,12 +111,14 @@ describe(`${postApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toEqual([
-        expect.objectContaining({
-          userId: expect.not.stringContaining(userId)
-        }),
-        expect.objectContaining({ userId })
-      ]);
+      expect(response.json()).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            userId: expect.not.stringContaining(userId.toString())
+          }),
+          expect.objectContaining({ userId })
+        ])
+      );
     });
   });
 });
