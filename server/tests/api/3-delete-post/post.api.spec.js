@@ -98,7 +98,7 @@ describe(`${postApiPath} routes`, () => {
         });
 
       expect(deletePostResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-      expect(getPostResponse.json()).not.toHaveProperty('deletedAt');
+      expect(getPostResponse.json()).toMatchObject(postToDelete);
     });
 
     it(`should return ${HttpCode.OK} with soft deleted post`, async () => {

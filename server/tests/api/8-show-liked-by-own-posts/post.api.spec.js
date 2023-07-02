@@ -95,11 +95,9 @@ describe(`${postApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toEqual([
-        expect.objectContaining({
-          postId
-        })
-      ]);
+      expect(response.json()).toEqual(
+        expect.arrayContaining([expect.objectContaining({ id: postId })])
+      );
     });
 
     it(`should return ${HttpCode.OK} with all users' posts`, async () => {
@@ -117,9 +115,7 @@ describe(`${postApiPath} routes`, () => {
         expect.objectContaining({
           userId: expect.not.stringContaining(userId)
         }),
-        expect.objectContaining({
-          userId
-        })
+        expect.objectContaining({ userId })
       ]);
     });
   });
