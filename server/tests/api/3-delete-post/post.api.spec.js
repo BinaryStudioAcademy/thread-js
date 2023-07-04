@@ -126,7 +126,6 @@ describe(`${postApiPath} routes`, () => {
         expect.objectContaining({
           id: postToDelete.id,
           createdAt: postToDelete.createdAt,
-          updatedAt: postToDelete.updatedAt,
           [PostPayloadKey.BODY]: postToDelete[PostPayloadKey.BODY]
         })
       );

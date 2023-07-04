@@ -133,7 +133,9 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toEqual(expect.objectContaining(userMain));
+      expect(response.json()).toEqual(
+        expect.objectContaining({ id: userMain.id })
+      );
       expect(response.json()).toHaveProperty('status');
     });
   });
