@@ -4,6 +4,8 @@ import { HttpCode } from '../../packages/http/http.js';
 const DEFAULT_MESSAGE = 'Network Error';
 
 class HttpError extends Error {
+  status;
+
   constructor({
     status = HttpCode.INTERNAL_SERVER_ERROR,
     message = DEFAULT_MESSAGE
