@@ -1,16 +1,23 @@
 import { afterAll, beforeAll } from '@jest/globals';
+import { type FastifyInstance } from 'fastify';
+import { type Knex } from 'knex';
 import pg from 'pg';
 
-import { config } from '#libs/packages/config/config.js';
-import { database } from '#libs/packages/database/database.js';
+import { config } from '~/libs/packages/config/config.js';
+import { database } from '~/libs/packages/database/database.js';
 import {
   ServerApp,
   serverAppApi
-} from '#libs/packages/server-application/server-application.js';
+} from '~/libs/packages/server-application/server-application.js';
 
 import { clearDatabase } from '../../../../database/database.js';
 
-const buildApp = () => {
+type BuildApp = () => {
+  getApp: () => FastifyInstance;
+  getKnex: () => Knex;
+};
+
+const buildApp: BuildApp = () => {
   const serverApp = new ServerApp({
     config,
     options: {
@@ -22,7 +29,7 @@ const buildApp = () => {
 
   beforeAll(async () => {
     const PG_TIMESTAMPTZ_OID = 1184;
-    pg.types.setTypeParser(PG_TIMESTAMPTZ_OID, value => {
+    pg.types.setTypeParser(PG_TIMESTAMPTZ_OID, (value: string) => {
       return new Date(value).toISOString();
     });
 
@@ -37,8 +44,8 @@ const buildApp = () => {
     await getKnex().destroy();
   });
 
-  const getApp = () => serverApp.app;
-  const getKnex = () => serverApp.database.knex;
+  const getApp = (): FastifyInstance => serverApp.app;
+  const getKnex = (): Knex => serverApp.database.knex;
 
   return { getApp, getKnex };
 };

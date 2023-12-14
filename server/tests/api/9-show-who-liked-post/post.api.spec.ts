@@ -1,13 +1,16 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import { type Post, PostsApiPath } from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
@@ -50,8 +53,8 @@ describe(`${postApiPath} routes`, () => {
 
   const app = getApp();
 
-  let token;
-  let userId;
+  let token: string;
+  let userId: number;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -67,12 +70,12 @@ describe(`${postApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginUserResponse.json().token;
-    userId = loginUserResponse.json().user.id;
+    token = loginUserResponse.json<UserLoginResponseDto>().token;
+    userId = loginUserResponse.json<UserLoginResponseDto>().user.id;
 
-    const [{ id: firstPostId }, { id: secondPostId }] = await select({
+    const [{ id: firstPostId }, { id: secondPostId }] = (await select<Post>({
       table: DatabaseTableName.POSTS
-    });
+    })) as Post[];
 
     await app
       .inject()
@@ -88,9 +91,9 @@ describe(`${postApiPath} routes`, () => {
 
   describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of posts`, async () => {
-      const [{ id: firstPostId }, { id: secondPostId }] = await select({
+      const [{ id: firstPostId }, { id: secondPostId }] = (await select<Post>({
         table: DatabaseTableName.POSTS
-      });
+      })) as Post[];
 
       const response = await app
         .inject()
@@ -117,18 +120,18 @@ describe(`${postApiPath} routes`, () => {
 
   describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of post`, async () => {
-      const [{ id: firstPostId }, { id: secondPostId }] = await select({
+      const [{ id: firstPostId }, { id: secondPostId }] = (await select<Post>({
         table: DatabaseTableName.POSTS
-      });
+      })) as Post[];
 
       const firstPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', firstPostId))
+        .get(postIdEndpoint.replace(':id', firstPostId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       const secondPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', secondPostId))
+        .get(postIdEndpoint.replace(':id', secondPostId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(firstPostResponse.statusCode).toBe(HttpCode.OK);

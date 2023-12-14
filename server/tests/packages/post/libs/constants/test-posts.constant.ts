@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { PostPayloadKey } from '#packages/post/post.js';
+import { PostPayloadKey } from '~/packages/post/post.js';
 
 const POSTS_COUNT = 5;
 

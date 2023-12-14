@@ -1,17 +1,21 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { HttpCode } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PasswordApiPath } from '#packages/password/password.js';
+import { ApiPath, ExceptionMessage } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { HttpCode } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
 import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import { PasswordApiPath } from '~/packages/password/password.js';
+import {
+  type UserAuthResponse,
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
-} from '#packages/user/user.js';
+} from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
@@ -46,7 +50,7 @@ describe(`${passwordEndpoint} routes`, () => {
 
   const app = getApp();
 
-  let user;
+  let user: UserAuthResponse;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -60,15 +64,17 @@ describe(`${passwordEndpoint} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    user = loginUserResponse.json().user;
+    user = loginUserResponse.json<UserLoginResponseDto>().user;
   });
 
   describe(`${resetPasswordEndpoint} endpoint`, () => {
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
       const response = await app.inject().post(resetPasswordEndpoint).body({});
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_REQUIRE
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`, async () => {
@@ -79,8 +85,10 @@ describe(`${passwordEndpoint} routes`, () => {
           [UserPayloadKey.EMAIL]: faker.person.firstName()
         });
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_WRONG
+      );
     });
 
     it(`should return ${HttpCode.NOT_FOUND} if email not exists`, async () => {
@@ -92,8 +100,8 @@ describe(`${passwordEndpoint} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.NOT_FOUND);
-      expect(response.json().message).toBe(
-        UserValidationMessage.USER_WITH_EMAIL_NOT_FOUND
+      expect(response.json<Record<'message', string>>().message).toBe(
+        ExceptionMessage.USER_WITH_EMAIL_NOT_FOUND
       );
     });
 
@@ -106,7 +114,7 @@ describe(`${passwordEndpoint} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.OK);
-      expect(response.json()).toHaveProperty(UserPayloadKey.TOKEN);
+      expect(response.json()).toHaveProperty(UserPayloadKey.TOKEN as string);
     });
   });
 
@@ -114,8 +122,10 @@ describe(`${passwordEndpoint} routes`, () => {
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.TOKEN} validation error`, async () => {
       const response = await app.inject().post(setPasswordEndpoint).body({});
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.TOKEN_REQUIRE);
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.TOKEN_REQUIRE
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
@@ -126,8 +136,8 @@ describe(`${passwordEndpoint} routes`, () => {
           [UserPayloadKey.TOKEN]: faker.string.sample()
         });
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_REQUIRE
       );
     });
@@ -143,8 +153,8 @@ describe(`${passwordEndpoint} routes`, () => {
           })
         });
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MIN_LENGTH
       );
     });
@@ -160,8 +170,8 @@ describe(`${passwordEndpoint} routes`, () => {
           })
         });
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MAX_LENGTH
       );
     });
@@ -175,8 +185,10 @@ describe(`${passwordEndpoint} routes`, () => {
           [UserPayloadKey.PASSWORD]: faker.internet.password()
         });
 
-      expect(response.json().statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.INVALID_TOKEN);
+      expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        ExceptionMessage.INVALID_TOKEN
+      );
     });
 
     it(`should return ${HttpCode.OK} with auth result`, async () => {
@@ -193,7 +205,8 @@ describe(`${passwordEndpoint} routes`, () => {
         .inject()
         .post(setPasswordEndpoint)
         .body({
-          [UserPayloadKey.TOKEN]: resetPasswordResponse.json().token,
+          [UserPayloadKey.TOKEN]:
+            resetPasswordResponse.json<Record<'token', string>>().token,
           [UserPayloadKey.PASSWORD]: newPassword
         });
 

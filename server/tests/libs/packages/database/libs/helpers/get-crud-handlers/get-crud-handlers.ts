@@ -2,9 +2,22 @@ import {
   FIRST_ARRAY_ELEMENT_IDX,
   KNEX_SELECT_ONE_RECORD
 } from '../../constants/constants.js';
+import {
+  type CountParameters,
+  type GetCrudHandlersFunction,
+  type InsertParameters,
+  type RemoveParameters,
+  type SelectParameters,
+  type UpdateParameters
+} from '../../types/types.js';
 
-const getCrudHandlers = getKnex => {
-  const remove = ({ table, condition }) => {
+const NO_RECORDS = 0;
+
+const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
+  const remove = <T extends Record<string, unknown>>({
+    table,
+    condition
+  }: RemoveParameters<T>): Promise<Record<string, unknown>[]> => {
     const knex = getKnex();
 
     return knex(table)
@@ -12,15 +25,23 @@ const getCrudHandlers = getKnex => {
       .del();
   };
 
-  const update = async ({ table, condition, data, returning = ['*'] }) => {
+  const update = <T extends Record<string, unknown>>({
+    table,
+    condition,
+    data,
+    returning = ['*']
+  }: UpdateParameters<T>): Promise<T[]> => {
     const knex = getKnex();
 
     return knex(table)
       .where({ ...condition })
-      .update(data, returning);
+      .update(data, returning) as Promise<T[]>;
   };
 
-  const select = async ({
+  const select = async <
+    T extends Record<string, unknown>,
+    K extends Record<string, unknown>
+  >({
     table,
     condition = {},
     conditionRaw,
@@ -29,41 +50,46 @@ const getCrudHandlers = getKnex => {
     limit,
     offset,
     joins = []
-  }) => {
+  }: SelectParameters<T, K>): Promise<T | T[]> => {
     const knex = getKnex();
 
-    const query = knex(table)
-      .where(condition)
+    const result: T[] = (await knex(table)
+      .where({ ...condition })
       .modify(scope => {
         if (!conditionRaw?.length) {
           return scope;
         }
 
         const [conditionKey, value] = conditionRaw;
+
         return scope.whereRaw(`${conditionKey} = ?`, [value]);
       })
       .modify(scope => {
         if (Object.keys(conditionNot).length === 0) {
           return scope;
         }
+
         return scope.whereNot({ ...conditionNot });
       })
       .modify(scope => {
         if (!limit) {
           return scope;
         }
+
         return scope.limit(limit);
       })
       .modify(scope => {
         if (!offset) {
           return scope;
         }
+
         return scope.offset(offset);
       })
       .modify(scope => {
         if (!columns || columns.length === 0) {
           return scope.select(['*']);
         }
+
         return scope.select(columns);
       })
       .modify(scope => {
@@ -72,12 +98,11 @@ const getCrudHandlers = getKnex => {
         }
         for (const index of joins) {
           const [foreignTable, foreignKey, onTable] = index;
-          scope.join(foreignTable, foreignKey, onTable);
+          void scope.join(foreignTable, foreignKey, onTable);
         }
-        return scope;
-      });
 
-    const result = await query;
+        return scope;
+      })) as T[];
 
     if (!result || result.length === 0) {
       throw new Error(`Nothing in ${table} was found`);
@@ -87,10 +112,14 @@ const getCrudHandlers = getKnex => {
       return result[FIRST_ARRAY_ELEMENT_IDX];
     }
 
-    return result;
+    return result as T[];
   };
 
-  const insert = async ({ table, data, returning = [] }) => {
+  const insert = <T extends Record<string, unknown>, K extends T>({
+    table,
+    data,
+    returning = []
+  }: InsertParameters<T>): Promise<K[]> => {
     const knex = getKnex();
 
     const toInsert = Array.isArray(data) ? data : [data];
@@ -101,14 +130,23 @@ const getCrudHandlers = getKnex => {
         if (!returning || returning.length === 0) {
           return scope.returning(['*']);
         }
+
         return scope.select(returning);
-      });
+      }) as Promise<K[]>;
   };
 
-  const count = async ({ table, condition = {}, conditionNot = [], joins }) => {
+  const count = async <
+    T extends Record<string, unknown>,
+    K extends Record<string, unknown>
+  >({
+    table,
+    condition = {},
+    conditionNot = [],
+    joins
+  }: CountParameters<T, K>): Promise<number> => {
     const knex = getKnex();
 
-    const result = await knex(table)
+    const result: Record<'count', number>[] = await knex(table)
       .where({ ...condition })
       .modify(scope => {
         if (conditionNot.length === 0) {
@@ -116,36 +154,37 @@ const getCrudHandlers = getKnex => {
         }
         for (const conditionKey of conditionNot) {
           if (Object.keys(conditionKey).length > 0) {
-            scope.whereNot({ ...conditionKey });
+            void scope.whereNot({ ...conditionKey });
           }
         }
+
         return scope;
       })
       .modify(scope => {
         if (joins?.length) {
           for (const index of joins) {
             const [foreignTable, foreignKey, onTable] = index;
-            scope.join(foreignTable, foreignKey, onTable);
+            void scope.join(foreignTable, foreignKey, onTable);
           }
+
           return scope;
         }
+
         return scope;
       })
       .count(`${table}.id`);
 
-    if (result?.length) {
-      return Number(result[FIRST_ARRAY_ELEMENT_IDX].count);
-    }
-
-    return result;
+    return Number(result[FIRST_ARRAY_ELEMENT_IDX].count ?? NO_RECORDS);
   };
 
-  const rawQuery = async query => {
+  const rawQuery = async <T extends Record<string, unknown>>(
+    query: string
+  ): Promise<T[]> => {
     const knex = getKnex();
 
-    const result = await knex.raw(query);
+    const result = await knex.raw<Record<'rows', T[]>>(query);
 
-    return result?.rows;
+    return result?.rows as T[];
   };
 
   return { remove, update, select, insert, count, rawQuery };

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { UserPayloadKey } from '#packages/user/user.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 const USERS_COUNT = 2;
 

@@ -1,12 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { UserPayloadKey, UsersApiPath } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import {
+  type UserAuthResponse,
+  UserPayloadKey,
+  UsersApiPath
+} from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
@@ -44,9 +51,9 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
 
   const app = getApp();
 
-  let tokenMainUser;
-  let tokenMinorUser;
-  let userMain;
+  let tokenMainUser: string;
+  let tokenMinorUser: string;
+  let userMain: UserAuthResponse;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -69,9 +76,9 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
       });
 
-    tokenMainUser = loginMainUserResponse.json().token;
-    tokenMinorUser = loginMinorUserResponse.json().token;
-    userMain = loginMainUserResponse.json().user;
+    tokenMainUser = loginMainUserResponse.json<UserLoginResponseDto>().token;
+    tokenMinorUser = loginMinorUserResponse.json<UserLoginResponseDto>().token;
+    userMain = loginMainUserResponse.json<UserLoginResponseDto>().user;
   });
 
   describe(`${userIdEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
@@ -83,7 +90,7 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
 
       const updateUserResponse = await app
         .inject()
-        .put(userIdEndpoint.replace(':id', userMain.id))
+        .put(userIdEndpoint.replace(':id', userMain.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         })
@@ -91,7 +98,7 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
 
       const getUserResponse = await app
         .inject()
-        .get(userIdEndpoint.replace(':id', userMain.id))
+        .get(userIdEndpoint.replace(':id', userMain.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         });
@@ -107,7 +114,7 @@ describe(`${userApiPath} and ${authApiPath} routes`, () => {
       };
       const response = await app
         .inject()
-        .put(userIdEndpoint.replace(':id', userMain.id))
+        .put(userIdEndpoint.replace(':id', userMain.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
         })

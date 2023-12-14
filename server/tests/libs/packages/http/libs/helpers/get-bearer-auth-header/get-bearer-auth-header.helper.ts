@@ -1,4 +1,4 @@
-const getBearerAuthHeader = accessToken => {
+const getBearerAuthHeader = (accessToken: string): string => {
   return `Bearer ${accessToken}`;
 };
 

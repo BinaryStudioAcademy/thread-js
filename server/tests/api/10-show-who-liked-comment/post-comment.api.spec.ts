@@ -1,14 +1,17 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { CommentsApiPath } from '#packages/comment/comment.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import { type Comment, CommentsApiPath } from '~/packages/comment/comment.js';
+import { PostsApiPath } from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import { getCrudHandlers } from '../../libs/packages/database/database.js';
@@ -54,8 +57,8 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
 
   const app = getApp();
 
-  let token;
-  let userId;
+  let token: string;
+  let userId: number;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -72,12 +75,14 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginUserResponse.json().token;
-    userId = loginUserResponse.json().user.id;
+    token = loginUserResponse.json<UserLoginResponseDto>().token;
+    userId = loginUserResponse.json<UserLoginResponseDto>().user.id;
 
-    const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
-      table: DatabaseTableName.POSTS
+    const result = await select<Comment>({
+      table: DatabaseTableName.COMMENTS
     });
+    const [{ id: firstCommentId }, { id: secondCommentId }] =
+      result as Comment[];
 
     await app
       .inject()
@@ -97,18 +102,20 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
 
   describe(`${commentIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of comment`, async () => {
-      const [{ id: firstCommentId }, { id: secondCommentId }] = await select({
+      const result = await select<Comment>({
         table: DatabaseTableName.COMMENTS
       });
+      const [{ id: firstCommentId }, { id: secondCommentId }] =
+        result as Comment[];
 
       const firstResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', firstCommentId))
+        .get(commentIdEndpoint.replace(':id', firstCommentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       const secondResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', secondCommentId))
+        .get(commentIdEndpoint.replace(':id', secondCommentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(firstResponse.statusCode).toBe(HttpCode.OK);
@@ -135,19 +142,20 @@ describe(`${commentApiPath} and ${postApiPath} routes`, () => {
 
   describe(`${postIdEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with likes and dislikes of post's comment`, async () => {
+      const result = await select({ table: DatabaseTableName.COMMENTS });
       const [
-        { id: firstCommentId, firstPostId },
-        { id: secondCommentId, secondPostId }
-      ] = await select({ table: DatabaseTableName.COMMENTS });
+        { id: firstCommentId, postId: firstPostId },
+        { id: secondCommentId, postId: secondPostId }
+      ] = result as Comment[];
 
       const firstPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', firstPostId))
+        .get(postIdEndpoint.replace(':id', firstPostId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       const secondPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', secondPostId))
+        .get(postIdEndpoint.replace(':id', secondPostId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(firstPostResponse.statusCode).toBe(HttpCode.OK);

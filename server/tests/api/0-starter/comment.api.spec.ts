@@ -1,16 +1,19 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
+import { type UserLoginResponseDto } from 'shared/dist/packages/user/user.js';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
 import {
+  type Comment,
   CommentPayloadKey,
   CommentsApiPath
-} from '#packages/comment/comment.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+} from '~/packages/comment/comment.js';
+import { type Post } from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -48,8 +51,8 @@ describe(`${commentApiPath} routes`, () => {
   const { getApp, getKnex } = buildApp();
   const { select, insert } = getCrudHandlers(getKnex);
 
-  let token;
-  let userId;
+  let token: string;
+  let userId: number;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -65,8 +68,8 @@ describe(`${commentApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginResponse.json().token;
-    userId = loginResponse.json().user.id;
+    token = loginResponse.json<UserLoginResponseDto>().token;
+    userId = loginResponse.json<UserLoginResponseDto>().user.id;
   });
 
   describe(`${commentsEndpoint} (${HttpMethod.POST}) endpoint`, () => {
@@ -75,10 +78,11 @@ describe(`${commentApiPath} routes`, () => {
     it(`should return ${HttpCode.CREATED} with a new comment`, async () => {
       const [validTestPost] = TEST_POSTS;
 
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const testComment = {
         ...validTestPost,
@@ -104,7 +108,7 @@ describe(`${commentApiPath} routes`, () => {
 
       const savedDatabaseComment = await select({
         table: DatabaseTableName.COMMENTS,
-        condition: { id: response.json().id },
+        condition: { id: response.json<Comment>().id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 
@@ -121,14 +125,15 @@ describe(`${commentApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.OK} with comment by id`, async () => {
-      const { id: commentId, body } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: commentId, body } = (result ?? {}) as Post;
 
       const response = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(response.statusCode).toBe(HttpCode.OK);

@@ -1,17 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
+import { type UserLoginResponseDto } from 'shared/dist/packages/user/user.js';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
 import {
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
-} from '#packages/user/user.js';
+} from '~/packages/user/user.js';
+import { type User } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -52,7 +54,7 @@ describe(`${authApiPath} routes`, () => {
       const response = await app.inject().post(registerEndpoint).body({});
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.USERNAME_REQUIRE
       );
     });
@@ -71,7 +73,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.USERNAME_MIN_LENGTH
       );
     });
@@ -90,7 +92,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.USERNAME_MAX_LENGTH
       );
     });
@@ -102,7 +104,9 @@ describe(`${authApiPath} routes`, () => {
       const response = await app.inject().post(registerEndpoint).body(user);
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_REQUIRE
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`, async () => {
@@ -117,7 +121,9 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_WRONG
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
@@ -127,7 +133,7 @@ describe(`${authApiPath} routes`, () => {
       const response = await app.inject().post(registerEndpoint).body(user);
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_REQUIRE
       );
     });
@@ -146,7 +152,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MIN_LENGTH
       );
     });
@@ -165,7 +171,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MAX_LENGTH
       );
     });
@@ -190,7 +196,7 @@ describe(`${authApiPath} routes`, () => {
 
       const savedDatabaseUser = await select({
         table: DatabaseTableName.USERS,
-        condition: { id: response.json().user.id },
+        condition: { id: response.json<UserLoginResponseDto>().user.id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 
@@ -210,7 +216,9 @@ describe(`${authApiPath} routes`, () => {
       const response = await app.inject().post(loginEndpoint).body({});
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_REQUIRE);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_REQUIRE
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of wrong ${UserPayloadKey.EMAIL} validation error`, async () => {
@@ -220,7 +228,9 @@ describe(`${authApiPath} routes`, () => {
         .body({ [UserPayloadKey.EMAIL]: faker.person.fullName() });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(UserValidationMessage.EMAIL_WRONG);
+      expect(response.json<Record<'message', string>>().message).toBe(
+        UserValidationMessage.EMAIL_WRONG
+      );
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
@@ -234,7 +244,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_REQUIRE
       );
     });
@@ -253,7 +263,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MIN_LENGTH
       );
     });
@@ -272,7 +282,7 @@ describe(`${authApiPath} routes`, () => {
         });
 
       expect(response.statusCode).toBe(HttpCode.BAD_REQUEST);
-      expect(response.json().message).toBe(
+      expect(response.json<Record<'message', string>>().message).toBe(
         UserValidationMessage.PASSWORD_MAX_LENGTH
       );
     });
@@ -316,7 +326,7 @@ describe(`${authApiPath} routes`, () => {
         .get(userEndpoint)
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(
-            loginResponse.json().token
+            loginResponse.json<UserLoginResponseDto>().token
           )
         });
 
@@ -330,13 +340,13 @@ describe(`${authApiPath} routes`, () => {
 
       const databaseUser = await select({
         table: DatabaseTableName.USERS,
-        condition: { id: response.json().id },
+        condition: { id: response.json<User>().id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 
       expect(databaseUser).toEqual(
         expect.objectContaining({
-          id: response.json().id,
+          id: response.json<User>().id,
           username,
           email
         })

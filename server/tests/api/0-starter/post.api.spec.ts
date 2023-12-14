@@ -1,13 +1,21 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
+import { type PostWithCommentImageUserNestedRelationsWithCount } from 'shared/dist/packages/post/post.js';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostPayloadKey, PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import {
+  type Post,
+  PostPayloadKey,
+  PostsApiPath
+} from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -51,8 +59,8 @@ describe(`${postApiPath} routes`, () => {
   const { getApp, getKnex } = buildApp();
   const { select, insert } = getCrudHandlers(getKnex);
 
-  let token;
-  let userId;
+  let token: string;
+  let userId: number;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -67,8 +75,8 @@ describe(`${postApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginResponse.json().token;
-    userId = loginResponse.json().user.id;
+    token = loginResponse.json<UserLoginResponseDto>().token;
+    userId = loginResponse.json<UserLoginResponseDto>().user.id;
   });
 
   describe(`${postsEndpoint} (${HttpMethod.POST}) endpoint`, () => {
@@ -94,9 +102,9 @@ describe(`${postApiPath} routes`, () => {
       expect(response.json()).toHaveProperty('createdAt');
       expect(response.json()).toHaveProperty('updatedAt');
 
-      const savedDatabasePost = await select({
+      const savedDatabasePost = await select<Post>({
         table: DatabaseTableName.POSTS,
-        condition: { id: response.json().id },
+        condition: { id: response.json<Post>().id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 
@@ -112,14 +120,15 @@ describe(`${postApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.OK} with post by id`, async () => {
-      const { id: postId, body } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId, body } = (result ?? {}) as Post;
 
       const response = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(response.statusCode).toBe(HttpCode.OK);
@@ -141,25 +150,31 @@ describe(`${postApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.OK} with all posts`, async () => {
-      const posts = await select({
-        table: DatabaseTableName.POSTS,
-        condition: { userId },
-        offset: 0,
-        limit: TEST_POSTS.length
-      });
+      const posts =
+        (await select<PostWithCommentImageUserNestedRelationsWithCount>({
+          table: DatabaseTableName.POSTS,
+          condition: { userId },
+          offset: 0,
+          limit: TEST_POSTS.length
+        })) as PostWithCommentImageUserNestedRelationsWithCount[];
 
       const response = await app
         .inject()
         .get(postsEndpoint)
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) })
-        .query({ from: 0, count: TEST_POSTS.length, userId });
+        .query({
+          from: '0',
+          count: TEST_POSTS.length.toString(),
+          userId: userId.toString()
+        });
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual(
         posts.map(post => expect.objectContaining(post))
       );
 
-      const [post] = response.json();
+      const [post] =
+        response.json<PostWithCommentImageUserNestedRelationsWithCount[]>();
 
       expect(post).toHaveProperty('id');
       expect(post).toHaveProperty('likeCount');
@@ -174,14 +189,15 @@ describe(`${postApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.OK} with liked post`, async () => {
-      const { id: postId } = await select({
+      const result = await select({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
@@ -190,7 +206,7 @@ describe(`${postApiPath} routes`, () => {
         .body({ postId });
       const getPostAfterLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(likePostResponse.statusCode).toBe(HttpCode.OK);
@@ -206,21 +222,25 @@ describe(`${postApiPath} routes`, () => {
       expect(getPostAfterLikeResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getPostBeforeLikeResponse.json().likeCount) + 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with removed user's like post`, async () => {
-      const { id: postId } = await select({
+      const result = await select({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
@@ -229,7 +249,7 @@ describe(`${postApiPath} routes`, () => {
         .body({ postId });
       const getPostAfterLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
 
       expect(likePostResponse.statusCode).toBe(HttpCode.OK);
@@ -237,7 +257,10 @@ describe(`${postApiPath} routes`, () => {
       expect(getPostAfterLikeResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getPostBeforeLikeResponse.json().likeCount) - 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) - 1
           )
         })
       );

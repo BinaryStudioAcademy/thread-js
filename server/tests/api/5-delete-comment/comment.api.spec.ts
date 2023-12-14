@@ -1,18 +1,16 @@
-import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
 import {
-  CommentPayloadKey,
-  CommentsApiPath
-} from '#packages/comment/comment.js';
-import { PostPayloadKey } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import { type Comment, CommentsApiPath } from '~/packages/comment/comment.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -47,8 +45,8 @@ describe(`${commentApiPath} routes`, () => {
 
   const app = getApp();
 
-  let tokenMainUser;
-  let tokenMinorUser;
+  let tokenMainUser: string;
+  let tokenMinorUser: string;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -73,68 +71,59 @@ describe(`${commentApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
       });
 
-    tokenMainUser = loginMainUserResponse.json().token;
-    tokenMinorUser = loginMinorUserResponse.json().token;
+    tokenMainUser = loginMainUserResponse.json<UserLoginResponseDto>().token;
+    tokenMinorUser = loginMinorUserResponse.json<UserLoginResponseDto>().token;
   });
 
-  describe(`${commentIdEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
-    it(`should return ${HttpCode.FORBIDDEN} with attempt to update comment by not own user`, async () => {
-      const comment = await select({
+  describe(`${commentIdEndpoint} (${HttpMethod.DELETE}) endpoint`, () => {
+    it(`should return ${HttpCode.FORBIDDEN} with attempt to delete comment by not own user`, async () => {
+      const commentToDelete = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
-      const testUpdatedComment = {
-        ...comment,
-        [CommentPayloadKey.BODY]: faker.lorem.paragraph()
-      };
-
-      const updateCommentResponse = await app
+      const deleteCommentResponse = await app
         .inject()
-        .put(commentIdEndpoint.replace(':id', comment.id))
-        .headers({
-          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
-        })
-        .body(testUpdatedComment);
-
-      const getCommentResponse = await app
-        .inject()
-        .get(commentIdEndpoint.replace(':id', comment.id))
+        .delete(commentIdEndpoint.replace(':id', commentToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         });
 
-      expect(updateCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
-      expect(getCommentResponse.json()).toMatchObject(comment);
+      const getCommentResponse = await app
+        .inject()
+        .get(commentIdEndpoint.replace(':id', commentToDelete.id.toString()))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
+        });
+
+      expect(deleteCommentResponse.statusCode).toBe(HttpCode.FORBIDDEN);
+      expect(getCommentResponse.json()).toEqual(
+        expect.objectContaining(commentToDelete)
+      );
     });
 
-    it(`should return ${HttpCode.OK} with updated comment`, async () => {
-      const comment = await select({
+    it(`should return ${HttpCode.OK} with deleted comment`, async () => {
+      const commentToDelete = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
-      const testUpdatedComment = {
-        ...comment,
-        [CommentPayloadKey.BODY]: faker.lorem.paragraph()
-      };
-
-      const updateCommentResponse = await app
+      const deleteCommentResponse = await app
         .inject()
-        .put(commentIdEndpoint.replace(':id', comment.id))
+        .delete(commentIdEndpoint.replace(':id', commentToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
-        })
-        .body(testUpdatedComment);
+        });
 
-      expect(updateCommentResponse.statusCode).toBe(HttpCode.OK);
-      expect(updateCommentResponse.json()).toEqual(
-        expect.objectContaining({
-          id: testUpdatedComment.id,
-          createdAt: testUpdatedComment.createdAt,
-          [CommentPayloadKey.BODY]: testUpdatedComment[PostPayloadKey.BODY]
-        })
-      );
+      const getCommentResponse = await app
+        .inject()
+        .get(commentIdEndpoint.replace(':id', commentToDelete.id.toString()))
+        .headers({
+          [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
+        });
+
+      expect(deleteCommentResponse.statusCode).toBe(HttpCode.OK);
+      expect(getCommentResponse.statusCode).toEqual(HttpCode.NOT_FOUND);
     });
   });
 });

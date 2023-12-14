@@ -5,14 +5,16 @@ import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 import FormData from 'form-data';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { ImagePayloadKey, ImagesApiPath } from '#packages/image/image.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
+import { type UserLoginResponseDto } from '~/packages/auth/auth.js';
+import { ImagePayloadKey, ImagesApiPath } from '~/packages/image/image.js';
+import { type Image } from '~/packages/image/image.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -43,7 +45,7 @@ describe(`${imageEndpoint} routes`, () => {
   const { getApp, getKnex } = buildApp();
   const { select, insert } = getCrudHandlers(getKnex);
 
-  let token;
+  let token: string;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -58,7 +60,7 @@ describe(`${imageEndpoint} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginResponse.json().token;
+    token = loginResponse.json<UserLoginResponseDto>().token;
   });
 
   describe(`${imagesEndpoint} (${HttpMethod.POST}) endpoint`, () => {
@@ -92,16 +94,16 @@ describe(`${imageEndpoint} routes`, () => {
       expect(response.json()).toHaveProperty('createdAt');
       expect(response.json()).toHaveProperty('updatedAt');
 
-      const savedDatabaseImage = await select({
+      const savedDatabaseImage = await select<Image>({
         table: DatabaseTableName.IMAGES,
-        condition: { id: response.json().id },
+        condition: { id: response.json<Image>().id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 
       expect(savedDatabaseImage).toEqual(
         expect.objectContaining({
-          id: response.json().id,
-          link: response.json().link
+          id: response.json<Image>().id,
+          link: response.json<Image>().link
         })
       );
     });

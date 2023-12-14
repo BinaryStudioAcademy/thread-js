@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { CommentPayloadKey } from '#packages/comment/comment.js';
+import { CommentPayloadKey } from '~/packages/comment/comment.js';
 
 const COMMENTS_COUNT = 5;
 

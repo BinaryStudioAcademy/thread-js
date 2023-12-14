@@ -1,13 +1,16 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import { type Post, PostsApiPath } from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -47,7 +50,7 @@ describe(`${postApiPath} routes`, () => {
 
   const app = getApp();
 
-  let token;
+  let token: string;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -63,19 +66,20 @@ describe(`${postApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginResponse.json().token;
+    token = loginResponse.json<UserLoginResponseDto>().token;
   });
 
   describe(`${postReactEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked post`, async () => {
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
@@ -87,22 +91,28 @@ describe(`${postApiPath} routes`, () => {
       expect(likePostResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getPostBeforeLikeResponse.json().likeCount) + 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           ),
-          dislikeCount: getPostBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with removed user's like post`, async () => {
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
@@ -114,22 +124,28 @@ describe(`${postApiPath} routes`, () => {
       expect(likePostResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getPostBeforeLikeResponse.json().likeCount) - 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) - 1
           ),
-          dislikeCount: getPostBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with disliked post`, async () => {
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikePostResponse = await app
         .inject()
@@ -140,23 +156,29 @@ describe(`${postApiPath} routes`, () => {
       expect(dislikePostResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikePostResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getPostBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getPostBeforeLikeResponse.json().dislikeCount) + 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) + 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with removed user's dislike post`, async () => {
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikePostResponse = await app
         .inject()
@@ -167,23 +189,29 @@ describe(`${postApiPath} routes`, () => {
       expect(dislikePostResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikePostResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getPostBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getPostBeforeLikeResponse.json().dislikeCount) - 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) - 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with switched like to dislike post`, async () => {
-      const { id: postId } = await select({
+      const result = await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likePostResponse = await app
         .inject()
@@ -206,28 +234,43 @@ describe(`${postApiPath} routes`, () => {
       expect(likePostResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getPostBeforeLikeResponse.json().likeCount) + 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           ),
-          dislikeCount: getPostBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
       expect(dislikePostResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: String(Number(likePostResponse.json().likeCount) - 1),
-          dislikeCount: String(Number(likePostResponse.json().dislikeCount) + 1)
+          likeCount: String(
+            Number(
+              likePostResponse.json<Record<'likeCount', number>>().likeCount
+            ) - 1
+          ),
+          dislikeCount: String(
+            Number(
+              likePostResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) + 1
+          )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with switched dislike to like post`, async () => {
-      const { id: postId } = await select({
+      const result = await select({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
+      const { id: postId } = (result ?? {}) as Post;
 
       const getPostBeforeLikeResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postId))
+        .get(postIdEndpoint.replace(':id', postId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikePostResponse = await app
         .inject()
@@ -244,17 +287,29 @@ describe(`${postApiPath} routes`, () => {
       expect(dislikePostResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikePostResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getPostBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getPostBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getPostBeforeLikeResponse.json().dislikeCount) + 1
+            Number(
+              getPostBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) + 1
           )
         })
       );
       expect(likePostResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: String(Number(dislikePostResponse.json().likeCount) + 1),
+          likeCount: String(
+            Number(
+              dislikePostResponse.json<Record<'likeCount', number>>().likeCount
+            ) + 1
+          ),
           dislikeCount: String(
-            Number(dislikePostResponse.json().dislikeCount) - 1
+            Number(
+              dislikePostResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) - 1
           )
         })
       );

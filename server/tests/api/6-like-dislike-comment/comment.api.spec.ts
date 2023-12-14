@@ -1,13 +1,15 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
+import { type UserLoginResponseDto } from '~/packages/auth/libs/types/types.js';
+import { type Comment } from '~/packages/comment/comment.js';
+import { PostsApiPath } from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -48,7 +50,7 @@ describe(`${commentApiPath} routes`, () => {
 
   const app = getApp();
 
-  let token;
+  let token: string;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -65,19 +67,21 @@ describe(`${commentApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestUser[UserPayloadKey.PASSWORD]
       });
 
-    token = loginResponse.json().token;
+    token = loginResponse.json<UserLoginResponseDto>().token;
   });
 
   describe(`${commentReactEndpoint} (${HttpMethod.PUT}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with liked comment`, async () => {
-      const { id: commentId } = await select({
+      const result = await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
       });
 
+      const { id: commentId } = (result as Comment) ?? {};
+
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likeCommentResponse = await app
         .inject()
@@ -89,22 +93,27 @@ describe(`${commentApiPath} routes`, () => {
       expect(likeCommentResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getCommentBeforeLikeResponse.json().likeCount) + 1
+            Number(
+              getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           ),
-          dislikeCount: getCommentBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getCommentBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with removed user's like comment`, async () => {
-      const { id: commentId } = await select({
+      const { id: commentId } = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likeCommentResponse = await app
         .inject()
@@ -116,22 +125,27 @@ describe(`${commentApiPath} routes`, () => {
       expect(likeCommentResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getCommentBeforeLikeResponse.json().likeCount) - 1
+            Number(
+              getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) - 1
           ),
-          dislikeCount: getCommentBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getCommentBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with disliked comment`, async () => {
-      const { id: commentId } = await select({
+      const { id: commentId } = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikeCommentResponse = await app
         .inject()
@@ -142,23 +156,29 @@ describe(`${commentApiPath} routes`, () => {
       expect(dislikeCommentResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikeCommentResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getCommentBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getCommentBeforeLikeResponse.json().dislikeCount) + 1
+            Number(
+              getCommentBeforeLikeResponse.json<
+                Record<'dislikeCount', number>
+              >().dislikeCount
+            ) + 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with removed user's dislike comment`, async () => {
-      const { id: commentId } = await select({
+      const { id: commentId } = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikeCommentResponse = await app
         .inject()
@@ -169,23 +189,29 @@ describe(`${commentApiPath} routes`, () => {
       expect(dislikeCommentResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikeCommentResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getCommentBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getCommentBeforeLikeResponse.json().dislikeCount) - 1
+            Number(
+              getCommentBeforeLikeResponse.json<
+                Record<'dislikeCount', number>
+              >().dislikeCount
+            ) - 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with switched like to dislike comment`, async () => {
-      const { id: commentId } = await select({
+      const { id: commentId } = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const likeCommentResponse = await app
         .inject()
@@ -208,30 +234,42 @@ describe(`${commentApiPath} routes`, () => {
       expect(likeCommentResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(getCommentBeforeLikeResponse.json().likeCount) + 1
+            Number(
+              getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           ),
-          dislikeCount: getCommentBeforeLikeResponse.json().dislikeCount
+          dislikeCount:
+            getCommentBeforeLikeResponse.json<Record<'dislikeCount', number>>()
+              .dislikeCount
         })
       );
       expect(dislikeCommentResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: String(Number(likeCommentResponse.json().likeCount) - 1),
+          likeCount: String(
+            Number(
+              likeCommentResponse.json<Record<'likeCount', number>>().likeCount
+            ) - 1
+          ),
           dislikeCount: String(
-            Number(likeCommentResponse.json().dislikeCount) + 1
+            Number(
+              likeCommentResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) + 1
           )
         })
       );
     });
 
     it(`should return ${HttpCode.OK} with switched dislike to like comment`, async () => {
-      const { id: commentId } = await select({
+      const { id: commentId } = (await select<Comment>({
         table: DatabaseTableName.COMMENTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Comment;
 
       const getCommentBeforeLikeResponse = await app
         .inject()
-        .get(commentIdEndpoint.replace(':id', commentId))
+        .get(commentIdEndpoint.replace(':id', commentId.toString()))
         .headers({ [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(token) });
       const dislikeCommentResponse = await app
         .inject()
@@ -248,19 +286,31 @@ describe(`${commentApiPath} routes`, () => {
       expect(dislikeCommentResponse.statusCode).toBe(HttpCode.OK);
       expect(dislikeCommentResponse.json()).toEqual(
         expect.objectContaining({
-          likeCount: getCommentBeforeLikeResponse.json().likeCount,
+          likeCount:
+            getCommentBeforeLikeResponse.json<Record<'likeCount', number>>()
+              .likeCount,
           dislikeCount: String(
-            Number(getCommentBeforeLikeResponse.json().dislikeCount) + 1
+            Number(
+              getCommentBeforeLikeResponse.json<
+                Record<'dislikeCount', number>
+              >().dislikeCount
+            ) + 1
           )
         })
       );
       expect(likeCommentResponse.json()).toEqual(
         expect.objectContaining({
           likeCount: String(
-            Number(dislikeCommentResponse.json().likeCount) + 1
+            Number(
+              dislikeCommentResponse.json<Record<'likeCount', number>>()
+                .likeCount
+            ) + 1
           ),
           dislikeCount: String(
-            Number(dislikeCommentResponse.json().dislikeCount) - 1
+            Number(
+              dislikeCommentResponse.json<Record<'dislikeCount', number>>()
+                .dislikeCount
+            ) - 1
           )
         })
       );

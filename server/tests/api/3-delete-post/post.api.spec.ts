@@ -1,13 +1,20 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ApiPath } from '#libs/enums/enums.js';
-import { config } from '#libs/packages/config/config.js';
-import { DatabaseTableName } from '#libs/packages/database/database.js';
-import { HttpCode, HttpHeader, HttpMethod } from '#libs/packages/http/http.js';
-import { joinPath } from '#libs/packages/path/path.js';
-import { AuthApiPath } from '#packages/auth/auth.js';
-import { PostPayloadKey, PostsApiPath } from '#packages/post/post.js';
-import { UserPayloadKey } from '#packages/user/user.js';
+import { ApiPath } from '~/libs/enums/enums.js';
+import { config } from '~/libs/packages/config/config.js';
+import { DatabaseTableName } from '~/libs/packages/database/database.js';
+import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
+import { joinPath } from '~/libs/packages/path/path.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto
+} from '~/packages/auth/auth.js';
+import {
+  type Post,
+  PostPayloadKey,
+  PostsApiPath
+} from '~/packages/post/post.js';
+import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
 import {
@@ -47,8 +54,8 @@ describe(`${postApiPath} routes`, () => {
 
   const app = getApp();
 
-  let tokenMainUser;
-  let tokenMinorUser;
+  let tokenMainUser: string;
+  let tokenMinorUser: string;
 
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
@@ -72,27 +79,27 @@ describe(`${postApiPath} routes`, () => {
         [UserPayloadKey.PASSWORD]: validTestMinorUser[UserPayloadKey.PASSWORD]
       });
 
-    tokenMainUser = loginMainUserResponse.json().token;
-    tokenMinorUser = loginMinorUserResponse.json().token;
+    tokenMainUser = loginMainUserResponse.json<UserLoginResponseDto>().token;
+    tokenMinorUser = loginMinorUserResponse.json<UserLoginResponseDto>().token;
   });
 
   describe(`${postIdEndpoint} (${HttpMethod.DELETE}) endpoint`, () => {
     it(`should return ${HttpCode.FORBIDDEN} with attempt to delete post by not own user`, async () => {
-      const postToDelete = await select({
+      const postToDelete = (await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Post;
 
       const deletePostResponse = await app
         .inject()
-        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .delete(postIdEndpoint.replace(':id', postToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         });
 
       const getPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postToDelete.id))
+        .get(postIdEndpoint.replace(':id', postToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         });
@@ -102,21 +109,21 @@ describe(`${postApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with soft deleted post`, async () => {
-      const postToDelete = await select({
+      const postToDelete = (await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Post;
 
       const deletePostResponse = await app
         .inject()
-        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .delete(postIdEndpoint.replace(':id', postToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
         });
 
       const getPostResponse = await app
         .inject()
-        .get(postIdEndpoint.replace(':id', postToDelete.id))
+        .get(postIdEndpoint.replace(':id', postToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
         });
@@ -135,14 +142,14 @@ describe(`${postApiPath} routes`, () => {
 
   describe(`${postsEndpoint} (${HttpMethod.GET}) endpoint`, () => {
     it(`should return ${HttpCode.OK} with ignoring soft deleted post`, async () => {
-      const postToDelete = await select({
+      const postToDelete = (await select<Post>({
         table: DatabaseTableName.POSTS,
         limit: KNEX_SELECT_ONE_RECORD
-      });
+      })) as Post;
 
       await app
         .inject()
-        .delete(postIdEndpoint.replace(':id', postToDelete.id))
+        .delete(postIdEndpoint.replace(':id', postToDelete.id.toString()))
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMainUser)
         });
@@ -153,7 +160,7 @@ describe(`${postApiPath} routes`, () => {
         .headers({
           [HttpHeader.AUTHORIZATION]: getBearerAuthHeader(tokenMinorUser)
         })
-        .query({ from: 0, count: 1 });
+        .query({ from: '0', count: '1' });
 
       expect(getPostsResponse.statusCode).toBe(HttpCode.OK);
       expect(getPostsResponse.json()).not.toEqual(
