@@ -6,6 +6,7 @@ import { type ValueOf } from '~/libs/types/types.js';
 type DatabasePackage = {
   environmentsConfig: Record<ValueOf<typeof AppEnvironment>, Knex.Config>;
   initialConfig: Knex.Config;
+  knex: Knex;
   connect(): void;
 };
 

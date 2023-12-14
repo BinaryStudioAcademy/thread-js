@@ -5,6 +5,6 @@ const ApiPath = {
   IMAGES: '/images',
   USERS: '/users',
   PASSWORD: '/password'
-};
+} as const;
 
 export { ApiPath };

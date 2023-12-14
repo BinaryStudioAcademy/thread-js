@@ -23,4 +23,7 @@ export {
   verifyToken
 } from './helpers/helpers.js';
 export { AuthApiPath } from './libs/enums/enums.js';
-export { type AuthService } from './libs/types/types.js';
+export {
+  type AuthService,
+  type UserLoginResponseDto
+} from './libs/types/types.js';

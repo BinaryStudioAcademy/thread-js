@@ -8,7 +8,8 @@ const UserValidationMessage = {
   EMAIL_WRONG: 'Email is wrong',
   PASSWORD_REQUIRE: 'Password is required',
   PASSWORD_MIN_LENGTH: `Password must be at least ${UserValidationRule.PASSWORD_MIN_LENGTH} characters long`,
-  PASSWORD_MAX_LENGTH: `Password must be at most ${UserValidationRule.PASSWORD_MAX_LENGTH} characters long`
+  PASSWORD_MAX_LENGTH: `Password must be at most ${UserValidationRule.PASSWORD_MAX_LENGTH} characters long`,
+  TOKEN_REQUIRE: 'Token is required'
 } as const;
 
 export { UserValidationMessage };

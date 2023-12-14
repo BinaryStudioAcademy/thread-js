@@ -20,6 +20,7 @@ export { commentController, commentRepository, commentService };
 export { CommentModel } from './comment.model.js';
 export { CommentPayloadKey, CommentsApiPath } from './libs/enums/enums.js';
 export {
+  type Comment,
   type CommentRepository,
   type CommentService
 } from './libs/types/types.js';

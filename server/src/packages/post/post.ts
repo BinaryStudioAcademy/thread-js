@@ -29,6 +29,7 @@ export {
   PostsApiPath
 } from './libs/enums/enums.js';
 export {
+  type Post,
   type PostController,
   type PostReactionRepository,
   type PostRepository,

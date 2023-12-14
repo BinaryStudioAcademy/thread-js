@@ -24,6 +24,7 @@ export { imageController, imageRepository, imageService };
 export { ImageModel } from './image.model.js';
 export { ImagePayloadKey, ImagesApiPath } from './libs/enums/enums.js';
 export {
+  type Image,
   type ImageController,
   type ImageRepository,
   type ImageService
