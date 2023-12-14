@@ -1,6 +1,6 @@
 const ProjectPrefix = {
   APP: 'thjs',
   ENVIRONMENTS: ['development', 'production']
-};
+} as const;
 
-module.exports = { ProjectPrefix };
+export { ProjectPrefix };

@@ -1,11 +1,29 @@
-const { danger, fail } = require('danger');
+import {
+  danger,
+  fail,
+  type GitHubPRDSL as LibraryGitHubDSL,
+  GitHubMergeRef,
+  GitHubRepo,
+  GitHubDSL
+} from 'danger';
 
-const { ProjectPrefix } = require('./project.config.cjs');
+import { ProjectPrefix } from './project.config';
+
+type GitHubPRDSL = LibraryGitHubDSL & {
+  head: GitHubMergeRef & {
+    repo: GitHubRepo & {
+      has_projects: boolean;
+    };
+  };
+  milestone: Record<string, unknown> | null;
+  labels: unknown[];
+  project_id: string | null;
+};
 
 const BranchPrefix = {
   TASK: 'task',
   FIX: 'fix'
-};
+} as const;
 
 const DangerConfig = {
   TITLE: {
@@ -34,9 +52,9 @@ const DangerConfig = {
   }
 };
 
-const pr = danger.github.pr;
+const { pr } = danger.github as GitHubDSL & Record<'pr', GitHubPRDSL>;
 
-const checkAssignees = () => {
+const checkAssignees = (): void => {
   const hasAssignees = Boolean(pr.assignee);
 
   if (!hasAssignees) {
@@ -44,7 +62,7 @@ const checkAssignees = () => {
   }
 };
 
-const checkTitle = titlePattern => {
+const checkTitle = (titlePattern: RegExp): void => {
   const isTitleValid = titlePattern.test(pr.title);
 
   if (!isTitleValid) {
@@ -56,7 +74,7 @@ const checkTitle = titlePattern => {
   }
 };
 
-const checkLabels = () => {
+const checkLabels = (): void => {
   const hasLabels = pr.labels.length > 0;
 
   if (!hasLabels) {
@@ -64,7 +82,7 @@ const checkLabels = () => {
   }
 };
 
-const checkBranch = branchPattern => {
+const checkBranch = (branchPattern: RegExp): void => {
   const isBranchValid = branchPattern.test(pr.head.ref);
 
   if (!isBranchValid) {
@@ -76,7 +94,7 @@ const checkBranch = branchPattern => {
   }
 };
 
-const applyDanger = () => {
+const applyDanger = (): void => {
   if (DangerConfig.TITLE.IS_REQUIRED) {
     checkTitle(DangerConfig.TITLE.PATTERN);
   }

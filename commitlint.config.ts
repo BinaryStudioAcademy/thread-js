@@ -1,4 +1,6 @@
-const { ProjectPrefix } = require('./project.config.cjs');
+import { UserConfig } from '@commitlint/types';
+
+import { ProjectPrefix } from './project.config';
 
 const COMMIT_MODIFIERS = ['+', '*', '-'];
 const COMMIT_MESSAGE_REGEXP = new RegExp(
@@ -19,7 +21,7 @@ Examples:
   - ${ProjectPrefix.APP}-12: * docker homework
   - production: - comments in ui/ux homework`;
 
-const configuration = {
+const configuration: UserConfig = {
   parserPreset: {
     parserOpts: {
       headerPattern: COMMIT_MESSAGE_REGEXP,
@@ -45,4 +47,4 @@ const configuration = {
   }
 };
 
-module.exports = configuration;
+export default configuration;
