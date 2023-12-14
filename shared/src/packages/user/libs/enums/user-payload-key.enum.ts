@@ -3,6 +3,6 @@ const UserPayloadKey = {
   EMAIL: 'email',
   PASSWORD: 'password',
   STATUS: 'status'
-};
+} as const;
 
 export { UserPayloadKey };

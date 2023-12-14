@@ -1,5 +1,8 @@
 {
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/libs/packages/config/libs/types/configurable.type.ts"
+  ],
   "exclude": ["node_modules/*"],
   "compilerOptions": {
     "allowJs": true,
@@ -18,6 +21,7 @@
     },
     "types": ["node"],
     "isolatedModules": true,
+    "strictNullChecks": true,
     "noPropertyAccessFromIndexSignature": true
   }
 }

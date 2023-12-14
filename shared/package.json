@@ -7,8 +7,10 @@
   },
   "type": "module",
   "scripts": {
-    "lint:js": "npx eslint --ext .js src",
-    "lint": "npm run lint:js"
+    "lint:js": "npx eslint \"src/**/*.ts\"",
+    "lint": "npm run lint:js",
+    "lint:type": "npx tsc --noEmit",
+    "build": "tsc && tsc-alias"
   },
   "dependencies": {
     "dayjs": "1.11.8",
