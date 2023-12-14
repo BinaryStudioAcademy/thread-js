@@ -4,7 +4,8 @@ parserOptions:
   ecmaVersion: 2022
   sourceType: module
   project:
-    - tsconfig.json
+    - ./tsconfig.json
+    - ./shared/tsconfig.json
     - ./client/jsconfig.json
     - ./server/tsconfig.json
 
