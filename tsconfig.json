@@ -1,0 +1,9 @@
+{
+  "exclude": ["commitlint.config.ts"],
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noPropertyAccessFromIndexSignature": true
+  }
+}
