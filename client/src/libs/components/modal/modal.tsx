@@ -1,12 +1,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 import { Portal } from '../portal/portal.jsx';
 import { useModal } from './hooks/hooks.js';
 import styles from './styles.module.scss';
+import { ReactNode } from 'react';
 
-const Modal = ({ isOpen, isCentered, onClose, children }) => {
+type ModalProps = {
+  isCentered?: boolean;
+  children: ReactNode;
+  isOpen: boolean;
+  onClose: Function;
+};
+
+const Modal: React.FC<ModalProps> = ({ isOpen, isCentered, onClose, children }) => {
   const { handleDisableContentContainerClick, handleOutsideClick } = useModal({
     onClose
   });
@@ -21,30 +28,19 @@ const Modal = ({ isOpen, isCentered, onClose, children }) => {
         className={clsx(styles.modal, isCentered && styles.centered)}
         onClick={handleOutsideClick}
         role="button"
-        tabIndex="0"
+        tabIndex={0}
       >
         <div
           className={styles.content}
           onClick={handleDisableContentContainerClick}
           role="button"
-          tabIndex="0"
+          tabIndex={0}
         >
           {children}
         </div>
       </div>
     </Portal>
   );
-};
-
-Modal.propTypes = {
-  isCentered: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
-};
-
-Modal.defaultProps = {
-  isCentered: false
 };
 
 export { Modal };

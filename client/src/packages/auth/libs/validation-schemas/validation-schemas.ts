@@ -1,1 +1,1 @@
-export { login, registration } from 'shared/dist/packages/auth/auth';
+export { login, registration } from 'shared/dist/packages/auth/auth.js';

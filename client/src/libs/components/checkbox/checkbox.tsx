@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
-import { useController } from 'react-hook-form';
+import { type Control, useController } from 'react-hook-form';
 
 import styles from './styles.module.scss';
 
-const Checkbox = ({ name, label, control }) => {
+type CheckboxProps = {
+  name: string;
+  label: string;
+  control: Control
+};
+
+const Checkbox: React.FC<CheckboxProps> = ({ name, label, control }) => {
   const { field } = useController({ name, control });
 
   return (
@@ -20,12 +25,6 @@ const Checkbox = ({ name, label, control }) => {
       </label>
     </div>
   );
-};
-
-Checkbox.propTypes = {
-  name: PropTypes.string.isRequired,
-  control: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  label: PropTypes.string.isRequired
 };
 
 export { Checkbox };

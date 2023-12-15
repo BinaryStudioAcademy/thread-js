@@ -1,5 +1,7 @@
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+
 const IconSize = {
-  LARGE: 'lg'
+  LARGE: 'lg' as SizeProp
 };
 
 export { IconSize };

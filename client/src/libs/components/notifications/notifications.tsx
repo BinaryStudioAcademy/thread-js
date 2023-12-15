@@ -3,10 +3,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 import { useDispatch, useEffect } from '~/libs/hooks/hooks.js';
-import { userType } from '~/libs/prop-types/property-types.js';
 import { actions as notificationActionCreator } from '~/slices/notifications/notifications.js';
+import { User } from '~/libs/types/types.js';
 
-const Notifications = ({ user }) => {
+type NotificationsProps = {
+  user: User
+};
+
+const Notifications: React.FC<NotificationsProps> = ({ user }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,14 +27,6 @@ const Notifications = ({ user }) => {
   }, [user, dispatch]);
 
   return <ToastContainer />;
-};
-
-Notifications.defaultProps = {
-  user: undefined
-};
-
-Notifications.propTypes = {
-  user: userType
 };
 
 export { Notifications };

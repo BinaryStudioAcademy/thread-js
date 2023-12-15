@@ -1,11 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
 
 import { IconColor, IconName, IconSize } from '~/libs/enums/enums.js';
 
 import { iconNameToSvgIcon } from './common.js';
+import { ValueOf } from '~/libs/types/value-of.type.js';
+import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 
-const Icon = ({ className, name, size, color, isLoading }) => (
+type IconProps = {
+  className?: string;
+  name: ValueOf<typeof IconName>;
+  size?: SizeProp
+  color?: ValueOf<typeof IconColor>;
+  isLoading?: boolean;
+};
+
+const Icon: React.FC<IconProps> = ({
+  className,
+  name,
+  size = IconSize.LARGE as SizeProp,
+  color,
+  isLoading
+}) => (
   <FontAwesomeIcon
     className={className}
     icon={iconNameToSvgIcon[name]}
@@ -14,20 +29,5 @@ const Icon = ({ className, name, size, color, isLoading }) => (
     spin={isLoading}
   />
 );
-
-Icon.propTypes = {
-  className: PropTypes.string,
-  name: PropTypes.oneOf(Object.values(IconName)).isRequired,
-  size: PropTypes.oneOf(Object.values(IconSize)),
-  color: PropTypes.oneOf(Object.values(IconColor)),
-  isLoading: PropTypes.bool
-};
-
-Icon.defaultProps = {
-  className: undefined,
-  size: IconSize.LARGE,
-  color: null,
-  isLoading: false
-};
 
 export { Icon };

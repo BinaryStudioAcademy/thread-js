@@ -1,1 +1,1 @@
-export { ExceptionMessage } from 'shared/dist/libs/enums/enums';
+export { ExceptionMessage } from 'shared/dist/libs/enums/enums.js';

@@ -1,20 +1,24 @@
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 import { useEffect, useMemo } from '~/libs/hooks/hooks.js';
 
 import styles from './styles.module.scss';
+import { ReactNode } from 'react';
 
-const Portal = ({ children }) => {
-  const portalContainer = useMemo(() => {
-    const element = document.createElement('div');
+type PortalProps = {
+  children: ReactNode;
+};
+
+const Portal: React.FC<PortalProps> = ({ children }) => {
+  const portalContainer: HTMLDivElement = useMemo(() => {
+    const element: HTMLDivElement = document.createElement('div');
     element.classList.add(styles.portal);
 
     return element;
   }, []);
 
   useEffect(() => {
-    const wasOverflowHidden = document.body.classList.contains(
+    const wasOverflowHidden: boolean = document.body.classList.contains(
       styles.noOverflow
     );
     document.body.append(portalContainer);
@@ -29,10 +33,6 @@ const Portal = ({ children }) => {
   }, [portalContainer]);
 
   return ReactDOM.createPortal(children, portalContainer);
-};
-
-Portal.propTypes = {
-  children: PropTypes.element.isRequired
 };
 
 export { Portal };

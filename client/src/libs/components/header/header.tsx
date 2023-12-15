@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 import {
@@ -6,6 +5,8 @@ import {
   IconName,
   IconSize
 } from '~/libs/enums/enums.js';
+import { type User } from '~/libs/types/types.js';
+
 import { userType } from '~/libs/prop-types/property-types.js';
 import { DEFAULT_USER_AVATAR } from '~/packages/user/constants/constants.js';
 
@@ -14,7 +15,12 @@ import { Icon } from '../icon/icon.jsx';
 import { Image } from '../image/image.jsx';
 import styles from './styles.module.scss';
 
-const Header = ({ user, onUserLogout }) => (
+type HeaderProps = {
+  onUserLogout: React.MouseEventHandler<HTMLButtonElement>;
+  user: User;
+};
+
+const Header: React.FC<HeaderProps> = ({ user, onUserLogout }) => (
   <div className={styles.headerWrp}>
     {user && (
       <NavLink to={AppRoute.ROOT}>
@@ -45,10 +51,5 @@ const Header = ({ user, onUserLogout }) => (
     </div>
   </div>
 );
-
-Header.propTypes = {
-  onUserLogout: PropTypes.func.isRequired,
-  user: userType.isRequired
-};
 
 export { Header };

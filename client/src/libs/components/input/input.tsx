@@ -1,19 +1,31 @@
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { useController } from 'react-hook-form';
+import { Control, useController } from 'react-hook-form';
 
 import { IconName } from '~/libs/enums/enums.js';
 
 import { Icon } from '../icon/icon.js';
 import styles from './styles.module.scss';
+import { ValueOf } from '~/libs/types/types.js';
 
-const Input = ({
+type InputProps = {
+  name: string;
+  control: Control;
+  errors?: object;
+  disabled?: boolean;
+  iconName?: ValueOf<typeof IconName>;
+  placeholder: string;
+  className: string;
+  type: 'email' | 'password' | 'submit' | 'text';
+  rows: number;
+};
+
+const Input: React.FC<InputProps> = ({
   name,
   control,
-  type,
-  rows,
-  errors,
+  type = 'text',
+  rows = 0,
+  errors = {},
   disabled,
   iconName,
   placeholder,
@@ -57,27 +69,6 @@ const Input = ({
       </span>
     </div>
   );
-};
-
-Input.propTypes = {
-  name: PropTypes.string.isRequired,
-  control: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  errors: PropTypes.oneOfType([PropTypes.object]),
-  disabled: PropTypes.bool,
-  iconName: PropTypes.oneOf(Object.values(IconName)),
-  placeholder: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  type: PropTypes.oneOf(['email', 'password', 'submit', 'text']),
-  rows: PropTypes.number
-};
-
-Input.defaultProps = {
-  disabled: false,
-  iconName: null,
-  className: '',
-  type: 'text',
-  rows: 0,
-  errors: {}
 };
 
 export { Input };

@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
+import { ReactNode } from 'react';
 
-const Segment = ({ children }) => (
+type SegmentProps = {
+  children: ReactNode;
+};
+
+const Segment: React.FC<SegmentProps> = ({ children }) => (
   <div className={styles.segment}>{children}</div>
 );
-
-Segment.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 export { Segment };

@@ -2,7 +2,11 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-const Spinner = ({ isOverflow }) =>
+type SpinnerProps = {
+  isOverflow: boolean;
+};
+
+const Spinner: React.FC<SpinnerProps> = ({ isOverflow }) =>
   isOverflow ? (
     <div className={styles.container}>
       <div className={styles.loader}>Loading...</div>
@@ -10,13 +14,5 @@ const Spinner = ({ isOverflow }) =>
   ) : (
     <div className={styles.loader}>Loading...</div>
   );
-
-Spinner.propTypes = {
-  isOverflow: PropTypes.bool
-};
-
-Spinner.defaultProps = {
-  isOverflow: false
-};
 
 export { Spinner };

@@ -1,16 +1,21 @@
 /* eslint-disable react/jsx-no-bind */
-import PropTypes from 'prop-types';
-
 import { IconName } from '~/libs/enums/enums.js';
 import { getFromNowTime } from '~/libs/helpers/helpers.js';
 import { useCallback } from '~/libs/hooks/hooks.js';
-import { postType } from '~/libs/prop-types/property-types.js';
 
 import { IconButton } from '../icon-button/icon-button.js';
 import { Image } from '../image/image.js';
 import styles from './styles.module.scss';
+import { Post as PostType } from '~/libs/types/types.js';
 
-const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
+type PostProps = {
+  post: PostType;
+  onPostLike: Function;
+  onExpandedPostToggle: Function;
+  onSharePost: Function;
+};
+
+const Post: React.FC<PostProps> = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
   const {
     id,
     image,
@@ -62,13 +67,6 @@ const Post = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
       </div>
     </div>
   );
-};
-
-Post.propTypes = {
-  post: postType.isRequired,
-  onPostLike: PropTypes.func.isRequired,
-  onExpandedPostToggle: PropTypes.func.isRequired,
-  onSharePost: PropTypes.func.isRequired
 };
 
 export { Post };

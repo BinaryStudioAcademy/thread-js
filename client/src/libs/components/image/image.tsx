@@ -1,11 +1,22 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 import { ImageSize } from '~/libs/enums/enums.js';
 
 import styles from './styles.module.scss';
+import { ValueOf } from '~/libs/types/types.js';
 
-const Image = ({
+type ImageProps = {
+  alt: string;
+  isCentered?: boolean;
+  isCircular?: boolean;
+  className?: string;
+  height?: string;
+  size?: ValueOf<typeof ImageSize>;
+  width?: string;
+  src: string;
+};
+
+const Image: React.FC<ImageProps> = ({
   alt,
   isCentered,
   isCircular,
@@ -29,25 +40,5 @@ const Image = ({
     alt={alt}
   />
 );
-
-Image.propTypes = {
-  alt: PropTypes.string.isRequired,
-  isCentered: PropTypes.bool,
-  isCircular: PropTypes.bool,
-  className: PropTypes.string,
-  height: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(ImageSize)),
-  src: PropTypes.string.isRequired,
-  width: PropTypes.string
-};
-
-Image.defaultProps = {
-  isCentered: false,
-  isCircular: false,
-  className: undefined,
-  height: undefined,
-  size: undefined,
-  width: undefined
-};
 
 export { Image };

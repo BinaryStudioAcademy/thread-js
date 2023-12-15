@@ -1,6 +1,5 @@
 /* eslint-disable react/button-has-type */
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 import {
   ButtonColor,
@@ -9,7 +8,7 @@ import {
 } from '~/libs/enums/enums.js';
 
 import {
-  ButtonType
+  type ButtonType
 } from '~/libs/types/types.js';
 
 import { Icon } from '../icon/icon.jsx';
@@ -21,7 +20,7 @@ type ButtonProps = {
   children?: ReactNode;
   type?: ButtonType;
   color?: ValueOf<typeof ButtonColor>;
-  onClick?: () => any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   iconName?: ValueOf<typeof IconName>;
   iconSize?: ValueOf<typeof IconSize>
@@ -32,7 +31,7 @@ type ButtonProps = {
   isDisabled?: boolean;
 }
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   onClick = null,
   className = null,
   type = 'button',
@@ -45,7 +44,7 @@ const Button = ({
   isPrimary = false,
   isDisabled = false,
   children = null
-}: ButtonProps ) => {
+}) => {
   const hasIcon = Boolean(iconName);
 
   return (

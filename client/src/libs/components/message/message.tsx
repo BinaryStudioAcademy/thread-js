@@ -1,16 +1,12 @@
-import PropTypes from 'prop-types';
-
 import styles from './styles.module.scss';
+import { ReactNode } from 'react';
 
-const Message = ({ children }) => (
+type MessageProps = {
+  children: ReactNode;
+};
+
+const Message: React.FC<MessageProps> = ({ children }) => (
   <div className={styles.message}>{children}</div>
 );
-
-Message.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element)
-  ]).isRequired
-};
 
 export { Message };
