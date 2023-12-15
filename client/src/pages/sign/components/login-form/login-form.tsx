@@ -9,27 +9,26 @@ import {
   AppRoute,
   ButtonColor,
   ButtonSize,
-  ButtonType,
   IconName
 } from '~/libs/enums/enums.js';
 import { useAppForm, useState } from '~/libs/hooks/hooks.js';
-import { registration as registrationValidation } from '~/packages/auth/libs/validation-schemas/validation-schemas.js';
+import { login as loginValidationSchema } from '~/packages/auth/libs/validation-schemas/validation-schemas.js';
 import { UserPayloadKey } from '~/packages/user/enums/enums.js';
 
-import { DEFAULT_REGISTRATION_PAYLOAD } from './libs/common/constants.js';
+import { DEFAULT_LOGIN_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
 
-const RegistrationForm = ({ onRegister }) => {
+const LoginForm = ({ onLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { control, errors, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_REGISTRATION_PAYLOAD,
-    validationSchema: registrationValidation
+    defaultValues: DEFAULT_LOGIN_PAYLOAD,
+    validationSchema: loginValidationSchema
   });
 
-  const handleRegister = values => {
+  const handleLogin = values => {
     setIsLoading(true);
 
-    onRegister(values)
+    onLogin(values)
       .unwrap()
       .catch(() => {
         // TODO: show error
@@ -39,18 +38,10 @@ const RegistrationForm = ({ onRegister }) => {
 
   return (
     <>
-      <h2 className={styles.title}>Register for free account</h2>
-      <form name="registrationForm" onSubmit={handleSubmit(handleRegister)}>
+      <h2 className={styles.title}>Login to your account</h2>
+      <form name="loginForm" onSubmit={handleSubmit(handleLogin)}>
         <Segment>
           <fieldset disabled={isLoading} className={styles.fieldset}>
-            <Input
-              name={UserPayloadKey.USERNAME}
-              type="text"
-              placeholder="Username"
-              iconName={IconName.USER}
-              control={control}
-              errors={errors}
-            />
             <Input
               name={UserPayloadKey.EMAIL}
               type="email"
@@ -68,28 +59,27 @@ const RegistrationForm = ({ onRegister }) => {
               errors={errors}
             />
             <Button
-              type={ButtonType.SUBMIT}
+              type={'submit'}
               color={ButtonColor.TEAL}
-              size={ButtonSize.LARGE}
               isLoading={isLoading}
               isFluid
               isPrimary
             >
-              Register
+              Login
             </Button>
           </fieldset>
         </Segment>
       </form>
       <Message>
-        <span>Already with us?</span>
-        <NavLink to={AppRoute.LOGIN}>Sign In</NavLink>
+        <span>New to us?</span>
+        <NavLink to={AppRoute.REGISTRATION}>Sign Up</NavLink>
       </Message>
     </>
   );
 };
 
-RegistrationForm.propTypes = {
-  onRegister: PropTypes.func.isRequired
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired
 };
 
-export { RegistrationForm };
+export { LoginForm };

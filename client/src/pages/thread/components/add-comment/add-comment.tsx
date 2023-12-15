@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import { Button } from '~/libs/components/button/button.jsx';
 import { Input } from '~/libs/components/input/input.jsx';
-import { ButtonType } from '~/libs/enums/enums.js';
 import { useAppForm, useCallback } from '~/libs/hooks/hooks.js';
 import { CommentPayloadKey } from '~/packages/comment/comment.js';
 
@@ -31,7 +30,7 @@ const AddComment = ({ postId, onCommentAdd }) => {
         rows={10}
         control={control}
       />
-      <Button type={ButtonType.SUBMIT} isPrimary>
+      <Button type={'submit'} isPrimary>
         Post comment
       </Button>
     </form>

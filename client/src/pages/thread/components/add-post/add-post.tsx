@@ -4,7 +4,7 @@ import { Button } from '~/libs/components/button/button.jsx';
 import { Image } from '~/libs/components/image/image.jsx';
 import { Input } from '~/libs/components/input/input.jsx';
 import { Segment } from '~/libs/components/segment/segment.jsx';
-import { ButtonColor, ButtonType, IconName } from '~/libs/enums/enums.js';
+import { ButtonColor, IconName } from '~/libs/enums/enums.js';
 import { useAppForm, useCallback, useState } from '~/libs/hooks/hooks.js';
 import { PostPayloadKey } from '~/packages/post/libs/enums/enums.js';
 
@@ -86,7 +86,7 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
               />
             </label>
           </Button>
-          <Button color={ButtonColor.BLUE} type={ButtonType.SUBMIT}>
+          <Button color={ButtonColor.BLUE} type={'submit'}>
             Post
           </Button>
         </div>

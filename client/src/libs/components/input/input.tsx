@@ -5,7 +5,7 @@ import { useController } from 'react-hook-form';
 
 import { IconName } from '~/libs/enums/enums.js';
 
-import { Icon } from '../icon/icon.jsx';
+import { Icon } from '../icon/icon.js';
 import styles from './styles.module.scss';
 
 const Input = ({

@@ -3,14 +3,13 @@ import { NavLink } from 'react-router-dom';
 
 import {
   AppRoute,
-  ButtonType,
   IconName,
   IconSize
 } from '~/libs/enums/enums.js';
 import { userType } from '~/libs/prop-types/property-types.js';
 import { DEFAULT_USER_AVATAR } from '~/packages/user/constants/constants.js';
 
-import { Button } from '../button/button.jsx';
+import { Button } from '../button/button.js';
 import { Icon } from '../icon/icon.jsx';
 import { Image } from '../image/image.jsx';
 import styles from './styles.module.scss';
@@ -38,7 +37,7 @@ const Header = ({ user, onUserLogout }) => (
       <Button
         className={`${styles.menuBtn} ${styles.logoutBtn}`}
         onClick={onUserLogout}
-        type={ButtonType.BUTTON}
+        type={'button'}
         iconName={IconName.LOG_OUT}
         iconSize={IconSize.LARGE}
         isBasic

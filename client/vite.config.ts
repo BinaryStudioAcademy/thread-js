@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 
 import reactPlugin from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
+import tsConfigPathsPlugin from 'vite-tsconfig-paths';
 
 const config = ({ mode }) => {
   // import.meta.env doesn't exist at this moment
@@ -15,6 +16,9 @@ const config = ({ mode }) => {
   } = loadEnv(mode, process.cwd());
 
   return defineConfig({
+    build: {
+      outDir: 'build'
+    },
     resolve: {
       alias: {
         '~': fileURLToPath(new URL('src', import.meta.url))
@@ -31,7 +35,10 @@ const config = ({ mode }) => {
         }
       }
     },
-    plugins: [reactPlugin()]
+    plugins: [
+      tsConfigPathsPlugin(),
+      reactPlugin()
+    ]
   });
 };
 
