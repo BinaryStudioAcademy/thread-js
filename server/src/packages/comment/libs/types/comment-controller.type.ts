@@ -9,7 +9,7 @@ import {
 type CommentController = {
   getById(
     _request: FastifyRequest<Record<'Params', Record<'id', number>>>
-  ): Promise<CommentWithUserNestedRelations>;
+  ): Promise<CommentWithUserNestedRelations | null>;
   create(
     _request: FastifyRequest<Record<'Body', CreateCommentRequestDto>>,
     _reply: FastifyReply

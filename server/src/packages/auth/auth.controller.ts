@@ -91,7 +91,7 @@ class Auth extends Controller implements AuthController {
 
   public getUser = (
     request: FastifyRequest
-  ): Promise<UserWithImageRelation> => {
+  ): Promise<UserWithImageRelation | null> => {
     return this.#userService.getByIdWithImage(
       (request.user as UserAuthResponse).id
     );

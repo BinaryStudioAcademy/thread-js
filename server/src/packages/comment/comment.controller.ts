@@ -44,7 +44,7 @@ class Comment extends Controller implements CommentController {
 
   public getById = async (
     request: FastifyRequest<Record<'Params', Record<'id', number>>>
-  ): Promise<CommentWithUserNestedRelations> => {
+  ): Promise<CommentWithUserNestedRelations | null> => {
     return await this.#commentService.getById(request.params.id);
   };
 

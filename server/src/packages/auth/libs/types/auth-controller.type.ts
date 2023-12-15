@@ -1,6 +1,7 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import {
+  type UserWithImageRelation,
   type UserLoginRequestDto,
   type UserLoginResponseDto,
   type UserRegisterRequestDto
@@ -17,7 +18,7 @@ type AuthController = {
   ) => Promise<UserLoginResponseDto>;
   getUser: (
     _request: FastifyRequest<Record<'Body', UserLoginRequestDto>>
-  ) => void;
+  ) => Promise<UserWithImageRelation | null>;
 };
 
 export { type AuthController };

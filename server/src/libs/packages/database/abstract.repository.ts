@@ -31,7 +31,7 @@ class Abstract<T extends typeof AbstractModel, K> implements Repository<K> {
       .execute();
   }
 
-  public updateById(id: number, data: K): Promise<K> {
+  public updateById(id: number, data: Partial<K>): Promise<K> {
     return this.#model
       .query()
       .patchAndFetchById(id, data)
