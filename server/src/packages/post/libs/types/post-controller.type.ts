@@ -12,7 +12,7 @@ type PostController = {
   getByFilter(_request: FastifyRequest): Promise<GetPostsByFilterResponseDto>;
   getById(
     _request: FastifyRequest
-  ): Promise<PostWithCommentImageUserNestedRelationsWithCount>;
+  ): Promise<PostWithCommentImageUserNestedRelationsWithCount | null>;
   create(
     _request: FastifyRequest<Record<'Body', CreatePostRequestDto>>,
     _reply: FastifyReply

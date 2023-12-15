@@ -2,8 +2,8 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": "18.x.x",
-    "npm": "10.x.x"
+    "node": "18.18.x",
+    "npm": "9.8.x"
   },
   "type": "module",
   "scripts": {
