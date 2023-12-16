@@ -1,11 +1,23 @@
 import { ENV } from '~/libs/enums/enums.js';
-import { http } from '~/packages/http/http.js';
+import { httpApi } from '~/packages/http/http.js';
 
-import { Post } from './post-api.js';
+import { Post as PostApi } from './post-api.js';
 
-const post = new Post({
+const postApi = new PostApi({
   apiPath: ENV.API_PATH,
-  http
+  httpApi
 });
 
-export { post };
+export { postApi };
+export { PostPayloadKey } from './libs/enums/enums.js';
+export {
+  type CreatePostReactionRequestDto,
+  type CreatePostReactionResponseDto,
+  type CreatePostRequestDto,
+  type GetPostByIdResponseDto,
+  type GetPostsByFilterRequestDto,
+  type GetPostsByFilterResponseDto,
+  type Post,
+  type PostApi,
+  type PostWithCommentImageUserNestedRelationsWithCount,
+  type PostWithImageUserNestedRelationsWithCount } from './libs/types/types.js';

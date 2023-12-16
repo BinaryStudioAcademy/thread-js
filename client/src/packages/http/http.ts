@@ -1,9 +1,10 @@
-import { storage } from '~/packages/storage/storage.js';
+import { storageApi } from '~/packages/storage/storage.js';
 
-import { Http } from './http-api.js';
+import { Http as HttpApi } from './http-api.js';
 
-const http = new Http({
-  storage
+const httpApi = new HttpApi({
+  storageApi
 });
 
-export { http };
+export { httpApi };
+export { type HttpApi, type HttpOptions } from './libs/types/types.js';

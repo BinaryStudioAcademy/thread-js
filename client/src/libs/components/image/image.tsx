@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 
-import { ImageSize } from '~/libs/enums/enums.js';
+import { type ImageSize } from '~/libs/enums/enums.js';
+import { type ValueOf } from '~/libs/types/types.js';
 
 import styles from './styles.module.scss';
-import { ValueOf } from '~/libs/types/types.js';
 
-type ImageProps = {
+type ImageProperties = {
   alt: string;
   isCentered?: boolean;
   isCircular?: boolean;
@@ -16,7 +16,7 @@ type ImageProps = {
   src: string;
 };
 
-const Image: React.FC<ImageProps> = ({
+const Image: React.FC<ImageProperties> = ({
   alt,
   isCentered,
   isCircular,
@@ -28,9 +28,9 @@ const Image: React.FC<ImageProps> = ({
 }) => (
   <img
     className={clsx(
-      styles.image,
-      isCircular && styles.circular,
-      isCentered && styles.centered,
+      styles['image'],
+      isCircular && styles['circular'],
+      isCentered && styles['centered'],
       size && styles[`imageSize__${size}`],
       className
     )}

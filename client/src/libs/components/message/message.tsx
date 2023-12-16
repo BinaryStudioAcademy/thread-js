@@ -1,12 +1,13 @@
-import styles from './styles.module.scss';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
-type MessageProps = {
+import styles from './styles.module.scss';
+
+type MessageProperties = {
   children: ReactNode;
 };
 
-const Message: React.FC<MessageProps> = ({ children }) => (
-  <div className={styles.message}>{children}</div>
+const Message: React.FC<MessageProperties> = ({ children }) => (
+  <div className={styles['message']}>{children}</div>
 );
 
 export { Message };

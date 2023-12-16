@@ -1,11 +1,12 @@
 {
-  "include": ["src"],
+  "extends": "../tsconfig.json",
+  "include": ["src", "vite.config.ts", "index.d.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
-    "esModuleInterop": true,
     "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",

@@ -1,31 +1,32 @@
+import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IconColor, IconName, IconSize } from '~/libs/enums/enums.js';
+import { type IconColor, type IconName } from '~/libs/enums/enums.js';
+import { IconSize } from '~/libs/enums/enums.js';
+import { type ValueOf } from '~/libs/types/types.js';
 
 import { iconNameToSvgIcon } from './common.js';
-import { ValueOf } from '~/libs/types/value-of.type.js';
-import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 
-type IconProps = {
+type IconProperties = {
   className?: string;
   name: ValueOf<typeof IconName>;
-  size?: SizeProp
+  size?: SizeProp;
   color?: ValueOf<typeof IconColor>;
   isLoading?: boolean;
 };
 
-const Icon: React.FC<IconProps> = ({
+const Icon: React.FC<IconProperties> = ({
   className,
   name,
   size = IconSize.LARGE as SizeProp,
   color,
-  isLoading
+  isLoading = false
 }) => (
   <FontAwesomeIcon
-    className={className}
+    className={className as string}
     icon={iconNameToSvgIcon[name]}
     size={size}
-    color={color}
+    color={color as string}
     spin={isLoading}
   />
 );

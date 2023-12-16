@@ -1,7 +1,8 @@
-import { Storage } from './storage-api.js';
+import { Storage as StorageApi } from './storage-api.js';
 
-const storage = new Storage({
+const storageApi = new StorageApi({
   storage: localStorage
 });
 
-export { storage };
+export { storageApi };
+export { type StorageApi } from './libs/types/types.js';

@@ -1,26 +1,33 @@
-import PropTypes from 'prop-types';
-
-import { CopyBufferInput } from '~/libs/components/copy-buffer-input/copy-buffer-input.jsx';
-import { Icon } from '~/libs/components/icon/icon.jsx';
-import { Modal } from '~/libs/components/modal/modal.jsx';
+import { CopyBufferInput } from '~/libs/components/copy-buffer-input/copy-buffer-input.js';
+import { Icon } from '~/libs/components/icon/icon.js';
+import { Modal } from '~/libs/components/modal/modal.js';
 import { IconColor, IconName } from '~/libs/enums/enums.js';
 import { useCallback, useRef, useState } from '~/libs/hooks/hooks.js';
 
 import styles from './styles.module.scss';
 
-const SharedPostLink = ({ postId, onClose }) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const input = useRef();
+type Properties = {
+  postId: number;
+  onClose: () => void;
+};
 
-  const handleCopy = useCallback(({ target }) => {
-    navigator.clipboard.writeText(input.current?.value ?? '');
-    target.focus();
-    setIsCopied(true);
-  }, []);
+const SharedPostLink: React.FC<Properties> = ({ postId, onClose }) => {
+  const [isCopied, setIsCopied] = useState(false);
+  const input = useRef<HTMLInputElement | null>(null);
+
+  const handleCopy: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    async ({ target }) => {
+      await navigator.clipboard.writeText(input.current?.value ?? '');
+      (target as HTMLInputElement).focus();
+
+      setIsCopied(true);
+    },
+    []
+  );
 
   return (
     <Modal isOpen isCentered onClose={onClose}>
-      <header className={styles.header}>
+      <header className={styles['header']}>
         <span>Share Post</span>
         {isCopied && (
           <span>
@@ -38,11 +45,6 @@ const SharedPostLink = ({ postId, onClose }) => {
       </div>
     </Modal>
   );
-};
-
-SharedPostLink.propTypes = {
-  postId: PropTypes.number.isRequired,
-  onClose: PropTypes.func.isRequired
 };
 
 export { SharedPostLink };

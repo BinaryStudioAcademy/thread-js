@@ -1,11 +1,12 @@
 import { ENV } from '~/libs/enums/enums.js';
-import { http } from '~/packages/http/http.js';
+import { httpApi } from '~/packages/http/http.js';
 
-import { Image } from './image-api.js';
+import { Image as ImageApi } from './image-api.js';
 
-const image = new Image({
+const imageApi = new ImageApi({
   apiPath: ENV.API_PATH,
-  http
+  httpApi
 });
 
-export { image };
+export { imageApi };
+export { type Image, type ImageApi } from './libs/types/types.js';

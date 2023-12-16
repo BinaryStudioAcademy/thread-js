@@ -12,6 +12,6 @@ const IconName = {
   THUMBS_DOWN: 'thumbs down',
   USER: 'user',
   USER_CIRCLE: 'user circle'
-};
+} as const;
 
 export { IconName };

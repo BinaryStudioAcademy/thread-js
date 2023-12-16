@@ -1,49 +1,46 @@
 /* eslint-disable react/button-has-type */
+import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
 import clsx from 'clsx';
+import { type ReactNode } from 'react';
 
 import {
-  ButtonColor,
-  IconName,
-  IconSize
+  type ButtonColor,
+  type IconName,
+  type IconSize
 } from '~/libs/enums/enums.js';
+import { type ButtonType, type ValueOf } from '~/libs/types/types.js';
 
-import {
-  type ButtonType
-} from '~/libs/types/types.js';
-
-import { Icon } from '../icon/icon.jsx';
+import { Icon } from '../icon/icon.js';
 import styles from './styles.module.scss';
-import { ReactNode } from 'react';
-import { ValueOf } from '~/libs/types/value-of.type.js';
 
-type ButtonProps = {
+type ButtonProperties = {
   children?: ReactNode;
   type?: ButtonType;
   color?: ValueOf<typeof ButtonColor>;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   iconName?: ValueOf<typeof IconName>;
-  iconSize?: ValueOf<typeof IconSize>
+  iconSize?: ValueOf<typeof IconSize>;
   isBasic?: boolean;
   isFluid?: boolean;
   isLoading?: boolean;
   isPrimary?: boolean;
   isDisabled?: boolean;
-}
+};
 
-const Button: React.FC<ButtonProps> = ({
-  onClick = null,
-  className = null,
+const Button: React.FC<ButtonProperties> = ({
+  onClick,
+  className,
   type = 'button',
-  color = null,
-  iconName = null,
-  iconSize = null,
+  color,
+  iconName,
+  iconSize,
   isBasic = false,
   isFluid = false,
   isLoading = false,
   isPrimary = false,
   isDisabled = false,
-  children = null
+  children
 }) => {
   const hasIcon = Boolean(iconName);
 
@@ -52,22 +49,25 @@ const Button: React.FC<ButtonProps> = ({
       disabled={isDisabled}
       onClick={onClick}
       className={clsx(
-        styles.btn,
-        isLoading && styles.loading,
-        isFluid && styles.fluid,
-        isBasic && styles.basic,
-        isPrimary && styles.primary,
+        styles['btn'],
+        isLoading && styles['loading'],
+        isFluid && styles['fluid'],
+        isBasic && styles['basic'],
+        isPrimary && styles['primary'],
         color && styles[`btn__${color}`],
         className
       )}
       type={type}
     >
-      {hasIcon && <Icon name={iconName} size={iconSize} />}
+      {hasIcon && (
+        <Icon
+          name={iconName as ValueOf<typeof IconName>}
+          size={iconSize as SizeProp}
+        />
+      )}
       {children}
     </button>
   );
 };
-
-
 
 export { Button };

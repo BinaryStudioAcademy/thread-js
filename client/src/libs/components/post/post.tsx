@@ -2,20 +2,25 @@
 import { IconName } from '~/libs/enums/enums.js';
 import { getFromNowTime } from '~/libs/helpers/helpers.js';
 import { useCallback } from '~/libs/hooks/hooks.js';
+import { type PostWithImageUserNestedRelationsWithCount } from '~/packages/post/post.js';
 
 import { IconButton } from '../icon-button/icon-button.js';
 import { Image } from '../image/image.js';
 import styles from './styles.module.scss';
-import { Post as PostType } from '~/libs/types/types.js';
 
-type PostProps = {
-  post: PostType;
-  onPostLike: Function;
-  onExpandedPostToggle: Function;
-  onSharePost: Function;
+type PostProperties = {
+  post: PostWithImageUserNestedRelationsWithCount;
+  onPostLike: (id: number) => void;
+  onExpandedPostToggle: (id: number) => void;
+  onSharePost: (id: number) => void;
 };
 
-const Post: React.FC<PostProps> = ({ post, onPostLike, onExpandedPostToggle, onSharePost }) => {
+const Post: React.FC<PostProperties> = ({
+  post,
+  onPostLike,
+  onExpandedPostToggle,
+  onSharePost
+}) => {
   const {
     id,
     image,
@@ -28,23 +33,26 @@ const Post: React.FC<PostProps> = ({ post, onPostLike, onExpandedPostToggle, onS
   } = post;
   const date = getFromNowTime(createdAt);
 
-  const handlePostLike = useCallback(() => onPostLike(id), [id, onPostLike]);
-  const handleExpandedPostToggle = useCallback(
-    () => onExpandedPostToggle(id),
-    [id, onExpandedPostToggle]
-  );
-  const handleSharePost = useCallback(() => onSharePost(id), [id, onSharePost]);
+  const handlePostLike = useCallback(() => {
+    onPostLike(id);
+  }, [id, onPostLike]);
+  const handleExpandedPostToggle = useCallback(() => {
+    onExpandedPostToggle(id);
+  }, [id, onExpandedPostToggle]);
+  const handleSharePost = useCallback(() => {
+    onSharePost(id);
+  }, [id, onSharePost]);
 
   return (
-    <div className={styles.card}>
+    <div className={styles['card']}>
       {image && <Image src={image.link} alt="post image" />}
-      <div className={styles.content}>
-        <div className={styles.meta}>
+      <div className={styles['content']}>
+        <div className={styles['meta']}>
           <span>{`posted by ${user.username} - ${date}`}</span>
         </div>
-        <p className={styles.description}>{body}</p>
+        <p className={styles['description']}>{body}</p>
       </div>
-      <div className={styles.extra}>
+      <div className={styles['extra']}>
         <IconButton
           iconName={IconName.THUMBS_UP}
           label={likeCount}
@@ -53,7 +61,7 @@ const Post: React.FC<PostProps> = ({ post, onPostLike, onExpandedPostToggle, onS
         <IconButton
           iconName={IconName.THUMBS_DOWN}
           label={dislikeCount}
-          onClick={() => {}}
+          onClick={(): void => void {}}
         />
         <IconButton
           iconName={IconName.COMMENT}

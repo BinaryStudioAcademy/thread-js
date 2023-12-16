@@ -2,13 +2,17 @@ import { createAction } from '@reduxjs/toolkit';
 
 import { ActionType } from './common.js';
 
-const joinRoom = createAction(ActionType.JOIN_ROOM, userId => {
+const joinRoom = createAction<
+  (userId: number) => Record<'payload', number>
+>(ActionType.JOIN_ROOM, userId => {
   return {
     payload: userId
   };
 });
 
-const leaveRoom = createAction(ActionType.LEAVE_ROOM, userId => {
+const leaveRoom = createAction<
+  (userId: number) => Record<'payload', number>
+>(ActionType.LEAVE_ROOM, userId => {
   return {
     payload: userId
   };

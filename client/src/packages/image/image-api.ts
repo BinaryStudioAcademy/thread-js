@@ -1,20 +1,34 @@
 import { ApiPath } from '~/libs/enums/enums.js';
 import { HttpMethod } from '~/packages/http/libs/enums/enums.js';
 
+import { type HttpApi } from '../http/http.js';
 import { ImagePayloadKey } from './libs/enums/enums.js';
+import {
+  type ImageApi,
+  type UploadImageResponseDto
+} from './libs/types/types.js';
 
-class Image {
-  constructor({ apiPath, http }) {
-    this._apiPath = apiPath;
-    this._http = http;
+type Constructor = {
+  apiPath: string;
+  httpApi: HttpApi;
+};
+
+class Image implements ImageApi {
+  #apiPath: string;
+
+  #httpApi: HttpApi;
+
+  public constructor({ apiPath, httpApi }: Constructor) {
+    this.#apiPath = apiPath;
+    this.#httpApi = httpApi;
   }
 
-  uploadImage(image) {
+  public uploadImage(image: File): Promise<UploadImageResponseDto> {
     const formData = new FormData();
 
     formData.append(ImagePayloadKey.IMAGE, image);
 
-    return this._http.load(`${this._apiPath}${ApiPath.IMAGES}`, {
+    return this.#httpApi.load(`${this.#apiPath}${ApiPath.IMAGES}`, {
       method: HttpMethod.POST,
       payload: formData
     });

@@ -1,38 +1,54 @@
-import { StorageKey } from '~/libs/enums/enums.js';
+import { ContentType, StorageKey } from '~/libs/enums/enums.js';
 import { getStringifiedQuery } from '~/libs/helpers/helpers.js';
+import { type ValueOf } from '~/libs/types/types.js';
 
+import { type StorageApi } from '../storage/storage.js';
+import { type HttpCode } from './libs/enums/enums.js';
 import { HttpHeader, HttpMethod } from './libs/enums/enums.js';
 import { HttpError } from './libs/exceptions/exceptions.js';
+import { type HttpApi, type HttpOptions } from './libs/types/types.js';
 
-class Http {
-  constructor({ storage }) {
-    this._storage = storage;
+type Constructor = {
+  storageApi: StorageApi;
+};
+
+class Http implements HttpApi {
+  #storageApi: StorageApi;
+
+  public constructor({ storageApi }: Constructor) {
+    this.#storageApi = storageApi;
   }
 
-  load(url, options = {}) {
+  public async load<T>(
+    url: string,
+    options: Partial<HttpOptions> = {}
+  ): Promise<T> | never {
     const {
       method = HttpMethod.GET,
       payload = null,
       hasAuth = true,
-      contentType,
+      contentType = ContentType.JSON,
       query
     } = options;
-    const headers = this._getHeaders({
+    const headers = await this.#getHeaders({
       hasAuth,
       contentType
     });
 
-    return fetch(this._getUrl(url, query), {
+    return await fetch(this.#getUrl(url, query), {
       method,
       headers,
       body: payload
     })
-      .then(this._checkStatus)
-      .then(this._parseJSON)
-      .catch(this._throwError);
+      .then(void this.#checkStatus)
+      .then<T>(void this.#parseJSON)
+      .catch(void this.#throwError);
   }
 
-  _getHeaders({ hasAuth, contentType }) {
+  async #getHeaders({
+    hasAuth,
+    contentType
+  }: Pick<HttpOptions, 'hasAuth' | 'contentType'>): Promise<Headers> {
     const headers = new Headers();
 
     if (contentType) {
@@ -40,7 +56,7 @@ class Http {
     }
 
     if (hasAuth) {
-      const token = this._storage.getItem(StorageKey.TOKEN);
+      const token = await this.#storageApi.get(StorageKey.TOKEN);
 
       headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
@@ -48,14 +64,14 @@ class Http {
     return headers;
   }
 
-  async _checkStatus(response) {
+  async #checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
-      const parsedException = await response.json().catch(() => ({
+      const parsedException = (await response.json().catch(() => ({
         message: response.statusText
-      }));
+      }))) as Record<'message', string>;
 
       throw new HttpError({
-        status: response.status,
+        status: response.status as ValueOf<typeof HttpCode>,
         message: parsedException?.message
       });
     }
@@ -63,18 +79,22 @@ class Http {
     return response;
   }
 
-  _getUrl(url, query) {
+  #getUrl<T extends Record<string, unknown>>(
+    url: string,
+    query: T | undefined
+  ): string {
     if (query) {
       return `${url}?${getStringifiedQuery(query)}`;
     }
+
     return url;
   }
 
-  _parseJSON(response) {
-    return response.json();
+  #parseJSON<T>(response: Response): Promise<T> {
+    return response.json() as Promise<T>;
   }
 
-  _throwError(error) {
+  #throwError(error: Error): never {
     throw error;
   }
 }

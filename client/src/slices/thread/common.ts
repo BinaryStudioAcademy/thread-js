@@ -5,6 +5,6 @@ const ActionType = {
   SET_EXPANDED_POST: 'thread/set-expanded-post',
   REACT: 'thread/react',
   COMMENT: 'thread/comment'
-};
+} as const;
 
 export { ActionType };

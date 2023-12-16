@@ -1,18 +1,25 @@
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll, {
+  type Props as InfiniteScrollProperties
+} from 'react-infinite-scroll-component';
 
-import { Checkbox } from '~/libs/components/checkbox/checkbox.jsx';
-import { Post } from '~/libs/components/post/post.jsx';
-import { Spinner } from '~/libs/components/spinner/spinner.jsx';
-import { ThreadToolbarKey, UseFormMode } from '~/libs/enums/enums.js';
+import { Checkbox } from '~/libs/components/checkbox/checkbox.js';
+import { Post } from '~/libs/components/post/post.js';
+import { Spinner } from '~/libs/components/spinner/spinner.js';
+import { ThreadToolbarKey } from '~/libs/enums/enums.js';
 import {
+  useAppDispatch,
   useAppForm,
+  useAppSelector,
   useCallback,
-  useDispatch,
   useEffect,
-  useSelector,
   useState
 } from '~/libs/hooks/hooks.js';
-import { image as imageService } from '~/packages/image/image.js';
+import { imageApi } from '~/packages/image/image.js';
+import {
+  type CreatePostRequestDto,
+  type GetPostsByFilterRequestDto
+} from '~/packages/post/post.js';
+import { type UserWithImageRelation } from '~/packages/user/user.js';
 import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 import {
@@ -24,37 +31,41 @@ import { DEFAULT_THREAD_TOOLBAR } from './libs/common/constants.js';
 import { usePostsFilter } from './libs/hooks/use-posts-filter/use-posts-filter.js';
 import styles from './styles.module.scss';
 
-const handleUploadImage = file => imageService.uploadImage(file);
+// FIXME: JSX element type 'InfiniteScroll' does not have any construct or call signatures.
+const InfiniteScrollComponent =
+  InfiniteScroll as unknown as React.ComponentType<InfiniteScrollProperties>;
 
-const Thread = () => {
-  const dispatch = useDispatch();
-  const { posts, hasMorePosts, expandedPost, userId } = useSelector(state => ({
-    posts: state.posts.posts,
-    hasMorePosts: state.posts.hasMorePosts,
-    expandedPost: state.posts.expandedPost,
-    userId: state.profile.user.id
-  }));
+const Thread: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { posts, hasMorePosts, expandedPost, userId } = useAppSelector(
+    state => ({
+      posts: state.posts.posts,
+      hasMorePosts: state.posts.hasMorePosts,
+      expandedPost: state.posts.expandedPost,
+      userId: (state.profile.user as UserWithImageRelation).id
+    })
+  );
 
   const { postsFilter, handleShownOwnPosts } = usePostsFilter();
 
-  const [sharedPostId, setSharedPostId] = useState();
+  const [sharedPostId, setSharedPostId] = useState<number | null>(null);
 
   const { control, watch } = useAppForm({
     defaultValues: DEFAULT_THREAD_TOOLBAR,
-    mode: UseFormMode.ON_CHANGE
+    mode: 'onChange'
   });
 
   const showOwnPosts = watch(ThreadToolbarKey.SHOW_OWN_POSTS);
 
   const handlePostsLoad = useCallback(
-    filtersPayload => {
-      dispatch(threadActionCreator.loadPosts(filtersPayload));
+    (filtersPayload: GetPostsByFilterRequestDto): void => {
+      void dispatch(threadActionCreator.loadPosts(filtersPayload));
     },
     [dispatch]
   );
 
   const handleToggleShowOwnPosts = useCallback(() => {
-    const currentUserId = showOwnPosts ? userId : undefined;
+    const currentUserId = showOwnPosts ? userId : null;
 
     handleShownOwnPosts(currentUserId);
   }, [handleShownOwnPosts, showOwnPosts, userId]);
@@ -64,46 +75,56 @@ const Thread = () => {
   }, [showOwnPosts, handleToggleShowOwnPosts]);
 
   useEffect(() => {
-    handlePostsLoad(postsFilter);
+    handlePostsLoad(postsFilter as GetPostsByFilterRequestDto);
   }, [handlePostsLoad, postsFilter]);
 
   const handlePostLike = useCallback(
-    id => dispatch(threadActionCreator.likePost(id)),
+    (id: number) => dispatch(threadActionCreator.likePost(id)),
     [dispatch]
   );
 
   const handleExpandedPostToggle = useCallback(
-    id => dispatch(threadActionCreator.toggleExpandedPost(id)),
+    (id: number) => dispatch(threadActionCreator.toggleExpandedPost(id)),
     [dispatch]
   );
 
   const handlePostAdd = useCallback(
-    postPayload => dispatch(threadActionCreator.createPost(postPayload)),
+    (postPayload: CreatePostRequestDto) =>
+      dispatch(threadActionCreator.createPost(postPayload)),
     [dispatch]
   );
 
+  const handleUploadImage = useCallback(
+    (file: File) => imageApi.uploadImage(file),
+    []
+  );
+
   const handleMorePostsLoad = useCallback(
-    filtersPayload => {
-      dispatch(threadActionCreator.loadMorePosts(filtersPayload));
+    (filtersPayload: GetPostsByFilterRequestDto) => {
+      void dispatch(threadActionCreator.loadMorePosts(filtersPayload));
     },
     [dispatch]
   );
 
   const handleGetMorePosts = useCallback(() => {
-    handleMorePostsLoad(postsFilter);
+    handleMorePostsLoad(postsFilter as GetPostsByFilterRequestDto);
   }, [handleMorePostsLoad, postsFilter]);
 
-  const handleSharePost = useCallback(id => setSharedPostId(id), []);
+  const handleSharePost = useCallback((id: number) => {
+    setSharedPostId(id);
+  }, []);
 
-  const handleCloseSharedPostLink = useCallback(() => setSharedPostId(), []);
+  const handleCloseSharedPostLink = useCallback(() => {
+    setSharedPostId(null);
+  }, []);
 
   return (
-    <div className={styles.threadContent}>
-      <div className={styles.addPostForm}>
+    <div className={styles['threadContent']}>
+      <div className={styles['addPostForm']}>
         <AddPost onPostAdd={handlePostAdd} onUploadImage={handleUploadImage} />
       </div>
       <form name="thread-toolbar">
-        <div className={styles.toolbar}>
+        <div className={styles['toolbar']}>
           <Checkbox
             name={ThreadToolbarKey.SHOW_OWN_POSTS}
             control={control}
@@ -111,8 +132,8 @@ const Thread = () => {
           />
         </div>
       </form>
-      <div className={styles.posts}>
-        <InfiniteScroll
+      <div className={styles['posts']}>
+        <InfiniteScrollComponent
           dataLength={posts.length}
           next={handleGetMorePosts}
           scrollThreshold={0.8}
@@ -128,7 +149,7 @@ const Thread = () => {
               key={post.id}
             />
           ))}
-        </InfiniteScroll>
+        </InfiniteScrollComponent>
       </div>
       {expandedPost && <ExpandedPost onSharePost={handleSharePost} />}
       {sharedPostId && (

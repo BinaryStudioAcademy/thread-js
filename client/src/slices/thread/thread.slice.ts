@@ -1,5 +1,10 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
+import {
+  type GetPostByIdResponseDto,
+  type GetPostsByFilterResponseDto
+} from '~/packages/post/post.js';
+
 import { POSTS_PER_PAGE } from '../../pages/thread/libs/common/constants.js';
 import {
   addComment,
@@ -11,7 +16,15 @@ import {
   toggleExpandedPost
 } from './actions.js';
 
-const initialState = {
+type State = {
+  posts: GetPostsByFilterResponseDto;
+  expandedPost: GetPostByIdResponseDto | null;
+  hasMorePosts: boolean;
+  count: number;
+  from: number;
+};
+
+const initialState: State = {
   posts: [],
   expandedPost: null,
   hasMorePosts: true,
@@ -32,7 +45,7 @@ const { reducer, actions, name } = createSlice({
       state.from = initialState.count;
     });
     builder.addCase(loadMorePosts.pending, state => {
-      state.hasMorePosts = null;
+      state.hasMorePosts = false;
     });
     builder.addCase(loadMorePosts.fulfilled, (state, action) => {
       const { posts } = action.payload;

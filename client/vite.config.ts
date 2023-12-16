@@ -1,10 +1,12 @@
-import { fileURLToPath } from 'node:url';
-
-import reactPlugin from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import reactPlugin, { type Options } from '@vitejs/plugin-react';
+import { type ConfigEnv, defineConfig, loadEnv, type PluginOption } from 'vite';
 import tsConfigPathsPlugin from 'vite-tsconfig-paths';
 
-const config = ({ mode }) => {
+const viteReactPlugin = reactPlugin as unknown as (
+  options?: Options
+) => PluginOption[];
+
+const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
   // import.meta.env doesn't exist at this moment
   const {
     VITE_PORT,
@@ -19,26 +21,18 @@ const config = ({ mode }) => {
     build: {
       outDir: 'build'
     },
-    resolve: {
-      alias: {
-        '~': fileURLToPath(new URL('src', import.meta.url))
-      }
-    },
     server: {
-      host: VITE_HOST,
+      host: VITE_HOST as string,
       port: Number(VITE_PORT),
       proxy: {
-        [VITE_API_PATH]: VITE_API_SERVER,
-        [VITE_SOCKET_PATH]: {
+        [VITE_API_PATH as string]: VITE_API_SERVER as string,
+        [VITE_SOCKET_PATH as string]: {
           target: VITE_SOCKET_SERVER,
           ws: true
         }
       }
     },
-    plugins: [
-      tsConfigPathsPlugin(),
-      reactPlugin()
-    ]
+    plugins: [tsConfigPathsPlugin(), viteReactPlugin()]
   });
 };
 

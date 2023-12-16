@@ -7,7 +7,7 @@ settings:
 
 parserOptions:
   project:
-    - ./jsconfig.json
+    - ./tsconfig.json
 
 extends:
   - ../.eslintrc.yml
@@ -30,10 +30,12 @@ rules:
     - error
   import/no-unresolved:
     - off
+  react/prop-types:
+    - off
 
 overrides:
   - files:
-      - vite.config.js
+      - vite.config.ts
     rules:
       import/no-default-export:
         - off

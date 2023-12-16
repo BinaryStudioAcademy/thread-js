@@ -1,12 +1,16 @@
 import { ENV } from '~/libs/enums/enums.js';
-import { http } from '~/packages/http/http.js';
+import { httpApi } from '~/packages/http/http.js';
 
-import { Comment } from './comment-api.js';
+import { Comment as CommentApi } from './comment-api.js';
 
-const comment = new Comment({
+const commentApi = new CommentApi({
   apiPath: ENV.API_PATH,
-  http
+  httpApi
 });
 
-export { comment };
+export { commentApi };
 export { CommentPayloadKey } from './libs/enums/enums.js';
+export {
+  type CommentApi,
+  type CommentWithUserNestedRelations,
+  type CreateCommentRequestDto } from './libs/types/types.js';

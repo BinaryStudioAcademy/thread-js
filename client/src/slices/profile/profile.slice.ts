@@ -1,8 +1,14 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
+import { type UserAuthResponse } from '~/packages/auth/auth.js';
+
 import { loadCurrentUser, login, logout, register } from './actions.js';
 
-const initialState = {
+type State = {
+  user: UserAuthResponse | null;
+};
+
+const initialState: State = {
   user: null
 };
 

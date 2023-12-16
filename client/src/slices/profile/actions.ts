@@ -1,55 +1,71 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ExceptionMessage, StorageKey } from '~/libs/enums/enums.js';
+import { type AsyncThunkConfig } from '~/libs/types/types.js';
+import {
+  type UserAuthResponse,
+  type UserLoginRequestDto,
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto,
+  type UserRegisterResponseDto
+} from '~/packages/auth/auth.js';
 import { HttpCode } from '~/packages/http/libs/enums/enums.js';
 import { HttpError } from '~/packages/http/libs/exceptions/exceptions.js';
 
 import { ActionType } from './common.js';
 
-const login = createAsyncThunk(
-  ActionType.LOG_IN,
-  async (request, { extra: { services } }) => {
-    const { user, token } = await services.auth.login(request);
+const login = createAsyncThunk<
+  UserLoginResponseDto['user'],
+  UserLoginRequestDto,
+  AsyncThunkConfig
+>(ActionType.LOG_IN, async (request, { extra: { authApi, storageApi } }) => {
+  const { user, token } = await authApi.login(request);
 
-    services.storage.setItem(StorageKey.TOKEN, token);
+  void storageApi.set(StorageKey.TOKEN, token);
 
-    return user;
-  }
-);
+  return user;
+});
 
-const register = createAsyncThunk(
-  ActionType.REGISTER,
-  async (request, { extra: { services } }) => {
-    const { user, token } = await services.auth.registration(request);
+const register = createAsyncThunk<
+  UserRegisterResponseDto['user'],
+  UserRegisterRequestDto,
+  AsyncThunkConfig
+>(ActionType.REGISTER, async (request, { extra: { authApi, storageApi } }) => {
+  const { user, token } = await authApi.registration(request);
 
-    services.storage.setItem(StorageKey.TOKEN, token);
+  void storageApi.set(StorageKey.TOKEN, token);
 
-    return user;
-  }
-);
+  return user;
+});
 
-const logout = createAsyncThunk(
+const logout = createAsyncThunk<null, undefined, AsyncThunkConfig>(
   ActionType.LOG_OUT,
-  (_request, { extra: { services } }) => {
-    services.storage.removeItem(StorageKey.TOKEN);
+  (_request, { extra: { storageApi } }) => {
+    void storageApi.drop(StorageKey.TOKEN);
 
     return null;
   }
 );
 
-const loadCurrentUser = createAsyncThunk(
+const loadCurrentUser = createAsyncThunk<
+  UserAuthResponse,
+  undefined,
+  AsyncThunkConfig
+>(
   ActionType.LOG_IN,
-  async (_request, { dispatch, rejectWithValue, extra: { services } }) => {
+  async (_request, { dispatch, rejectWithValue, extra: { authApi } }) => {
     try {
-      return await services.auth.getCurrentUser();
+      return await authApi.getCurrentUser();
     } catch (error) {
       const isHttpError = error instanceof HttpError;
 
       if (isHttpError && error.status === HttpCode.UNAUTHORIZED) {
-        dispatch(logout());
+        void dispatch(logout());
       }
 
-      return rejectWithValue(error?.message ?? ExceptionMessage.UNKNOWN_ERROR);
+      return rejectWithValue(
+        (error as Error)?.message ?? ExceptionMessage.UNKNOWN_ERROR
+      );
     }
   }
 );

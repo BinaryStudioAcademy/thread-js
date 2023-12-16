@@ -1,11 +1,18 @@
 import { ENV } from '~/libs/enums/enums.js';
-import { http } from '~/packages/http/http.js';
+import { httpApi } from '~/packages/http/http.js';
 
-import { Auth } from './auth-api.js';
+import { Auth as AuthApi } from './auth-api.js';
 
-const auth = new Auth({
+const authApi = new AuthApi({
   apiPath: ENV.API_PATH,
-  http
+  httpApi
 });
 
-export { auth };
+export { authApi };
+export {
+  type AuthApi,
+  type UserAuthResponse,
+  type UserLoginRequestDto,
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto,
+  type UserRegisterResponseDto } from './libs/types/types.js';

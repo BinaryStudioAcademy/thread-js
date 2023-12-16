@@ -1,17 +1,25 @@
 import { useCallback } from '~/libs/hooks/hooks.js';
 
-type UseModalProps = {
-  onClose: Function;
+type UseModalProperties = {
+  onClose: () => void;
 };
 
-const useModal = ({ onClose }: UseModalProps) => {
+const useModal = ({
+  onClose
+}: UseModalProperties): {
+  handleOutsideClick: () => void;
+  handleDisableContentContainerClick: (event: React.SyntheticEvent) => void;
+} => {
   const handleOutsideClick = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  const handleDisableContentContainerClick = useCallback((event_ : React.SyntheticEvent) => {
-    event_.stopPropagation();
-  }, []);
+  const handleDisableContentContainerClick = useCallback(
+    (event_: React.SyntheticEvent) => {
+      event_.stopPropagation();
+    },
+    []
+  );
 
   return {
     handleOutsideClick,

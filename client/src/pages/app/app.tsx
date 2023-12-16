@@ -1,32 +1,33 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Header } from '~/libs/components/header/header.jsx';
-import { Notifications } from '~/libs/components/notifications/notifications.jsx';
-import { PrivateRoute } from '~/libs/components/private-route/private-route.jsx';
-import { PublicRoute } from '~/libs/components/public-route/public-route.jsx';
-import { Spinner } from '~/libs/components/spinner/spinner.jsx';
+import { Header } from '~/libs/components/header/header.js';
+import { Notifications } from '~/libs/components/notifications/notifications.js';
+import { PrivateRoute } from '~/libs/components/private-route/private-route.js';
+import { PublicRoute } from '~/libs/components/public-route/public-route.js';
+import { Spinner } from '~/libs/components/spinner/spinner.js';
 import { AppRoute, StorageKey } from '~/libs/enums/enums.js';
 import {
+  useAppDispatch,
+  useAppSelector,
   useCallback,
-  useDispatch,
-  useEffect,
-  useSelector
+  useEffect
 } from '~/libs/hooks/hooks.js';
-import { storage } from '~/packages/storage/storage.js';
-import { NotFound } from '~/pages/not-found/not-found.jsx';
-import { Profile } from '~/pages/profile/profile.jsx';
-import { SharedPost } from '~/pages/shared-post/shared-post.jsx';
-import { Sign } from '~/pages/sign/sign.jsx';
-import { Thread } from '~/pages/thread/thread.jsx';
+import { storageApi } from '~/packages/storage/storage.js';
+import { type UserWithImageRelation } from '~/packages/user/user.js';
+import { NotFound } from '~/pages/not-found/not-found.js';
+import { Profile } from '~/pages/profile/profile.js';
+import { SharedPost } from '~/pages/shared-post/shared-post.js';
+import { Sign } from '~/pages/sign/sign.js';
+import { Thread } from '~/pages/thread/thread.js';
 import { actions as profileActionCreator } from '~/slices/profile/profile.js';
 
-const App = () => {
-  const { user } = useSelector(state => ({
+const App: React.FC = () => {
+  const { user } = useAppSelector(state => ({
     user: state.profile.user
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
+  const hasToken = Boolean(storageApi.get(StorageKey.TOKEN));
   const hasUser = Boolean(user);
 
   const handleUserLogout = useCallback(
@@ -36,7 +37,7 @@ const App = () => {
 
   useEffect(() => {
     if (hasToken) {
-      dispatch(profileActionCreator.loadCurrentUser());
+      void dispatch(profileActionCreator.loadCurrentUser());
     }
   }, [hasToken, dispatch]);
 
@@ -48,7 +49,10 @@ const App = () => {
     <div className="fill">
       {hasUser && (
         <header>
-          <Header user={user} onUserLogout={handleUserLogout} />
+          <Header
+            user={user as UserWithImageRelation}
+            onUserLogout={handleUserLogout}
+          />
         </header>
       )}
       <main className="fill">

@@ -1,18 +1,34 @@
-import PropTypes from 'prop-types';
+import { type AsyncThunkAction } from '@reduxjs/toolkit';
 
-import { Button } from '~/libs/components/button/button.jsx';
-import { Image } from '~/libs/components/image/image.jsx';
-import { Input } from '~/libs/components/input/input.jsx';
-import { Segment } from '~/libs/components/segment/segment.jsx';
+import { Button, Image, Input, Segment } from '~/libs/components/components.js';
 import { ButtonColor, IconName } from '~/libs/enums/enums.js';
 import { useAppForm, useCallback, useState } from '~/libs/hooks/hooks.js';
-import { PostPayloadKey } from '~/packages/post/libs/enums/enums.js';
+import { type AsyncThunkConfig } from '~/libs/types/types.js';
+import { type Image as TImage } from '~/packages/image/image.js';
+import {
+  type CreatePostRequestDto,
+  type GetPostByIdResponseDto
+} from '~/packages/post/post.js';
+import { PostPayloadKey } from '~/packages/post/post.js';
 
 import { DEFAULT_ADD_POST_PAYLOAD } from './libs/constants/constants.js';
 import styles from './styles.module.scss';
 
-const AddPost = ({ onPostAdd, onUploadImage }) => {
-  const [image, setImage] = useState();
+type Properties = {
+  onPostAdd: (
+    payload: CreatePostRequestDto
+  ) => ReturnType<
+    AsyncThunkAction<
+      Record<'post', GetPostByIdResponseDto> | AsyncThunkConfig,
+      unknown,
+      AsyncThunkConfig
+    >
+  >;
+  onUploadImage: (payload: File) => Promise<TImage>;
+};
+
+const AddPost: React.FC<Properties> = ({ onPostAdd, onUploadImage }) => {
+  const [image, setImage] = useState<Pick<TImage, 'id' | 'link'> | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const { control, handleSubmit, reset } = useAppForm({
@@ -20,26 +36,28 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
   });
 
   const handleAddPost = useCallback(
-    values => {
+    (values: Omit<CreatePostRequestDto, 'imageId'>) => {
       if (!values.body) {
         return;
       }
-      onPostAdd({ imageId: image?.imageId, body: values.body }).then(() => {
-        reset();
-        setImage();
-      });
+      void onPostAdd({ imageId: image?.id ?? null, body: values.body })
+        .unwrap()
+        .then(() => {
+          reset();
+          setImage(null);
+        });
     },
     [image, reset, onPostAdd]
   );
 
   const handleUploadFile = useCallback(
-    ({ target }) => {
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
       setIsUploading(true);
-      const [file] = target.files;
+      const [file] = target.files ?? [];
 
-      onUploadImage(file)
-        .then(({ id: imageId, link: imageLink }) => {
-          setImage({ imageId, imageLink });
+      onUploadImage(file as File)
+        .then(({ id, link }) => {
+          setImage({ id, link });
         })
         .catch(() => {
           // TODO: show error
@@ -60,23 +78,23 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
           rows={5}
           control={control}
         />
-        {image?.imageLink && (
-          <div className={styles.imageWrapper}>
+        {Boolean(image) && (
+          <div className={styles['imageWrapper']}>
             <Image
-              className={styles.image}
-              src={image?.imageLink}
+              className={styles['image'] as string}
+              src={(image as TImage).link as string}
               alt="post image"
             />
           </div>
         )}
-        <div className={styles.btnWrapper}>
+        <div className={styles['btnWrapper']}>
           <Button
             color="teal"
             isLoading={isUploading}
             isDisabled={isUploading}
             iconName={IconName.IMAGE}
           >
-            <label className={styles.btnImgLabel}>
+            <label className={styles['btnImgLabel']}>
               Attach image
               <input
                 name="image"
@@ -86,18 +104,13 @@ const AddPost = ({ onPostAdd, onUploadImage }) => {
               />
             </label>
           </Button>
-          <Button color={ButtonColor.BLUE} type={'submit'}>
+          <Button color={ButtonColor.BLUE} type="submit">
             Post
           </Button>
         </div>
       </form>
     </Segment>
   );
-};
-
-AddPost.propTypes = {
-  onPostAdd: PropTypes.func.isRequired,
-  onUploadImage: PropTypes.func.isRequired
 };
 
 export { AddPost };

@@ -1,41 +1,50 @@
-import PropTypes from 'prop-types';
-
-import { Modal } from '~/libs/components/modal/modal.jsx';
-import { Post } from '~/libs/components/post/post.jsx';
-import { Spinner } from '~/libs/components/spinner/spinner.jsx';
-import { useCallback, useDispatch, useSelector } from '~/libs/hooks/hooks.js';
+import { Modal, Post, Spinner } from '~/libs/components/components.js';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useCallback
+} from '~/libs/hooks/hooks.js';
+import { type CreateCommentRequestDto } from '~/packages/comment/comment.js';
 import { AddComment, Comment } from '~/pages/thread/components/components.js';
 import { actions as threadActionCreator } from '~/slices/thread/thread.js';
 
 import { getSortedComments } from './libs/helpers/helpers.js';
 
-const ExpandedPost = ({ onSharePost }) => {
-  const dispatch = useDispatch();
-  const { post } = useSelector(state => ({
+type Properties = {
+  onSharePost: (id: number) => void;
+};
+
+const ExpandedPost: React.FC<Properties> = ({ onSharePost }) => {
+  const dispatch = useAppDispatch();
+  const { post } = useAppSelector(state => ({
     post: state.posts.expandedPost
   }));
 
   const handlePostLike = useCallback(
-    id => dispatch(threadActionCreator.likePost(id)),
+    (id: number) => dispatch(threadActionCreator.likePost(id)),
     [dispatch]
   );
 
   const handleCommentAdd = useCallback(
-    commentPayload => dispatch(threadActionCreator.addComment(commentPayload)),
+    (commentPayload: CreateCommentRequestDto) => {
+      return dispatch(threadActionCreator.addComment(commentPayload));
+    },
     [dispatch]
   );
 
   const handleExpandedPostToggle = useCallback(
-    id => dispatch(threadActionCreator.toggleExpandedPost(id)),
+    (id: number | null) => dispatch(threadActionCreator.toggleExpandedPost(id)),
     [dispatch]
   );
 
   const handleExpandedPostClose = useCallback(
-    () => handleExpandedPostToggle(),
+    () => handleExpandedPostToggle(null),
     [handleExpandedPostToggle]
   );
 
-  const sortedComments = getSortedComments(post.comments ?? []);
+  const sortedComments = getSortedComments(
+    (post as NonNullable<typeof post>).comments ?? []
+  );
 
   return (
     <Modal isOpen onClose={handleExpandedPostClose}>
@@ -60,10 +69,6 @@ const ExpandedPost = ({ onSharePost }) => {
       )}
     </Modal>
   );
-};
-
-ExpandedPost.propTypes = {
-  onSharePost: PropTypes.func.isRequired
 };
 
 export { ExpandedPost };
