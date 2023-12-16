@@ -21,7 +21,7 @@ class Http implements HttpService {
     url: string,
     options?: HttpLoadOptions<T>
   ): Promise<K> | never {
-    const { method = HttpMethod.GET, data, headers } = options ?? {};
+    const { data, headers, method = HttpMethod.GET } = options ?? {};
 
     return this.#instance
       .request<T, K>({
@@ -30,20 +30,20 @@ class Http implements HttpService {
         headers: headers as NonNullable<typeof headers>,
         data
       })
-      .then(void this.#getData)
-      .catch(void this.#catchError);
+      .then(this.#getData)
+      .catch(this.#catchError);
   }
 
-  #getData<T>(response: AxiosResponse<T>): AxiosResponse<T>['data'] {
-    return response.data;
-  }
+  #getData = <T>(response: T): AxiosResponse<T>['data'] => {
+    return (response as AxiosResponse<T>).data;
+  };
 
-  #catchError<T = unknown>(error: AxiosError): never {
+  #catchError = <T = unknown>(error: AxiosError): never => {
     const { response } = error;
     const { data } = response as AxiosResponse<T>;
 
     throw new Error((data as Error).toString());
-  }
+  };
 }
 
 export { Http };

@@ -9,8 +9,8 @@ const viteReactPlugin = reactPlugin as unknown as (
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
   // import.meta.env doesn't exist at this moment
   const {
-    VITE_PORT,
-    VITE_HOST,
+    VITE_APP_PORT,
+    VITE_APP_HOST,
     VITE_API_PATH,
     VITE_API_SERVER,
     VITE_SOCKET_SERVER,
@@ -22,8 +22,8 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
       outDir: 'build'
     },
     server: {
-      host: VITE_HOST as string,
-      port: Number(VITE_PORT),
+      host: VITE_APP_HOST as string,
+      port: Number(VITE_APP_PORT),
       proxy: {
         [VITE_API_PATH as string]: VITE_API_SERVER as string,
         [VITE_SOCKET_PATH as string]: {

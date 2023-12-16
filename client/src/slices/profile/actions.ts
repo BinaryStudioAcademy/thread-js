@@ -21,7 +21,7 @@ const login = createAsyncThunk<
 >(ActionType.LOG_IN, async (request, { extra: { authApi, storageApi } }) => {
   const { user, token } = await authApi.login(request);
 
-  void storageApi.set(StorageKey.TOKEN, token);
+  storageApi.set(StorageKey.TOKEN, token);
 
   return user;
 });
@@ -33,7 +33,7 @@ const register = createAsyncThunk<
 >(ActionType.REGISTER, async (request, { extra: { authApi, storageApi } }) => {
   const { user, token } = await authApi.registration(request);
 
-  void storageApi.set(StorageKey.TOKEN, token);
+  storageApi.set(StorageKey.TOKEN, token);
 
   return user;
 });
@@ -41,7 +41,7 @@ const register = createAsyncThunk<
 const logout = createAsyncThunk<null, undefined, AsyncThunkConfig>(
   ActionType.LOG_OUT,
   (_request, { extra: { storageApi } }) => {
-    void storageApi.drop(StorageKey.TOKEN);
+    storageApi.drop(StorageKey.TOKEN);
 
     return null;
   }

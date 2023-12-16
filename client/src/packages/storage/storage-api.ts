@@ -14,24 +14,20 @@ class Storage implements StorageApi {
     this.#storage = storage;
   }
 
-  public set(key: ValueOf<typeof StorageKey>, value: string): Promise<void> {
+  public set(key: ValueOf<typeof StorageKey>, value: string): void {
     this.#storage.setItem(key as string, value);
-
-    return Promise.resolve();
   }
 
-  public get<R = string>(key: ValueOf<typeof StorageKey>): Promise<R | null> {
-    return Promise.resolve(this.#storage.getItem(key as string) as R);
+  public get<R = string>(key: ValueOf<typeof StorageKey>): R | null {
+    return this.#storage.getItem(key as string) as R;
   }
 
-  public drop(key: ValueOf<typeof StorageKey>): Promise<void> {
+  public drop(key: ValueOf<typeof StorageKey>): void {
     this.#storage.removeItem(key as string);
-
-    return Promise.resolve();
   }
 
-  public async has(key: ValueOf<typeof StorageKey>): Promise<boolean> {
-    const value = await this.get(key);
+  public has(key: ValueOf<typeof StorageKey>): boolean {
+    const value = this.get(key);
 
     return Boolean(value);
   }

@@ -30,7 +30,7 @@ class Http implements HttpApi {
       contentType = ContentType.JSON,
       query
     } = options;
-    const headers = await this.#getHeaders({
+    const headers = this.#getHeaders({
       hasAuth,
       contentType
     });
@@ -40,15 +40,15 @@ class Http implements HttpApi {
       headers,
       body: payload
     })
-      .then(void this.#checkStatus)
-      .then<T>(void this.#parseJSON)
-      .catch(void this.#throwError);
+      .then(this.#checkStatus)
+      .then<T>(this.#parseJSON)
+      .catch(this.#throwError);
   }
 
-  async #getHeaders({
+  #getHeaders({
     hasAuth,
     contentType
-  }: Pick<HttpOptions, 'hasAuth' | 'contentType'>): Promise<Headers> {
+  }: Pick<HttpOptions, 'hasAuth' | 'contentType'>): Headers {
     const headers = new Headers();
 
     if (contentType) {
@@ -56,7 +56,7 @@ class Http implements HttpApi {
     }
 
     if (hasAuth) {
-      const token = await this.#storageApi.get(StorageKey.TOKEN);
+      const token = this.#storageApi.get(StorageKey.TOKEN);
 
       headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
@@ -64,7 +64,7 @@ class Http implements HttpApi {
     return headers;
   }
 
-  async #checkStatus(response: Response): Promise<Response> {
+  #checkStatus = async (response: Response): Promise<Response> => {
     if (!response.ok) {
       const parsedException = (await response.json().catch(() => ({
         message: response.statusText
@@ -77,26 +77,26 @@ class Http implements HttpApi {
     }
 
     return response;
-  }
+  };
 
-  #getUrl<T extends Record<string, unknown>>(
+  #getUrl = <T extends Record<string, unknown>>(
     url: string,
     query: T | undefined
-  ): string {
+  ): string => {
     if (query) {
       return `${url}?${getStringifiedQuery(query)}`;
     }
 
     return url;
-  }
+  };
 
-  #parseJSON<T>(response: Response): Promise<T> {
+  #parseJSON = <T>(response: Response): Promise<T> => {
     return response.json() as Promise<T>;
-  }
+  };
 
-  #throwError(error: Error): never {
+  #throwError = (error: Error): never => {
     throw error;
-  }
+  };
 }
 
 export { Http };
