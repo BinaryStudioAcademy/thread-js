@@ -1,7 +1,8 @@
 import {
   type FastifyReply,
   type FastifyRequest,
-  type preHandlerHookHandler
+  type preHandlerHookHandler,
+  type RouteGenericInterface
 } from 'fastify';
 
 import { type HttpMethod } from '~/libs/packages/http/http.js';
@@ -11,7 +12,10 @@ type ControllerRoute = {
   url: string;
   method: ValueOf<typeof HttpMethod>;
   preHandler?: preHandlerHookHandler;
-  handler: (_request: FastifyRequest, _reply: FastifyReply) => Promise<unknown>;
+  handler: <T extends RouteGenericInterface>(
+    _request: FastifyRequest<T>,
+    _reply: FastifyReply
+  ) => Promise<unknown>;
   schema?: {
     body?: ValidationSchema;
     params?: ValidationSchema;

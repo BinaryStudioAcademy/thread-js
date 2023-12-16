@@ -1,10 +1,10 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import {
-  type UserWithImageRelation,
   type UserLoginRequestDto,
   type UserLoginResponseDto,
-  type UserRegisterRequestDto
+  type UserRegisterRequestDto,
+  type UserWithImageRelation
 } from './types.js';
 
 type AuthController = {

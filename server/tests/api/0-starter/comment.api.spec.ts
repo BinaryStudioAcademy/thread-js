@@ -1,12 +1,15 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
-import { type UserLoginResponseDto } from 'shared/dist/packages/user/user.js';
 
 import { ApiPath } from '~/libs/enums/enums.js';
 import { config } from '~/libs/packages/config/config.js';
 import { DatabaseTableName } from '~/libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
-import { AuthApiPath } from '~/packages/auth/auth.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
+} from '~/packages/auth/auth.js';
 import {
   type Comment,
   CommentPayloadKey,
@@ -58,7 +61,7 @@ describe(`${commentApiPath} routes`, () => {
     await setupTestUsers({ handlers: { insert } });
     await setupTestPosts({ handlers: { select, insert } });
 
-    const [validTestUser] = TEST_USERS_CREDENTIALS;
+    const [validTestUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await getApp()
       .inject()

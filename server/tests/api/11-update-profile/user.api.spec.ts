@@ -11,9 +11,10 @@ import { config } from '~/libs/packages/config/config.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
 import {
-  AuthApiPath,
-  type UserLoginResponseDto
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
 } from '~/packages/auth/auth.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
 import { ImagePayloadKey, ImagesApiPath } from '~/packages/image/image.js';
 import { type Image } from '~/packages/image/image.js';
 import {
@@ -63,7 +64,10 @@ describe(`${userApiPath} routes`, () => {
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
 
-    const [validTestMainUser, validTestMinorUser] = TEST_USERS_CREDENTIALS;
+    const [validTestMainUser, validTestMinorUser] = TEST_USERS_CREDENTIALS as [
+      UserRegisterRequestDto,
+      UserRegisterRequestDto
+    ];
 
     const loginMainUserResponse = await app
       .inject()

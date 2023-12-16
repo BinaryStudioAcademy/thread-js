@@ -7,6 +7,7 @@ import fastify, {
   type FastifyInstance,
   type FastifyServerOptions
 } from 'fastify';
+import { type FastifyValidationResult } from 'fastify/types/schema.js';
 import multer from 'fastify-multer';
 
 import { type ConfigPackage } from '~/libs/packages/config/config.js';
@@ -123,11 +124,11 @@ class ServerApp {
 
   #initValidationCompiler = (): void => {
     this.#app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
-      return data => {
+      return (data => {
         return schema.validate(data, {
           abortEarly: true
         });
-      };
+      }) as FastifyValidationResult;
     });
   };
 

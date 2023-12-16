@@ -109,7 +109,7 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
     }
 
     if (limit === KNEX_SELECT_ONE_RECORD) {
-      return result[FIRST_ARRAY_ELEMENT_IDX];
+      return result[FIRST_ARRAY_ELEMENT_IDX] as T;
     }
 
     return result as T[];
@@ -174,7 +174,10 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
       })
       .count(`${table}.id`);
 
-    return Number(result[FIRST_ARRAY_ELEMENT_IDX].count ?? NO_RECORDS);
+    return Number(
+      (result[FIRST_ARRAY_ELEMENT_IDX] as Record<'count', number>).count ??
+        NO_RECORDS
+    );
   };
 
   const rawQuery = async <T extends Record<string, unknown>>(

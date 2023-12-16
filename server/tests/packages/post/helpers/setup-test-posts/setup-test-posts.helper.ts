@@ -20,7 +20,7 @@ const setupTestPosts = async ({
 
   const postsToInsert = TEST_POSTS.map(post => ({
     ...post,
-    userId: testUsers[getRandomIndex(testUsers.length)].id
+    userId: (testUsers[getRandomIndex(testUsers.length)] as User).id
   }));
 
   await insert({

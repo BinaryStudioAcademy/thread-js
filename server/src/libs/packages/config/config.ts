@@ -5,4 +5,5 @@ const config = new Config();
 export { config };
 export {
   type ConfigPackage,
-  type EnvironmentSchema } from './libs/types/types.js';
+  type EnvironmentSchema
+} from './libs/types/types.js';

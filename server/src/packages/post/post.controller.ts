@@ -61,24 +61,28 @@ class Post extends Controller implements PostController {
   }
 
   public getByFilter = (
-    request: FastifyRequest<Record<'Querystring', GetPostsByFilterRequestDto>>
+    request: FastifyRequest
   ): Promise<GetPostsByFilterResponseDto> => {
-    return this.#postService.getByFilter(request.query);
+    return this.#postService.getByFilter(
+      request.query as GetPostsByFilterRequestDto
+    );
   };
 
   public getById = (
-    request: FastifyRequest<Record<'Params', Record<'id', number>>>
+    request: FastifyRequest
   ): Promise<PostWithCommentImageUserNestedRelationsWithCount | null> => {
-    return this.#postService.getById(request.params.id);
+    return this.#postService.getById(
+      (request.params as Record<'id', number>).id
+    );
   };
 
   public create = async (
-    request: FastifyRequest<Record<'Body', CreatePostRequestDto>>,
+    request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TPost> => {
     const post = await this.#postService.create(
       (request.user as UserAuthResponse).id,
-      request.body
+      request.body as CreatePostRequestDto
     );
 
     request.io
@@ -89,12 +93,12 @@ class Post extends Controller implements PostController {
   };
 
   public react = async (
-    request: FastifyRequest<Record<'Body', CreatePostReactionRequestDto>>
+    request: FastifyRequest
   ): Promise<CreatePostReactionResponseDto> => {
     const authUserId = (request.user as UserAuthResponse).id;
     const reaction = await this.#postService.setReaction(
       authUserId,
-      request.body
+      request.body as CreatePostReactionRequestDto
     );
 
     if (reaction.post && reaction.post.userId !== authUserId) {

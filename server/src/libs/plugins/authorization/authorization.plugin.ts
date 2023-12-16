@@ -34,7 +34,7 @@ const authorization: FastifyPluginAsync<Options> = fp<Options>(
           [];
         const { userService, authService } = services;
         const { id } = await authService.verifyToken<Record<'id', number>>(
-          token
+          token as string
         );
 
         const authorizedUser = await userService.getById(id);

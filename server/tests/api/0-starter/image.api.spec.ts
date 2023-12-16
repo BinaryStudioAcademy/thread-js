@@ -10,8 +10,11 @@ import { config } from '~/libs/packages/config/config.js';
 import { DatabaseTableName } from '~/libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
-import { AuthApiPath } from '~/packages/auth/auth.js';
-import { type UserLoginResponseDto } from '~/packages/auth/auth.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
+} from '~/packages/auth/auth.js';
 import { ImagePayloadKey, ImagesApiPath } from '~/packages/image/image.js';
 import { type Image } from '~/packages/image/image.js';
 import { UserPayloadKey } from '~/packages/user/user.js';
@@ -50,7 +53,7 @@ describe(`${imageEndpoint} routes`, () => {
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
 
-    const [validTestUser] = TEST_USERS_CREDENTIALS;
+    const [validTestUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await getApp()
       .inject()

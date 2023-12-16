@@ -1,5 +1,4 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
-import { type PostWithCommentImageUserNestedRelationsWithCount } from 'shared/dist/packages/post/post.js';
 
 import { ApiPath } from '~/libs/enums/enums.js';
 import { config } from '~/libs/packages/config/config.js';
@@ -8,13 +7,15 @@ import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
 import {
   AuthApiPath,
-  type UserLoginResponseDto
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
 } from '~/packages/auth/auth.js';
 import {
+  type CreatePostRequestDto,
   type Post,
-  PostPayloadKey,
-  PostsApiPath
+  type PostWithCommentImageUserNestedRelationsWithCount
 } from '~/packages/post/post.js';
+import { PostPayloadKey, PostsApiPath } from '~/packages/post/post.js';
 import { UserPayloadKey } from '~/packages/user/user.js';
 
 import { buildApp } from '../../libs/packages/app/app.js';
@@ -65,7 +66,7 @@ describe(`${postApiPath} routes`, () => {
   beforeAll(async () => {
     await setupTestUsers({ handlers: { insert } });
 
-    const [validTestUser] = TEST_USERS_CREDENTIALS;
+    const [validTestUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await getApp()
       .inject()
@@ -83,7 +84,9 @@ describe(`${postApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.CREATED} with a new post`, async () => {
-      const [validTestPost] = TEST_POSTS;
+      const [validTestPost] = TEST_POSTS as [
+        Omit<CreatePostRequestDto, 'imageId'>
+      ];
 
       const response = await app
         .inject()
@@ -170,7 +173,7 @@ describe(`${postApiPath} routes`, () => {
 
       expect(response.statusCode).toBe(HttpCode.OK);
       expect(response.json()).toEqual(
-        posts.map(post => expect.objectContaining(post))
+        posts.map(post => expect.objectContaining({ ...post }))
       );
 
       const [post] =

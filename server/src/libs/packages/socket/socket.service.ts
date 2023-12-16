@@ -7,7 +7,7 @@ import { SocketEvent, SocketNamespace } from './libs/enums/enums.js';
 import { type SocketService } from './libs/types/types.js';
 
 class Socket implements SocketService {
-  #io: SocketServer;
+  #io!: SocketServer;
 
   public get io(): SocketServer {
     return this.#io;

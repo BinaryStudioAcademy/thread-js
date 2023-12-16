@@ -19,7 +19,7 @@ type Constructor = {
 class Database implements DatabasePackage {
   #config: ConfigPackage;
 
-  #knex: LibraryKnex.Knex;
+  #knex!: LibraryKnex.Knex;
 
   public constructor({ config }: Constructor) {
     this.#config = config;

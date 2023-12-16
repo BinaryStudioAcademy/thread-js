@@ -25,5 +25,6 @@ export {
 export { AuthApiPath } from './libs/enums/enums.js';
 export {
   type AuthService,
-  type UserLoginResponseDto
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
 } from './libs/types/types.js';

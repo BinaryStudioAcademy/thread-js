@@ -6,7 +6,8 @@ import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
 import {
   AuthApiPath,
-  type UserLoginResponseDto
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
 } from '~/packages/auth/auth.js';
 import { FilterUserMode, PostsApiPath } from '~/packages/post/post.js';
 import { UserPayloadKey } from '~/packages/user/user.js';
@@ -47,7 +48,7 @@ describe(`${postApiPath} routes`, () => {
     await setupTestUsers({ handlers: { insert } });
     await setupTestPosts({ handlers: { select, insert } });
 
-    const [validUser] = TEST_USERS_CREDENTIALS;
+    const [validUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await app
       .inject()

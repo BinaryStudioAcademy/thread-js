@@ -29,11 +29,13 @@ export {
   PostsApiPath
 } from './libs/enums/enums.js';
 export {
+  type CreatePostRequestDto,
   type Post,
   type PostController,
   type PostReactionRepository,
   type PostRepository,
-  type PostService
+  type PostService,
+  type PostWithCommentImageUserNestedRelationsWithCount
 } from './libs/types/types.js';
 export { PostModel } from './post.model.js';
 export { PostReactionModel } from './post-reaction.model.js';

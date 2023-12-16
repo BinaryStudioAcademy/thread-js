@@ -35,7 +35,7 @@ class Image implements ImageService {
 
     formData.append('imagedata', file.buffer, {
       filename: file.originalname,
-      knownLength: file.size
+      knownLength: file.size as number
     });
     formData.append('access_token', this.#config.ENV.GYAZO.ACCESS_KEY);
 

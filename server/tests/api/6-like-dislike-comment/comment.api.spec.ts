@@ -6,7 +6,10 @@ import { DatabaseTableName } from '~/libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
 import { AuthApiPath } from '~/packages/auth/auth.js';
-import { type UserLoginResponseDto } from '~/packages/auth/libs/types/types.js';
+import {
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
+} from '~/packages/auth/libs/types/types.js';
 import { type Comment } from '~/packages/comment/comment.js';
 import { PostsApiPath } from '~/packages/post/post.js';
 import { UserPayloadKey } from '~/packages/user/user.js';
@@ -57,7 +60,7 @@ describe(`${commentApiPath} routes`, () => {
     await setupTestPosts({ handlers: { select, insert } });
     await setupTestComments({ handlers: { select, insert } });
 
-    const [validTestUser] = TEST_USERS_CREDENTIALS;
+    const [validTestUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await app
       .inject()

@@ -64,11 +64,13 @@ class Auth extends Controller implements AuthController {
   }
 
   public login = async (
-    request: FastifyRequest<Record<'Body', UserLoginRequestDto>>,
+    request: FastifyRequest,
     reply: FastifyReply
   ): Promise<UserLoginResponseDto> => {
     try {
-      const user = await this.#authService.verifyLoginCredentials(request.body);
+      const user = await this.#authService.verifyLoginCredentials(
+        request.body as UserLoginRequestDto
+      );
 
       return await this.#authService.login(user);
     } catch (error) {
@@ -77,11 +79,13 @@ class Auth extends Controller implements AuthController {
   };
 
   public register = async (
-    request: FastifyRequest<Record<'Body', UserRegisterRequestDto>>,
+    request: FastifyRequest,
     reply: FastifyReply
   ): Promise<UserLoginResponseDto> => {
     try {
-      const createdUser = await this.#authService.register(request.body);
+      const createdUser = await this.#authService.register(
+        request.body as UserRegisterRequestDto
+      );
 
       return await reply.status(HttpCode.CREATED).send(createdUser);
     } catch (error) {

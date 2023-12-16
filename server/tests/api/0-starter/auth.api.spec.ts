@@ -1,13 +1,16 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
-import { type UserLoginResponseDto } from 'shared/dist/packages/user/user.js';
 
 import { ApiPath } from '~/libs/enums/enums.js';
 import { config } from '~/libs/packages/config/config.js';
 import { DatabaseTableName } from '~/libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
-import { AuthApiPath } from '~/packages/auth/auth.js';
+import {
+  AuthApiPath,
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
+} from '~/packages/auth/auth.js';
 import {
   UserPayloadKey,
   UserValidationMessage,
@@ -99,7 +102,8 @@ describe(`${authApiPath} routes`, () => {
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
       const [validTestUser] = TEST_USERS_CREDENTIALS;
-      const { [UserPayloadKey.EMAIL]: _email, ...user } = validTestUser;
+      const { [UserPayloadKey.EMAIL]: _email, ...user } =
+        validTestUser as UserRegisterRequestDto;
 
       const response = await app.inject().post(registerEndpoint).body(user);
 
@@ -128,7 +132,8 @@ describe(`${authApiPath} routes`, () => {
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
       const [validTestUser] = TEST_USERS_CREDENTIALS;
-      const { [UserPayloadKey.PASSWORD]: _password, ...user } = validTestUser;
+      const { [UserPayloadKey.PASSWORD]: _password, ...user } =
+        validTestUser as UserRegisterRequestDto;
 
       const response = await app.inject().post(registerEndpoint).body(user);
 
@@ -177,7 +182,9 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.CREATED} and create a new user`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const response = await app
         .inject()
@@ -234,7 +241,9 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const response = await app
         .inject()
@@ -250,7 +259,9 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too short ${UserPayloadKey.PASSWORD} validation error`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const response = await app
         .inject()
@@ -269,7 +280,9 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.BAD_REQUEST} of too long ${UserPayloadKey.PASSWORD} validation error`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const response = await app
         .inject()
@@ -288,7 +301,9 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HttpCode.OK} with auth result`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const response = await app
         .inject()
@@ -314,7 +329,9 @@ describe(`${authApiPath} routes`, () => {
     const app = getApp();
 
     it(`should return ${HttpCode.OK} with auth user`, async () => {
-      const [{ email, username, password }] = TEST_USERS_CREDENTIALS;
+      const [{ email, username, password }] = TEST_USERS_CREDENTIALS as [
+        UserRegisterRequestDto
+      ];
 
       const loginResponse = await app
         .inject()

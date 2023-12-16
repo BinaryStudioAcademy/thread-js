@@ -1,11 +1,11 @@
 import { Model } from 'objection';
 
 class Abstract extends Model {
-  public id: number;
+  public id!: number;
 
-  public createdAt: string;
+  public createdAt!: string;
 
-  public updatedAt: string;
+  public updatedAt!: string;
 
   public $beforeInsert(): void {
     const date = new Date().toISOString();

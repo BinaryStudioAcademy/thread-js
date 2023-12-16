@@ -6,9 +6,10 @@ import { DatabaseTableName } from '~/libs/packages/database/database.js';
 import { HttpCode, HttpHeader, HttpMethod } from '~/libs/packages/http/http.js';
 import { joinPath } from '~/libs/packages/path/path.js';
 import {
-  AuthApiPath,
-  type UserLoginResponseDto
+  type UserLoginResponseDto,
+  type UserRegisterRequestDto
 } from '~/packages/auth/auth.js';
+import { AuthApiPath } from '~/packages/auth/auth.js';
 import {
   FilterUserMode,
   type Post,
@@ -61,7 +62,7 @@ describe(`${postApiPath} routes`, () => {
     await setupTestUsers({ handlers: { insert } });
     await setupTestPosts({ handlers: { select, insert } });
 
-    const [validUser] = TEST_USERS_CREDENTIALS;
+    const [validUser] = TEST_USERS_CREDENTIALS as [UserRegisterRequestDto];
 
     const loginResponse = await app
       .inject()

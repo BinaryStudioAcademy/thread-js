@@ -25,8 +25,8 @@ const setupTestComments = async ({
 
   const commentsToInsert = TEST_COMMENTS.map(comment => ({
     ...comment,
-    userId: testUsers[getRandomIndex(testUsers.length)].id,
-    postId: testPosts[getRandomIndex(testPosts.length)].id
+    userId: (testUsers[getRandomIndex(testUsers.length)] as User).id,
+    postId: (testPosts[getRandomIndex(testPosts.length)] as Post).id
   }));
 
   await insert({

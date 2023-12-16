@@ -17,14 +17,17 @@ class Http implements HttpService {
     });
   }
 
-  public load<T, K>(url: string, options?: HttpLoadOptions<T>): Promise<K> {
+  public load<T, K>(
+    url: string,
+    options?: HttpLoadOptions<T>
+  ): Promise<K> | never {
     const { method = HttpMethod.GET, data, headers } = options ?? {};
 
     return this.#instance
       .request<T, K>({
         url,
         method,
-        headers,
+        headers: headers as NonNullable<typeof headers>,
         data
       })
       .then(void this.#getData)

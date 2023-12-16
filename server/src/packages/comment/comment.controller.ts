@@ -43,18 +43,20 @@ class Comment extends Controller implements CommentController {
   }
 
   public getById = async (
-    request: FastifyRequest<Record<'Params', Record<'id', number>>>
+    request: FastifyRequest
   ): Promise<CommentWithUserNestedRelations | null> => {
-    return await this.#commentService.getById(request.params.id);
+    return await this.#commentService.getById(
+      (request.params as Record<'id', number>).id
+    );
   };
 
   public create = async (
-    request: FastifyRequest<Record<'Body', CreateCommentRequestDto>>,
+    request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TComment> => {
     const comment = await this.#commentService.create(
       (request.user as UserAuthResponse).id,
-      request.body
+      request.body as CreateCommentRequestDto
     );
 
     return await reply.status(HttpCode.CREATED).send(comment);
