@@ -6,7 +6,7 @@ parserOptions:
   project:
     - ./tsconfig.json
     - ./shared/tsconfig.json
-    - ./client/jsconfig.json
+    - ./client/tsconfig.json
     - ./server/tsconfig.json
 
 settings:

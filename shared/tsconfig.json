@@ -8,7 +8,6 @@
     "declarationMap": true,
     "sourceMap": true,
     "lib": ["ESNext"],
-    "noUnusedParameters": true,
     "esModuleInterop": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -16,8 +15,6 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "types": ["node"],
-    "isolatedModules": true,
-    "strictNullChecks": true
+    "types": ["node"]
   }
 }

@@ -1,5 +1,5 @@
-import { User } from './user.type.js';
+import { UserWithImageRelation } from './user-with-image-relation.type.js';
 
-type UserAuthResponse = User;
+type UserAuthResponse = UserWithImageRelation;
 
 export { type UserAuthResponse };
