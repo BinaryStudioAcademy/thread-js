@@ -7,4 +7,5 @@ export {
   type UserLoginResponseDto,
   type UserRegisterRequestDto,
   type UserRegisterResponseDto,
-  type UserWithImageRelation } from 'shared/dist/packages/user/user.js';
+  type UserWithImageRelation
+} from 'shared/dist/packages/user/user.js';

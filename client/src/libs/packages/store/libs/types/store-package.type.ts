@@ -2,7 +2,8 @@ import {
   type AnyAction,
   type configureStore,
   type MiddlewareArray,
-  type ThunkMiddleware } from '@reduxjs/toolkit';
+  type ThunkMiddleware
+} from '@reduxjs/toolkit';
 
 import { type notificationApi } from '~/libs/packages/notification/notification.js';
 import { type authApi } from '~/packages/auth/auth.js';
@@ -39,4 +40,4 @@ type StorePackage = {
   extraArguments: ExtraArguments;
 };
 
-export { type ExtraArguments,type StoreInstance, type StorePackage };
+export { type ExtraArguments, type StoreInstance, type StorePackage };

@@ -20,4 +20,5 @@ export {
   type Post,
   type PostApi,
   type PostWithCommentImageUserNestedRelationsWithCount,
-  type PostWithImageUserNestedRelationsWithCount } from './libs/types/types.js';
+  type PostWithImageUserNestedRelationsWithCount
+} from './libs/types/types.js';

@@ -1,1 +1,4 @@
-export { PostPayloadKey, PostsApiPath } from 'shared/dist/packages/post/post.js';
+export {
+  PostPayloadKey,
+  PostsApiPath
+} from 'shared/dist/packages/post/post.js';

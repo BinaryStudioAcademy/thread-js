@@ -5,4 +5,5 @@ export {
   type Comment,
   type CommentWithUserNestedRelations,
   type CreateCommentRequestDto,
-  type GetCommentByIdResponseDto } from 'shared/dist/packages/comment/comment.js';
+  type GetCommentByIdResponseDto
+} from 'shared/dist/packages/comment/comment.js';

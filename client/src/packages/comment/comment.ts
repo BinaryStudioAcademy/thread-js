@@ -13,4 +13,5 @@ export { CommentPayloadKey } from './libs/enums/enums.js';
 export {
   type CommentApi,
   type CommentWithUserNestedRelations,
-  type CreateCommentRequestDto } from './libs/types/types.js';
+  type CreateCommentRequestDto
+} from './libs/types/types.js';

@@ -1,6 +1,6 @@
 type UserRegisterRequestDto = {
   email: string;
-  username: string
+  username: string;
   password: string;
 };
 

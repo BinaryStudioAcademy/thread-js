@@ -4,4 +4,5 @@ export {
   type UserLoginRequestDto,
   type UserLoginResponseDto,
   type UserRegisterRequestDto,
-  type UserRegisterResponseDto } from 'shared/dist/packages/user/user.js';
+  type UserRegisterResponseDto
+} from 'shared/dist/packages/user/user.js';

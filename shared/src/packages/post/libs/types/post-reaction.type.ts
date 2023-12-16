@@ -5,6 +5,6 @@ type PostReaction = {
   userId: number;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export { type PostReaction };

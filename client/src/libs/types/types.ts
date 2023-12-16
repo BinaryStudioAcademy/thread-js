@@ -4,4 +4,5 @@ export { type AsyncThunkConfig } from './store/store.js';
 export { type AppDispatch } from './store/store.js';
 export {
   type ValidationSchema,
-  type ValueOf } from 'shared/dist/libs/types/types.js';
+  type ValueOf
+} from 'shared/dist/libs/types/types.js';

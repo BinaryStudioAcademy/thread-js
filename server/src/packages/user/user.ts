@@ -21,5 +21,6 @@ export {
   type UserAuthResponse,
   type UserRepository,
   type UserService,
-  type UserWithPassword } from './libs/types/types.js';
+  type UserWithPassword
+} from './libs/types/types.js';
 export { User as UserModel } from './user.model.js';
