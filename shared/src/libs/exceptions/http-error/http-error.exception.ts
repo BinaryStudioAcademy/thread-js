@@ -1,4 +1,5 @@
 import { type ValueOf } from '~/libs/types/types.js';
+
 import { ExceptionName } from '../../enums/enums.js';
 import { HttpCode } from '../../packages/http/http.js';
 
@@ -10,9 +11,9 @@ type Constructor = {
 };
 
 class HttpError extends Error {
-  status: ValueOf<typeof HttpCode>;
+  public status: ValueOf<typeof HttpCode>;
 
-  constructor({
+  public constructor({
     status = HttpCode.INTERNAL_SERVER_ERROR,
     message = DEFAULT_MESSAGE
   }: Partial<Constructor> = {}) {

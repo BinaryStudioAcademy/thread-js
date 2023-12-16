@@ -1,6 +1,7 @@
-import { UserWithImageRelation } from '~/packages/user/user.js';
-import { Post } from './post.type.js';
-import { Image } from '~/packages/image/image.js';
+import { type Image } from '~/packages/image/image.js';
+import { type UserWithImageRelation } from '~/packages/user/user.js';
+
+import { type Post } from './post.type.js';
 
 type PostWithImageUserNestedRelationsWithCount = Post &
   Record<'image', Image> &

@@ -1,4 +1,4 @@
-import { PostFilter } from './post-filter.type.js';
+import { type PostFilter } from './post-filter.type.js';
 
 type GetPostsByFilterRequestDto = PostFilter;
 

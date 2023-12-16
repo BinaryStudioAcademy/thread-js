@@ -1,5 +1,5 @@
 import { dayjs } from '../dayjs/dayjs.js';
 
-const getFromNowTime = date => dayjs(date).fromNow();
+const getFromNowTime = (date: Date): string => dayjs(date).fromNow();
 
 export { getFromNowTime };

@@ -1,4 +1,4 @@
-import { User } from './user.type.js';
+import { type User } from './user.type.js';
 
 type UserWithPassword = User & Record<'password', string>;
 

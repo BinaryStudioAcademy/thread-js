@@ -8,9 +8,9 @@ export {
   type User,
   type UserAuthResponse,
   type UserLoginRequestDto,
-  type UserRegisterRequestDto,
   type UserLoginResponseDto,
+  type UserRegisterRequestDto,
+  type UserRegisterResponseDto,
   type UserWithImageRelation,
-  type UserWithPassword,
-  type UserRegisterResponseDto
+  type UserWithPassword
 } from './libs/types/types.js';

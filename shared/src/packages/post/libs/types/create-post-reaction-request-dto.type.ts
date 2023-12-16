@@ -1,4 +1,4 @@
-import { PostReaction } from './post-reaction.type.js';
+import { type PostReaction } from './post-reaction.type.js';
 
 type CreatePostReactionRequestDto = Pick<PostReaction, 'postId' | 'isLike'>;
 

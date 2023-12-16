@@ -1,4 +1,4 @@
-import { Image } from './image.type.js';
+import { type Image } from './image.type.js';
 
 type UploadImageResponseDto = Image;
 

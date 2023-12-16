@@ -1,4 +1,4 @@
-import { Comment } from './comment.type.js';
+import { type Comment } from './comment.type.js';
 
 type CreateCommentRequestDto = Pick<Comment, 'body' | 'postId'>;
 
