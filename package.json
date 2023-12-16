@@ -24,7 +24,7 @@
     "lint:server:js": "npm run lint:js -w server",
     "lint:server": "npm run lint -w server",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:prettify && npm run lint -ws",
-    "prettify": "npx prettier --write \"**/*.{js,jsx,scss,json,md,html}\""
+    "prettify": "npx prettier --write \"**/*.{ts,tsx,scss,json,md,html}\""
   },
   "devDependencies": {
     "@commitlint/cli": "17.6.5",
