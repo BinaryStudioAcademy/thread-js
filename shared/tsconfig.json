@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/*"],
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "lib": ["ESNext"],
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "paths": {
+      "~/*": ["src/*"]
+    },
+    "types": ["node"]
+  }
+}

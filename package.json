@@ -2,16 +2,17 @@
   "name": "threadjs",
   "private": true,
   "engines": {
-    "node": "18.x.x",
-    "npm": "9.x.x"
+    "node": "18.18.x",
+    "npm": "9.8.x"
   },
-  "type": "module",
   "workspaces": [
     "client",
     "server",
     "shared"
   ],
   "scripts": {
+    "postinstall": "npm run build:shared",
+    "build:shared": "npm run build -w shared",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
     "lint:shared:js": "npm run lint:js -w shared",
@@ -19,11 +20,11 @@
     "lint:client:css": "npm run lint:css -w client",
     "lint:client:js": "npm run lint:js -w client",
     "lint:client": "npm run lint -w client",
-    "lint:prettify": "npx prettier --check \"**/*.{js,jsx,scss,json,md,html}\"",
+    "lint:prettify": "npx prettier --check \"**/*.{ts,tsx,scss,json,md,html}\"",
     "lint:server:js": "npm run lint:js -w server",
     "lint:server": "npm run lint -w server",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:prettify && npm run lint -ws",
-    "prettify": "npx prettier --write \"**/*.{js,jsx,scss,json,md,html}\""
+    "prettify": "npx prettier --write \"**/*.{ts,tsx,scss,json,md,html}\""
   },
   "devDependencies": {
     "@commitlint/cli": "17.6.5",
@@ -40,10 +41,12 @@
     "prettier": "2.8.8",
     "simple-git-hooks": "2.8.1",
     "stylelint": "15.7.0",
-    "stylelint-config-standard": "33.0.0"
+    "stylelint-config-standard": "33.0.0",
+    "tsc-alias": "1.8.8",
+    "typescript": "5.1.6"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "commit-msg": "npx commitlint --edit $1 -c -g ./commitlint.config.cjs"
+    "commit-msg": "npx commitlint --edit $1"
   }
 }

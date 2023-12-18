@@ -2,17 +2,17 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": "18.x.x",
-    "npm": "9.x.x"
+    "node": "18.18.x",
+    "npm": "9.8.x"
   },
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
+    "start:dev": "vite",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "npx stylelint \"src/**/*.scss\"",
-    "lint:js": "npx eslint --ext .js,jsx src"
+    "lint:js": "npx eslint --ext .ts,tsx src"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.0",
@@ -21,9 +21,8 @@
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "3.1.1",
     "@reduxjs/toolkit": "1.9.5",
-    "clsx": "1.2.1",
+    "clsx": "2.0.0",
     "events": "3.3.0",
-    "prop-types": "15.8.1",
     "query-string": "8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -41,6 +40,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "4.0.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-react-app": "7.0.1",
@@ -49,6 +50,7 @@
     "sass": "1.63.4",
     "stylelint-config-standard-scss": "9.0.0",
     "stylelint-scss": "5.0.1",
-    "vite": "4.3.9"
+    "vite": "4.3.9",
+    "vite-tsconfig-paths": "4.2.2"
   }
 }
