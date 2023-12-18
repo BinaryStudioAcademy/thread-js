@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-spread */
 import { configureStore } from '@reduxjs/toolkit';
 
 import { AppEnvironment } from '~/libs/enums/enums.js';
@@ -33,14 +34,11 @@ class Store implements StorePackage {
         posts: threadReducer
       },
       middleware: getDefaultMiddleware => {
-        return [
-          ...getDefaultMiddleware({
-            thunk: {
-              extraArgument: this.extraArguments
-            }
-          }),
-          notificationSocket
-        ];
+        return getDefaultMiddleware({
+          thunk: {
+            extraArgument: this.extraArguments
+          }
+        }).concat(notificationSocket);
       }
     });
   }

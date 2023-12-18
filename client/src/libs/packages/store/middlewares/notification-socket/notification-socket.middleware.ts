@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/prefer-regexp-test */
-import { type AnyAction, type Middleware } from '@reduxjs/toolkit';
+import { type Middleware } from '@reduxjs/toolkit';
 
 import {
   NotificationMessage,
@@ -39,7 +39,7 @@ const notificationSocket: Middleware<unknown, unknown, AppDispatch> = ({
     }
   );
 
-  return next => (action: AnyAction) => {
+  return next => action => {
     if (notificationActionCreator.joinRoom.match(action)) {
       notificationSocketInstance.emit(
         SocketEvent.NOTIFICATION_JOIN_ROOM,
