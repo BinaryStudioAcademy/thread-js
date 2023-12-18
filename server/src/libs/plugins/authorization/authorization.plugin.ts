@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { type FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 
 import { ExceptionMessage } from '~/libs/enums/enums.js';
@@ -17,7 +16,7 @@ type Options = {
   };
 };
 
-const authorization: FastifyPluginAsync<Options> = fp<Options>(
+const authorization = fp<Options>(
   async (fastify, { routesWhiteList, services }): Promise<void> => {
     fastify.decorateRequest('user', null);
 
