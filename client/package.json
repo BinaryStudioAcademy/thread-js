@@ -2,37 +2,36 @@
   "name": "client",
   "private": true,
   "engines": {
-    "node": "18.x.x",
-    "npm": "9.x.x"
+    "node": "18.18.x",
+    "npm": "9.8.x"
   },
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
+    "start:dev": "vite",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "npx stylelint \"src/**/*.scss\"",
-    "lint:js": "npx eslint --ext .js,jsx src"
+    "lint:js": "npx eslint --ext .ts,tsx src"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.4.0",
-    "@fortawesome/free-solid-svg-icons": "6.4.0",
+    "@fortawesome/fontawesome-svg-core": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@hookform/error-message": "2.0.1",
-    "@hookform/resolvers": "3.1.1",
-    "@reduxjs/toolkit": "1.9.5",
-    "clsx": "1.2.1",
+    "@hookform/resolvers": "3.3.2",
+    "@reduxjs/toolkit": "2.0.1",
+    "clsx": "2.0.0",
     "events": "3.3.0",
-    "prop-types": "15.8.1",
     "query-string": "8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.44.3",
+    "react-hook-form": "7.49.2",
     "react-infinite-scroll-component": "6.1.0",
-    "react-redux": "8.1.0",
-    "react-router-dom": "6.13.0",
+    "react-redux": "9.0.4",
+    "react-router-dom": "6.21.0",
     "react-toastify": "9.1.3",
-    "socket.io-client": "4.6.2"
+    "socket.io-client": "4.7.2"
   },
   "browserslist": [
     ">0.2%",
@@ -41,14 +40,17 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@vitejs/plugin-react": "4.0.0",
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.18",
+    "@vitejs/plugin-react": "4.2.1",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-react-app": "7.0.1",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-react": "7.32.2",
-    "sass": "1.63.4",
-    "stylelint-config-standard-scss": "9.0.0",
-    "stylelint-scss": "5.0.1",
-    "vite": "4.3.9"
+    "eslint-plugin-jsx-a11y": "6.8.0",
+    "eslint-plugin-react": "7.33.2",
+    "sass": "1.69.5",
+    "stylelint-config-standard-scss": "12.0.0",
+    "stylelint-scss": "6.0.0",
+    "vite": "5.0.10",
+    "vite-tsconfig-paths": "4.2.2"
   }
 }

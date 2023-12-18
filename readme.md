@@ -15,15 +15,16 @@ The main frameworks and libraries used in the project are listed here. A complet
 ### Common
 
 1. ESLatest
-2. [Git](https://git-scm.com/doc)
-3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html)
-4. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
-5. [Socket.IO](https://socket.io/docs/)
-6. [npm](<https://en.wikipedia.org/wiki/Npm_(software)>)
-7. [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
-8. [ESLint](https://eslint.org/docs/user-guide/getting-started)
-9. [joi](https://www.npmjs.com/package/joi)
-10. [dayjs](https://day.js.org/)
+2. [Typescript](https://www.typescriptlang.org/)
+3. [Git](https://git-scm.com/doc)
+4. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html)
+5. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
+6. [Socket.IO](https://socket.io/docs/)
+7. [npm](<https://en.wikipedia.org/wiki/Npm_(software)>)
+8. [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+9. [ESLint](https://eslint.org/docs/user-guide/getting-started)
+10. [joi](https://www.npmjs.com/package/joi)
+11. [dayjs](https://day.js.org/)
 
 ### Frontend
 
@@ -116,7 +117,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 3.  Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
 
     ```
-    npm run migrate:run
+    npm run migrate:dev
     npm run seed:run
     ```
 
@@ -125,7 +126,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 4.  To start the server in the command line (terminal) in the server folder, run:
 
     ```
-    npm start
+    npm start:dev
     ```
 
 5.  To test the correct completing the task in the command line (terminal) in the server folder, run:

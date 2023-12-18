@@ -4,7 +4,10 @@ parserOptions:
   ecmaVersion: 2022
   sourceType: module
   project:
-    - ./client/jsconfig.json
+    - ./tsconfig.json
+    - ./shared/tsconfig.json
+    - ./client/tsconfig.json
+    - ./server/tsconfig.json
 
 settings:
   node: true
@@ -12,6 +15,13 @@ settings:
 extends:
   - eslint:recommended
   - plugin:import/recommended
+  - plugin:import/typescript
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-type-checked
+  - plugin:@typescript-eslint/strict
+  - plugin:@typescript-eslint/strict-type-checked
+  - plugin:@typescript-eslint/stylistic
+  - plugin:@typescript-eslint/stylistic-type-checked
   - plugin:unicorn/recommended
   - plugin:sonarjs/recommended
 
@@ -56,9 +66,7 @@ rules:
   import/no-duplicates:
     - error
   no-unused-vars:
-    - error
-    - argsIgnorePattern: ^_
-      ignoreRestSiblings: true
+    - off
   sonarjs/cognitive-complexity:
     - error
     - 18
@@ -68,19 +76,74 @@ rules:
   object-curly-spacing:
     - error
     - always
-  semi:
+  '@typescript-eslint/no-unused-vars':
+    - error
+    - argsIgnorePattern: ^_
+      ignoreRestSiblings: true
+  '@typescript-eslint/lines-between-class-members':
+    - error
+  '@typescript-eslint/padding-line-between-statements':
+    - error
+    - blankLine: never
+      prev: export
+      next: export
+    - blankLine: always
+      prev:
+        - const
+        - class
+      next: export
+    - blankLine: always
+      prev: '*'
+      next:
+        - switch
+        - class
+        - function
+        - if
+        - return
+        - try
+        - interface
+        - type
+  '@typescript-eslint/consistent-type-definitions':
+    - off
+  '@typescript-eslint/non-nullable-type-assertion-style':
+    - off
+  '@typescript-eslint/no-unnecessary-condition':
+    - off
+  '@typescript-eslint/return-await':
+    - error
+    - always
+  '@typescript-eslint/quotes':
+    - error
+    - single
+  '@typescript-eslint/consistent-type-imports':
+    - error
+  '@typescript-eslint/consistent-type-exports':
+    - error
+  '@typescript-eslint/no-unnecessary-type-assertion':
+    - off
+  '@typescript-eslint/explicit-function-return-type':
+    - error
+    - allowTypedFunctionExpressions: true
+  '@typescript-eslint/no-empty-interface':
+    - error
+    - allowSingleExtends: true
+  '@typescript-eslint/explicit-member-accessibility':
+    - error
+  '@typescript-eslint/no-misused-promises':
+    - error
+    - checksVoidReturn: false
+  '@typescript-eslint/object-curly-spacing':
+    - error
+    - always
+  '@typescript-eslint/semi':
     - error
     - always
 
 overrides:
   - files:
-      - project.config.cjs
-      - commitlint.config.cjs
-      - dangerfile.cjs
-    parserOptions:
-      sourceType: commonjs
-    env:
-      node: true
+      - project.config.ts
+      - commitlint.config.ts
+      - dangerfile.ts
     rules:
       'import/no-default-export':
         - off

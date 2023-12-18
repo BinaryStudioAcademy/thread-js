@@ -2,16 +2,17 @@
   "name": "threadjs",
   "private": true,
   "engines": {
-    "node": "18.x.x",
-    "npm": "9.x.x"
+    "node": "18.18.x",
+    "npm": "9.8.x"
   },
-  "type": "module",
   "workspaces": [
     "client",
     "server",
     "shared"
   ],
   "scripts": {
+    "postinstall": "npm run build:shared",
+    "build:shared": "npm run build -w shared",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
     "lint:shared:js": "npm run lint:js -w shared",
@@ -19,31 +20,35 @@
     "lint:client:css": "npm run lint:css -w client",
     "lint:client:js": "npm run lint:js -w client",
     "lint:client": "npm run lint -w client",
-    "lint:prettify": "npx prettier --check \"**/*.{js,jsx,scss,json,md,html}\"",
+    "lint:prettify": "npx prettier --check \"**/*.{ts,tsx,scss,json,md,html}\"",
     "lint:server:js": "npm run lint:js -w server",
     "lint:server": "npm run lint -w server",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:prettify && npm run lint -ws",
-    "prettify": "npx prettier --write \"**/*.{js,jsx,scss,json,md,html}\""
+    "prettify": "npx prettier --write \"**/*.{ts,tsx,scss,json,md,html}\""
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.5",
-    "@commitlint/config-conventional": "17.6.5",
-    "@ls-lint/ls-lint": "2.0.0",
-    "danger": "11.2.6",
-    "editorconfig-checker": "5.1.0",
-    "eslint": "8.43.0",
-    "eslint-plugin-import": "2.27.5",
+    "@commitlint/cli": "18.4.3",
+    "@commitlint/config-conventional": "18.4.3",
+    "@ls-lint/ls-lint": "2.2.2",
+    "danger": "11.3.1",
+    "editorconfig-checker": "5.1.2",
+    "@typescript-eslint/eslint-plugin": "6.14.0",
+    "@typescript-eslint/parser": "6.14.0",
+    "eslint": "8.56.0",
+    "eslint-plugin-import": "2.29.1",
     "eslint-plugin-simple-import-sort": "10.0.0",
-    "eslint-plugin-sonarjs": "0.19.0",
-    "eslint-plugin-unicorn": "47.0.0",
-    "lint-staged": "13.2.2",
-    "prettier": "2.8.8",
-    "simple-git-hooks": "2.8.1",
-    "stylelint": "15.7.0",
-    "stylelint-config-standard": "33.0.0"
+    "eslint-plugin-sonarjs": "0.23.0",
+    "eslint-plugin-unicorn": "49.0.0",
+    "lint-staged": "15.2.0",
+    "prettier": "3.1.1",
+    "simple-git-hooks": "2.9.0",
+    "stylelint": "16.0.2",
+    "stylelint-config-standard": "35.0.0",
+    "tsc-alias": "1.8.8",
+    "typescript": "5.3.3"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "commit-msg": "npx commitlint --edit $1 -c -g ./commitlint.config.cjs"
+    "commit-msg": "npx commitlint --edit $1"
   }
 }
