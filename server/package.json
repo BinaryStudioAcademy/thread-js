@@ -19,7 +19,7 @@
     "lint:js": "npx eslint --ext .ts src",
     "lint": "npm run lint:js",
     "build": "tsc && tsc-alias",
-    "pretest": "cross-env NODE_ENV=test npm run migrate:run",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:dev",
     "test": "cross-env NODE_ENV=test node --experimental-vm-modules --expose-gc --no-compilation-cache ../node_modules/jest/bin/jest.js --runInBand",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/0-starter/",
     "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",

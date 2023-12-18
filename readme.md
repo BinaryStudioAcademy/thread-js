@@ -117,7 +117,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 3.  Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
 
     ```
-    npm run migrate:run
+    npm run migrate:dev
     npm run seed:run
     ```
 
@@ -126,7 +126,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 4.  To start the server in the command line (terminal) in the server folder, run:
 
     ```
-    npm start
+    npm start:dev
     ```
 
 5.  To test the correct completing the task in the command line (terminal) in the server folder, run:
