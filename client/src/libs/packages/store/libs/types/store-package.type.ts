@@ -1,8 +1,8 @@
 import {
-  type AnyAction,
   type configureStore,
-  type MiddlewareArray,
-  type ThunkMiddleware
+  type ThunkMiddleware,
+  type Tuple,
+  type UnknownAction
 } from '@reduxjs/toolkit';
 
 import { type notificationApi } from '~/libs/packages/notification/notification.js';
@@ -31,8 +31,8 @@ type ExtraArguments = {
 type StoreInstance = ReturnType<
   typeof configureStore<
     RootReducer,
-    AnyAction,
-    MiddlewareArray<[ThunkMiddleware<RootReducer, AnyAction, ExtraArguments>]>
+    UnknownAction,
+    Tuple<[ThunkMiddleware<RootReducer, UnknownAction, ExtraArguments>]>
   >
 >;
 

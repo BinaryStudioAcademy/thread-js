@@ -13,7 +13,7 @@
     "build": "tsc && tsc-alias"
   },
   "dependencies": {
-    "dayjs": "1.11.8",
-    "joi": "17.9.2"
+    "dayjs": "1.11.10",
+    "joi": "17.11.0"
   }
 }
