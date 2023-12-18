@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["src/**/*.ts", "tests/**/*.ts", "knexfile.ts", "jest.config.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts", "knexfile.ts"],
   "files": ["src/index.d.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {

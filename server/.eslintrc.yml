@@ -10,13 +10,30 @@ extends:
 
 overrides:
   - files:
-      - knexfile.js
+      - knexfile.ts
     rules:
       'import/no-default-export':
         - off
   - files:
-      - src/db/migrations/**/*.js
+      - src/db/migrations/**/*.ts
     rules:
       'unicorn/filename-case':
         - error
         - case: snakeCase
+  - files:
+      - jest.config.js
+    rules:
+      '@typescript-eslint/no-unsafe-return':
+        - off
+      '@typescript-eslint/no-unsafe-member-access':
+        - off
+      '@typescript-eslint/explicit-function-return-type':
+        - off
+      '@typescript-eslint/no-unsafe-argument':
+        - off
+      '@typescript-eslint/no-unsafe-assignment':
+        - off
+      '@typescript-eslint/no-unsafe-call':
+        - off
+      'import/no-default-export':
+        - off

@@ -20,7 +20,7 @@
     "lint": "npm run lint:js",
     "build": "tsc && tsc-alias",
     "pretest": "cross-env NODE_ENV=test npm run migrate:dev",
-    "test": "cross-env NODE_ENV=test node --experimental-vm-modules --expose-gc --no-compilation-cache ../node_modules/jest/bin/jest.js --runInBand",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules --expose-gc --no-compilation-cache ../node_modules/jest/bin/jest.js --config jest.config.js --runInBand --forceExit --detectOpenHandles",
     "test:starter": "npm run test -- --verbose --rootDir=tests/api/0-starter/",
     "test:dislike-post": "npm run test -- --verbose --rootDir=tests/api/1-dislike-post/",
     "test:update-post": "npm run test -- --verbose --rootDir=tests/api/2-update-post/",
