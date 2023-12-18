@@ -33,7 +33,7 @@ class PostReactionModel extends AbstractModel {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
         filter: (query: QueryBuilder<UserModel>): QueryBuilder<UserModel> => {
-          return query.select('id', 'userId');
+          return query.select('id', 'username');
         },
         join: {
           from: `${DatabaseTableName.POST_REACTIONS}.userId`,
