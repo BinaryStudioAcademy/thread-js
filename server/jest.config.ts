@@ -1,4 +1,6 @@
+/* eslint-disable import/no-default-export */
 import { pathsToModuleNameMapper } from 'ts-jest';
+
 import tsconfigJson from './tsconfig.json' assert { type: 'json' };
 
 const manageKey = (key: string): string => {
@@ -22,7 +24,6 @@ export default {
   testMatch: ['<rootDir>/tests/test-cases/**/*.test.ts'],
   transformIgnorePatterns: ['node_modules/'],
   testPathIgnorePatterns: ['node_modules/', 'dist/'],
-  setupFilesAfterEnv: ['<rootDir>/tests/helpers/app-setup/app-setup.helper.ts'],
   moduleNameMapper: manageMapper(
     pathsToModuleNameMapper(tsconfigJson.compilerOptions.paths, {
       prefix: '<rootDir>/'
