@@ -53,7 +53,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 ## Installation
 
-1.  Get the latest stable version [Node.js](https://nodejs.org/en/ 'Node.js') (LTS). **Note:** npm will be installed automatically. Check the correctness of the installation: to do this, run in the command line (terminal):
+1.  Get [Node.js](https://nodejs.org/en/ 'Node.js') (LTS) the version included into [.nvmrc file](./.nvmrc). **Note:** npm will be installed automatically. Check the correctness of the installation: to do this, run in the command line (terminal):
 
     ```
     node -v  // for checking Node.js version
