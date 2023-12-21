@@ -126,7 +126,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 4.  To start the server in the command line (terminal) in the server folder, run:
 
     ```
-    npm start:dev
+    npm run start:dev
     ```
 
 5.  To test the correct completing the task in the command line (terminal) in the server folder, run:
@@ -156,7 +156,7 @@ The main frameworks and libraries used in the project are listed here. A complet
 3.  To run the client from the command line (terminal) in the client folder, run:
 
     ```
-    npm start
+    npm run start:dev
     ```
 
     The app should automatically open in your default browser.
