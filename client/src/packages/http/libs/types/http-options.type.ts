@@ -9,7 +9,7 @@ type HttpOptions = {
   headers: Headers;
   hasAuth: boolean;
   query: Record<string, unknown>;
-  contentType: ValueOf<typeof ContentType> | undefined;
+  contentType?: ValueOf<typeof ContentType> | undefined;
 };
 
 export { type HttpOptions };
