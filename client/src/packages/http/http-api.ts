@@ -1,4 +1,4 @@
-import { ContentType, StorageKey } from '~/libs/enums/enums.js';
+import { StorageKey } from '~/libs/enums/enums.js';
 import { getStringifiedQuery } from '~/libs/helpers/helpers.js';
 import { type ValueOf } from '~/libs/types/types.js';
 
@@ -27,7 +27,7 @@ class Http implements HttpApi {
       method = HttpMethod.GET,
       payload = null,
       hasAuth = true,
-      contentType = ContentType.JSON,
+      contentType,
       query
     } = options;
     const headers = this.#getHeaders({
@@ -48,7 +48,7 @@ class Http implements HttpApi {
   #getHeaders({
     hasAuth,
     contentType
-  }: Pick<HttpOptions, 'hasAuth' | 'contentType'>): Headers {
+  }: Partial<Pick<HttpOptions, 'hasAuth' | 'contentType'>>): Headers {
     const headers = new Headers();
 
     if (contentType) {
