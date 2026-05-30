@@ -2,8 +2,8 @@
   "name": "@thread-js/frontend",
   "private": true,
   "engines": {
-    "node": "22.15.x",
-    "npm": "10.9.x"
+    "node": "24.16.x",
+    "npm": "11.16.x"
   },
   "type": "module",
   "scripts": {

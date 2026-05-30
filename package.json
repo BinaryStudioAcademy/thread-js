@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "22.15.x",
-    "npm": "10.9.x"
+    "node": "24.16.x",
+    "npm": "11.16.x"
   },
   "workspaces": [
     "apps/*",
@@ -34,7 +34,6 @@
     "@eslint/js": "9.38.0",
     "@ls-lint/ls-lint": "2.3.1",
     "@stylistic/eslint-plugin": "4.2.0",
-    "@types/lint-staged": "13.3.0",
     "@typescript-eslint/eslint-plugin": "8.60.0",
     "@typescript-eslint/parser": "8.60.0",
     "concurrently": "10.0.0",

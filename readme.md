@@ -12,8 +12,8 @@ The main idea of the project is to onboard students with our vision of how a rea
 
 ### Requirements
 
-- [NodeJS](https://nodejs.org/en) (22.15.x);
-- [npm](https://www.npmjs.com/) (10.9.x);
+- [NodeJS](https://nodejs.org/en) (24.16.x);
+- [npm](https://www.npmjs.com/) (11.16.x);
 - [PostgreSQL](https://www.postgresql.org/) (15.5)
 
 ## Technologies
