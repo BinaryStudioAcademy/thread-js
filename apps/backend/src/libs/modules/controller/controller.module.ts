@@ -34,7 +34,7 @@ class Controller implements ControllerModule {
     this.#logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
     const handlerOptions = this.mapRequest(request);
-    const { payload, status } = await handler(handlerOptions);
+    const { payload, status } = await Promise.resolve(handler(handlerOptions));
 
     return await reply.status(status).send(payload);
   }
