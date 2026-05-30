@@ -176,7 +176,7 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
       })
       .count(`${table}.id`);
 
-    return Number(
+    return (
       (result[FIRST_ARRAY_ELEMENT_IDX] as Record<'count', number | undefined>)
         .count ?? NO_RECORDS
     );
