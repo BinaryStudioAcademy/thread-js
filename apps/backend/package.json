@@ -22,6 +22,7 @@
     "build": "tsc && tsc-alias",
     "pretest": "cross-env NODE_ENV=test npm run migrate:dev",
     "test": "cross-env NODE_ENV=test node --experimental-vm-modules --expose-gc --no-compilation-cache ../../node_modules/jest/bin/jest.js --config jest.config.js --runInBand --forceExit --detectOpenHandles",
+    "test:coverage": "npm run test -- --coverage",
     "test:auth": "npm run test -- --verbose --rootDir=tests/modules/auth/"
   },
   "dependencies": {
