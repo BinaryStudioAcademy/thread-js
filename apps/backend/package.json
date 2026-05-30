@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "10.4.0",
-    "@jest/globals": "29.7.0",
+    "@jest/globals": "30.4.1",
     "@types/convict": "6.1.6",
-    "@types/jest": "29.5.14",
+    "@types/jest": "30.0.0",
     "@types/pg": "8.20.0",
     "@types/qs": "6.15.1",
     "cross-env": "7.0.3",
