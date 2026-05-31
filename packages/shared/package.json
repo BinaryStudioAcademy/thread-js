@@ -2,8 +2,8 @@
   "name": "@thread-js/shared",
   "private": true,
   "engines": {
-    "node": "22.15.x",
-    "npm": "10.9.x"
+    "node": "24.16.x",
+    "npm": "11.13.x"
   },
   "type": "module",
   "main": "build/index.js",
@@ -16,6 +16,6 @@
     "build": "tsc && tsc-alias"
   },
   "dependencies": {
-    "joi": "17.13.3"
+    "joi": "18.2.1"
   }
 }

@@ -4,6 +4,7 @@
   "files": ["packages.d.ts"],
   "lib": ["ESNext"],
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
