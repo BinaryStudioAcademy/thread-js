@@ -72,6 +72,7 @@ const jsConfig = {
           'ImportDeclaration[importKind=type],ExportNamedDeclaration[exportKind=type]'
       }
     ],
+    'no-throw-literal': 'off',
     'object-shorthand': ['error'],
     'prefer-destructuring': ['error'],
     quotes: ['error', 'single']
@@ -115,6 +116,8 @@ const sonarConfig = {
   rules: {
     ...sonarjs.configs.recommended.rules,
     'sonarjs/cognitive-complexity': ['error', 16],
+    'sonarjs/function-return-type': ['off'],
+    'sonarjs/in-operator-type-error': ['off'],
     'sonarjs/no-unused-vars': ['off'],
     'sonarjs/void-use': ['off']
   }
@@ -190,6 +193,7 @@ const typescriptConfig = {
       'error',
       { 'argsIgnorePattern': '^_', 'ignoreRestSiblings': true }
     ],
+    '@typescript-eslint/only-throw-error': 'error',
     '@typescript-eslint/restrict-plus-operands': ['off'],
     '@typescript-eslint/restrict-template-expressions': [
       'error',

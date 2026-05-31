@@ -21,11 +21,11 @@ class Storage implements StorageApi {
   }
 
   public drop(key: ValueOf<typeof StorageKey>): void {
-    this.#storage.removeItem(key as string);
+    this.#storage.removeItem(key);
   }
 
   public get<R = string>(key: ValueOf<typeof StorageKey>): null | R {
-    return this.#storage.getItem(key as string) as R;
+    return this.#storage.getItem(key) as R;
   }
 
   public has(key: ValueOf<typeof StorageKey>): boolean {
@@ -35,7 +35,7 @@ class Storage implements StorageApi {
   }
 
   public set(key: ValueOf<typeof StorageKey>, value: string): void {
-    this.#storage.setItem(key as string, value);
+    this.#storage.setItem(key, value);
   }
 }
 

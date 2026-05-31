@@ -1,6 +1,5 @@
 import viteReactPlugin from '@vitejs/plugin-react';
 import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
-import tsConfigPathsPlugin from 'vite-tsconfig-paths';
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
   // import.meta.env doesn't exist at this moment
@@ -15,14 +14,17 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
     build: {
       outDir: 'build'
     },
-    plugins: [tsConfigPathsPlugin(), viteReactPlugin()],
+    plugins: [viteReactPlugin()],
+    resolve: {
+      tsconfigPaths: true
+    },
     server: {
       host: VITE_APP_HOST as string,
       port: Number(VITE_APP_PORT),
       proxy: {
         [VITE_API_PATH as string]: {
           changeOrigin: true,
-          target: VITE_APP_PROXY_SERVER_URL
+          target: VITE_APP_PROXY_SERVER_URL as string
         }
       }
     }
