@@ -1,12 +1,15 @@
 # ThreadJS 🧵
 
 ## 📖 Application Overview
-[TODO: Explain what the app does, its purpose, and target audience]
+ThreadJS is a full-stack social media web application where users can share text-based posts, engage in discussions, and interact with other users' content. It serves as an educational repository designed to simulate a real-world enterprise development environment. Key features include user authentication, creating threads, commenting, and liking posts.
 
 ## 🏗️ Application Architecture
-[TODO: High-level explanation of the Frontend (React/Vite), Backend (Node/Fastify/Knex), and Shared packages]
+The project is built as a **Monorepo** using npm workspaces, separating the code into three distinct packages:
 
----
+* **Frontend (`apps/frontend`)**: A React application built with Vite. It handles the user interface, state management, and client-side routing.
+* **Backend (`apps/backend`)**: A RESTful API server built with Node.js and Fastify. It manages business logic, handles database operations using Knex.js, and serves data to the frontend.
+* **Shared (`packages/shared`)**: A common library containing TypeScript interfaces, types, and validation schemas (e.g., Joi/Zod) used by both the frontend and backend to ensure data consistency.
+* **Database**: PostgreSQL is used as the primary relational database to store users, threads, comments, and likes.
 
 ## ⚙️ Technical Requirements & Setup
 
