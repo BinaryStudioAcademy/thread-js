@@ -11,6 +11,8 @@ The project is built as a **Monorepo** using npm workspaces, separating the code
 * **Shared (`packages/shared`)**: A common library containing TypeScript interfaces, types, and validation schemas (e.g., Joi/Zod) used by both the frontend and backend to ensure data consistency.
 * **Database**: PostgreSQL is used as the primary relational database to store users, threads, comments, and likes.
 
+---
+
 ## ⚙️ Technical Requirements & Setup
 
 ### Prerequisites
